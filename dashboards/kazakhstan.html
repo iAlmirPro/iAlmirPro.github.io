@@ -26,7 +26,7 @@ body { background: #000; color: #fff; font-family: 'Inter', sans-serif; font-wei
 .kpi.cb::after { background: var(--blu); }
 .kpi.cd::after { background: var(--dim); }
 .kpi-lbl { font-size: 10px; letter-spacing: .11em; text-transform: uppercase; color: var(--sub); margin-bottom: 6px; }
-.kpi-val { font-family: 'Fraunces', serif; font-weight: 900; font-size: 26px; line-height: 1; margin-bottom: 4px; word-break: break-word; }
+.kpi-val { font-family: 'Fraunces', serif; font-weight: 900; font-size: 18px; line-height: 1; margin-bottom: 4px; word-break: break-word; }
 .kpi.ck .kpi-val { color: var(--kaz-l); }
 .kpi.ca .kpi-val { color: var(--yel); }
 .kpi.cb .kpi-val { color: var(--blu-l); }
@@ -60,7 +60,7 @@ h1 em { font-style: italic; color: var(--kaz); font-weight: 400; }
 .flag-stripe { position: absolute; left: 0; top: 0; bottom: 0; width: 9px; background: repeating-linear-gradient(180deg,#FFC72C 0,#FFC72C 2px,transparent 2px,transparent 5px); }
 .flag-sun { width: 20px; height: 20px; background: #FFC72C; border-radius: 50%; margin-right: 4px; flex-shrink: 0; }
 section { padding-top: 24px; }
-.reg { background: var(--card); border: 1px solid var(--border); padding: 18px 14px; position: relative; overflow: hidden; }
+.reg { background: var(--card); border: 1px solid var(--border); padding: 18px 14px; position: relative; overflow: hidden; height: 100%; }
 .reg::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; }
 .reg.rk::before { background: var(--kaz); } .reg.ry::before { background: var(--yel); }
 .rn { font-family: 'Fraunces', serif; font-weight: 700; font-size: 15px; color: var(--txt); margin-bottom: 3px; }
@@ -68,7 +68,7 @@ section { padding-top: 24px; }
 .rd { font-size: 12px; color: #888; line-height: 1.6; }
 .scard { background: var(--card); border: 1px solid var(--border); padding: 14px 12px; text-align: center; }
 .sc-lbl { font-size: 10px; color: var(--sub); letter-spacing: .07em; text-transform: uppercase; margin-bottom: 6px; }
-.sc-val { font-family: 'Fraunces', serif; font-weight: 700; font-size: 20px; line-height: 1; }
+.sc-val { font-family: 'Fraunces', serif; font-weight: 700; font-size: 18px; line-height: 1; }
 .sc-note { font-size: 11px; color: var(--sub); margin-top: 4px; }
 .dl-row { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; }
 .dl-mo { font-size: 10px; letter-spacing: .05em; text-transform: uppercase; color: var(--sub); width: 24px; flex-shrink: 0; }
@@ -79,7 +79,7 @@ section { padding-top: 24px; }
 .divider { height: 1px; background: var(--border); margin: 14px 0; }
 .pc { background: var(--card); border: 1px solid var(--border); padding: 18px 14px; text-align: center; flex: 1; }
 .pc-loc { font-size: 10px; letter-spacing: .1em; text-transform: uppercase; color: var(--sub); margin-bottom: 6px; }
-.pc-price { font-family: 'Fraunces', serif; font-weight: 900; font-size: 22px; color: var(--kaz-l); margin-bottom: 3px; }
+.pc-price { font-family: 'Fraunces', serif; font-weight: 900; font-size: 18px; color: var(--kaz-l); margin-bottom: 3px; }
 .pc-note { font-size: 11px; color: var(--sub); }
 .tl-item { padding-left: 16px; border-left: 1px solid var(--kaz); margin-bottom: 14px; }
 .tl-yr { font-size: 10px; letter-spacing: .11em; color: var(--yel); text-transform: uppercase; margin-bottom: 2px; }
@@ -146,10 +146,10 @@ footer p { font-size: 10.5px; color: #555; line-height: 1.7; }
       </div>
     </div>
     <div class="row g-1 mb-3">
-      <div class="col-6 col-md-3"><div class="reg rk"><div class="rn">Astana &amp; Centre</div><div class="rt">Capital · steppe core</div><div class="rd">Purpose-built capital. Futuristic skyline. Financial hub. Extreme continental climate.</div></div></div>
-      <div class="col-6 col-md-3"><div class="reg ry"><div class="rn">Almaty &amp; South-East</div><div class="rt">Commercial hub · mountains</div><div class="rd">Largest city (2.3M). Foot of Tian Shan at 800 m. Financial &amp; cultural centre.</div></div></div>
-      <div class="col-6 col-md-3"><div class="reg rk"><div class="rn">West (Atyrau / Aktau)</div><div class="rt">Caspian · oil region</div><div class="rd">Tengiz and Kashagan oilfields. Caspian coast. Kazakhstan's energy gateway.</div></div></div>
-      <div class="col-6 col-md-3"><div class="reg ry"><div class="rn">North &amp; East Steppe</div><div class="rt">Grain belt · mining</div><div class="rd">Wheat production. Karaganda coal basin. Baikonur Cosmodrome leased to Russia.</div></div></div>
+      <div class="col-6 col-md-3 d-flex"><div class="reg rk"><div class="rn">Astana &amp; Centre</div><div class="rt">Capital · steppe core</div><div class="rd">Purpose-built capital. Futuristic skyline. Financial hub. Extreme continental climate.</div></div></div>
+      <div class="col-6 col-md-3 d-flex"><div class="reg ry"><div class="rn">Almaty &amp; South-East</div><div class="rt">Commercial hub · mountains</div><div class="rd">Largest city (2.3M). Foot of Tian Shan at 800 m. Financial &amp; cultural centre.</div></div></div>
+      <div class="col-6 col-md-3 d-flex"><div class="reg rk"><div class="rn">West (Atyrau / Aktau)</div><div class="rt">Caspian · oil region</div><div class="rd">Tengiz and Kashagan oilfields. Caspian coast. Kazakhstan's energy gateway.</div></div></div>
+      <div class="col-6 col-md-3 d-flex"><div class="reg ry"><div class="rn">North &amp; East Steppe</div><div class="rt">Grain belt · mining</div><div class="rd">Wheat production. Karaganda coal basin. Baikonur Cosmodrome leased to Russia.</div></div></div>
     </div>
   </section>
 
@@ -167,10 +167,10 @@ footer p { font-size: 10.5px; color: #555; line-height: 1.7; }
       <div class="col-6 col-md-4 d-flex"><div class="kpi cd"><div class="kpi-lbl">Climate type</div><div class="kpi-val">BSk / Dfb</div><div class="kpi-sub">Cold steppe north; desert south; mountain east</div></div></div>
       <div class="col-6 col-md-4 d-flex"><div class="kpi ca"><div class="kpi-lbl">Almaty summer avg</div><div class="kpi-val">24.5°C</div><div class="kpi-sub">Milder at 800 m altitude; can drop to −30°C in winter</div></div></div>
       <div class="col-6 col-md-4 d-flex"><div class="kpi ca"><div class="kpi-lbl">Astana summer avg</div><div class="kpi-val">21°C</div><div class="kpi-sub">Short hot summers; winters average −14°C</div></div></div>
-      <div class="col-6 col-md-4 d-flex"><div class="scard"><div class="sc-lbl">Winter Dec–Feb</div><div class="sc-val" style="color:#5ba8ff">−20–0°C</div><div class="sc-note">Bitterly cold; blizzards; ski near Almaty</div></div></div>
-      <div class="col-6 col-md-4 d-flex"><div class="scard"><div class="sc-lbl">Spring Mar–May</div><div class="sc-val" style="color:#33c8df">0–20°C</div><div class="sc-note">Rapid warming; steppe blooms; wettest season</div></div></div>
-      <div class="col-6 col-md-4 d-flex"><div class="scard"><div class="sc-lbl">Summer Jun–Aug</div><div class="sc-val" style="color:#FFC72C">25–40°C</div><div class="sc-note">Hot &amp; dry in steppe; cooler in mountains</div></div></div>
-      <div class="col-6 col-md-4 d-flex"><div class="scard"><div class="sc-lbl">Autumn Sep–Nov</div><div class="sc-val" style="color:#ccc">5–20°C</div><div class="sc-note">Short golden autumn; rapid cooling from October</div></div></div>
+      <div class="col-6 col-md-4 d-flex"><div class="kpi cb"><div class="kpi-lbl">Winter Dec–Feb</div><div class="kpi-val">−20–0°C</div><div class="kpi-sub">Bitterly cold north; blizzards; ski season near Almaty</div></div></div>
+      <div class="col-6 col-md-4 d-flex"><div class="kpi ck"><div class="kpi-lbl">Spring Mar–May</div><div class="kpi-val">0–20°C</div><div class="kpi-sub">Rapid warming; steppe blooms; wettest season in north</div></div></div>
+      <div class="col-6 col-md-4 d-flex"><div class="kpi ca"><div class="kpi-lbl">Summer Jun–Aug</div><div class="kpi-val">25–40°C</div><div class="kpi-sub">Hot &amp; dry in steppe; cooler in mountains; low humidity</div></div></div>
+      <div class="col-6 col-md-4 d-flex"><div class="kpi cd"><div class="kpi-lbl">Autumn Sep–Nov</div><div class="kpi-val">5–20°C</div><div class="kpi-sub">Short golden autumn; rapid cooling from October</div></div></div>
     </div>
     <div class="row gy-3 mb-3">
       <div class="col-12 col-md-6 mb-3 mb-md-0">
@@ -439,6 +439,93 @@ footer p { font-size: 10.5px; color: #555; line-height: 1.7; }
           <div class="tl-item"><div class="tl-yr">2019</div><div class="tl-tx">After 29 years, Nazarbayev resigns. Tokayev elected president.</div></div>
           <div class="tl-item"><div class="tl-yr">2022</div><div class="tl-tx">Nationwide unrest (Bloody January). Russian troops deployed briefly. Constitutional reforms introduced.</div></div>
           <div class="tl-item"><div class="tl-yr">2024</div><div class="tl-tx">Voters approve construction of first nuclear power plant. GDP growth accelerates to 6%+.</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TOURISM -->
+  <section>
+    <div class="sec-hdr">
+      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 512 512" fill="#fff"><path d="M184 48H328c4.4 0 8 3.6 8 8V96H176V56c0-4.4 3.6-8 8-8zm-56 8V96H64C28.7 96 0 124.7 0 160v96H192 320 512V160c0-35.3-28.7-64-64-64H384V56c0-30.9-25.1-56-56-56H184c-30.9 0-56 25.1-56 56zM512 288H320v32c0 17.7-14.3 32-32 32H224c-17.7 0-32-14.3-32-32V288H0V416c0 35.3 28.7 64 64 64H448c35.3 0 64-28.7 64-64V288z"/></svg>
+      <span>Tourism</span>
+    </div>
+    <div class="row g-1 mb-3">
+      <div class="col-6 col-md-4 d-flex"><div class="kpi ck"><div class="kpi-lbl">Foreign Visitors (2024)</div><div class="kpi-val">15.3M</div><div class="kpi-sub">Doubled vs 2023; record high</div></div></div>
+      <div class="col-6 col-md-4 d-flex"><div class="kpi ck"><div class="kpi-lbl">Overnight Visitors</div><div class="kpi-val">10.4M</div><div class="kpi-sub">Of total 15.3M arrivals in 2024</div></div></div>
+      <div class="col-6 col-md-4 d-flex"><div class="kpi ca"><div class="kpi-lbl">Tourism Revenue (2024)</div><div class="kpi-val">~$3.1B</div><div class="kpi-sub">Up 25% YoY; total tourist spending exceeded 1.2T KZT</div></div></div>
+      <div class="col-6 col-md-4 d-flex"><div class="kpi ca"><div class="kpi-lbl">Avg Spend per Visitor</div><div class="kpi-val">$1,200–1,500</div><div class="kpi-sub">Per visit in 2024</div></div></div>
+      <div class="col-6 col-md-4 d-flex"><div class="kpi cd"><div class="kpi-lbl">Domestic Trips (2024)</div><div class="kpi-val">10.5M</div><div class="kpi-sub">Up ~1M vs previous year</div></div></div>
+      <div class="col-6 col-md-4 d-flex"><div class="kpi cb"><div class="kpi-lbl">H1 2025 Visitors</div><div class="kpi-val">7.5M</div><div class="kpi-sub">Of which 5M stayed 24h+; on track for record year</div></div></div>
+    </div>
+    <div class="row gy-3 mb-3">
+      <div class="col-12 col-md-6 mb-3 mb-md-0">
+        <div class="panel">
+          <div class="ptitle"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 640 512" fill="#fff"><path d="M72 88a56 56 0 1 1 112 0A56 56 0 1 1 72 88zM64 245.7C54 256.9 48 271.8 48 288s6 31.1 16 42.3V245.7zm144.4-49.3C178.7 222.7 160 261.2 160 304c0 34.3 12 65.8 32 90.5V416c0 17.7-14.3 32-32 32H96c-17.7 0-32-14.3-32-32V389.2C26.2 371.2 0 332.7 0 288c0-61.9 50.1-112 112-112c29.3 0 56 11.3 75.9 29.7zM320 32a64 64 0 1 1 0 128A64 64 0 1 1 320 32zM448 304c0 44.7-26.2 83.2-64 101.2V448c0 17.7-14.3 32-32 32H288c-17.7 0-32-14.3-32-32V405.2c-37.8-18-64-56.5-64-101.2c0-61.9 50.1-112 112-112h32c61.9 0 112 50.1 112 112z"/></svg> Top Visitor Origins (2024)</div>
+          <div style="display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid var(--border)"><span style="font-size:18px">🇨🇳</span><span style="font-size:12.5px;color:#fff;flex:1">China</span><span style="font-size:12px;color:var(--sub)">fastest growing</span></div>
+          <div style="display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid var(--border)"><span style="font-size:18px">🇷🇺</span><span style="font-size:12.5px;color:#fff;flex:1">Russia</span><span style="font-size:12px;color:var(--sub)">largest border crossing</span></div>
+          <div style="display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid var(--border)"><span style="font-size:18px">🇺🇿</span><span style="font-size:12.5px;color:#fff;flex:1">Uzbekistan</span><span style="font-size:12px;color:var(--sub)">high volume neighbour</span></div>
+          <div style="display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid var(--border)"><span style="font-size:18px">🇮🇳</span><span style="font-size:12.5px;color:#fff;flex:1">India</span><span style="font-size:12px;color:var(--sub)">rising interest</span></div>
+          <div style="display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid var(--border)"><span style="font-size:18px">🇩🇪</span><span style="font-size:12.5px;color:#fff;flex:1">Germany</span><span style="font-size:12px;color:var(--sub)">leading European source</span></div>
+          <div style="display:flex;align-items:center;gap:10px;padding:9px 0"><span style="font-size:18px">🇰🇷</span><span style="font-size:12.5px;color:#fff;flex:1">South Korea</span><span style="font-size:12px;color:var(--sub)">growing Asian market</span></div>
+        </div>
+      </div>
+      <div class="col-12 col-md-6">
+        <div class="panel">
+          <div class="ptitle"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 512 512" fill="#fff"><path d="M240.1 4.2c9.8-5.6 21.9-5.6 31.8 0l208 120c9.2 5.3 14.1 15.6 12.2 26.1s-10.4 18.5-21 18.5h-24.9L448 464H480c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H64L66.7 168.8H41.7c-10.6 0-19.2-7.9-21-18.5s3-20.8 12.2-26.1l208-120z"/></svg> Tourism Highlights</div>
+          <table class="tbl"><tbody>
+            <tr><td>Tax revenue from tourism (2024)</td><td>500B KZT (~$1.1B)</td></tr>
+            <tr><td>Accommodation revenue growth</td><td>+27% YoY (2024)</td></tr>
+            <tr><td>State-certified tour guides</td><td>400+</td></tr>
+            <tr><td>Neo Nomad visa (launched 2024)</td><td>Up to 1 year stay</td></tr>
+            <tr><td>Oi-Qaragai ski cluster investment</td><td>$150M (Almaty region)</td></tr>
+            <tr><td>Caspian Riviera project value</td><td>137.4B KZT</td></tr>
+            <tr><td>2025 tourism theme</td><td>Year of KZ-China Tourism</td></tr>
+          </tbody></table>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- VITAL STATISTICS -->
+  <section>
+    <div class="sec-hdr">
+      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 640 512" fill="#fff"><path d="M72 88a56 56 0 1 1 112 0A56 56 0 1 1 72 88zM64 245.7C54 256.9 48 271.8 48 288s6 31.1 16 42.3V245.7zm144.4-49.3C178.7 222.7 160 261.2 160 304c0 34.3 12 65.8 32 90.5V416c0 17.7-14.3 32-32 32H96c-17.7 0-32-14.3-32-32V389.2C26.2 371.2 0 332.7 0 288c0-61.9 50.1-112 112-112c29.3 0 56 11.3 75.9 29.7zM320 32a64 64 0 1 1 0 128A64 64 0 1 1 320 32zM448 304c0 44.7-26.2 83.2-64 101.2V448c0 17.7-14.3 32-32 32H288c-17.7 0-32-14.3-32-32V405.2c-37.8-18-64-56.5-64-101.2c0-61.9 50.1-112 112-112h32c61.9 0 112 50.1 112 112z"/></svg>
+      <span>Vital Statistics</span>
+    </div>
+    <div class="row g-1 mb-3">
+      <div class="col-6 col-md-4 d-flex"><div class="kpi ck"><div class="kpi-lbl">Births (2024 est.)</div><div class="kpi-val">~350,000</div><div class="kpi-sub">Birth rate ~17 per 1,000 population</div></div></div>
+      <div class="col-6 col-md-4 d-flex"><div class="kpi cb"><div class="kpi-lbl">Deaths (2024 est.)</div><div class="kpi-val">~175,000</div><div class="kpi-sub">Death rate ~8.5 per 1,000 population</div></div></div>
+      <div class="col-6 col-md-4 d-flex"><div class="kpi ck"><div class="kpi-lbl">Natural Increase</div><div class="kpi-val">~175,000</div><div class="kpi-sub">Strong natural population growth</div></div></div>
+      <div class="col-6 col-md-4 d-flex"><div class="kpi cb"><div class="kpi-lbl">Infant Mortality</div><div class="kpi-val">6.8 / 1,000</div><div class="kpi-sub">Per 1,000 live births (2024); significantly improved since 2000</div></div></div>
+      <div class="col-6 col-md-4 d-flex"><div class="kpi ca"><div class="kpi-lbl">Ages 0–14</div><div class="kpi-val">~29.5%</div><div class="kpi-sub">Large youth cohort; nearly 1/3 of population</div></div></div>
+      <div class="col-6 col-md-4 d-flex"><div class="kpi cd"><div class="kpi-lbl">Ages 65+</div><div class="kpi-val">~7.9%</div><div class="kpi-sub">Very young age structure; well below EU average</div></div></div>
+    </div>
+    <div class="row gy-3 mb-3">
+      <div class="col-12 col-md-6 mb-3 mb-md-0">
+        <div class="panel">
+          <div class="ptitle"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 512 512" fill="#fff"><path d="M64 64c0-17.7-14.3-32-32-32S0 46.3 0 64V400c0 44.2 35.8 80 80 80H480c17.7 0 32-14.3 32-32s-14.3-32-32-32H80c-8.8 0-16-7.2-16-16V64zm406.6 86.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L320 210.7l-57.4-57.4c-12.5-12.5-32.8-12.5-45.3 0l-112 112c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L240 221.3l57.4 57.4c12.5 12.5 32.8 12.5 45.3 0l128-128z"/></svg> Causes of Death (2024)</div>
+          <div class="br"><div class="bh"><span class="bl">Circulatory system diseases</span><span class="bv">22.3%</span></div><div class="bt"><div class="bf bfk" style="width:100%"></div></div></div>
+          <div class="br"><div class="bh"><span class="bl">Nervous system diseases</span><span class="bv">19.1%</span></div><div class="bt"><div class="bf bfa" style="width:86%"></div></div></div>
+          <div class="br"><div class="bh"><span class="bl">Neoplasms (cancer)</span><span class="bv">10.2%</span></div><div class="bt"><div class="bf bfa" style="width:46%"></div></div></div>
+          <div class="br"><div class="bh"><span class="bl">Respiratory diseases</span><span class="bv">10.0%</span></div><div class="bt"><div class="bf bfd" style="width:45%"></div></div></div>
+          <div class="br"><div class="bh"><span class="bl">Digestive system diseases</span><span class="bv">8.3%</span></div><div class="bt"><div class="bf bfd" style="width:37%"></div></div></div>
+          <div class="br"><div class="bh"><span class="bl">Accidents, poisoning &amp; injuries</span><span class="bv">7.8%</span></div><div class="bt"><div class="bf bfb" style="width:35%"></div></div></div>
+          <p class="note">Cardiovascular disease rates among highest in Central Asia. Maternal mortality has declined significantly since 2000.</p>
+        </div>
+      </div>
+      <div class="col-12 col-md-6">
+        <div class="panel">
+          <div class="ptitle"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 512 512" fill="#fff"><path d="M240.1 4.2c9.8-5.6 21.9-5.6 31.8 0l208 120c9.2 5.3 14.1 15.6 12.2 26.1s-10.4 18.5-21 18.5h-24.9L448 464H480c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H64L66.7 168.8H41.7c-10.6 0-19.2-7.9-21-18.5s3-20.8 12.2-26.1l208-120z"/></svg> Marriage &amp; Vital Trends</div>
+          <table class="tbl"><tbody>
+            <tr><td>Marriage rate (per 1,000)</td><td>~8.5</td></tr>
+            <tr><td>Divorce rate (per 1,000)</td><td>~2.6</td></tr>
+            <tr><td>Avg age at first marriage (women)</td><td>~24 yrs</td></tr>
+            <tr><td>Avg age at first marriage (men)</td><td>~27 yrs</td></tr>
+            <tr><td>Under-5 deaths (2024)</td><td>3,404</td></tr>
+            <tr><td>Maternal mortality (2023)</td><td>39 deaths</td></tr>
+            <tr><td>Child stunting rate (2024)</td><td>4.4%</td></tr>
+          </tbody></table>
         </div>
       </div>
     </div>
