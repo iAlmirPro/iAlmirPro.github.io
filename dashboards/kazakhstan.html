@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kazakhstan — Country Dashboard 2025</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,700;0,9..144,900;1,9..144,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { overflow-x: hidden; }
+body { background: #000; color: #fff; font-family: 'Inter', sans-serif; font-weight: 300; line-height: 1.6; overflow-x: hidden; }
+:root {
+  --kaz: #00AFCA; --kaz-l: #33c8df;
+  --yel: #FFC72C; --yel-l: #ffd966;
+  --blu: #2E86DE; --blu-l: #5ba8ff;
+  --bg: #000; --card: #1c1c1c; --border: #2a2a2a;
+  --track: #222; --txt: #fff; --sub: #999; --dim: #444;
+}
+.dash { max-width: 1020px; margin: 0 auto; padding: 0 22px 24px; }
+@keyframes up { from { opacity:0; transform:translateY(10px); } to { opacity:1; transform:none; } }
+.kpi { animation: up .4s ease forwards; opacity: 0; background: var(--card); border: 1px solid var(--border); padding: 18px 15px 15px; position: relative; overflow: hidden; width: 100%; flex: 1; }
+.kpi::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 2px; }
+.kpi.ck::after { background: var(--kaz); }
+.kpi.ca::after { background: var(--yel); }
+.kpi.cb::after { background: var(--blu); }
+.kpi.cd::after { background: var(--dim); }
+.kpi-lbl { font-size: 10px; letter-spacing: .11em; text-transform: uppercase; color: var(--sub); margin-bottom: 6px; }
+.kpi-val { font-family: 'Fraunces', serif; font-weight: 900; font-size: 26px; line-height: 1; margin-bottom: 4px; word-break: break-word; }
+.kpi.ck .kpi-val { color: var(--kaz-l); }
+.kpi.ca .kpi-val { color: var(--yel); }
+.kpi.cb .kpi-val { color: var(--blu-l); }
+.kpi.cd .kpi-val { color: var(--txt); }
+.kpi-sub { font-size: 11px; color: var(--sub); line-height: 1.4; }
+.panel { background: var(--card); border: 1px solid var(--border); padding: 24px 20px; height: 100%; }
+.ptitle { font-family: 'Fraunces', serif; font-weight: 700; font-size: 13px; color: var(--txt); margin-bottom: 16px; padding-bottom: 11px; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 8px; }
+.br { margin-bottom: 13px; }
+.br:last-child { margin-bottom: 0; }
+.bh { display: flex; justify-content: space-between; align-items: baseline; font-size: 12px; color: var(--sub); margin-bottom: 5px; gap: 4px; }
+.bl { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; flex: 1; }
+.bv { color: var(--txt); font-weight: 500; flex-shrink: 0; white-space: nowrap; }
+.bt { height: 6px; background: var(--track); border-radius: 3px; overflow: hidden; }
+.bf { height: 100%; border-radius: 3px; }
+.bfk { background: var(--kaz); } .bfa { background: var(--yel); } .bfb { background: var(--blu); } .bfd { background: var(--dim); }
+.tbl { width: 100%; border-collapse: collapse; table-layout: fixed; }
+.tbl tr { border-bottom: 1px solid var(--border); }
+.tbl tr:last-child { border-bottom: none; }
+.tbl td { padding: 9px 4px; font-size: 12.5px; overflow-wrap: break-word; }
+.tbl td:first-child { color: var(--sub); width: 58%; }
+.tbl td:last-child { color: var(--txt); font-weight: 500; text-align: right; font-family: 'Fraunces', serif; font-size: 14px; }
+.sec-hdr { display: flex; align-items: center; gap: 10px; margin-bottom: 28px; }
+.sec-hdr svg { flex-shrink: 0; }
+.sec-hdr span { font-size: 13px; letter-spacing: .18em; text-transform: uppercase; color: var(--txt); font-weight: 500; }
+.hero { padding: 16px 0 0; display: grid; grid-template-columns: 1fr auto; align-items: end; gap: 32px; margin-bottom: 8px; }
+.eyebrow { font-size: 10px; letter-spacing: .28em; text-transform: uppercase; color: var(--kaz); margin-bottom: 14px; }
+h1 { font-family: 'Fraunces', serif; font-weight: 900; font-size: clamp(44px,9vw,96px); line-height: .9; letter-spacing: -.02em; margin-bottom: 16px; }
+h1 em { font-style: italic; color: var(--kaz); font-weight: 400; }
+.hero-sub { font-size: 14px; color: var(--sub); max-width: 460px; line-height: 1.7; }
+.flag { width: 80px; height: 50px; background: var(--kaz); border-radius: 3px; overflow: hidden; box-shadow: 0 4px 24px rgba(0,175,202,.4); position: relative; display: flex; align-items: center; justify-content: center; align-self: flex-start; margin-top: 6px; }
+.flag-stripe { position: absolute; left: 0; top: 0; bottom: 0; width: 9px; background: repeating-linear-gradient(180deg,#FFC72C 0,#FFC72C 2px,transparent 2px,transparent 5px); }
+.flag-sun { width: 20px; height: 20px; background: #FFC72C; border-radius: 50%; margin-right: 4px; flex-shrink: 0; }
+section { padding-top: 24px; }
+.reg { background: var(--card); border: 1px solid var(--border); padding: 18px 14px; position: relative; overflow: hidden; }
+.reg::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; }
+.reg.rk::before { background: var(--kaz); } .reg.ry::before { background: var(--yel); }
+.rn { font-family: 'Fraunces', serif; font-weight: 700; font-size: 15px; color: var(--txt); margin-bottom: 3px; }
+.rt { font-size: 10px; letter-spacing: .09em; text-transform: uppercase; color: var(--sub); margin-bottom: 9px; }
+.rd { font-size: 12px; color: #888; line-height: 1.6; }
+.scard { background: var(--card); border: 1px solid var(--border); padding: 14px 12px; text-align: center; }
+.sc-lbl { font-size: 10px; color: var(--sub); letter-spacing: .07em; text-transform: uppercase; margin-bottom: 6px; }
+.sc-val { font-family: 'Fraunces', serif; font-weight: 700; font-size: 20px; line-height: 1; }
+.sc-note { font-size: 11px; color: var(--sub); margin-top: 4px; }
+.dl-row { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; }
+.dl-mo { font-size: 10px; letter-spacing: .05em; text-transform: uppercase; color: var(--sub); width: 24px; flex-shrink: 0; }
+.dl-tr { flex: 1; height: 18px; background: var(--track); border-radius: 3px; overflow: hidden; }
+.dl-bar { height: 100%; border-radius: 3px; display: flex; align-items: center; padding-left: 6px; }
+.dl-v { font-size: 9px; font-weight: 500; color: #fff; white-space: nowrap; overflow: hidden; }
+.note { font-size: 11px; color: var(--sub); margin-top: 10px; line-height: 1.6; }
+.divider { height: 1px; background: var(--border); margin: 14px 0; }
+.pc { background: var(--card); border: 1px solid var(--border); padding: 18px 14px; text-align: center; flex: 1; }
+.pc-loc { font-size: 10px; letter-spacing: .1em; text-transform: uppercase; color: var(--sub); margin-bottom: 6px; }
+.pc-price { font-family: 'Fraunces', serif; font-weight: 900; font-size: 22px; color: var(--kaz-l); margin-bottom: 3px; }
+.pc-note { font-size: 11px; color: var(--sub); }
+.tl-item { padding-left: 16px; border-left: 1px solid var(--kaz); margin-bottom: 14px; }
+.tl-yr { font-size: 10px; letter-spacing: .11em; color: var(--yel); text-transform: uppercase; margin-bottom: 2px; }
+.tl-tx { font-size: 12.5px; color: #888; line-height: 1.6; }
+footer { padding: 8px 0 0; margin-top: 8px; }
+footer p { font-size: 10.5px; color: #555; line-height: 1.7; }
+</style>
+</head>
+<body>
+<div class="dash">
+
+  <!-- HERO -->
+  <div class="hero">
+    <div>
+      <div class="eyebrow">Country Dashboard 2025</div>
+      <h1>Kazakh<em>stan</em></h1>
+      <p class="hero-sub">A comprehensive data snapshot — geography, climate, population, economy, employment, education and politics — sourced from NSC RK, World Bank, IMF, CIA World Factbook, and UN.</p>
+    </div>
+    <div class="flag">
+      <div class="flag-stripe"></div>
+      <div class="flag-sun"></div>
+      <svg width="18" height="10" viewBox="0 0 18 10" fill="none"><path d="M9 5 C6 1 1 2 0 4 C3 3 5 4 6.5 6 C7.5 7.5 8.5 8.5 9 9 C9.5 8.5 10.5 7.5 11.5 6 C13 4 15 3 18 4 C17 2 12 1 9 5Z" fill="#FFC72C"/></svg>
+    </div>
+  </div>
+
+  <!-- GEOGRAPHY -->
+  <section>
+    <div class="sec-hdr">
+      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 512 512" fill="#fff"><path d="M256 32L32 480h448L256 32zm0 77l163 291H93L256 109z"/></svg>
+      <span>Geography &amp; Landscape</span>
+    </div>
+    <div class="row g-1 mb-3">
+      <div class="col-6 col-md-4 d-flex"><div class="kpi ck"><div class="kpi-lbl">Total Area</div><div class="kpi-val">2,724,900 km²</div><div class="kpi-sub">9th largest country; 3rd in Asia</div></div></div>
+      <div class="col-6 col-md-4 d-flex"><div class="kpi ck"><div class="kpi-lbl">Mean Elevation</div><div class="kpi-val">387 m</div><div class="kpi-sub">Vast flat steppe; much lower than neighbours</div></div></div>
+      <div class="col-6 col-md-4 d-flex"><div class="kpi ca"><div class="kpi-lbl">Highest Peak</div><div class="kpi-val">7,010 m</div><div class="kpi-sub">Khan Tengri — northernmost 7,000 m peak on Earth</div></div></div>
+      <div class="col-6 col-md-4 d-flex"><div class="kpi cb"><div class="kpi-lbl">Lowest Point</div><div class="kpi-val">−132 m</div><div class="kpi-sub">Qauyndy Oyysy depression</div></div></div>
+      <div class="col-6 col-md-4 d-flex"><div class="kpi cd"><div class="kpi-lbl">Borders</div><div class="kpi-val">5 countries</div><div class="kpi-sub">Russia, China, Kyrgyzstan, Uzbekistan, Turkmenistan</div></div></div>
+      <div class="col-6 col-md-4 d-flex"><div class="kpi cb"><div class="kpi-lbl">Lake Balkhash</div><div class="kpi-val">22,000 km²</div><div class="kpi-sub">Half fresh, half saline — unique in the world</div></div></div>
+      <div class="col-6 col-md-4 d-flex"><div class="kpi cb"><div class="kpi-lbl">Caspian Coastline</div><div class="kpi-val">1,894 km</div><div class="kpi-sub">Major oil zone; landlocked sea access</div></div></div>
+    </div>
+    <div class="row gy-3 mb-3">
+      <div class="col-12 col-md-6 mb-3 mb-md-0">
+        <div class="panel">
+          <div class="ptitle"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 576 512" fill="#fff"><path d="M384 476.1L192 421.2V35.9L384 90.8v385.3zm32-1.2V88.4l127.1-42.4c5.7-1.9 11.9.3 15.3 5.3 1.7 2.5 2.6 5.5 2.6 8.5V440c0 6.1-3.9 11.5-9.7 13.4L416 474.9zM15.7 56.4L160 10.7V98.6l-128 43.4V69c0-6.1 3.9-11.5 9.7-13.4zM192 421.2L32 474.9V138.7l160-54.2v336.7z"/></svg> Major Terrain Zones</div>
+          <div class="br"><div class="bh"><span class="bl">Steppe (north &amp; centre)</span><span class="bv">~2,000,000 km²</span></div><div class="bt"><div class="bf bfa" style="width:100%"></div></div></div>
+          <div class="br"><div class="bh"><span class="bl">Desert &amp; semi-desert (south)</span><span class="bv">~900,000 km²</span></div><div class="bt"><div class="bf bfd" style="width:45%"></div></div></div>
+          <div class="br"><div class="bh"><span class="bl">Mountains (east &amp; SE)</span><span class="bv">~260,000 km²</span></div><div class="bt"><div class="bf bfk" style="width:13%"></div></div></div>
+          <div class="br"><div class="bh"><span class="bl">Agricultural land</span><span class="bv">77.4%</span></div><div class="bt"><div class="bf bfa" style="width:77%"></div></div></div>
+          <div class="br"><div class="bh"><span class="bl">Forest cover</span><span class="bv">1.2%</span></div><div class="bt"><div class="bf bfb" style="width:12%"></div></div></div>
+        </div>
+      </div>
+      <div class="col-12 col-md-6">
+        <div class="panel">
+          <div class="ptitle"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 576 512" fill="#fff"><path d="M269.5 69.9c11.1-7.9 25.9-7.9 37 0C329 85.4 356.5 96 384 96c26.9 0 55.4-10.1 80.4-25.1 16-9.7 36.4-8.1 50.7 4.2s18.2 31.6 11.2 48.6C520.1 140 516 159 516 178c0 49.7 20 87.5 38.2 106.9l.4.4c17 18 22.4 44.5 13.4 67.8S536.6 391 511.4 391H64c-25.2 0-47.6-15.3-56.6-38.5s-3.6-49.8 13.4-67.8l.4-.4C39 265.5 59 227.7 59 178c0-18.4-3.4-36.3-9.9-52.4-7-17-2.9-36.3 11.2-48.6S105 62.9 121 72.9C146 87.9 173.1 96 200 96c27.5 0 55-10.6 77.5-26.1z"/></svg> Key Water Bodies</div>
+          <table class="tbl"><tbody>
+            <tr><td>Lake Balkhash (half-fresh / half-salt)</td><td>22,000 km²</td></tr>
+            <tr><td>Caspian Sea coastline</td><td>1,894 km</td></tr>
+            <tr><td>Lake Zaysan</td><td>1,800 km²</td></tr>
+            <tr><td>Irtysh River (longest in KZ)</td><td>4,248 km total</td></tr>
+            <tr><td>Syr Darya (crosses south)</td><td>2,212 km</td></tr>
+            <tr><td>Aral Sea remnant (KZ portion)</td><td>~3,300 km²</td></tr>
+          </tbody></table>
+        </div>
+      </div>
+    </div>
+    <div class="row g-1 mb-3">
+      <div class="col-6 col-md-3"><div class="reg rk"><div class="rn">Astana &amp; Centre</div><div class="rt">Capital · steppe core</div><div class="rd">Purpose-built capital. Futuristic skyline. Financial hub. Extreme continental climate.</div></div></div>
+      <div class="col-6 col-md-3"><div class="reg ry"><div class="rn">Almaty &amp; South-East</div><div class="rt">Commercial hub · mountains</div><div class="rd">Largest city (2.3M). Foot of Tian Shan at 800 m. Financial &amp; cultural centre.</div></div></div>
+      <div class="col-6 col-md-3"><div class="reg rk"><div class="rn">West (Atyrau / Aktau)</div><div class="rt">Caspian · oil region</div><div class="rd">Tengiz and Kashagan oilfields. Caspian coast. Kazakhstan's energy gateway.</div></div></div>
+      <div class="col-6 col-md-3"><div class="reg ry"><div class="rn">North &amp; East Steppe</div><div class="rt">Grain belt · mining</div><div class="rd">Wheat production. Karaganda coal basin. Baikonur Cosmodrome leased to Russia.</div></div></div>
+    </div>
+  </section>
+
+  <!-- CLIMATE -->
+  <section>
+    <div class="sec-hdr">
+      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 640 512" fill="#fff"><path d="M294.2 1.2c5.1 2.1 8.7 6.7 9.6 12.1l18.4 107.5 107.5 18.4c5.4.9 10 4.5 12.1 9.6s1.5 10.9-1.6 15.4l-62.3 90.3 46.5 60.7c3.1 4.5 3.7 10.2 1.6 15.2s-6.6 8.6-11.9 9.6L301.7 358l-19.9 107.9c-1 5.3-4.6 9.8-9.6 11.9s-10.7 1.5-15.2-1.6L167.7 414l-90.4 62.2c-4.5 3.1-10.2 3.7-15.2 1.6s-8.6-6.6-9.6-11.9L33.6 358 1.2 294.2c-2.1-5-1.5-10.7 1.6-15.2L65 218.7 2.8 128.4c-3.1-4.5-3.7-10.2-1.6-15.4s6.7-8.7 12.1-9.6L121.8 85 140.2 13c1-5.4 4.5-10 9.6-12.1S160.5-.6 165 2.5L256 64.9 347 2.5c4.5-3.1 10.1-3.6 15.2-1.3z"/></svg>
+      <span>Climate: Weather, Daylight &amp; Rainfall</span>
+    </div>
+    <div class="row g-1 mb-3">
+      <div class="col-6 col-md-4 d-flex"><div class="kpi ca"><div class="kpi-lbl">Avg Annual Temp (Astana)</div><div class="kpi-val">3.5°C</div><div class="kpi-sub">One of the coldest capitals in the world</div></div></div>
+      <div class="col-6 col-md-4 d-flex"><div class="kpi ck"><div class="kpi-lbl">Record High</div><div class="kpi-val">49°C</div><div class="kpi-sub">Southern desert — Turkestan region summer</div></div></div>
+      <div class="col-6 col-md-4 d-flex"><div class="kpi cb"><div class="kpi-lbl">Record Low</div><div class="kpi-val">−57°C</div><div class="kpi-sub">Northern steppe winter extremes</div></div></div>
+      <div class="col-6 col-md-4 d-flex"><div class="kpi cb"><div class="kpi-lbl">Annual Rainfall (Astana)</div><div class="kpi-val">316 mm</div><div class="kpi-sub">Semi-arid; ~75% of land arid or semi-arid</div></div></div>
+      <div class="col-6 col-md-4 d-flex"><div class="kpi cd"><div class="kpi-lbl">Climate type</div><div class="kpi-val">BSk / Dfb</div><div class="kpi-sub">Cold steppe north; desert south; mountain east</div></div></div>
+      <div class="col-6 col-md-4 d-flex"><div class="kpi ca"><div class="kpi-lbl">Almaty summer avg</div><div class="kpi-val">24.5°C</div><div class="kpi-sub">Milder at 800 m altitude; can drop to −30°C in winter</div></div></div>
+      <div class="col-6 col-md-4 d-flex"><div class="kpi ca"><div class="kpi-lbl">Astana summer avg</div><div class="kpi-val">21°C</div><div class="kpi-sub">Short hot summers; winters average −14°C</div></div></div>
+      <div class="col-6 col-md-4 d-flex"><div class="scard"><div class="sc-lbl">Winter Dec–Feb</div><div class="sc-val" style="color:#5ba8ff">−20–0°C</div><div class="sc-note">Bitterly cold; blizzards; ski near Almaty</div></div></div>
+      <div class="col-6 col-md-4 d-flex"><div class="scard"><div class="sc-lbl">Spring Mar–May</div><div class="sc-val" style="color:#33c8df">0–20°C</div><div class="sc-note">Rapid warming; steppe blooms; wettest season</div></div></div>
+      <div class="col-6 col-md-4 d-flex"><div class="scard"><div class="sc-lbl">Summer Jun–Aug</div><div class="sc-val" style="color:#FFC72C">25–40°C</div><div class="sc-note">Hot &amp; dry in steppe; cooler in mountains</div></div></div>
+      <div class="col-6 col-md-4 d-flex"><div class="scard"><div class="sc-lbl">Autumn Sep–Nov</div><div class="sc-val" style="color:#ccc">5–20°C</div><div class="sc-note">Short golden autumn; rapid cooling from October</div></div></div>
+    </div>
+    <div class="row gy-3 mb-3">
+      <div class="col-12 col-md-6 mb-3 mb-md-0">
+        <div class="panel">
+          <div class="ptitle"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 512 512" fill="#fff"><path d="M361.5 1.2c5 2.1 8.6 6.6 9.6 11.9L391 121l107.9 19.8c5.3 1 9.8 4.6 11.9 9.6s1.5 10.7-1.6 15.2L446.9 256l62.3 90.3c3.1 4.5 3.7 10.2 1.6 15.2s-6.6 8.6-11.9 9.6L391 391 371.1 498.9c-1 5.3-4.6 9.8-9.6 11.9s-10.7 1.5-15.2-1.6L256 446.9l-90.3 62.3c-4.5 3.1-10.2 3.7-15.2 1.6s-8.6-6.6-9.6-11.9L121 391 13.1 371.1c-5.3-1-9.8-4.6-11.9-9.6s-1.5-10.7 1.6-15.2L65.1 256 2.8 165.7c-3.1-4.5-3.7-10.2-1.6-15.2s6.6-8.6 11.9-9.6L121 121 140.9 13.1c1-5.3 4.6-9.8 9.6-11.9s10.7-1.5 15.2 1.6L256 65.1 346.3 2.8c4.5-3.1 10.2-3.7 15.2-1.6zM160 256a96 96 0 1 1 192 0 96 96 0 1 1-192 0z"/></svg> Daylight Hours — Astana (51°N)</div>
+          <div class="dl-row"><span class="dl-mo">Jan</span><div class="dl-tr"><div class="dl-bar" style="width:32%;background:var(--blu)"><span class="dl-v">8h 18m</span></div></div></div>
+          <div class="dl-row"><span class="dl-mo">Feb</span><div class="dl-tr"><div class="dl-bar" style="width:41%;background:var(--blu)"><span class="dl-v">10h 00m</span></div></div></div>
+          <div class="dl-row"><span class="dl-mo">Mar</span><div class="dl-tr"><div class="dl-bar" style="width:54%;background:var(--kaz)"><span class="dl-v">11h 54m</span></div></div></div>
+          <div class="dl-row"><span class="dl-mo">Apr</span><div class="dl-tr"><div class="dl-bar" style="width:68%;background:var(--kaz)"><span class="dl-v">13h 44m</span></div></div></div>
+          <div class="dl-row"><span class="dl-mo">May</span><div class="dl-tr"><div class="dl-bar" style="width:80%;background:var(--kaz)"><span class="dl-v">15h 16m</span></div></div></div>
+          <div class="dl-row"><span class="dl-mo">Jun</span><div class="dl-tr"><div class="dl-bar" style="width:100%;background:var(--yel)"><span class="dl-v" style="color:#000">16h 18m ★</span></div></div></div>
+          <div class="dl-row"><span class="dl-mo">Jul</span><div class="dl-tr"><div class="dl-bar" style="width:95%;background:var(--kaz)"><span class="dl-v">15h 52m</span></div></div></div>
+          <div class="dl-row"><span class="dl-mo">Aug</span><div class="dl-tr"><div class="dl-bar" style="width:79%;background:var(--kaz)"><span class="dl-v">14h 10m</span></div></div></div>
+          <div class="dl-row"><span class="dl-mo">Sep</span><div class="dl-tr"><div class="dl-bar" style="width:63%;background:var(--kaz)"><span class="dl-v">12h 08m</span></div></div></div>
+          <div class="dl-row"><span class="dl-mo">Oct</span><div class="dl-tr"><div class="dl-bar" style="width:47%;background:var(--kaz)"><span class="dl-v">10h 10m</span></div></div></div>
+          <div class="dl-row"><span class="dl-mo">Nov</span><div class="dl-tr"><div class="dl-bar" style="width:34%;background:var(--blu)"><span class="dl-v">8h 38m</span></div></div></div>
+          <div class="dl-row"><span class="dl-mo">Dec</span><div class="dl-tr"><div class="dl-bar" style="width:27%;background:var(--blu)"><span class="dl-v">7h 42m ★</span></div></div></div>
+          <p class="note">★ Summer solstice <strong style="color:var(--yel)">16h 18m</strong> · Winter solstice <strong style="color:var(--blu-l)">7h 42m</strong></p>
+        </div>
+      </div>
+      <div class="col-12 col-md-6">
+        <div class="panel">
+          <div class="ptitle"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 512 512" fill="#fff"><path d="M96 320c-53 0-96-43-96-96 0-42.5 27.6-78.6 65.9-91.2C64.7 126.1 64 119.1 64 112 64 50.1 114.1 0 176 0c43.1 0 80.5 24.3 99.8 60 14.7-17.1 36.5-28 60.2-28 44.2 0 80 35.8 80 80 0 5.5-.6 10.8-1.6 16 .5 0 1.1 0 1.6 0 53 0 96 43 96 96s-43 96-96 96H96zm-8 96c0-13.3 10.7-24 24-24s24 10.7 24 24v80c0 13.3-10.7 24-24 24s-24-10.7-24-24v-80zm120-24c13.3 0 24 10.7 24 24v80c0 13.3-10.7 24-24 24s-24-10.7-24-24v-80c0-13.3 10.7-24 24-24zm96 24c0-13.3 10.7-24 24-24s24 10.7 24 24v80c0 13.3-10.7 24-24 24s-24-10.7-24-24v-80zm120-24c13.3 0 24 10.7 24 24v80c0 13.3-10.7 24-24 24s-24-10.7-24-24v-80c0-13.3 10.7-24 24-24z"/></svg> Rainfall by Region</div>
+          <div class="br"><div class="bh"><span class="bl">Tian Shan mountains (Almaty)</span><span class="bv">675 mm</span></div><div class="bt"><div class="bf bfk" style="width:100%"></div></div></div>
+          <div class="br"><div class="bh"><span class="bl">North steppe (Petropavl)</span><span class="bv">350 mm</span></div><div class="bt"><div class="bf bfa" style="width:52%"></div></div></div>
+          <div class="br"><div class="bh"><span class="bl">Astana (northern steppe)</span><span class="bv">316 mm</span></div><div class="bt"><div class="bf bfb" style="width:47%"></div></div></div>
+          <div class="br"><div class="bh"><span class="bl">Caspian coast (Aktau)</span><span class="bv">150 mm</span></div><div class="bt"><div class="bf bfb" style="width:22%"></div></div></div>
+          <div class="br"><div class="bh"><span class="bl">Southern desert (Kyzylorda)</span><span class="bv">~100 mm</span></div><div class="bt"><div class="bf bfd" style="width:15%"></div></div></div>
+          <div class="divider"></div>
+          <div class="br"><div class="bh"><span class="bl">May–June (wettest)</span><span class="bv">40–50 mm</span></div><div class="bt"><div class="bf bfk" style="width:100%"></div></div></div>
+          <div class="br"><div class="bh"><span class="bl">July–August</span><span class="bv">25–35 mm</span></div><div class="bt"><div class="bf bfa" style="width:68%"></div></div></div>
+          <div class="br"><div class="bh"><span class="bl">Jan–Feb (driest)</span><span class="bv">10–15 mm</span></div><div class="bt"><div class="bf bfd" style="width:22%"></div></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- POPULATION -->
+  <section>
+    <div class="sec-hdr">
+      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 640 512" fill="#fff"><path d="M72 88a56 56 0 1 1 112 0A56 56 0 1 1 72 88zM64 245.7C54 256.9 48 271.8 48 288s6 31.1 16 42.3V245.7zm144.4-49.3C178.7 222.7 160 261.2 160 304c0 34.3 12 65.8 32 90.5V416c0 17.7-14.3 32-32 32H96c-17.7 0-32-14.3-32-32V389.2C26.2 371.2 0 332.7 0 288c0-61.9 50.1-112 112-112c29.3 0 56 11.3 75.9 29.7zM320 32a64 64 0 1 1 0 128A64 64 0 1 1 320 32zM448 304c0 44.7-26.2 83.2-64 101.2V448c0 17.7-14.3 32-32 32H288c-17.7 0-32-14.3-32-32V405.2c-37.8-18-64-56.5-64-101.2c0-61.9 50.1-112 112-112h32c61.9 0 112 50.1 112 112z"/></svg>
+      <span>Population &amp; Demographics</span>
+    </div>
+    <div class="row g-1 mb-3">
+      <div class="col-6 col-md-4 d-flex"><div class="kpi ck"><div class="kpi-lbl">Population (2025)</div><div class="kpi-val">20.5M</div><div class="kpi-sub">Steady growth; +6M since independence in 1991</div></div></div>
+      <div class="col-6 col-md-4 d-flex"><div class="kpi ck"><div class="kpi-lbl">Urban Population</div><div class="kpi-val">58.2%</div><div class="kpi-sub">Rapidly urbanising; Almaty &amp; Astana dominate</div></div></div>
+      <div class="col-6 col-md-4 d-flex"><div class="kpi ca"><div class="kpi-lbl">Median Age</div><div class="kpi-val">30.6 yrs</div><div class="kpi-sub">Relatively young; 29.5% under 14</div></div></div>
+      <div class="col-6 col-md-4 d-flex"><div class="kpi ca"><div class="kpi-lbl">Population Density</div><div class="kpi-val">7.6 /km2</div><div class="kpi-sub">One of the most sparsely populated countries</div></div></div>
+      <div class="col-6 col-md-4 d-flex"><div class="kpi cb"><div class="kpi-lbl">Life Expectancy</div><div class="kpi-val">73.3 yrs</div><div class="kpi-sub">Women 77.9 - Men 69.0 (2024)</div></div></div>
+      <div class="col-6 col-md-4 d-flex"><div class="kpi cd"><div class="kpi-lbl">Fertility Rate</div><div class="kpi-val">2.8</div><div class="kpi-sub">Above replacement level; birth rate 17.2 per 1000</div></div></div>
+    </div>
+    <div class="row gy-3 mb-3">
+      <div class="col-12 col-md-6 mb-3 mb-md-0">
+        <div class="panel">
+          <div class="ptitle"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 512 512" fill="#fff"><path d="M64 64c0-17.7-14.3-32-32-32S0 46.3 0 64V400c0 44.2 35.8 80 80 80H480c17.7 0 32-14.3 32-32s-14.3-32-32-32H80c-8.8 0-16-7.2-16-16V64zm406.6 86.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L320 210.7l-57.4-57.4c-12.5-12.5-32.8-12.5-45.3 0l-112 112c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L240 221.3l57.4 57.4c12.5 12.5 32.8 12.5 45.3 0l128-128z"/></svg> Population Growth</div>
+          <div class="br"><div class="bh"><span class="bl">1991 (independence)</span><span class="bv">16.5M</span></div><div class="bt"><div class="bf bfd" style="width:80%"></div></div></div>
+          <div class="br"><div class="bh"><span class="bl">1999 (post-exodus low)</span><span class="bv">14.9M</span></div><div class="bt"><div class="bf bfd" style="width:73%"></div></div></div>
+          <div class="br"><div class="bh"><span class="bl">2010</span><span class="bv">16.3M</span></div><div class="bt"><div class="bf bfa" style="width:79%"></div></div></div>
+          <div class="br"><div class="bh"><span class="bl">2020</span><span class="bv">19.0M</span></div><div class="bt"><div class="bf bfk" style="width:93%"></div></div></div>
+          <div class="br"><div class="bh"><span class="bl">2025</span><span class="bv">20.5M</span></div><div class="bt"><div class="bf bfk" style="width:100%"></div></div></div>
+        </div>
+      </div>
+      <div class="col-12 col-md-6">
+        <div class="panel">
+          <div class="ptitle"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 512 512" fill="#fff"><path d="M240.1 4.2c9.8-5.6 21.9-5.6 31.8 0l208 120c9.2 5.3 14.1 15.6 12.2 26.1s-10.4 18.5-21 18.5h-24.9L448 464H480c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H64L66.7 168.8H41.7c-10.6 0-19.2-7.9-21-18.5s3-20.8 12.2-26.1l208-120z"/></svg> Largest Cities (2025)</div>
+          <div class="br"><div class="bh"><span class="bl">Almaty (commercial capital)</span><span class="bv">2,348,000</span></div><div class="bt"><div class="bf bfk" style="width:100%"></div></div></div>
+          <div class="br"><div class="bh"><span class="bl">Astana (capital)</span><span class="bv">1,622,000</span></div><div class="bt"><div class="bf bfk" style="width:69%"></div></div></div>
+          <div class="br"><div class="bh"><span class="bl">Shymkent</span><span class="bv">1,200,000</span></div><div class="bt"><div class="bf bfa" style="width:51%"></div></div></div>
+          <div class="br"><div class="bh"><span class="bl">Aktobe</span><span class="bv">530,000</span></div><div class="bt"><div class="bf bfd" style="width:23%"></div></div></div>
+          <div class="br"><div class="bh"><span class="bl">Karaganda</span><span class="bv">500,000</span></div><div class="bt"><div class="bf bfd" style="width:21%"></div></div></div>
+        </div>
+      </div>
+    </div>
+    <div class="row gy-3 mb-3">
+      <div class="col-12 col-md-6 mb-3 mb-md-0">
+        <div class="panel">
+          <div class="ptitle"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 640 512" fill="#fff"><path d="M72 88a56 56 0 1 1 112 0A56 56 0 1 1 72 88zM64 245.7C54 256.9 48 271.8 48 288s6 31.1 16 42.3V245.7zm144.4-49.3C178.7 222.7 160 261.2 160 304c0 34.3 12 65.8 32 90.5V416c0 17.7-14.3 32-32 32H96c-17.7 0-32-14.3-32-32V389.2C26.2 371.2 0 332.7 0 288c0-61.9 50.1-112 112-112c29.3 0 56 11.3 75.9 29.7zM320 32a64 64 0 1 1 0 128A64 64 0 1 1 320 32zM448 304c0 44.7-26.2 83.2-64 101.2V448c0 17.7-14.3 32-32 32H288c-17.7 0-32-14.3-32-32V405.2c-37.8-18-64-56.5-64-101.2c0-61.9 50.1-112 112-112h32c61.9 0 112 50.1 112 112z"/></svg> Ethnic Composition (2025)</div>
+          <div class="br"><div class="bh"><span class="bl">Kazakh</span><span class="bv">71.5%</span></div><div class="bt"><div class="bf bfk" style="width:100%"></div></div></div>
+          <div class="br"><div class="bh"><span class="bl">Russian</span><span class="bv">14.4%</span></div><div class="bt"><div class="bf bfb" style="width:20%"></div></div></div>
+          <div class="br"><div class="bh"><span class="bl">Uzbek</span><span class="bv">3.4%</span></div><div class="bt"><div class="bf bfa" style="width:5%"></div></div></div>
+          <div class="br"><div class="bh"><span class="bl">Uyghur</span><span class="bv">1.5%</span></div><div class="bt"><div class="bf bfd" style="width:2%"></div></div></div>
+          <div class="br"><div class="bh"><span class="bl">Other (130+ groups)</span><span class="bv">9.2%</span></div><div class="bt"><div class="bf bfd" style="width:13%"></div></div></div>
+        </div>
+      </div>
+      <div class="col-12 col-md-6">
+        <div class="panel">
+          <div class="ptitle"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 512 512" fill="#fff"><path d="M240.1 4.2c9.8-5.6 21.9-5.6 31.8 0l208 120c9.2 5.3 14.1 15.6 12.2 26.1s-10.4 18.5-21 18.5h-24.9L448 464H480c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H64L66.7 168.8H41.7c-10.6 0-19.2-7.9-21-18.5s3-20.8 12.2-26.1l208-120z"/></svg> Religion &amp; Language</div>
+          <table class="tbl"><tbody>
+            <tr><td>Islam (predominantly Sunni)</td><td>69.3%</td></tr>
+            <tr><td>Christianity (Orthodox majority)</td><td>17.2%</td></tr>
+            <tr><td>No religion</td><td>2.3%</td></tr>
+            <tr><td>Official language</td><td>Kazakh</td></tr>
+            <tr><td>Co-official / widely used</td><td>Russian</td></tr>
+            <tr><td>Alphabet transition</td><td>Cyrillic to Latin</td></tr>
+            <tr><td>Recognised ethnic groups</td><td>130+</td></tr>
+          </tbody></table>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ECONOMY -->
+  <section>
+    <div class="sec-hdr">
+      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 512 512" fill="#fff"><path d="M64 64c0-17.7-14.3-32-32-32S0 46.3 0 64V400c0 44.2 35.8 80 80 80H480c17.7 0 32-14.3 32-32s-14.3-32-32-32H80c-8.8 0-16-7.2-16-16V64zm406.6 86.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L320 210.7l-57.4-57.4c-12.5-12.5-32.8-12.5-45.3 0l-112 112c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L240 221.3l57.4 57.4c12.5 12.5 32.8 12.5 45.3 0l128-128z"/></svg>
+      <span>Economy &amp; Finance</span>
+    </div>
+    <div class="row g-1 mb-3">
+      <div class="col-6 col-md-4 d-flex"><div class="kpi ck"><div class="kpi-lbl">GDP Nominal (2025)</div><div class="kpi-val">~$330B</div><div class="kpi-sub">Largest economy in Central Asia</div></div></div>
+      <div class="col-6 col-md-4 d-flex"><div class="kpi ck"><div class="kpi-lbl">GDP per Capita</div><div class="kpi-val">$16,100</div><div class="kpi-sub">Upper-middle income; rank ~67th globally</div></div></div>
+      <div class="col-6 col-md-4 d-flex"><div class="kpi ca"><div class="kpi-lbl">GDP Growth (2025)</div><div class="kpi-val">~5.6%</div><div class="kpi-sub">Record pace; driven by manufacturing &amp; services</div></div></div>
+      <div class="col-6 col-md-4 d-flex"><div class="kpi ca"><div class="kpi-lbl">GDP PPP (2025)</div><div class="kpi-val">$993B</div><div class="kpi-sub">36th globally by PPP</div></div></div>
+      <div class="col-6 col-md-4 d-flex"><div class="kpi cb"><div class="kpi-lbl">Inflation CPI (2025)</div><div class="kpi-val">~9%</div><div class="kpi-sub">Declining from 2022 peak of 21%</div></div></div>
+      <div class="col-6 col-md-4 d-flex"><div class="kpi cd"><div class="kpi-lbl">Currency</div><div class="kpi-val">KZT</div><div class="kpi-sub">~470 KZT = $1 (2025)</div></div></div>
+    </div>
+    <div class="row gy-3 mb-3">
+      <div class="col-12 col-md-6 mb-3 mb-md-0">
+        <div class="panel">
+          <div class="ptitle"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 512 512" fill="#fff"><path d="M64 64c0-17.7-14.3-32-32-32S0 46.3 0 64V400c0 44.2 35.8 80 80 80H480c17.7 0 32-14.3 32-32s-14.3-32-32-32H80c-8.8 0-16-7.2-16-16V64zm406.6 86.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L320 210.7l-57.4-57.4c-12.5-12.5-32.8-12.5-45.3 0l-112 112c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L240 221.3l57.4 57.4c12.5 12.5 32.8 12.5 45.3 0l128-128z"/></svg> GDP by Sector &amp; Major Exports</div>
+          <div class="br"><div class="bh"><span class="bl">Services</span><span class="bv">61.2%</span></div><div class="bt"><div class="bf bfk" style="width:100%"></div></div></div>
+          <div class="br"><div class="bh"><span class="bl">Industry</span><span class="bv">34.1%</span></div><div class="bt"><div class="bf bfa" style="width:56%"></div></div></div>
+          <div class="br"><div class="bh"><span class="bl">Agriculture</span><span class="bv">4.7%</span></div><div class="bt"><div class="bf bfd" style="width:8%"></div></div></div>
+          <div class="divider"></div>
+          <div class="br"><div class="bh"><span class="bl">Crude oil &amp; petroleum</span><span class="bv">~60% of exports</span></div><div class="bt"><div class="bf bfk" style="width:100%"></div></div></div>
+          <div class="br"><div class="bh"><span class="bl">Copper &amp; ferroalloys</span><span class="bv">~9%</span></div><div class="bt"><div class="bf bfa" style="width:15%"></div></div></div>
+          <div class="br"><div class="bh"><span class="bl">Uranium (world largest producer)</span><span class="bv">~5%</span></div><div class="bt"><div class="bf bfa" style="width:8%"></div></div></div>
+          <div class="br"><div class="bh"><span class="bl">Wheat &amp; grain</span><span class="bv">~4%</span></div><div class="bt"><div class="bf bfd" style="width:7%"></div></div></div>
+        </div>
+      </div>
+      <div class="col-12 col-md-6">
+        <div class="panel">
+          <div class="ptitle"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 512 512" fill="#fff"><path d="M184 48H328c4.4 0 8 3.6 8 8V96H176V56c0-4.4 3.6-8 8-8zm-56 8V96H64C28.7 96 0 124.7 0 160v96H192 320 512V160c0-35.3-28.7-64-64-64H384V56c0-30.9-25.1-56-56-56H184c-30.9 0-56 25.1-56 56zM512 288H320v32c0 17.7-14.3 32-32 32H224c-17.7 0-32-14.3-32-32V288H0V416c0 35.3 28.7 64 64 64H448c35.3 0 64-28.7 64-64V288z"/></svg> Key Economic Indicators</div>
+          <table class="tbl"><tbody>
+            <tr><td>World largest uranium producer</td><td>~43% global share</td></tr>
+            <tr><td>Oil reserves (world rank)</td><td>12th largest</td></tr>
+            <tr><td>Natural gas reserves</td><td>16th largest</td></tr>
+            <tr><td>Wheat harvest 2024</td><td>~27M tonnes (record)</td></tr>
+            <tr><td>Gini coefficient</td><td>29.2 (low)</td></tr>
+            <tr><td>Poverty rate</td><td>~2.5%</td></tr>
+            <tr><td>FDI (2024)</td><td>~$22B</td></tr>
+          </tbody></table>
+        </div>
+      </div>
+    </div>
+    <div class="row g-1 mb-3">
+      <div class="col-12 col-md-4 d-flex"><div class="pc"><div class="pc-loc">Almaty City Centre</div><div class="pc-price">$2,500/m2</div><div class="pc-note">Premium apartments; significant price rise post-2022</div></div></div>
+      <div class="col-12 col-md-4 d-flex"><div class="pc"><div class="pc-loc">Astana New Districts</div><div class="pc-price">$1,400/m2</div><div class="pc-note">Government-backed development; growing demand</div></div></div>
+      <div class="col-12 col-md-4 d-flex"><div class="pc"><div class="pc-loc">Regional Cities</div><div class="pc-price">$700/m2</div><div class="pc-note">Shymkent, Karaganda, Aktobe average</div></div></div>
+    </div>
+  </section>
+
+  <!-- EMPLOYMENT -->
+  <section>
+    <div class="sec-hdr">
+      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 512 512" fill="#fff"><path d="M184 48H328c4.4 0 8 3.6 8 8V96H176V56c0-4.4 3.6-8 8-8zm-56 8V96H64C28.7 96 0 124.7 0 160v96H192 320 512V160c0-35.3-28.7-64-64-64H384V56c0-30.9-25.1-56-56-56H184c-30.9 0-56 25.1-56 56zM512 288H320v32c0 17.7-14.3 32-32 32H224c-17.7 0-32-14.3-32-32V288H0V416c0 35.3 28.7 64 64 64H448c35.3 0 64-28.7 64-64V288z"/></svg>
+      <span>Employment &amp; Wages</span>
+    </div>
+    <div class="row g-1 mb-3">
+      <div class="col-6 col-md-4 d-flex"><div class="kpi ck"><div class="kpi-lbl">Avg Monthly Wage (2025)</div><div class="kpi-val">~$915</div><div class="kpi-sub">~429,000 KZT; up ~10% YoY</div></div></div>
+      <div class="col-6 col-md-4 d-flex"><div class="kpi ca"><div class="kpi-lbl">Labour Force</div><div class="kpi-val">9.3M</div><div class="kpi-sub">95.4% employment rate (2025)</div></div></div>
+      <div class="col-6 col-md-4 d-flex"><div class="kpi cd"><div class="kpi-lbl">Unemployment</div><div class="kpi-val">4.6%</div><div class="kpi-sub">~446K persons; low by regional standards</div></div></div>
+      <div class="col-6 col-md-4 d-flex"><div class="kpi cd"><div class="kpi-lbl">Youth Unemployment</div><div class="kpi-val">~8%</div><div class="kpi-sub">15-24 age group; urban-rural divide significant</div></div></div>
+      <div class="col-6 col-md-4 d-flex"><div class="kpi cd"><div class="kpi-lbl">Min. Wage (2025)</div><div class="kpi-val">85,000 KZT</div><div class="kpi-sub">~$180/month</div></div></div>
+      <div class="col-6 col-md-4 d-flex"><div class="kpi cb"><div class="kpi-lbl">Labour Participation</div><div class="kpi-val">~72%</div><div class="kpi-sub">Women 65% vs men 79%</div></div></div>
+    </div>
+    <div class="row gy-3 mb-3">
+      <div class="col-12 col-md-6 mb-3 mb-md-0">
+        <div class="panel">
+          <div class="ptitle"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 512 512" fill="#fff"><path d="M64 64c0-17.7-14.3-32-32-32S0 46.3 0 64V400c0 44.2 35.8 80 80 80H480c17.7 0 32-14.3 32-32s-14.3-32-32-32H80c-8.8 0-16-7.2-16-16V64zm406.6 86.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L320 210.7l-57.4-57.4c-12.5-12.5-32.8-12.5-45.3 0l-112 112c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L240 221.3l57.4 57.4c12.5 12.5 32.8 12.5 45.3 0l128-128z"/></svg> Wages by Sector (avg monthly KZT)</div>
+          <div class="br"><div class="bh"><span class="bl">Financial services &amp; insurance</span><span class="bv">~850,000</span></div><div class="bt"><div class="bf bfk" style="width:100%"></div></div></div>
+          <div class="br"><div class="bh"><span class="bl">Mining &amp; extraction</span><span class="bv">~780,000</span></div><div class="bt"><div class="bf bfk" style="width:92%"></div></div></div>
+          <div class="br"><div class="bh"><span class="bl">IT &amp; communications</span><span class="bv">~650,000</span></div><div class="bt"><div class="bf bfa" style="width:76%"></div></div></div>
+          <div class="br"><div class="bh"><span class="bl">Manufacturing</span><span class="bv">~535,000</span></div><div class="bt"><div class="bf bfa" style="width:63%"></div></div></div>
+          <div class="br"><div class="bh"><span class="bl">National average</span><span class="bv">~429,000</span></div><div class="bt"><div class="bf bfd" style="width:50%"></div></div></div>
+          <div class="br"><div class="bh"><span class="bl">Education</span><span class="bv">~270,000</span></div><div class="bt"><div class="bf bfd" style="width:32%"></div></div></div>
+          <div class="br"><div class="bh"><span class="bl">Agriculture</span><span class="bv">~220,000</span></div><div class="bt"><div class="bf bfd" style="width:26%"></div></div></div>
+        </div>
+      </div>
+      <div class="col-12 col-md-6">
+        <div class="panel">
+          <div class="ptitle"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 512 512" fill="#fff"><path d="M184 48H328c4.4 0 8 3.6 8 8V96H176V56c0-4.4 3.6-8 8-8zm-56 8V96H64C28.7 96 0 124.7 0 160v96H192 320 512V160c0-35.3-28.7-64-64-64H384V56c0-30.9-25.1-56-56-56H184c-30.9 0-56 25.1-56 56zM512 288H320v32c0 17.7-14.3 32-32 32H224c-17.7 0-32-14.3-32-32V288H0V416c0 35.3 28.7 64 64 64H448c35.3 0 64-28.7 64-64V288z"/></svg> Employment by Sector</div>
+          <table class="tbl"><tbody>
+            <tr><td>Services (trade, transport, finance)</td><td>~58%</td></tr>
+            <tr><td>Industry &amp; manufacturing</td><td>~20%</td></tr>
+            <tr><td>Agriculture &amp; forestry</td><td>~15%</td></tr>
+            <tr><td>Construction</td><td>~7%</td></tr>
+            <tr><td>Avg household income per capita</td><td>350,382 KZT/mo</td></tr>
+            <tr><td>Labour force participation rate</td><td>~72%</td></tr>
+          </tbody></table>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EDUCATION -->
+  <section>
+    <div class="sec-hdr">
+      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 640 512" fill="#fff"><path d="M320 32c-8.1 0-16.1 1.4-23.7 4.1L25 155.5c-12.1 4.7-20 16.1-20 29.1s7.9 24.4 20 29.1l272.3 119.3c7.6 2.7 15.6 4.1 23.7 4.1s16.1-1.4 23.7-4.1L571.4 241c16.6-6.3 16.6-29.7 0-36L349.7 36.1c-7.6-2.7-15.6-4.1-23.7-4.1zM128 254.7V358c0 20.5 13.7 38.5 33.2 44.2l112.1 32c10.5 3 21.5 4.5 32.7 4.5s22.2-1.5 32.7-4.5l112.1-32c19.5-5.7 33.2-23.7 33.2-44.2V254.7L346.7 308c-8.3 3-17.3 4.5-26.7 4.5s-18.4-1.5-26.7-4.5L128 254.7z"/></svg>
+      <span>Education &amp; Human Development</span>
+    </div>
+    <div class="row g-1 mb-3">
+      <div class="col-6 col-md-4 d-flex"><div class="kpi ck"><div class="kpi-lbl">Literacy Rate</div><div class="kpi-val">99.8%</div><div class="kpi-sub">Among highest in Central Asia - Soviet legacy</div></div></div>
+      <div class="col-6 col-md-4 d-flex"><div class="kpi ca"><div class="kpi-lbl">HDI (2026)</div><div class="kpi-val">0.859</div><div class="kpi-sub">Very High category - highest in Central Asia</div></div></div>
+      <div class="col-6 col-md-4 d-flex"><div class="kpi ca"><div class="kpi-lbl">Avg Years Schooling</div><div class="kpi-val">12.1 yrs</div><div class="kpi-sub">Among highest in post-Soviet Central Asia</div></div></div>
+      <div class="col-6 col-md-4 d-flex"><div class="kpi cd"><div class="kpi-lbl">Expected Schooling</div><div class="kpi-val">15.5 yrs</div><div class="kpi-sub">University attendance rising rapidly</div></div></div>
+      <div class="col-6 col-md-4 d-flex"><div class="kpi cd"><div class="kpi-lbl">Education Spending</div><div class="kpi-val">~3.5% GDP</div><div class="kpi-sub">Target 5% by 2030 under reform agenda</div></div></div>
+      <div class="col-6 col-md-4 d-flex"><div class="kpi cb"><div class="kpi-lbl">Bolashak Scholars</div><div class="kpi-val">~11,000</div><div class="kpi-sub">State-funded graduates from top 200 universities since 1993</div></div></div>
+    </div>
+    <div class="row gy-3 mb-3">
+      <div class="col-12 col-md-6 mb-3 mb-md-0">
+        <div class="panel">
+          <div class="ptitle"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 640 512" fill="#fff"><path d="M320 32c-8.1 0-16.1 1.4-23.7 4.1L25 155.5c-12.1 4.7-20 16.1-20 29.1s7.9 24.4 20 29.1l272.3 119.3c7.6 2.7 15.6 4.1 23.7 4.1s16.1-1.4 23.7-4.1L571.4 241c16.6-6.3 16.6-29.7 0-36L349.7 36.1c-7.6-2.7-15.6-4.1-23.7-4.1zM128 254.7V358c0 20.5 13.7 38.5 33.2 44.2l112.1 32c10.5 3 21.5 4.5 32.7 4.5s22.2-1.5 32.7-4.5l112.1-32c19.5-5.7 33.2-23.7 33.2-44.2V254.7L346.7 308c-8.3 3-17.3 4.5-26.7 4.5s-18.4-1.5-26.7-4.5L128 254.7z"/></svg> Education Metrics</div>
+          <div class="br"><div class="bh"><span class="bl">Primary enrolment rate</span><span class="bv">99.5%</span></div><div class="bt"><div class="bf bfk" style="width:99%"></div></div></div>
+          <div class="br"><div class="bh"><span class="bl">Secondary completion rate</span><span class="bv">~97%</span></div><div class="bt"><div class="bf bfk" style="width:97%"></div></div></div>
+          <div class="br"><div class="bh"><span class="bl">Tertiary enrolment</span><span class="bv">~55%</span></div><div class="bt"><div class="bf bfa" style="width:55%"></div></div></div>
+          <div class="br"><div class="bh"><span class="bl">PISA reading (vs OECD avg)</span><span class="bv">below avg</span></div><div class="bt"><div class="bf bfd" style="width:44%"></div></div></div>
+          <div class="br"><div class="bh"><span class="bl">PISA math (vs OECD avg)</span><span class="bv">below avg</span></div><div class="bt"><div class="bf bfd" style="width:40%"></div></div></div>
+        </div>
+      </div>
+      <div class="col-12 col-md-6">
+        <div class="panel">
+          <div class="ptitle"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 512 512" fill="#fff"><path d="M240.1 4.2c9.8-5.6 21.9-5.6 31.8 0l208 120c9.2 5.3 14.1 15.6 12.2 26.1s-10.4 18.5-21 18.5h-24.9L448 464H480c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H64L66.7 168.8H41.7c-10.6 0-19.2-7.9-21-18.5s3-20.8 12.2-26.1l208-120z"/></svg> Key Education Facts</div>
+          <table class="tbl"><tbody>
+            <tr><td>Languages of instruction</td><td>Kazakh, Russian</td></tr>
+            <tr><td>Alphabet shift</td><td>Cyrillic to Latin (by 2031)</td></tr>
+            <tr><td>School year</td><td>September to May</td></tr>
+            <tr><td>Top study destinations</td><td>Russia, UK, Czech Rep.</td></tr>
+            <tr><td>Student-teacher ratio (primary)</td><td>~19:1</td></tr>
+            <tr><td>Nazarbayev University founded</td><td>2010 (English-medium)</td></tr>
+          </tbody></table>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- POLITICS -->
+  <section>
+    <div class="sec-hdr">
+      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 512 512" fill="#fff"><path d="M240.1 4.2c9.8-5.6 21.9-5.6 31.8 0l208 120c9.2 5.3 14.1 15.6 12.2 26.1s-10.4 18.5-21 18.5h-24.9L448 464H480c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H64L66.7 168.8H41.7c-10.6 0-19.2-7.9-21-18.5s3-20.8 12.2-26.1l208-120z"/></svg>
+      <span>Political Landscape</span>
+    </div>
+    <div class="row g-1 mb-3">
+      <div class="col-6 col-md-4 d-flex"><div class="kpi ck"><div class="kpi-lbl">System</div><div class="kpi-val">Presidential</div><div class="kpi-sub">Semi-presidential republic; strong executive</div></div></div>
+      <div class="col-6 col-md-4 d-flex"><div class="kpi ck"><div class="kpi-lbl">President</div><div class="kpi-val">K. Tokayev</div><div class="kpi-sub">In power since March 2019; re-elected Nov 2022</div></div></div>
+      <div class="col-6 col-md-4 d-flex"><div class="kpi cd"><div class="kpi-lbl">Parliament (Mazhilis)</div><div class="kpi-val">98 seats</div><div class="kpi-sub">Lower house; mixed party-list + single-mandate</div></div></div>
+      <div class="col-6 col-md-4 d-flex"><div class="kpi cd"><div class="kpi-lbl">Next Election</div><div class="kpi-val">2029</div><div class="kpi-sub">Tokayev re-elected with 81% of the vote in 2022</div></div></div>
+      <div class="col-6 col-md-4 d-flex"><div class="kpi ca"><div class="kpi-lbl">Ruling Party</div><div class="kpi-val">Amanat</div><div class="kpi-sub">62 of 98 seats in Mazhilis (2023)</div></div></div>
+      <div class="col-6 col-md-4 d-flex"><div class="kpi cb"><div class="kpi-lbl">Independence</div><div class="kpi-val">Dec 16, 1991</div><div class="kpi-sub">From the Soviet Union; national holiday</div></div></div>
+    </div>
+    <div class="row gy-3 mb-3">
+      <div class="col-12 col-md-6 mb-3 mb-md-0">
+        <div class="panel">
+          <div class="ptitle"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 512 512" fill="#fff"><path d="M240.1 4.2c9.8-5.6 21.9-5.6 31.8 0l208 120c9.2 5.3 14.1 15.6 12.2 26.1s-10.4 18.5-21 18.5h-24.9L448 464H480c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H64L66.7 168.8H41.7c-10.6 0-19.2-7.9-21-18.5s3-20.8 12.2-26.1l208-120z"/></svg> Mazhilis 2023 Election Results</div>
+          <div class="br"><div class="bh"><span class="bl">Amanat (ruling party)</span><span class="bv">62 seats / 53%</span></div><div class="bt"><div class="bf bfk" style="width:100%"></div></div></div>
+          <div class="br"><div class="bh"><span class="bl">Auyl (agrarian)</span><span class="bv">8 seats / 10.9%</span></div><div class="bt"><div class="bf bfa" style="width:14%"></div></div></div>
+          <div class="br"><div class="bh"><span class="bl">Respublica (business)</span><span class="bv">8 seats / 8.6%</span></div><div class="bt"><div class="bf bfb" style="width:13%"></div></div></div>
+          <div class="br"><div class="bh"><span class="bl">Others &amp; Independents</span><span class="bv">20 seats / 28%</span></div><div class="bt"><div class="bf bfd" style="width:26%"></div></div></div>
+          <p class="note">Voter turnout: ~54%. 2022 constitutional reform reduced presidential term to 7 years (non-renewable). RSF press freedom index 2024: rank 142.</p>
+        </div>
+      </div>
+      <div class="col-12 col-md-6">
+        <div class="panel">
+          <div class="ptitle"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 512 512" fill="#fff"><path d="M64 64c0-17.7-14.3-32-32-32S0 46.3 0 64V400c0 44.2 35.8 80 80 80H480c17.7 0 32-14.3 32-32s-14.3-32-32-32H80c-8.8 0-16-7.2-16-16V64zm406.6 86.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L320 210.7l-57.4-57.4c-12.5-12.5-32.8-12.5-45.3 0l-112 112c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L240 221.3l57.4 57.4c12.5 12.5 32.8 12.5 45.3 0l128-128z"/></svg> Political Timeline</div>
+          <div class="tl-item"><div class="tl-yr">1991</div><div class="tl-tx">Kazakhstan declares independence from USSR on Dec 16. Nursultan Nazarbayev becomes first president.</div></div>
+          <div class="tl-item"><div class="tl-yr">1997</div><div class="tl-tx">Capital relocated from Almaty to Akmola (later renamed Astana). Ambitious nation-building project begins.</div></div>
+          <div class="tl-item"><div class="tl-yr">2019</div><div class="tl-tx">After 29 years, Nazarbayev resigns. Tokayev elected president.</div></div>
+          <div class="tl-item"><div class="tl-yr">2022</div><div class="tl-tx">Nationwide unrest (Bloody January). Russian troops deployed briefly. Constitutional reforms introduced.</div></div>
+          <div class="tl-item"><div class="tl-yr">2024</div><div class="tl-tx">Voters approve construction of first nuclear power plant. GDP growth accelerates to 6%+.</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p>Sources: Bureau of National Statistics RK · World Bank · CIA World Factbook 2024 · IMF 2025 · UNDP HDR 2026 · Wikipedia · Climates to Travel · Worlddata.info · Data as of May 2026.</p>
+  </footer>
+
+</div>
+</body>
+</html>
