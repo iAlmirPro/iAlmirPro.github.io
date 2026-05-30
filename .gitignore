@@ -1,0 +1,8 @@
+# macOS system files
+.DS_Store
+
+# Claude session data
+.claude/
+
+# Reference folder (local only)
+ref/
