@@ -151,7 +151,9 @@ def convert(jsx_path):
     if not os.path.isfile(jsx_path) or not jsx_path.endswith(".jsx"):
         print("❌  Need a valid .jsx file"); sys.exit(1)
 
-    out_path  = jsx_path.replace(".jsx", ".html")
+    out_path  = re.sub(r'-dashboard\.jsx$', '.html', jsx_path)
+    if out_path == jsx_path:  # no -dashboard suffix, fall back
+        out_path = jsx_path.replace(".jsx", ".html")
     cache     = os.path.expanduser("~/.jsx_to_html_cache")
     os.makedirs(cache, exist_ok=True)
 
