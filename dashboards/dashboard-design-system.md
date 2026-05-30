@@ -13,6 +13,12 @@
 - One approved task at a time — do not chain unrequested changes.
 - **Never change anything not explicitly requested** — e.g. if asked to change bar colors, do not also change label colors.
 
+### No Exceptions Rule
+- **"Obvious" fixes are not exceptions.** A bug, an overflow, a broken layout — none of these bypass the approval protocol. Propose first, always.
+- **Screenshots and error reports are findings, not work orders.** When the user shares a screenshot showing a problem, respond by describing what you see and what you would change — then STOP and wait.
+- **The correct response to any reported problem is:** "I can see [X]. I would fix it by [Y]. Shall I proceed?"
+- **Never interpret a problem report as implicit approval to fix it.**
+
 ### Versioning Convention
 - Every meaningful change = new version: `v1 → v2 → v3...`
 - **Never overwrite** an existing version — copy first, then edit.
