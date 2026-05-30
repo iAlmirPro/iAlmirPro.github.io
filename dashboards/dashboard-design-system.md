@@ -1,5 +1,5 @@
 # Country Dashboard — Design System
-> Extracted directly from `kywrgyzstan-dashboard.jsx`  
+> Extracted directly from `kyrgyzstan-dashboard.jsx`  
 > Use this file as the single source of truth for all future country dashboards.  
 > Every value, prop, and pattern below is taken verbatim from the working production file.
 
@@ -16,7 +16,7 @@
 ### Versioning Convention
 - Every meaningful change = new version: `v1 → v2 → v3...`
 - **Never overwrite** an existing version — copy first, then edit.
-- Always present `.jsx` + `.html` together after each version.
+- Always present `.jsx` after each version.
 
 ---
 
@@ -38,10 +38,7 @@
 
 ```
 [country]-dashboard-v1.jsx    ← React JSX source
-[country]-dashboard-v1.html   ← Compiled self-contained HTML
 ```
-
-The JSX is the source of truth. The HTML is always regenerated from it.
 
 ---
 
@@ -703,4 +700,4 @@ All KPI values must be verified before publishing:
 - **One task at a time** — do not chain unrequested changes
 - **New version for every meaningful change:** `v1 → v2 → v3...`
 - **Never overwrite** an existing version — copy first, then edit
-- Present JSX and HTML together after each version
+- Present `.jsx` after each version
