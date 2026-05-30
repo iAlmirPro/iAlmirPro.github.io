@@ -110,6 +110,124 @@ const DlRow = ({ mo, label, pct, color = C.uz, dark = false }) => (
   </div>
 );
 
+/* ── Gradient Bar (temperature / rainfall / tourism timeline) ── */
+const GradientBar = ({ title, values, colorStops, unit = '', height = 22, xLabels, fmt, invertPeak = false, absScale = false }) => {
+  const defaultLabels = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  const labels = xLabels || defaultLabels;
+  const n = values.length;
+  const min = Math.min(...values), max = Math.max(...values);
+  const absMax = Math.max(...values.map(Math.abs));
+  const peakIdx = invertPeak ? values.indexOf(min) : values.indexOf(max);
+  // absScale: color intensity based on distance from zero (most extreme = most saturated)
+  const pct = v => absScale ? (Math.abs(v) / absMax) * 100 : ((v - min) / (max - min)) * 100;
+  const gradient = values.map((v, i) => {
+    const p = pct(v);
+    return `${colorStops(p, v)} ${(i / (n - 1)) * 100}%`;
+  }).join(', ');
+  // peak = most extreme absolute value
+  const peakIdx2 = absScale ? values.reduce((a,b,i,arr) => Math.abs(arr[i]) > Math.abs(arr[a]) ? i : a, 0) : peakIdx;
+  const usePeakIdx = absScale ? peakIdx2 : peakIdx;
+  const peakPct = (usePeakIdx / (n - 1)) * 100;
+  const labelColor = C.sub;
+  const peakColor = colorStops(100, absScale ? values[usePeakIdx] : (invertPeak ? min : max)).replace(/rgb\((\d+),(\d+),(\d+)\)/, (_, r, g, b) => `rgb(${Math.round(r*0.45)},${Math.round(g*0.45)},${Math.round(b*0.45)})`);
+  return (
+    <div style={{ marginTop:14 }}>
+      {title && <div style={{ fontSize:10, letterSpacing:'0.1em', textTransform:'uppercase', color:C.sub, marginBottom:6 }}>{title}</div>}
+      <div style={{ position:'relative', height, borderRadius:4, overflow:'hidden', background:`linear-gradient(to right, ${gradient})` }}>
+        <div style={{ position:'absolute', top:'10%', bottom:'10%', left:`${peakPct}%`, width:2, background:peakColor, transform:'translateX(-50%)', borderRadius:2 }} />
+      </div>
+      <div style={{ display:'flex', marginTop:4 }}>
+        {labels.map((l, i) => (
+          <div key={l} style={{ textAlign:'center', flex:1 }}>
+            <div style={{ fontSize:8, color: i===usePeakIdx ? '#fff' : labelColor, fontWeight: i===usePeakIdx ? 600 : 300, lineHeight:1 }}>{l}</div>
+            <div style={{ fontSize:8, color: i===usePeakIdx ? '#fff' : labelColor, lineHeight:1.4 }}>{fmt ? fmt(values[i]) : `${values[i]}${unit}`}</div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+};
+
+/* ── Age Structure Bar (population pyramid as two stacked gradient bars) ── */
+const AgeBar = ({ title, male, female, medianM, medianF }) => {
+  const maleColor = '#2E86DE';
+  const femaleColor = '#E8192C';
+  const decadeLabels = [0,10,20,30,40,50,60,70,80];
+  // 16 cohorts span 0-80+; each cohort = 5 years; total span = 80 years
+  // cohort midpoints for gradient: 2,7,12,...,77.5
+  const maxVal = Math.max(...male, ...female);
+  const pctM = v => (v / maxVal) * 100;
+  const makeGradient = (arr, color) => {
+    return arr.map((v, i) => {
+      const alpha = pctM(v) / 100;
+      const r = parseInt(color.slice(1,3),16);
+      const g = parseInt(color.slice(3,5),16);
+      const b = parseInt(color.slice(5,7),16);
+      const vr = Math.round(r + (255-r)*(1-alpha));
+      const vg = Math.round(g + (255-g)*(1-alpha));
+      const vb = Math.round(b + (255-b)*(1-alpha));
+      return `rgb(${vr},${vg},${vb}) ${(i/15)*100}%`;
+    }).join(', ');
+  };
+  // median line position: median age / 80 * 100%
+  const medMPct = Math.min((medianM / 80) * 100, 100);
+  const medFPct = Math.min((medianF / 80) * 100, 100);
+  const darkM = '#0e6d8c';
+  const darkF = '#a01020';
+  return (
+    <div style={{ marginTop:14 }}>
+      {title && <div style={{ fontSize:10, letterSpacing:'0.1em', textTransform:'uppercase', color:C.sub, marginBottom:6 }}>{title}</div>}
+      <div style={{ position:'relative' }}>
+        {/* Male bar */}
+        <div style={{ height:18, borderRadius:'4px 4px 0 0', overflow:'hidden',
+          background:`linear-gradient(to right, ${makeGradient(male, maleColor)})` }} />
+        {/* 2px gap */}
+        <div style={{ height:2, background:C.bg }} />
+        {/* Female bar */}
+        <div style={{ height:18, borderRadius:'0 0 4px 4px', overflow:'hidden',
+          background:`linear-gradient(to right, ${makeGradient(female, femaleColor)})` }} />
+        {/* Male median line — on male bar only, 80% height centered (top:2px of 18px bar) */}
+        <div style={{ position:'absolute', top:2, height:14, left:`${medMPct}%`,
+          width:2, background:darkM, transform:'translateX(-50%)', borderRadius:2, pointerEvents:'none' }} />
+        {/* Female median line — on female bar only, 80% height centered (top: 18+2gap+2px) */}
+        <div style={{ position:'absolute', top:22, height:14, left:`${medFPct}%`,
+          width:2, background:darkF, transform:'translateX(-50%)', borderRadius:2, pointerEvents:'none' }} />
+      </div>
+      {/* X-axis decade labels */}
+      <div style={{ position:'relative', height:18, marginTop:3 }}>
+        {decadeLabels.filter(age => age !== 0 && age !== 80).map(age => (
+          <div key={age} style={{ position:'absolute', left:`${(age/80)*100}%`, transform:'translateX(-50%)', textAlign:'center' }}>
+            <div style={{ fontSize:8, color:C.sub, lineHeight:1 }}>{age}</div>
+          </div>
+        ))}
+      </div>
+      {/* Legend */}
+      <div style={{ display:'flex', alignItems:'center', gap:14, marginTop:3, fontSize:9, color:C.sub, flexWrap:'wrap' }}>
+        <span style={{ display:'flex', alignItems:'center', gap:4 }}>
+          <span style={{ display:'inline-block', width:10, height:4, background:maleColor, borderRadius:1 }} />
+          Male (median <strong style={{ color:maleColor }}>{medianM} yrs</strong>)
+        </span>
+        <span style={{ display:'flex', alignItems:'center', gap:4 }}>
+          <span style={{ display:'inline-block', width:10, height:4, background:femaleColor, borderRadius:1 }} />
+          Female (median <strong style={{ color:femaleColor }}>{medianF} yrs</strong>)
+        </span>
+      </div>
+    </div>
+  );
+};
+const tempColor = p => {
+  if (p < 25) return `rgb(${Math.round(40+p*0.8)},${Math.round(60+p*0.4)},${Math.round(180-p*0.8)})`;
+  if (p < 50) { const t=(p-25)/25; return `rgb(${Math.round(60+t*130)},${Math.round(80+t*80)},${Math.round(160-t*100)})`; }
+  if (p < 75) { const t=(p-50)/25; return `rgb(${Math.round(190+t*50)},${Math.round(160-t*80)},${Math.round(60-t*40)})`; }
+  const t=(p-75)/25; return `rgb(${Math.round(240-t*30)},${Math.round(80-t*60)},${Math.round(20)})`;
+};
+const rainColor = p => {
+  const r = Math.round(255 - (209 * p / 100));
+  const g = Math.round(255 - (121 * p / 100));
+  const b = Math.round(255 - (33  * p / 100));
+  return `rgb(${r},${g},${b})`;
+};
+
 const Donut = ({ segments, label, sublabel, size = 160 }) => {
   const r = 54, cx = 80, cy = 80, stroke = 22;
   const circ = 2 * Math.PI * r;
@@ -296,6 +414,8 @@ export default function Uzbekistan() {
               <BarRow label="Jun–Sep (very dry)" value="3–8 mm" pct={10} color={C.grn} />
               <BarRow label="Jan–Feb (snow possible)" value="20–30 mm" pct={40} color={C.blu} />
               <p style={{ fontSize:11, color:C.sub, marginTop:10, lineHeight:1.6 }}>Almost zero rainfall in summer (3–8mm/month Jun–Sep) means agriculture is entirely dependent on irrigation from the Amu Darya and Syr Darya — the same rivers that once filled the Aral Sea. Water stress is Uzbekistan's most critical long-term environmental and economic challenge.</p>
+              <GradientBar title="Monthly avg temperature — Tashkent (°C)" values={[-1,2,9,16,22,28,30,28,22,14,6,0]} colorStops={tempColor} unit="°" />
+              <GradientBar title="Monthly rainfall — Tashkent (mm)" values={[28,30,40,45,25,8,4,3,5,20,25,30]} colorStops={rainColor} unit="mm" />
             </Panel>
           </div>
         </div>
@@ -319,6 +439,13 @@ export default function Uzbekistan() {
               <BarRow label="2020" value="34.9M" pct={93} color={C.grn} />
               <BarRow label="2026" value="~37.7M" pct={100} color={C.uz} />
               <p style={{ fontSize:11, color:C.sub, marginTop:10, lineHeight:1.6 }}>Uzbekistan's population nearly doubled since independence — from 20.5M to 37.7M (+84%). Unlike Kazakhstan, it did not suffer post-Soviet emigration collapse; natural growth remained high throughout. With 37.7M people, Uzbekistan accounts for ~50% of Central Asia's total population.</p>
+              <AgeBar
+                title="Population age structure — male ▲ / female ▼ (% of total)"
+                male={[5.5,5.2,4.95,4.75,4.5,4.25,4.0,3.6,3.15,2.75,2.4,2.1,1.75,1.3,0.95,1.4]}
+                female={[5.2,4.95,4.7,4.55,4.35,4.15,3.95,3.55,3.1,2.75,2.4,2.1,1.75,1.4,1.1,1.8]}
+                medianM={27.9}
+                medianF={29.5}
+              />
             </Panel>
           </div>
           <div className="col-12 col-md-6">
@@ -573,6 +700,7 @@ export default function Uzbekistan() {
                 ['Aral Sea tours (Moynaq)', 'Ship graveyard; environmental tourism'],
               ]} />
               <p style={{ fontSize:11, color:C.sub, marginTop:10, lineHeight:1.6 }}>Uzbekistan has arguably the richest concentration of Islamic architectural heritage anywhere in the world — Samarkand's Registan rivals the Taj Mahal in grandeur. The Aral Sea ship graveyard at Moynaq has become a haunting but significant eco-tourism site — a monument to the world's worst man-made ecological disaster. With 4 UNESCO sites and 90+ visa-free countries, the runway for growth is enormous.</p>
+              <GradientBar title="Tourism intensity by month (relative)" values={[15,20,45,85,100,80,65,70,90,85,30,15]} colorStops={p => { const r=Math.round(255-(225*p/100)); const g=Math.round(255-(75*p/100)); const b=Math.round(255-(26*p/100)); return `rgb(${r},${g},${b})`; }} unit="%" />
             </Panel>
           </div>
         </div>
@@ -658,6 +786,7 @@ export default function Uzbekistan() {
                 ['GDP growth Jan–Sep 2025 (official)', '+7.7% — record pace'],
               ]} />
               <p style={{ fontSize:11, color:C.sub, marginTop:10, lineHeight:1.6 }}>Investment at 31.9% of GDP is exceptionally high — it is the engine of Uzbekistan's growth story. This is being funded by FDI ($39.7B), multilateral lending (IDB, ADB, World Bank), and the sovereign wealth fund. WTO accession would be the most significant trade reform since independence — opening markets and requiring legal modernisation.</p>
+              <GradientBar title="Trade balance 2015–2024 ($B)" values={[-4.5, -4.8, -5.2, -7.0, -8.1, -8.1, -11.5, -13.7, -15.2, -13.6]} xLabels={['2015', '2016', '2017', '2018', '2019', '2020', '2021', '2022', '2023', '2024']} colorStops={(p, v) => v >= 0 ? `rgb(${Math.round(255-220*p/100)},${Math.round(255-96*p/100)},${Math.round(255-191*p/100)})` : `rgb(${Math.round(255-23*p/100)},${Math.round(255-230*p/100)},${Math.round(255-211*p/100)})`} fmt={v => v > 0 ? `+${v}B` : `${v}B`} absScale={true} />
             </Panel>
           </div>
         </div>

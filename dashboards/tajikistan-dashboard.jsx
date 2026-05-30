@@ -2,7 +2,7 @@ const { useState, useEffect } = React;
 
 // Tajikistan flag: green (#239F40) top, white middle, red (#C8102E) bottom + gold crown/stars
 const C = {
-  ir:   '#239F40', irL: '#3dc95a',   // primary — Tajik green
+  tj:   '#239F40', tjL: '#3dc95a',   // primary — Tajik green
   red:  '#C8102E', redL: '#f03050',  // secondary — Tajik red
   gld:  '#D4AF37', gldL: '#f0cc55',  // gold — crown & stars accent
   bg:   '#000',   card: '#111',  border: '#1e1e1e',
@@ -41,8 +41,8 @@ const SectionHeader = ({ icon, label }) => (
   </div>
 );
 
-const KpiCard = ({ label, value, sub, accent = C.ir, delay = 0 }) => {
-  const valColor = accent === C.ir ? C.irL : accent === C.red ? C.redL : accent === C.gld ? C.gldL : C.txt;
+const KpiCard = ({ label, value, sub, accent = C.tj, delay = 0 }) => {
+  const valColor = accent === C.tj ? C.tjL : accent === C.red ? C.redL : accent === C.gld ? C.gldL : C.txt;
   return (
     <div className="kpi" style={{
       background:C.card, border:`1px solid ${C.border}`, padding:'18px 15px 15px',
@@ -65,7 +65,7 @@ const Panel = ({ title, icon, children }) => (
   </div>
 );
 
-const BarRow = ({ label, value, pct, color = C.ir }) => (
+const BarRow = ({ label, value, pct, color = C.tj }) => (
   <div style={{ marginBottom:13 }}>
     <div style={{ display:'flex', justifyContent:'space-between', alignItems:'baseline', fontSize:12, color:C.sub, marginBottom:5, gap:4 }}>
       <span style={{ overflow:'hidden', textOverflow:'ellipsis', whiteSpace:'nowrap', flex:1 }}>{label}</span>
@@ -99,7 +99,7 @@ const RegCard = ({ name, type, desc, stripe }) => (
   </div>
 );
 
-const DlRow = ({ mo, label, pct, color = C.ir, dark = false }) => (
+const DlRow = ({ mo, label, pct, color = C.tj, dark = false }) => (
   <div style={{ display:'flex', alignItems:'center', gap:8, marginBottom:6 }}>
     <span style={{ fontSize:10, letterSpacing:'0.05em', textTransform:'uppercase', color:C.sub, width:24, flexShrink:0 }}>{mo}</span>
     <div style={{ flex:1, height:18, background:C.track, borderRadius:3, overflow:'hidden', minWidth:0 }}>
@@ -109,6 +109,124 @@ const DlRow = ({ mo, label, pct, color = C.ir, dark = false }) => (
     </div>
   </div>
 );
+
+/* ── Gradient Bar (temperature / rainfall / tourism timeline) ── */
+const GradientBar = ({ title, values, colorStops, unit = '', height = 22, xLabels, fmt, invertPeak = false, absScale = false }) => {
+  const defaultLabels = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  const labels = xLabels || defaultLabels;
+  const n = values.length;
+  const min = Math.min(...values), max = Math.max(...values);
+  const absMax = Math.max(...values.map(Math.abs));
+  const peakIdx = invertPeak ? values.indexOf(min) : values.indexOf(max);
+  // absScale: color intensity based on distance from zero (most extreme = most saturated)
+  const pct = v => absScale ? (Math.abs(v) / absMax) * 100 : ((v - min) / (max - min)) * 100;
+  const gradient = values.map((v, i) => {
+    const p = pct(v);
+    return `${colorStops(p, v)} ${(i / (n - 1)) * 100}%`;
+  }).join(', ');
+  // peak = most extreme absolute value
+  const peakIdx2 = absScale ? values.reduce((a,b,i,arr) => Math.abs(arr[i]) > Math.abs(arr[a]) ? i : a, 0) : peakIdx;
+  const usePeakIdx = absScale ? peakIdx2 : peakIdx;
+  const peakPct = (usePeakIdx / (n - 1)) * 100;
+  const labelColor = C.sub;
+  const peakColor = colorStops(100, absScale ? values[usePeakIdx] : (invertPeak ? min : max)).replace(/rgb\((\d+),(\d+),(\d+)\)/, (_, r, g, b) => `rgb(${Math.round(r*0.45)},${Math.round(g*0.45)},${Math.round(b*0.45)})`);
+  return (
+    <div style={{ marginTop:14 }}>
+      {title && <div style={{ fontSize:10, letterSpacing:'0.1em', textTransform:'uppercase', color:C.sub, marginBottom:6 }}>{title}</div>}
+      <div style={{ position:'relative', height, borderRadius:4, overflow:'hidden', background:`linear-gradient(to right, ${gradient})` }}>
+        <div style={{ position:'absolute', top:'10%', bottom:'10%', left:`${peakPct}%`, width:2, background:peakColor, transform:'translateX(-50%)', borderRadius:2 }} />
+      </div>
+      <div style={{ display:'flex', marginTop:4 }}>
+        {labels.map((l, i) => (
+          <div key={l} style={{ textAlign:'center', flex:1 }}>
+            <div style={{ fontSize:8, color: i===usePeakIdx ? '#fff' : labelColor, fontWeight: i===usePeakIdx ? 600 : 300, lineHeight:1 }}>{l}</div>
+            <div style={{ fontSize:8, color: i===usePeakIdx ? '#fff' : labelColor, lineHeight:1.4 }}>{fmt ? fmt(values[i]) : `${values[i]}${unit}`}</div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+};
+
+/* ── Age Structure Bar (population pyramid as two stacked gradient bars) ── */
+const AgeBar = ({ title, male, female, medianM, medianF }) => {
+  const maleColor = '#2E86DE';
+  const femaleColor = '#E8192C';
+  const decadeLabels = [0,10,20,30,40,50,60,70,80];
+  // 16 cohorts span 0-80+; each cohort = 5 years; total span = 80 years
+  // cohort midpoints for gradient: 2,7,12,...,77.5
+  const maxVal = Math.max(...male, ...female);
+  const pctM = v => (v / maxVal) * 100;
+  const makeGradient = (arr, color) => {
+    return arr.map((v, i) => {
+      const alpha = pctM(v) / 100;
+      const r = parseInt(color.slice(1,3),16);
+      const g = parseInt(color.slice(3,5),16);
+      const b = parseInt(color.slice(5,7),16);
+      const vr = Math.round(r + (255-r)*(1-alpha));
+      const vg = Math.round(g + (255-g)*(1-alpha));
+      const vb = Math.round(b + (255-b)*(1-alpha));
+      return `rgb(${vr},${vg},${vb}) ${(i/15)*100}%`;
+    }).join(', ');
+  };
+  // median line position: median age / 80 * 100%
+  const medMPct = Math.min((medianM / 80) * 100, 100);
+  const medFPct = Math.min((medianF / 80) * 100, 100);
+  const darkM = '#145a24';
+  const darkF = '#a01020';
+  return (
+    <div style={{ marginTop:14 }}>
+      {title && <div style={{ fontSize:10, letterSpacing:'0.1em', textTransform:'uppercase', color:C.sub, marginBottom:6 }}>{title}</div>}
+      <div style={{ position:'relative' }}>
+        {/* Male bar */}
+        <div style={{ height:18, borderRadius:'4px 4px 0 0', overflow:'hidden',
+          background:`linear-gradient(to right, ${makeGradient(male, maleColor)})` }} />
+        {/* 2px gap */}
+        <div style={{ height:2, background:C.bg }} />
+        {/* Female bar */}
+        <div style={{ height:18, borderRadius:'0 0 4px 4px', overflow:'hidden',
+          background:`linear-gradient(to right, ${makeGradient(female, femaleColor)})` }} />
+        {/* Male median line — on male bar only, 80% height centered (top:2px of 18px bar) */}
+        <div style={{ position:'absolute', top:2, height:14, left:`${medMPct}%`,
+          width:2, background:darkM, transform:'translateX(-50%)', borderRadius:2, pointerEvents:'none' }} />
+        {/* Female median line — on female bar only, 80% height centered (top: 18+2gap+2px) */}
+        <div style={{ position:'absolute', top:22, height:14, left:`${medFPct}%`,
+          width:2, background:darkF, transform:'translateX(-50%)', borderRadius:2, pointerEvents:'none' }} />
+      </div>
+      {/* X-axis decade labels */}
+      <div style={{ position:'relative', height:18, marginTop:3 }}>
+        {decadeLabels.filter(age => age !== 0 && age !== 80).map(age => (
+          <div key={age} style={{ position:'absolute', left:`${(age/80)*100}%`, transform:'translateX(-50%)', textAlign:'center' }}>
+            <div style={{ fontSize:8, color:C.sub, lineHeight:1 }}>{age}</div>
+          </div>
+        ))}
+      </div>
+      {/* Legend */}
+      <div style={{ display:'flex', alignItems:'center', gap:14, marginTop:3, fontSize:9, color:C.sub, flexWrap:'wrap' }}>
+        <span style={{ display:'flex', alignItems:'center', gap:4 }}>
+          <span style={{ display:'inline-block', width:10, height:4, background:maleColor, borderRadius:1 }} />
+          Male (median <strong style={{ color:maleColor }}>{medianM} yrs</strong>)
+        </span>
+        <span style={{ display:'flex', alignItems:'center', gap:4 }}>
+          <span style={{ display:'inline-block', width:10, height:4, background:femaleColor, borderRadius:1 }} />
+          Female (median <strong style={{ color:femaleColor }}>{medianF} yrs</strong>)
+        </span>
+      </div>
+    </div>
+  );
+};
+const tempColor = p => {
+  if (p < 25) return `rgb(${Math.round(40+p*0.8)},${Math.round(60+p*0.4)},${Math.round(180-p*0.8)})`;
+  if (p < 50) { const t=(p-25)/25; return `rgb(${Math.round(60+t*130)},${Math.round(80+t*80)},${Math.round(160-t*100)})`; }
+  if (p < 75) { const t=(p-50)/25; return `rgb(${Math.round(190+t*50)},${Math.round(160-t*80)},${Math.round(60-t*40)})`; }
+  const t=(p-75)/25; return `rgb(${Math.round(240-t*30)},${Math.round(80-t*60)},${Math.round(20)})`;
+};
+const rainColor = p => {
+  const r = Math.round(255 - (209 * p / 100));
+  const g = Math.round(255 - (121 * p / 100));
+  const b = Math.round(255 - (33  * p / 100));
+  return `rgb(${r},${g},${b})`;
+};
 
 const Donut = ({ segments, label, sublabel, size = 160 }) => {
   const r = 54, cx = 80, cy = 80, stroke = 22;
@@ -166,7 +284,7 @@ const Flag = () => (
         ))}
       </svg>
     </div>
-    <div style={{ height:'33.3%', background:C.ir }} />
+    <div style={{ height:'33.3%', background:C.tj }} />
   </div>
 );
 
@@ -188,9 +306,9 @@ export default function Tajikistan() {
         {/* HERO */}
         <div style={{ padding:'20px 0 0', display:'grid', gridTemplateColumns:'1fr auto', alignItems:'end', gap:32, marginBottom:8 }}>
           <div>
-            <div style={{ fontSize:10, letterSpacing:'0.28em', textTransform:'uppercase', color:C.ir, marginBottom:14 }}>Country Dashboard 2025</div>
+            <div style={{ fontSize:10, letterSpacing:'0.28em', textTransform:'uppercase', color:C.tj, marginBottom:14 }}>Country Dashboard 2025</div>
             <h1 style={{ fontFamily:'Fraunces,serif', fontWeight:900, fontSize:'clamp(44px,9vw,96px)', lineHeight:0.9, letterSpacing:'-0.02em', marginBottom:16 }}>
-              Tajiki<em style={{ fontStyle:'italic', color:C.ir, fontWeight:400 }}>stan</em>
+              Tajiki<em style={{ fontStyle:'italic', color:C.tj, fontWeight:400 }}>stan</em>
             </h1>
             <p style={{ fontSize:14, color:C.sub, maxWidth:480, lineHeight:1.7 }}>
               A comprehensive data snapshot — geography, climate, population, economy, employment, education and politics — sourced from State Committee on Statistics TJ, World Bank, IMF, and UN agencies.
@@ -203,7 +321,7 @@ export default function Tajikistan() {
         <SectionHeader icon={Icons.mountain} label="Geography & Landscape" />
         <div className="row g-1 mb-3">
           <div className="col-6 col-md-4 d-flex"><KpiCard label="Total Area" value="144,100 km²" sub="93% mountainous; slightly larger than Greece" accent={C.dim} delay={0.05} /></div>
-          <div className="col-6 col-md-4 d-flex"><KpiCard label="Highest Peak" value="7,495 m" sub="Ismoil Somoni Peak (formerly Communism Peak) — Pamir" accent={C.ir} delay={0.10} /></div>
+          <div className="col-6 col-md-4 d-flex"><KpiCard label="Highest Peak" value="7,495 m" sub="Ismoil Somoni Peak (formerly Communism Peak) — Pamir" accent={C.tj} delay={0.10} /></div>
           <div className="col-6 col-md-4 d-flex"><KpiCard label="Mean Elevation" value="~3,186 m" sub="Highest mean elevation of any sovereign state on Earth" accent={C.gld} delay={0.15} /></div>
           <div className="col-6 col-md-4 d-flex"><KpiCard label="Lowest Point" value="300 m" sub="Syr Darya valley near Uzbekistan border" accent={C.red} delay={0.20} /></div>
           <div className="col-6 col-md-4 d-flex"><KpiCard label="Borders" value="4 countries" sub="Afghanistan, China, Kyrgyzstan, Uzbekistan" accent={C.dim} delay={0.25} /></div>
@@ -215,7 +333,7 @@ export default function Tajikistan() {
         <div className="row gy-3 mb-3">
           <div className="col-12 col-md-6">
             <Panel title="Major Terrain Zones" icon={Icons.map}>
-              <BarRow label="High Pamir plateau (eastern Tajikistan)" value="~45%" pct={100} color={C.ir} />
+              <BarRow label="High Pamir plateau (eastern Tajikistan)" value="~45%" pct={100} color={C.tj} />
               <BarRow label="Mountain ranges & valleys (central)" value="~48%" pct={95} color={C.gld} />
               <BarRow label="Fergana Valley strip (north)" value="~3%" pct={7} color={C.red} />
               <BarRow label="Hisar & Vakhsh valleys (south-west)" value="~4%" pct={9} color={C.dim} />
@@ -238,9 +356,9 @@ export default function Tajikistan() {
           </div>
         </div>
         <div className="row g-1 mb-3">
-          <div className="col-6 col-md-3 d-flex"><RegCard name="Dushanbe & Hisar" type="Capital · western valley" desc="Capital (1.2M). Hisar Valley at 823m. Administrative & commercial hub. Soviet-era layout; rapidly modernising." stripe={C.ir} /></div>
+          <div className="col-6 col-md-3 d-flex"><RegCard name="Dushanbe & Hisar" type="Capital · western valley" desc="Capital (1.2M). Hisar Valley at 823m. Administrative & commercial hub. Soviet-era layout; rapidly modernising." stripe={C.tj} /></div>
           <div className="col-6 col-md-3 d-flex"><RegCard name="Sughd (Khujand)" type="North · Fergana strip" desc="Most prosperous region. Fergana Valley agriculture. Silk Road city Khujand (330 BC). Industry and textiles." stripe={C.gld} /></div>
-          <div className="col-6 col-md-3 d-flex"><RegCard name="Khatlon (south-west)" type="Agriculture · cotton belt" desc="Largest region by population. Vakhsh Valley cotton & fruit. Kulyab & Qurghonteppa industrial centres." stripe={C.ir} /></div>
+          <div className="col-6 col-md-3 d-flex"><RegCard name="Khatlon (south-west)" type="Agriculture · cotton belt" desc="Largest region by population. Vakhsh Valley cotton & fruit. Kulyab & Qurghonteppa industrial centres." stripe={C.tj} /></div>
           <div className="col-6 col-md-3 d-flex"><RegCard name="GBAO (Pamir)" type="Remote · Roof of World" desc="Gorno-Badakhshan Autonomous Oblast. Pamir Highway (M41). Extreme altitude; barely 200,000 people." stripe={C.gld} /></div>
         </div>
 
@@ -248,14 +366,14 @@ export default function Tajikistan() {
         <SectionHeader icon={Icons.cloudSun} label="Climate: Weather, Daylight & Rainfall" />
         <div className="row g-1 mb-4">
           <div className="col-6 col-md-4 d-flex"><KpiCard label="Avg Annual Temp (Dushanbe)" value="14.7°C" sub="Continental; hot summers, cold winters; valley location" accent={C.gld} delay={0.05} /></div>
-          <div className="col-6 col-md-4 d-flex"><KpiCard label="Record High" value="48°C" sub="Southern valleys; extreme summer heat in Khatlon" accent={C.ir} delay={0.10} /></div>
+          <div className="col-6 col-md-4 d-flex"><KpiCard label="Record High" value="48°C" sub="Southern valleys; extreme summer heat in Khatlon" accent={C.tj} delay={0.10} /></div>
           <div className="col-6 col-md-4 d-flex"><KpiCard label="Record Low" value="−63°C" sub="Pamir plateau; most extreme cold in former Soviet space" accent={C.red} delay={0.15} /></div>
           <div className="col-6 col-md-4 d-flex"><KpiCard label="Annual Rainfall (Dushanbe)" value="~560 mm" sub="Mountains receive 1,000–2,000 mm; Pamir as low as 60 mm" accent={C.dim} delay={0.20} /></div>
           <div className="col-6 col-md-4 d-flex"><KpiCard label="Climate type" value="BSk / Dfa" sub="Semi-arid valleys; alpine tundra on Pamir" accent={C.dim} delay={0.25} /></div>
           <div className="col-6 col-md-4 d-flex"><KpiCard label="Dushanbe summer avg" value="28°C" sub="Hot & dry Jul–Aug; dust from Amu Darya basin" accent={C.dim} delay={0.30} /></div>
           <div className="col-6 col-md-4 d-flex"><KpiCard label="Winter Dec–Feb (Dushanbe)" value="1–4°C" sub="Mild in capital; −25°C in mountains; heavy snow" accent={C.red} delay={0.35} /></div>
           <div className="col-6 col-md-4 d-flex"><KpiCard label="Pamir annual avg" value="−10 to −20°C" sub="Permanent permafrost above 4,000m; snow year-round" accent={C.dim} delay={0.40} /></div>
-          <div className="col-6 col-md-4 d-flex"><KpiCard label="Spring (Mar–May)" value="8–22°C" sub="Wettest season; snowmelt floods; Dushanbe blooms" accent={C.ir} delay={0.45} /></div>
+          <div className="col-6 col-md-4 d-flex"><KpiCard label="Spring (Mar–May)" value="8–22°C" sub="Wettest season; snowmelt floods; Dushanbe blooms" accent={C.tj} delay={0.45} /></div>
         </div>
         <div className="row gy-3 mb-3">
           <div className="col-12 col-md-6">
@@ -273,23 +391,25 @@ export default function Tajikistan() {
                 { mo:'Oct', label:'11h 02m', pct:53 },
                 { mo:'Nov', label:'10h 02m', pct:42, color:C.red },
                 { mo:'Dec', label:'9h 36m ★', pct:36, color:C.red },
-              ].map(r => <DlRow key={r.mo} mo={r.mo} label={r.label} pct={r.pct} color={r.color || C.ir} dark={r.dark} />)}
+              ].map(r => <DlRow key={r.mo} mo={r.mo} label={r.label} pct={r.pct} color={r.color || C.tj} dark={r.dark} />)}
               <p style={{ fontSize:11, color:C.sub, marginTop:10, lineHeight:1.6 }}>At 38.5°N, Dushanbe has a relatively mild daylight swing (5h 14m) compared to Astana (8.5h). Long summer days of nearly 15h support agriculture in the valleys. The hot, dry summer coincides with maximum solar energy — Tajikistan's untapped solar potential is significant.</p>
             </Panel>
           </div>
           <div className="col-12 col-md-6">
             <Panel title="Rainfall by Region" icon={Icons.rain}>
               <p style={{ fontSize:11, color:C.sub, marginBottom:11, letterSpacing:'0.04em' }}>Annual precipitation by zone</p>
-              <BarRow label="Western Pamir-Alay slopes" value="1,000–2,000 mm" pct={100} color={C.ir} />
+              <BarRow label="Western Pamir-Alay slopes" value="1,000–2,000 mm" pct={100} color={C.tj} />
               <BarRow label="Dushanbe & Hisar Valley" value="~560 mm" pct={40} color={C.gld} />
               <BarRow label="Fergana Valley strip (Sughd)" value="~300 mm" pct={22} color={C.red} />
               <BarRow label="Eastern Pamir plateau" value="~60–100 mm" pct={7} color={C.dim} />
               <div style={{ height:1, background:C.border, margin:'14px 0' }} />
               <p style={{ fontSize:11, color:C.sub, marginBottom:11, letterSpacing:'0.04em' }}>Dushanbe monthly pattern</p>
-              <BarRow label="March–April (wettest)" value="70–85 mm" pct={100} color={C.ir} />
+              <BarRow label="March–April (wettest)" value="70–85 mm" pct={100} color={C.tj} />
               <BarRow label="Jun–Aug (dry summer)" value="5–15 mm" pct={15} color={C.gld} />
               <BarRow label="Dec–Jan (snow/rain)" value="20–30 mm" pct={30} color={C.red} />
               <p style={{ fontSize:11, color:C.sub, marginTop:10, lineHeight:1.6 }}>The Pamir's extreme aridity (60mm/year) contrasts with the western slopes receiving 2,000mm. This glacial melt feeds the Amu Darya — Central Asia's most important river — making Tajikistan the region's water tower. Climate change is accelerating glacier retreat at an estimated 1% per year.</p>
+              <GradientBar title="Monthly avg temperature — Dushanbe (°C)" values={[2,4,10,16,21,27,30,28,22,14,7,3]} colorStops={tempColor} unit="°" />
+              <GradientBar title="Monthly rainfall — Dushanbe (mm)" values={[35,40,65,75,65,10,5,3,8,30,40,38]} colorStops={rainColor} unit="mm" />
             </Panel>
           </div>
         </div>
@@ -297,7 +417,7 @@ export default function Tajikistan() {
         {/* 3. POPULATION */}
         <SectionHeader icon={Icons.people} label="Population & Demographics" />
         <div className="row g-1 mb-3">
-          <div className="col-6 col-md-4 d-flex"><KpiCard label="Population (2025)" value="~10.8M" sub="Growing ~2.2% per year; ~1M abroad as migrant workers" accent={C.ir} delay={0.05} /></div>
+          <div className="col-6 col-md-4 d-flex"><KpiCard label="Population (2025)" value="~10.8M" sub="Growing ~2.2% per year; ~1M abroad as migrant workers" accent={C.tj} delay={0.05} /></div>
           <div className="col-6 col-md-4 d-flex"><KpiCard label="Urban Population" value="~28%" sub="Most rural country in Central Asia; urbanisation accelerating" accent={C.dim} delay={0.10} /></div>
           <div className="col-6 col-md-4 d-flex"><KpiCard label="Median Age" value="~22 yrs" sub="Extremely young; 35%+ under 15; demographic bulge building" accent={C.gld} delay={0.15} /></div>
           <div className="col-6 col-md-4 d-flex"><KpiCard label="Population Density" value="~75 /km²" sub="Concentrated in valleys; mountains nearly empty" accent={C.dim} delay={0.20} /></div>
@@ -311,13 +431,20 @@ export default function Tajikistan() {
               <BarRow label="2000 (post-civil war)" value="6.2M" pct={57} color={C.dim} />
               <BarRow label="2010" value="7.6M" pct={70} color={C.red} />
               <BarRow label="2020" value="9.5M" pct={88} color={C.gld} />
-              <BarRow label="2025" value="~10.8M" pct={100} color={C.ir} />
+              <BarRow label="2025" value="~10.8M" pct={100} color={C.tj} />
               <p style={{ fontSize:11, color:C.sub, marginTop:10, lineHeight:1.6 }}>Population nearly doubled since independence (+96%) — one of the fastest growth rates in the former Soviet space — driven by a persistently high fertility rate of 3.45. The 1992–1997 civil war caused a dip from out-migration but natural increase quickly resumed. 1M+ migrant workers in Russia mean the de-facto domestic population is smaller.</p>
+              <AgeBar
+                title="Population age structure — male ▲ / female ▼ (% of total)"
+                male={[7.03,5.54,5.58,5.53,5.44,4.6,3.44,2.85,2.57,2.3,1.98,1.27,0.81,0.46,0.49,0.59]}
+                female={[6.61,5.25,5.31,5.32,5.38,4.54,3.37,2.88,2.64,2.4,2.03,1.33,0.86,0.42,0.49,0.68]}
+                medianM={21.5}
+                medianF={23.5}
+              />
             </Panel>
           </div>
           <div className="col-12 col-md-6">
             <Panel title="Largest Cities (2025 est.)" icon={Icons.landmark}>
-              <BarRow label="Dushanbe (capital)" value="~1,228,000" pct={100} color={C.ir} />
+              <BarRow label="Dushanbe (capital)" value="~1,228,000" pct={100} color={C.tj} />
               <BarRow label="Khujand (Sughd region)" value="~181,000" pct={15} color={C.gld} />
               <BarRow label="Kulob (Khatlon region)" value="~105,000" pct={9} color={C.red} />
               <BarRow label="Qurghonteppa / Bokhtar" value="~100,000" pct={8} color={C.dim} />
@@ -333,7 +460,7 @@ export default function Tajikistan() {
                 label="10.8M"
                 sublabel="population"
                 segments={[
-                  { label:'Tajik',          value:'84.3%', pct:84.3, color:C.ir  },
+                  { label:'Tajik',          value:'84.3%', pct:84.3, color:C.tj  },
                   { label:'Uzbek',          value:'13.8%', pct:13.8, color:C.gld },
                   { label:'Kyrgyz',         value:'0.8%',  pct:0.8,  color:C.red },
                   { label:'Russian',        value:'0.5%',  pct:0.5,  color:'#888'},
@@ -362,7 +489,7 @@ export default function Tajikistan() {
         {/* 4. ECONOMY */}
         <SectionHeader icon={Icons.chart} label="Economy & Finance" />
         <div className="row g-1 mb-3">
-          <div className="col-6 col-md-4 d-flex"><KpiCard label="GDP Nominal (2025 est.)" value="~$18.8B" sub="IMF; fastest-growing in Central Asia at 8.4% in 2024" accent={C.ir} delay={0.05} /></div>
+          <div className="col-6 col-md-4 d-flex"><KpiCard label="GDP Nominal (2025 est.)" value="~$18.8B" sub="IMF; fastest-growing in Central Asia at 8.4% in 2024" accent={C.tj} delay={0.05} /></div>
           <div className="col-6 col-md-4 d-flex"><KpiCard label="GDP per Capita" value="~$1,780" sub="IMF 2025; lowest in Central Asia; lower-middle income" accent={C.dim} delay={0.10} /></div>
           <div className="col-6 col-md-4 d-flex"><KpiCard label="GDP Growth (2024)" value="8.4%" sub="World Bank confirmed; services & industry led" accent={C.gld} delay={0.15} /></div>
           <div className="col-6 col-md-4 d-flex"><KpiCard label="GDP PPP (2025)" value="~$62.6B" sub="PPP per capita ~$6,048 — masks remittance dependency" accent={C.dim} delay={0.20} /></div>
@@ -376,13 +503,13 @@ export default function Tajikistan() {
                 label="$18.8B"
                 sublabel="GDP 2025"
                 segments={[
-                  { label:'Services',              value:'~54%', pct:54, color:C.ir  },
+                  { label:'Services',              value:'~54%', pct:54, color:C.tj  },
                   { label:'Industry (aluminium, mining)', value:'~23%', pct:23, color:C.gld },
                   { label:'Agriculture (cotton, fruits)', value:'~23%', pct:23, color:C.red },
                 ]}
               />
               <div style={{ height:1, background:C.border, margin:'16px 0' }} />
-              <BarRow label="Aluminium (TALCO plant)" value="~40% of exports" pct={100} color={C.ir} />
+              <BarRow label="Aluminium (TALCO plant)" value="~40% of exports" pct={100} color={C.tj} />
               <BarRow label="Gold & precious metals" value="~20%" pct={50} color={C.gld} />
               <BarRow label="Cotton fibre & yarn" value="~10%" pct={25} color={C.red} />
               <BarRow label="Electricity (Rogun future)" value="~5%" pct={13} color={C.dim} />
@@ -409,7 +536,7 @@ export default function Tajikistan() {
         <div className="row g-1 mb-3">
           <div className="col-6 col-md-4 d-flex"><KpiCard label="Avg Monthly Wage (2024)" value="~$160" sub="~1,740 TJS; among lowest in post-Soviet space" accent={C.gld} delay={0.05} /></div>
           <div className="col-6 col-md-4 d-flex"><KpiCard label="Labour Force (domestic)" value="~2.5M" sub="~1M+ additional working abroad in Russia mainly" accent={C.dim} delay={0.10} /></div>
-          <div className="col-6 col-md-4 d-flex"><KpiCard label="Unemployment (official)" value="~2.5%" sub="Severely understates reality; underemployment ~30%" accent={C.ir} delay={0.15} /></div>
+          <div className="col-6 col-md-4 d-flex"><KpiCard label="Unemployment (official)" value="~2.5%" sub="Severely understates reality; underemployment ~30%" accent={C.tj} delay={0.15} /></div>
           <div className="col-6 col-md-4 d-flex"><KpiCard label="Informal employment" value="~50%+" sub="Agriculture, bazaar trade; no social protection" accent={C.dim} delay={0.20} /></div>
           <div className="col-6 col-md-4 d-flex"><KpiCard label="Min. Wage (2025)" value="~400 TJS" sub="~$37/month; far below living costs even in rural areas" accent={C.red} delay={0.25} /></div>
           <div className="col-6 col-md-4 d-flex"><KpiCard label="Labour Participation" value="~57%" sub="Women ~45% vs men ~70%; rural women severely underemployed" accent={C.dim} delay={0.30} /></div>
@@ -417,7 +544,7 @@ export default function Tajikistan() {
         <div className="row gy-3 mb-3">
           <div className="col-12 col-md-6">
             <Panel title="Wages by Sector (monthly TJS, est.)" icon={Icons.chart}>
-              <BarRow label="Mining & extraction" value="~4,500" pct={100} color={C.ir} />
+              <BarRow label="Mining & extraction" value="~4,500" pct={100} color={C.tj} />
               <BarRow label="Financial services" value="~3,800" pct={84} color={C.gld} />
               <BarRow label="Public administration" value="~2,200" pct={49} color={C.red} />
               <BarRow label="National average" value="~1,740" pct={39} color={C.dim} />
@@ -432,7 +559,7 @@ export default function Tajikistan() {
                 label="2.5M"
                 sublabel="domestic labour"
                 segments={[
-                  { label:'Agriculture & livestock', value:'~47%', pct:47, color:C.ir  },
+                  { label:'Agriculture & livestock', value:'~47%', pct:47, color:C.tj  },
                   { label:'Trade & services',        value:'~28%', pct:28, color:C.gld },
                   { label:'Industry & mining',       value:'~11%', pct:11, color:C.red },
                   { label:'Construction',            value:'~7%',  pct:7,  color:C.dim },
@@ -452,7 +579,7 @@ export default function Tajikistan() {
         {/* 6. EDUCATION */}
         <SectionHeader icon={Icons.graduation} label="Education & Human Development" />
         <div className="row g-1 mb-3">
-          <div className="col-6 col-md-4 d-flex"><KpiCard label="Literacy Rate" value="99.7%" sub="Soviet-era legacy; near-universal; rural women slightly lower" accent={C.ir} delay={0.05} /></div>
+          <div className="col-6 col-md-4 d-flex"><KpiCard label="Literacy Rate" value="99.7%" sub="Soviet-era legacy; near-universal; rural women slightly lower" accent={C.tj} delay={0.05} /></div>
           <div className="col-6 col-md-4 d-flex"><KpiCard label="HDI (2023)" value="0.691" sub="Medium Human Development — rank 128th globally (UNDP)" accent={C.dim} delay={0.10} /></div>
           <div className="col-6 col-md-4 d-flex"><KpiCard label="Avg Years Schooling" value="~11.3 yrs" sub="Declining quality despite maintained access" accent={C.dim} delay={0.15} /></div>
           <div className="col-6 col-md-4 d-flex"><KpiCard label="Expected Schooling" value="~11.7 yrs" sub="Among lowest expected years in post-Soviet space" accent={C.dim} delay={0.20} /></div>
@@ -462,7 +589,7 @@ export default function Tajikistan() {
         <div className="row gy-3 mb-3">
           <div className="col-12 col-md-6">
             <Panel title="Education Metrics" icon={Icons.graduation}>
-              <BarRow label="Primary enrolment rate" value="~98%" pct={98} color={C.ir} />
+              <BarRow label="Primary enrolment rate" value="~98%" pct={98} color={C.tj} />
               <BarRow label="Secondary completion rate" value="~88%" pct={88} color={C.gld} />
               <BarRow label="Tertiary enrolment" value="~21%" pct={21} color={C.red} />
               <BarRow label="Girls secondary completion" value="~82%" pct={82} color={C.dim} />
@@ -493,7 +620,7 @@ export default function Tajikistan() {
           <div className="col-6 col-md-4 d-flex"><KpiCard label="Parliament (Majlisi Oli)" value="63 seats" sub="Bicameral; upper senate + lower assembly; rubber-stamp body" accent={C.dim} delay={0.15} /></div>
           <div className="col-6 col-md-4 d-flex"><KpiCard label="Ruling Party" value="PDPT" sub="People's Democratic Party of Tajikistan; controls all seats" accent={C.dim} delay={0.20} /></div>
           <div className="col-6 col-md-4 d-flex"><KpiCard label="Press Freedom (RSF 2024)" value="Rank 162/180" sub="Near-bottom globally; all media state-controlled" accent={C.dim} delay={0.25} /></div>
-          <div className="col-6 col-md-4 d-flex"><KpiCard label="Independence" value="Sep 9, 1991" sub="From Soviet Union; civil war followed 1992–1997" accent={C.ir} delay={0.30} /></div>
+          <div className="col-6 col-md-4 d-flex"><KpiCard label="Independence" value="Sep 9, 1991" sub="From Soviet Union; civil war followed 1992–1997" accent={C.tj} delay={0.30} /></div>
         </div>
         <div className="row gy-3 mb-3">
           <div className="col-12 col-md-6">
@@ -515,7 +642,7 @@ export default function Tajikistan() {
                 { yr:'2016', tx:'Constitutional referendum removes presidential term limits. Rahmon, 63, can rule for life.' },
                 { yr:'2020', tx:'Son Rustam Emomali becomes Senate Chairman — second in line to the presidency; dynastic succession visible.' },
               ].map(({ yr, tx }) => (
-                <div key={yr} style={{ paddingLeft:16, borderLeft:`1px solid ${C.ir}`, marginBottom:14 }}>
+                <div key={yr} style={{ paddingLeft:16, borderLeft:`1px solid ${C.tj}`, marginBottom:14 }}>
                   <div style={{ fontSize:10, letterSpacing:'0.11em', color:C.gld, textTransform:'uppercase', marginBottom:2 }}>{yr}</div>
                   <div style={{ fontSize:12.5, color:'#888', lineHeight:1.6 }}>{tx}</div>
                 </div>
@@ -528,7 +655,7 @@ export default function Tajikistan() {
         {/* 8. TOURISM */}
         <SectionHeader icon={Icons.briefcase} label="Tourism" />
         <div className="row g-1 mb-3">
-          <div className="col-6 col-md-4 d-flex"><KpiCard label="International Visitors (2023)" value="~1.1M" sub="Recovering post-COVID; mostly regional visitors" accent={C.ir} delay={0.05} /></div>
+          <div className="col-6 col-md-4 d-flex"><KpiCard label="International Visitors (2023)" value="~1.1M" sub="Recovering post-COVID; mostly regional visitors" accent={C.tj} delay={0.05} /></div>
           <div className="col-6 col-md-4 d-flex"><KpiCard label="Tourism Revenue" value="~$200M" sub="~1% of GDP; vast untapped potential" accent={C.dim} delay={0.10} /></div>
           <div className="col-6 col-md-4 d-flex"><KpiCard label="Top draw" value="Pamir Highway" sub="M41 highway — most epic overland route in the world" accent={C.dim} delay={0.15} /></div>
           <div className="col-6 col-md-4 d-flex"><KpiCard label="Visa-free / e-visa" value="~50 countries" sub="E-visa available online; significant improvement since 2018" accent={C.dim} delay={0.20} /></div>
@@ -568,6 +695,7 @@ export default function Tajikistan() {
                 ['Rushan & Ishkashim (GBAO villages)', 'Unique Pamiri architecture & hospitality'],
               ]} />
               <p style={{ fontSize:11, color:C.sub, marginTop:10, lineHeight:1.6 }}>The Pamir Highway is globally unique — a genuine wilderness road at 4,000–5,000m altitude bordering Afghanistan and China. Tajikistan is one of the few remaining "off the beaten track" destinations in Asia. Infrastructure limitations (accommodation, internet, roads) remain the key tourism constraint, not demand.</p>
+              <GradientBar title="Tourism intensity by month (relative)" values={[8,10,18,30,50,70,100,95,90,45,15,8]} colorStops={p => { const r=Math.round(255-(220*p/100)); const g=Math.round(255-(96*p/100)); const b=Math.round(255-(191*p/100)); return `rgb(${r},${g},${b})`; }} unit="%" />
             </Panel>
           </div>
         </div>
@@ -575,7 +703,7 @@ export default function Tajikistan() {
         {/* 9. VITAL STATISTICS */}
         <SectionHeader icon={Icons.people} label="Vital Statistics" />
         <div className="row g-1 mb-3">
-          <div className="col-6 col-md-4 d-flex"><KpiCard label="Births (2025 est.)" value="~225,000" sub="Birth rate ~20.7 per 1,000; high but declining slowly" accent={C.ir} delay={0.05} /></div>
+          <div className="col-6 col-md-4 d-flex"><KpiCard label="Births (2025 est.)" value="~225,000" sub="Birth rate ~20.7 per 1,000; high but declining slowly" accent={C.tj} delay={0.05} /></div>
           <div className="col-6 col-md-4 d-flex"><KpiCard label="Natural Increase" value="~165,000" sub="Strong net growth; low death rate ~5.7 per 1,000" accent={C.dim} delay={0.10} /></div>
           <div className="col-6 col-md-4 d-flex"><KpiCard label="Ages 0–14" value="~35%" sub="Massive youth bulge; future labour supply or unemployment risk" accent={C.dim} delay={0.15} /></div>
           <div className="col-6 col-md-4 d-flex"><KpiCard label="Ages 65+" value="~3.6%" sub="Very young age structure; minimal pension pressure for now" accent={C.dim} delay={0.20} /></div>
@@ -585,7 +713,7 @@ export default function Tajikistan() {
         <div className="row gy-3 mb-3">
           <div className="col-12 col-md-6">
             <Panel title="Causes of Death (est.)" icon={Icons.chart}>
-              <BarRow label="Circulatory diseases"        value="~47%" pct={100} color={C.ir}  />
+              <BarRow label="Circulatory diseases"        value="~47%" pct={100} color={C.tj}  />
               <BarRow label="Respiratory diseases"        value="~12%" pct={26}  color={C.gld} />
               <BarRow label="Digestive diseases"          value="~10%" pct={21}  color={C.red} />
               <BarRow label="Infections & parasitic"      value="~9%"  pct={19}  color={C.dim} />
@@ -613,7 +741,7 @@ export default function Tajikistan() {
         {/* 10. ECONOMIC DEPTH */}
         <SectionHeader icon={Icons.chart} label="Economic Depth & Fiscal Position" />
         <div className="row g-1 mb-3">
-          <div className="col-6 col-md-4 d-flex"><KpiCard label="Foreign Reserves (2025)" value="~$5.6B" sub="World Bank 2025; 8+ months import cover — record high" accent={C.ir} delay={0.05} /></div>
+          <div className="col-6 col-md-4 d-flex"><KpiCard label="Foreign Reserves (2025)" value="~$5.6B" sub="World Bank 2025; 8+ months import cover — record high" accent={C.tj} delay={0.05} /></div>
           <div className="col-6 col-md-4 d-flex"><KpiCard label="Govt Budget (2025)" value="~−2.2% deficit" sub="IMF fiscal anchor; grant inflows declining as IDA transitions" accent={C.gld} delay={0.10} /></div>
           <div className="col-6 col-md-4 d-flex"><KpiCard label="Govt Debt / GDP (2024)" value="~33%" sub="Manageable but China EXIM Bank debt raises sustainability concerns" accent={C.dim} delay={0.15} /></div>
           <div className="col-6 col-md-4 d-flex"><KpiCard label="Rogun Dam investment" value="~$4B+ total" sub="World's tallest dam when complete; transforms energy exports" accent={C.red} delay={0.20} /></div>
@@ -653,6 +781,7 @@ export default function Tajikistan() {
                 ['IDA grant graduation (planned)', 'Transitioning to loan terms ~2025–2027'],
               ]} />
               <p style={{ fontSize:11, color:C.sub, marginTop:10, lineHeight:1.6 }}>Rogun Dam is Tajikistan's generational economic bet — if completed, it would make the country an electricity exporter and reduce dependence on remittances. China's 40% share of external debt is a significant risk; Tajikistan has already ceded a gold mine to China in lieu of debt repayment. Graduating from IDA grants raises financing costs.</p>
+              <GradientBar title="Trade balance 2015–2024 ($B)" values={[-2.3, -2.1, -2.0, -2.2, -2.2, -1.7, -2.1, 0.0, -2.3, -3.0]} xLabels={['2015', '2016', '2017', '2018', '2019', '2020', '2021', '2022', '2023', '2024']} colorStops={(p, v) => v >= 0 ? `rgb(${Math.round(255-220*p/100)},${Math.round(255-96*p/100)},${Math.round(255-191*p/100)})` : `rgb(${Math.round(255-23*p/100)},${Math.round(255-230*p/100)},${Math.round(255-211*p/100)})`} fmt={v => v > 0 ? `+${v}B` : `${v}B`} absScale={true} />
             </Panel>
           </div>
         </div>
@@ -660,7 +789,7 @@ export default function Tajikistan() {
         {/* 11. ENERGY */}
         <SectionHeader icon={Icons.mountain} label="Energy & Resources" />
         <div className="row g-1 mb-3">
-          <div className="col-6 col-md-4 d-flex"><KpiCard label="Total Generation (2024 est.)" value="~22 TWh" sub="Nearly 100% hydropower; 2nd cleanest grid in world" accent={C.ir} delay={0.05} /></div>
+          <div className="col-6 col-md-4 d-flex"><KpiCard label="Total Generation (2024 est.)" value="~22 TWh" sub="Nearly 100% hydropower; 2nd cleanest grid in world" accent={C.tj} delay={0.05} /></div>
           <div className="col-6 col-md-4 d-flex"><KpiCard label="Nurek HPP capacity" value="3,000 MW" sub="World's tallest earthen dam (300m); Vakhsh River" accent={C.dim} delay={0.10} /></div>
           <div className="col-6 col-md-4 d-flex"><KpiCard label="Hydro potential (untapped)" value="~80%" sub="Potential 527 TWh/yr; only 4% utilised; enormous asset" accent={C.gld} delay={0.15} /></div>
           <div className="col-6 col-md-4 d-flex"><KpiCard label="Energy deficit (winter)" value="Seasonal" sub="Power cuts 8–12 hrs/day in rural areas Dec–Feb; aluminium smelter priority" accent={C.dim} delay={0.20} /></div>
@@ -674,7 +803,7 @@ export default function Tajikistan() {
                 label="~22 TWh"
                 sublabel="generated 2024"
                 segments={[
-                  { label:'Large hydropower (Nurek, Rogun)', value:'~95%', pct:95, color:C.ir  },
+                  { label:'Large hydropower (Nurek, Rogun)', value:'~95%', pct:95, color:C.tj  },
                   { label:'Small hydro & run-of-river',      value:'~4%',  pct:4,  color:C.gld },
                   { label:'Thermal & other',                 value:'~1%',  pct:1,  color:C.red },
                 ]}
@@ -723,7 +852,7 @@ export default function Tajikistan() {
           </div>
           <div className="col-12 col-md-6">
             <Panel title="Digital Indicators" icon={Icons.chart}>
-              <BarRow label="Internet penetration" value="~40%" pct={40} color={C.ir} />
+              <BarRow label="Internet penetration" value="~40%" pct={40} color={C.tj} />
               <BarRow label="Mobile penetration" value="~100%" pct={100} color={C.gld} />
               <BarRow label="Fixed broadband" value="~3%" pct={3} color={C.red} />
               <BarRow label="Social media penetration" value="~25%" pct={25} color={C.dim} />
@@ -759,7 +888,7 @@ export default function Tajikistan() {
           </div>
           <div className="col-12 col-md-6">
             <Panel title="Disease & Health Burden" icon={Icons.chart}>
-              <BarRow label="TB incidence per 100K (2023)" value="~56" pct={100} color={C.ir} />
+              <BarRow label="TB incidence per 100K (2023)" value="~56" pct={100} color={C.tj} />
               <BarRow label="OOP health spending share" value="64%" pct={100} color={C.red} />
               <BarRow label="Child stunting (under-5)" value="~18%" pct={32} color={C.gld} />
               <BarRow label="Infant mortality per 1,000" value="32.3" pct={57} color={C.dim} />
@@ -772,7 +901,7 @@ export default function Tajikistan() {
         {/* 14. SOCIAL */}
         <SectionHeader icon={Icons.people} label="Social Indicators & Inequality" />
         <div className="row g-1 mb-3">
-          <div className="col-6 col-md-4 d-flex"><KpiCard label="Poverty rate ($4.20/day)" value="~14.8%" sub="World Bank 2025; down from 55% in 2010 — remittance-driven" accent={C.ir} delay={0.05} /></div>
+          <div className="col-6 col-md-4 d-flex"><KpiCard label="Poverty rate ($4.20/day)" value="~14.8%" sub="World Bank 2025; down from 55% in 2010 — remittance-driven" accent={C.tj} delay={0.05} /></div>
           <div className="col-6 col-md-4 d-flex"><KpiCard label="Gini Coefficient (2015)" value="34.0" sub="Moderate inequality; remittances equalise somewhat" accent={C.dim} delay={0.10} /></div>
           <div className="col-6 col-md-4 d-flex"><KpiCard label="Rural poverty rate" value="~20%" sub="National line 2024; urban-rural gap significant" accent={C.dim} delay={0.15} /></div>
           <div className="col-6 col-md-4 d-flex"><KpiCard label="Gender Inequality Index" value="0.420 (rank 118)" sub="UNDP; limited women's economic & political participation" accent={C.gld} delay={0.20} /></div>
@@ -782,7 +911,7 @@ export default function Tajikistan() {
         <div className="row gy-3 mb-3">
           <div className="col-12 col-md-6">
             <Panel title="Access & Basic Services" icon={Icons.chart}>
-              <BarRow label="Access to clean water (urban)" value="~93%" pct={93} color={C.ir} />
+              <BarRow label="Access to clean water (urban)" value="~93%" pct={93} color={C.tj} />
               <BarRow label="Access to clean water (rural)" value="~60%" pct={60} color={C.gld} />
               <BarRow label="Access to sanitation (urban)" value="~88%" pct={88} color={C.dim} />
               <BarRow label="Access to sanitation (rural)" value="~45%" pct={45} color={C.dim} />
@@ -810,7 +939,7 @@ export default function Tajikistan() {
         <div className="row g-1 mb-3">
           <div className="col-6 col-md-4 d-flex"><KpiCard label="CO₂ per capita (2022)" value="~0.7 t" sub="Extremely low; nearly pure hydro grid; subsistence agriculture" accent={C.gld} delay={0.05} /></div>
           <div className="col-6 col-md-4 d-flex"><KpiCard label="Glacier loss rate" value="~1% per year" sub="8,000+ glaciers losing mass; Amu Darya flows threatened" accent={C.red} delay={0.10} /></div>
-          <div className="col-6 col-md-4 d-flex"><KpiCard label="Hydro potential" value="527 TWh/yr" sub="Only ~4% utilised; world's largest untapped per-capita potential" accent={C.ir} delay={0.15} /></div>
+          <div className="col-6 col-md-4 d-flex"><KpiCard label="Hydro potential" value="527 TWh/yr" sub="Only ~4% utilised; world's largest untapped per-capita potential" accent={C.tj} delay={0.15} /></div>
           <div className="col-6 col-md-4 d-flex"><KpiCard label="Sarez Lake risk" value="High" sub="Natural dam holding 17km³; failure would be regional catastrophe" accent={C.dim} delay={0.20} /></div>
           <div className="col-6 col-md-4 d-flex"><KpiCard label="Arable land loss" value="Ongoing" sub="Erosion & desertification in lower valleys; soil degradation" accent={C.dim} delay={0.25} /></div>
           <div className="col-6 col-md-4 d-flex"><KpiCard label="Climate vulnerability" value="Extreme" sub="Mountain country; flood, drought, landslide risks all elevated" accent={C.dim} delay={0.30} /></div>
@@ -831,7 +960,7 @@ export default function Tajikistan() {
           </div>
           <div className="col-12 col-md-6">
             <Panel title="Climate Risks" icon={Icons.chart}>
-              <BarRow label="Glacier retreat risk" value="Critical" pct={95} color={C.ir} />
+              <BarRow label="Glacier retreat risk" value="Critical" pct={95} color={C.tj} />
               <BarRow label="Flash flood frequency" value="High (spring melt)" pct={80} color={C.red} />
               <BarRow label="Landslide risk (mountain slopes)" value="Very high" pct={85} color={C.gld} />
               <BarRow label="Drought risk (lower valleys)" value="Elevated" pct={65} color={C.dim} />
@@ -868,7 +997,7 @@ export default function Tajikistan() {
           <div className="col-12 col-md-6">
             <Panel title="Key Risks & Opportunities" icon={Icons.chart}>
               <BarRow label="Governance / rule of law risk" value="Extreme" pct={95} color={C.red} />
-              <BarRow label="Russia dependency (remittances)" value="Critical" pct={100} color={C.ir} />
+              <BarRow label="Russia dependency (remittances)" value="Critical" pct={100} color={C.tj} />
               <BarRow label="Hydropower export opportunity" value="World-class" pct={90} color={C.dim} />
               <BarRow label="Afghanistan border risk" value="Elevated" pct={70} color={C.gld} />
               <BarRow label="Tourism potential (untapped)" value="High" pct={75} color={C.dim} />
@@ -884,7 +1013,7 @@ export default function Tajikistan() {
           <div className="col-6 col-md-4 d-flex"><KpiCard label="Global Peace Index (2024)" value="~Rank 90" sub="Medium peace; Afghan border a persistent risk factor" accent={C.gld} delay={0.05} /></div>
           <div className="col-6 col-md-4 d-flex"><KpiCard label="Afghanistan border" value="1,357 km" sub="Major narcotics trafficking corridor; military incidents occur" accent={C.red} delay={0.10} /></div>
           <div className="col-6 col-md-4 d-flex"><KpiCard label="Homicide rate (est.)" value="~1.5 / 100K" sub="Low by global standards; state controls information tightly" accent={C.dim} delay={0.15} /></div>
-          <div className="col-6 col-md-4 d-flex"><KpiCard label="Press Freedom (RSF 2024)" value="Rank 162/180" sub="Near-bottom globally; no independent media exists" accent={C.ir} delay={0.20} /></div>
+          <div className="col-6 col-md-4 d-flex"><KpiCard label="Press Freedom (RSF 2024)" value="Rank 162/180" sub="Near-bottom globally; no independent media exists" accent={C.tj} delay={0.20} /></div>
           <div className="col-6 col-md-4 d-flex"><KpiCard label="Drug trafficking" value="High risk" sub="Afghanistan opiate transit route to Russia & Europe" accent={C.dim} delay={0.25} /></div>
           <div className="col-6 col-md-4 d-flex"><KpiCard label="GBAO unrest (2022)" value="Suppressed" sub="May 2022 protests in Pamir; 25+ killed; internet blackout imposed" accent={C.dim} delay={0.30} /></div>
         </div>
@@ -904,7 +1033,7 @@ export default function Tajikistan() {
           </div>
           <div className="col-12 col-md-6">
             <Panel title="Security Context" icon={Icons.chart}>
-              <BarRow label="Corruption (CPI, 100=clean)" value="~20/100" pct={20} color={C.ir} />
+              <BarRow label="Corruption (CPI, 100=clean)" value="~20/100" pct={20} color={C.tj} />
               <BarRow label="Press freedom (100=free, est.)" value="~8/100" pct={8} color={C.red} />
               <BarRow label="Rule of law (WJP, 100=best)" value="~22/100" pct={22} color={C.gld} />
               <BarRow label="Political rights (FH, 100=free)" value="4/100" pct={4} color={C.dim} />
