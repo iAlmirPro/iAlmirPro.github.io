@@ -185,6 +185,12 @@ const SectionHeader = ({ icon, label }) => (
 );
 ```
 
+Usage: `<SectionHeader icon={Icons.mountain} label="Geography & Landscape" />`
+
+- No border-top, no rule line — clean minimal header
+- `paddingTop: 24` creates spacing from the section above
+- `marginBottom: 28` before the first KPI grid
+
 ---
 
 ### `<KpiCard>`
@@ -210,11 +216,93 @@ const KpiCard = ({ label, value, sub, accent = C.kg, delay = 0 }) => {
 - `accent={C.dim}` = white value text, dim stripe — default/neutral card
 - Bottom stripe is `2px` tall, full width, positioned `absolute`
 
+Usage:
+```jsx
+<div className="col-6 col-md-4 d-flex">
+  <KpiCard label="GDP Nominal" value="$17.5B" sub="World Bank 2024" accent={C.kg} delay={0.05} />
+</div>
+```
+
 ---
 
 ### `<Panel>`, `<BarRow>`, `<Tbl>`, `<RegCard>`, `<DlRow>`, `<Donut>`
 
 See `kyrgyzstan-dashboard.jsx` for full component source — these are unchanged from the original design system.
+
+**Panel usage:**
+```jsx
+<div className="col-12 col-md-6">
+  <Panel title="Key Economic Indicators" icon={Icons.briefcase}>
+    <Tbl rows={[...]} />
+    <p style={{ fontSize:11, color:C.sub, marginTop:10, lineHeight:1.6 }}>
+      Interpretive note here — what do these values mean? High/low/normal compared to global or regional benchmarks.
+    </p>
+  </Panel>
+</div>
+```
+
+> **Every panel must end with an interpretive note** — answers *"So what?"*: is this value good/bad/typical? Compare to global average, regional peers, or historical trend. If a panel already has a descriptive paragraph, append a second note after it.
+
+> **JSX special chars:** Use `&lt;` for `<` inside panel note text (e.g. `&lt;10/100K`) to avoid parse errors.
+
+**Inline Divider** (between sub-sections inside a panel):
+```jsx
+<div style={{ height:1, background:C.border, margin:'16px 0' }} />
+```
+
+**Visitor / Export Origins Row** (used in §8 Tourism and §10 Export destinations):
+```jsx
+{[
+  { flag:'🇷🇺', country:'Russia',     val:'largest source market',       pct:'~38%' },
+  { flag:'🇰🇿', country:'Kazakhstan', val:'frequent short-stay visitors', pct:'~22%' },
+].map(({ flag, country, val, pct }) => (
+  <div key={country} style={{ display:'flex', alignItems:'center', gap:10, padding:'9px 0' }}>
+    <span style={{ fontSize:18, flexShrink:0 }}>{flag}</span>
+    <span style={{ fontSize:12.5, color:C.txt, flexShrink:0 }}>{country}</span>
+    <span style={{ fontSize:11, color:C.sub, flex:1 }}>{val}</span>
+    <span style={{ fontFamily:'Fraunces,serif', fontWeight:700, fontSize:13, color:C.txt, flexShrink:0 }}>{pct}</span>
+  </div>
+))}
+```
+Layout: `flag (18px) | country name | description (flex:1, C.sub) | percentage (Fraunces 700)`
+
+**Political Timeline** (used in §7 Political Landscape):
+```jsx
+{[
+  { yr:'1991', tx:'Independence declared...' },
+  { yr:'2005', tx:'Revolution...' },
+].map(({ yr, tx }) => (
+  <div key={yr} style={{ paddingLeft:16, borderLeft:`1px solid ${C.kg}`, marginBottom:14 }}>
+    <div style={{ fontSize:10, letterSpacing:'0.11em', color:C.yel, textTransform:'uppercase', marginBottom:2 }}>{yr}</div>
+    <div style={{ fontSize:12.5, color:'#888', lineHeight:1.6 }}>{tx}</div>
+  </div>
+))}
+```
+- Left border: primary country color — Year text: secondary (yel) — Event text: 12.5px `#888`
+
+---
+
+### Icons Library
+
+All icons: `width="14" height="14"`, `fill="currentColor"`, used in `<SectionHeader>` and `<Panel>` title.
+
+```js
+const Icons = {
+  mountain,    // §1 Geography, §11 Energy & Resources
+  map,         // §12 Infrastructure, region maps
+  water,       // §15 Environment, rivers, lakes
+  cloudSun,    // §2 Climate
+  sun,         // Daylight hours panel
+  rain,        // Rainfall panel
+  people,      // §3 Population, §9 Vital Statistics, §13 Health, §14 Social, tourism origins
+  chart,       // §4 Economy, §10 Fiscal, §9 Causes of Death, GDP statistics
+  briefcase,   // §5 Employment, §8 Tourism, §16 Business
+  graduation,  // §6 Education
+  landmark,    // §7 Political, cities, heritage, facts tables
+}
+```
+
+SVG paths are copied verbatim from Font Awesome 6 free set — see `kyrgyzstan-dashboard.jsx` `Icons` object for full `<path d="...">` values.
 
 ---
 
@@ -463,6 +551,12 @@ Each section follows this pattern:
   </div>
 </div>
 ```
+
+- **H1:** Fraunces 900, `clamp(44px,9vw,96px)`, `lineHeight:0.9`, `letterSpacing:'-0.02em'`
+- **Country name suffix:** italic `<em>` with `fontWeight:400` and primary country color
+- **Eyebrow:** 10px, uppercase, `letterSpacing:0.28em`, primary color, `marginBottom:14`
+- **Flag:** top-right, `alignSelf:'flex-start'`, `marginTop:6`
+- **Flag size:** `90×54px`, `borderRadius:3`, `boxShadow: 0 4px 24px rgba(R,G,B,.45)` using primary color channels
 
 ---
 
