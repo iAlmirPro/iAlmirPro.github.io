@@ -68,12 +68,35 @@ def ensure_npm(cache):
     print("✓  npm packages installed")
 
 def beautify_html(html):
+    INLINE = ['em', 'strong', 'b', 'i', 'span', 'code', 'sup', 'sub', 'small']
+
+    # Replace inline tags (including those with attributes) with numbered placeholders
+    # so prettify() doesn't wrap them in newlines causing unwanted spaces in the browser.
+    placeholders = {}
+    counter = [0]
+
+    def store(m):
+        key = f'__TAG{counter[0]}__'
+        placeholders[key] = m.group(0)
+        counter[0] += 1
+        return key
+
+    for tag in INLINE:
+        html = re.sub(rf'<{tag}(?:\s[^>]*)?>', store, html)
+        html = re.sub(rf'</{tag}>', store, html)
+
     pretty = BeautifulSoup(html, 'html.parser').prettify()
     result = []
     for line in pretty.split('\n'):
         s = line.lstrip(' ')
         result.append('  ' * (len(line) - len(s)) + s)
-    return '\n'.join(result)
+    pretty = '\n'.join(result)
+
+    # Restore inline tags
+    for key, val in placeholders.items():
+        pretty = pretty.replace(key, val)
+
+    return pretty
 
 def inject_comments(html, sections, panels):
     inserts = []
