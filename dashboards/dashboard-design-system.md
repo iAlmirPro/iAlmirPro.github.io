@@ -30,8 +30,7 @@
 5. Replace all data section by section — verify every KPI value via web search
 6. Run duplicate check: no label/key should appear in both a visual component and a table row — if duplicated, remove the table row; the visual takes priority
 7. Run color audit: max 2 colored KpiCards per section, balanced `kg/yel/blu` across dashboard
-8. Compile to HTML: `node compile.js` (see HTML Export section)
-9. Present both `.jsx` and `.html` for download
+8. Present `.jsx` for download
 
 ---
 
@@ -673,60 +672,6 @@ Each section follows this pattern:
 
 ---
 
-## HTML Export
-
-Pre-compile JSX to plain JS server-side using Node.js — no Babel in the browser, no runtime warning.
-
-### compile.js
-
-```js
-const babel = require('@babel/core');
-const fs = require('fs');
-
-const jsx = fs.readFileSync('./[country]-dashboard-vN.jsx', 'utf8');
-const prepared = jsx
-  .replace('const { useState, useEffect } = React;', 'const { useEffect } = React;')
-  .replace('export default function [Country]()', 'function [Country]()');
-
-const result = babel.transformSync(prepared, {
-  plugins: ['@babel/plugin-transform-react-jsx'],
-  filename: 'dashboard.jsx'
-});
-
-const compiled = result.code +
-  '\n\nconst root = ReactDOM.createRoot(document.getElementById("root"));' +
-  '\nroot.render(React.createElement([Country]));';
-
-const html = `<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>[Country] — Country Dashboard 2025</title>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
-</head>
-<body style="margin:0;background:#000">
-  <div id="root"></div>
-  <script>
-${compiled}
-  </script>
-</body>
-</html>`;
-
-fs.writeFileSync('./[country]-dashboard-vN.html', html);
-```
-
-Install dependencies once: `npm install @babel/core @babel/plugin-transform-react-jsx`
-
-### JSX special characters in text content
-Inside JSX `<p>` tags, `<` followed by a digit must be escaped as `&lt;` or Babel will throw a parse error:
-```
-TB at 59.9/100K is 6× the WHO target of &lt;10/100K.   ✓ correct
-TB at 59.9/100K is 6× the WHO target of <10/100K.      ✗ parse error
-```
-
----
 
 ## Data Verification Standard
 
