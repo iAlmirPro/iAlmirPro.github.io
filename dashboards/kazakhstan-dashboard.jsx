@@ -5,6 +5,7 @@ const C = {
   kaz:  '#00AFCA', kazL: '#33c8df',   // primary — Kazakh blue
   yel:  '#FFC72C', yelL: '#ffd966',   // secondary — Kazakh yellow (sun & steppe eagle)
   blu:  '#2E86DE', bluL: '#5ba8ff',   // water / depth / cold
+  red:  '#E8192C', redL: '#ff3347',   // heat / record high
   bg:   '#000',   card: '#111',  border: '#1e1e1e',
   track:'#222',   txt:  '#fff',  sub:   '#999',  dim: '#444',
 };
@@ -43,7 +44,7 @@ const SectionHeader = ({ icon, label }) => (
 );
 
 const KpiCard = ({ label, value, sub, accent = C.kaz, delay = 0 }) => {
-  const valColor = accent === C.kaz ? C.kazL : accent === C.yel ? C.yelL : accent === C.blu ? C.bluL : C.txt;
+  const valColor = accent === C.kaz ? C.kazL : accent === C.yel ? C.yelL : accent === C.blu ? C.bluL : accent === C.red ? C.redL : C.txt;
   return (
     <div className="kpi" style={{
       background:C.card, border:`1px solid ${C.border}`, padding:'18px 15px 15px',
@@ -135,7 +136,7 @@ const GradientBar = ({ title, values, colorStops, unit = '', height = 22, xLabel
     <div style={{ marginTop:14 }}>
       {title && <div style={{ fontSize:10, letterSpacing:'0.1em', textTransform:'uppercase', color:C.sub, marginBottom:6 }}>{title}</div>}
       <div style={{ position:'relative', height, borderRadius:4, overflow:'hidden', background:`linear-gradient(to right, ${gradient})` }}>
-        <div style={{ position:'absolute', top:'10%', bottom:'10%', left:`${peakPct}%`, width:2, background:peakColor, transform:'translateX(-50%)', borderRadius:2 }} />
+        <div style={{ position:'absolute', top:'10%', bottom:'10%', left:`${peakPct}%`, width:1, background:peakColor, transform:'translateX(-50%)', borderRadius:1 }} />
       </div>
       <div style={{ display:'flex', marginTop:4 }}>
         {labels.map((l, i) => (
@@ -154,63 +155,61 @@ const AgeBar = ({ title, male, female, medianM, medianF }) => {
   const maleColor = '#2E86DE';
   const femaleColor = '#E8192C';
   const decadeLabels = [0,10,20,30,40,50,60,70,80];
-  // 16 cohorts span 0-80+; each cohort = 5 years; total span = 80 years
-  // cohort midpoints for gradient: 2,7,12,...,77.5
   const maxVal = Math.max(...male, ...female);
-  const pctM = v => (v / maxVal) * 100;
-  const makeGradient = (arr, color) => {
-    return arr.map((v, i) => {
-      const alpha = pctM(v) / 100;
-      const r = parseInt(color.slice(1,3),16);
-      const g = parseInt(color.slice(3,5),16);
-      const b = parseInt(color.slice(5,7),16);
-      const vr = Math.round(r + (255-r)*(1-alpha));
-      const vg = Math.round(g + (255-g)*(1-alpha));
-      const vb = Math.round(b + (255-b)*(1-alpha));
-      return `rgb(${vr},${vg},${vb}) ${(i/15)*100}%`;
-    }).join(', ');
+  const barH = 26;
+  const chunkColor = (v, hex) => {
+    const alpha = (v / maxVal);
+    const r = parseInt(hex.slice(1,3),16);
+    const g = parseInt(hex.slice(3,5),16);
+    const b = parseInt(hex.slice(5,7),16);
+    return `rgb(${Math.round(153+(r-153)*alpha)},${Math.round(153+(g-153)*alpha)},${Math.round(153+(b-153)*alpha)})`;
   };
-  // median line position: median age / 80 * 100%
   const medMPct = Math.min((medianM / 80) * 100, 100);
   const medFPct = Math.min((medianF / 80) * 100, 100);
   const darkM = '#006d7e';
   const darkF = '#a01020';
+  const renderBar = (arr, color, radius) => (
+    <div style={{ height:barH, borderRadius:radius, overflow:'hidden', display:'flex' }}>
+      {arr.map((v, i) => (
+        <div key={i} style={{
+          flex:1, background:chunkColor(v, color),
+          display:'flex', alignItems:'center', justifyContent:'center',
+          fontSize:7, color:'rgba(255,255,255,0.85)', fontWeight:600, lineHeight:1
+        }}>
+          {v.toFixed(1)}
+        </div>
+      ))}
+    </div>
+  );
   return (
     <div style={{ marginTop:14 }}>
       {title && <div style={{ fontSize:10, letterSpacing:'0.1em', textTransform:'uppercase', color:C.sub, marginBottom:6 }}>{title}</div>}
       <div style={{ position:'relative' }}>
-        {/* Male bar */}
-        <div style={{ height:18, borderRadius:'4px 4px 0 0', overflow:'hidden',
-          background:`linear-gradient(to right, ${makeGradient(male, maleColor)})` }} />
-        {/* 2px gap */}
+        {renderBar(male, maleColor, '4px 4px 0 0')}
         <div style={{ height:2, background:C.bg }} />
-        {/* Female bar */}
-        <div style={{ height:18, borderRadius:'0 0 4px 4px', overflow:'hidden',
-          background:`linear-gradient(to right, ${makeGradient(female, femaleColor)})` }} />
-        {/* Male median line — on male bar only, 80% height centered (top:2px of 18px bar) */}
-        <div style={{ position:'absolute', top:2, height:14, left:`${medMPct}%`,
-          width:2, background:darkM, transform:'translateX(-50%)', borderRadius:2, pointerEvents:'none' }} />
-        {/* Female median line — on female bar only, 80% height centered (top: 18+2gap+2px) */}
-        <div style={{ position:'absolute', top:22, height:14, left:`${medFPct}%`,
-          width:2, background:darkF, transform:'translateX(-50%)', borderRadius:2, pointerEvents:'none' }} />
+        {renderBar(female, femaleColor, '0 0 4px 4px')}
+        <div style={{ position:'absolute', top:2, height:barH-4, left:`${medMPct}%`,
+          width:1, background:darkM, transform:'translateX(-50%)', borderRadius:1, pointerEvents:'none' }} />
+        <div style={{ position:'absolute', top:barH+4, height:barH-4, left:`${medFPct}%`,
+          width:1, background:darkF, transform:'translateX(-50%)', borderRadius:1, pointerEvents:'none' }} />
       </div>
       {/* X-axis decade labels */}
       <div style={{ position:'relative', height:18, marginTop:3 }}>
         {decadeLabels.filter(age => age !== 0 && age !== 80).map(age => (
           <div key={age} style={{ position:'absolute', left:`${(age/80)*100}%`, transform:'translateX(-50%)', textAlign:'center' }}>
-            <div style={{ fontSize:8, color:C.sub, lineHeight:1 }}>{age}</div>
+            <div style={{ fontSize:8, color:C.sub, lineHeight:1 }}>{age}y</div>
           </div>
         ))}
       </div>
-      {/* Legend */}
-      <div style={{ display:'flex', alignItems:'center', gap:14, marginTop:3, fontSize:9, color:C.sub, flexWrap:'wrap' }}>
+      {/* Legend — centered */}
+      <div style={{ display:'flex', alignItems:'center', justifyContent:'center', gap:14, marginTop:3, fontSize:9, color:C.sub, flexWrap:'wrap' }}>
         <span style={{ display:'flex', alignItems:'center', gap:4 }}>
           <span style={{ display:'inline-block', width:10, height:4, background:maleColor, borderRadius:1 }} />
-          Male (median <strong style={{ color:maleColor }}>{medianM} yrs</strong>)
+          Male (median <strong style={{ color:maleColor }}>{medianM} yrs<span style={{ color:C.sub, fontWeight:300 }}>)</span></strong>
         </span>
         <span style={{ display:'flex', alignItems:'center', gap:4 }}>
           <span style={{ display:'inline-block', width:10, height:4, background:femaleColor, borderRadius:1 }} />
-          Female (median <strong style={{ color:femaleColor }}>{medianF} yrs</strong>)
+          Female (median <strong style={{ color:femaleColor }}>{medianF} yrs<span style={{ color:C.sub, fontWeight:300 }}>)</span></strong>
         </span>
       </div>
     </div>
@@ -222,12 +221,7 @@ const tempColor = p => {
   if (p < 75) { const t=(p-50)/25; return `rgb(${Math.round(190+t*50)},${Math.round(160-t*80)},${Math.round(60-t*40)})`; }
   const t=(p-75)/25; return `rgb(${Math.round(240-t*30)},${Math.round(80-t*60)},${Math.round(20)})`;
 };
-const rainColor = p => {
-  const r = Math.round(255 - (209 * p / 100));
-  const g = Math.round(255 - (121 * p / 100));
-  const b = Math.round(255 - (33  * p / 100));
-  return `rgb(${r},${g},${b})`;
-};
+const rainColor = p => `rgb(${Math.round(153-107*p/100)},${Math.round(153-19*p/100)},${Math.round(153+69*p/100)})`;
 
 const Donut = ({ segments, label, sublabel, size = 160 }) => {
   const r = 54, cx = 80, cy = 80, stroke = 22;
@@ -382,7 +376,7 @@ export default function Kazakhstan() {
 
         <div className="row g-1 mb-4">
           <div className="col-6 col-md-4 d-flex"><KpiCard label="Avg Annual Temp (Astana)" value="3.5°C" sub="Extreme continental; one of coldest capitals on Earth" accent={C.blu} delay={0.05} /></div>
-          <div className="col-6 col-md-4 d-flex"><KpiCard label="Record High" value="49°C" sub="Southern desert regions; extreme summer heat" accent={C.kaz} delay={0.10} /></div>
+          <div className="col-6 col-md-4 d-flex"><KpiCard label="Record High" value="49°C" sub="Southern desert regions; extreme summer heat" accent={C.red} delay={0.10} /></div>
           <div className="col-6 col-md-4 d-flex"><KpiCard label="Record Low" value="−57°C" sub="Northern steppe; brutal continental winter extremes" accent={C.blu} delay={0.15} /></div>
           <div className="col-6 col-md-4 d-flex"><KpiCard label="Annual Rainfall (Astana)" value="~340 mm" sub="Very dry; Almaty ~600 mm; south <200 mm" accent={C.dim} delay={0.20} /></div>
           <div className="col-6 col-md-4 d-flex"><KpiCard label="Climate type" value="BSk / Dwc" sub="Semi-arid steppe; severe continental inland" accent={C.dim} delay={0.25} /></div>
@@ -758,7 +752,7 @@ export default function Kazakhstan() {
                 ['Steppe nomad culture & eagle hunters', 'Berkutchi tradition; Altai region'],
               ]} />
               <p style={{ fontSize:11, color:C.sub, marginTop:10, lineHeight:1.6 }}>The Yasawi Mausoleum in Turkestan (UNESCO 2003) is Kazakhstan's most significant heritage site. Charyn Canyon rivals the American Grand Canyon in visual drama. The steppe nomad tradition — eagle hunting (berkutchi) — is a genuinely unique cultural offer. Astana's futuristic architecture, led by Norman Foster (Khan Shatyr), is increasingly a draw in itself.</p>
-              <GradientBar title="Tourism intensity by month (relative)" values={[8,10,15,25,45,65,100,90,70,40,15,8]} colorStops={p => { const r=Math.round(255-(255*p/100)); const g=Math.round(255-(80*p/100)); const b=Math.round(255-(53*p/100)); return `rgb(${r},${g},${b})`; }} unit="%" />
+              <GradientBar title="Tourism intensity by month (relative)" values={[8,10,15,25,45,65,100,90,70,40,15,8]} colorStops={p => `rgb(${Math.round(153+79*p/100)},${Math.round(153-128*p/100)},${Math.round(153-109*p/100)})`} unit="%" />
             </Panel>
           </div>
         </div>
@@ -851,7 +845,7 @@ export default function Kazakhstan() {
                 ['GDP growth Jan–Apr 2025', '+6.0% real (IMF/Bureau Statistics KZ)'],
               ]} />
               <p style={{ fontSize:11, color:C.sub, marginTop:10, lineHeight:1.6 }}>Investment-grade Baa3 is Kazakhstan's most significant fiscal achievement — it allows borrowing at far lower rates than peers like Kyrgyzstan (B3). The NFRK at $67B provides 8+ months of fiscal runway even if oil prices collapse. AIFC's English-law jurisdiction is strategically important — it allows international contract disputes to bypass Kazakhstani courts.</p>
-              <GradientBar title="Trade balance 2015–2024 ($B)" values={[14.8, 10.2, 13.5, 14.7, 14.7, 6.9, 17.0, 33.4, 18.5, 17.0]} xLabels={['2015', '2016', '2017', '2018', '2019', '2020', '2021', '2022', '2023', '2024']} colorStops={(p, v) => v >= 0 ? `rgb(${Math.round(255-220*p/100)},${Math.round(255-96*p/100)},${Math.round(255-191*p/100)})` : `rgb(${Math.round(255-23*p/100)},${Math.round(255-230*p/100)},${Math.round(255-211*p/100)})`} fmt={v => v > 0 ? `+${v}B` : `${v}B`} absScale={true} />
+              <GradientBar title="Trade balance 2015–2024 ($B)" values={[14.8, 10.2, 13.5, 14.7, 14.7, 6.9, 17.0, 33.4, 18.5, 17.0]} xLabels={['2015', '2016', '2017', '2018', '2019', '2020', '2021', '2022', '2023', '2024']} colorStops={(p, v) => v >= 0 ? `rgb(${Math.round(153-118*p/100)},${Math.round(153+6*p/100)},${Math.round(153-89*p/100)})` : `rgb(${Math.round(153+79*p/100)},${Math.round(153-128*p/100)},${Math.round(153-109*p/100)})`} fmt={v => v > 0 ? `+${v}B` : `${v}B`} absScale={true} />
             </Panel>
           </div>
         </div>

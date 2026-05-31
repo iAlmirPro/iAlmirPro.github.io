@@ -134,7 +134,7 @@ const GradientBar = ({ title, values, colorStops, unit = '', height = 22, xLabel
     <div style={{ marginTop:14 }}>
       {title && <div style={{ fontSize:10, letterSpacing:'0.1em', textTransform:'uppercase', color:C.sub, marginBottom:6 }}>{title}</div>}
       <div style={{ position:'relative', height, borderRadius:4, overflow:'hidden', background:`linear-gradient(to right, ${gradient})` }}>
-        <div style={{ position:'absolute', top:'10%', bottom:'10%', left:`${peakPct}%`, width:2, background:peakColor, transform:'translateX(-50%)', borderRadius:2 }} />
+        <div style={{ position:'absolute', top:'10%', bottom:'10%', left:`${peakPct}%`, width:1, background:peakColor, transform:'translateX(-50%)', borderRadius:1 }} />
       </div>
       <div style={{ display:'flex', marginTop:4 }}>
         {labels.map((l, i) => (
@@ -153,63 +153,61 @@ const AgeBar = ({ title, male, female, medianM, medianF }) => {
   const maleColor = '#2E86DE';
   const femaleColor = '#E8192C';
   const decadeLabels = [0,10,20,30,40,50,60,70,80];
-  // 16 cohorts span 0-80+; each cohort = 5 years; total span = 80 years
-  // cohort midpoints for gradient: 2,7,12,...,77.5
   const maxVal = Math.max(...male, ...female);
-  const pctM = v => (v / maxVal) * 100;
-  const makeGradient = (arr, color) => {
-    return arr.map((v, i) => {
-      const alpha = pctM(v) / 100;
-      const r = parseInt(color.slice(1,3),16);
-      const g = parseInt(color.slice(3,5),16);
-      const b = parseInt(color.slice(5,7),16);
-      const vr = Math.round(r + (255-r)*(1-alpha));
-      const vg = Math.round(g + (255-g)*(1-alpha));
-      const vb = Math.round(b + (255-b)*(1-alpha));
-      return `rgb(${vr},${vg},${vb}) ${(i/15)*100}%`;
-    }).join(', ');
+  const barH = 26;
+  const chunkColor = (v, hex) => {
+    const alpha = (v / maxVal);
+    const r = parseInt(hex.slice(1,3),16);
+    const g = parseInt(hex.slice(3,5),16);
+    const b = parseInt(hex.slice(5,7),16);
+    return `rgb(${Math.round(153+(r-153)*alpha)},${Math.round(153+(g-153)*alpha)},${Math.round(153+(b-153)*alpha)})`;
   };
-  // median line position: median age / 80 * 100%
   const medMPct = Math.min((medianM / 80) * 100, 100);
   const medFPct = Math.min((medianF / 80) * 100, 100);
   const darkM = '#1a5fa0';
   const darkF = '#a01020';
+  const renderBar = (arr, color, radius) => (
+    <div style={{ height:barH, borderRadius:radius, overflow:'hidden', display:'flex' }}>
+      {arr.map((v, i) => (
+        <div key={i} style={{
+          flex:1, background:chunkColor(v, color),
+          display:'flex', alignItems:'center', justifyContent:'center',
+          fontSize:7, color:'rgba(255,255,255,0.85)', fontWeight:600, lineHeight:1
+        }}>
+          {v.toFixed(1)}
+        </div>
+      ))}
+    </div>
+  );
   return (
     <div style={{ marginTop:14 }}>
       {title && <div style={{ fontSize:10, letterSpacing:'0.1em', textTransform:'uppercase', color:C.sub, marginBottom:6 }}>{title}</div>}
       <div style={{ position:'relative' }}>
-        {/* Male bar */}
-        <div style={{ height:18, borderRadius:'4px 4px 0 0', overflow:'hidden',
-          background:`linear-gradient(to right, ${makeGradient(male, maleColor)})` }} />
-        {/* 2px gap */}
+        {renderBar(male, maleColor, '4px 4px 0 0')}
         <div style={{ height:2, background:C.bg }} />
-        {/* Female bar */}
-        <div style={{ height:18, borderRadius:'0 0 4px 4px', overflow:'hidden',
-          background:`linear-gradient(to right, ${makeGradient(female, femaleColor)})` }} />
-        {/* Male median line — on male bar only, 80% height centered (top:2px of 18px bar) */}
-        <div style={{ position:'absolute', top:2, height:14, left:`${medMPct}%`,
-          width:2, background:darkM, transform:'translateX(-50%)', borderRadius:2, pointerEvents:'none' }} />
-        {/* Female median line — on female bar only, 80% height centered (top: 18+2gap+2px) */}
-        <div style={{ position:'absolute', top:22, height:14, left:`${medFPct}%`,
-          width:2, background:darkF, transform:'translateX(-50%)', borderRadius:2, pointerEvents:'none' }} />
+        {renderBar(female, femaleColor, '0 0 4px 4px')}
+        <div style={{ position:'absolute', top:2, height:barH-4, left:`${medMPct}%`,
+          width:1, background:darkM, transform:'translateX(-50%)', borderRadius:1, pointerEvents:'none' }} />
+        <div style={{ position:'absolute', top:barH+4, height:barH-4, left:`${medFPct}%`,
+          width:1, background:darkF, transform:'translateX(-50%)', borderRadius:1, pointerEvents:'none' }} />
       </div>
       {/* X-axis decade labels */}
       <div style={{ position:'relative', height:18, marginTop:3 }}>
         {decadeLabels.filter(age => age !== 0 && age !== 80).map(age => (
           <div key={age} style={{ position:'absolute', left:`${(age/80)*100}%`, transform:'translateX(-50%)', textAlign:'center' }}>
-            <div style={{ fontSize:8, color:C.sub, lineHeight:1 }}>{age}</div>
+            <div style={{ fontSize:8, color:C.sub, lineHeight:1 }}>{age}y</div>
           </div>
         ))}
       </div>
-      {/* Legend */}
-      <div style={{ display:'flex', alignItems:'center', gap:14, marginTop:3, fontSize:9, color:C.sub, flexWrap:'wrap' }}>
+      {/* Legend — centered */}
+      <div style={{ display:'flex', alignItems:'center', justifyContent:'center', gap:14, marginTop:3, fontSize:9, color:C.sub, flexWrap:'wrap' }}>
         <span style={{ display:'flex', alignItems:'center', gap:4 }}>
           <span style={{ display:'inline-block', width:10, height:4, background:maleColor, borderRadius:1 }} />
-          Male (median <strong style={{ color:maleColor }}>{medianM} yrs</strong>)
+          Male (median <strong style={{ color:maleColor }}>{medianM} yrs<span style={{ color:C.sub, fontWeight:300 }}>)</span></strong>
         </span>
         <span style={{ display:'flex', alignItems:'center', gap:4 }}>
           <span style={{ display:'inline-block', width:10, height:4, background:femaleColor, borderRadius:1 }} />
-          Female (median <strong style={{ color:femaleColor }}>{medianF} yrs</strong>)
+          Female (median <strong style={{ color:femaleColor }}>{medianF} yrs<span style={{ color:C.sub, fontWeight:300 }}>)</span></strong>
         </span>
       </div>
     </div>
@@ -221,12 +219,7 @@ const tempColor = p => {
   if (p < 75) { const t=(p-50)/25; return `rgb(${Math.round(190+t*50)},${Math.round(160-t*80)},${Math.round(60-t*40)})`; }
   const t=(p-75)/25; return `rgb(${Math.round(240-t*30)},${Math.round(80-t*60)},${Math.round(20)})`;
 };
-const rainColor = p => {
-  const r = Math.round(255 - (209 * p / 100));
-  const g = Math.round(255 - (121 * p / 100));
-  const b = Math.round(255 - (33  * p / 100));
-  return `rgb(${r},${g},${b})`;
-};
+const rainColor = p => `rgb(${Math.round(153-107*p/100)},${Math.round(153-19*p/100)},${Math.round(153+69*p/100)})`;
 
 /* ── Donut Chart ── */
 const Donut = ({ segments, label, sublabel, size = 160 }) => {
@@ -463,7 +456,7 @@ export default function Kyrgyzstan() {
               <p style={{ fontSize:11, color:C.sub, marginTop:10, lineHeight:1.6 }}>Population dipped slightly in 1990s due to emigration of ethnic Russians and Germans. Strong natural growth since 2000 driven by high birth rate.</p>
               <p style={{ fontSize:11, color:C.sub, marginTop:10, lineHeight:1.6 }}>Growing from 4.4M to 7.3M since 1991 (+66%) is strong but partly offset by emigration — an estimated 800K–1M Kyrgyz live abroad. Net growth reflects a high birth rate of ~22/1,000, well above the OECD average of ~10/1,000.</p>
               <AgeBar
-                title="Population age structure — male ▲ / female ▼ (% of total)"
+                title="Population age structure — male vs. female (% of total)"
                 male={[6.28,5.91,4.7,3.93,4.0,4.4,4.3,3.38,2.74,2.39,2.17,1.97,1.51,0.9,0.51,0.81]}
                 female={[5.96,5.61,4.51,3.79,3.84,4.24,4.28,3.36,2.77,2.55,2.38,2.27,1.84,1.22,0.77,0.92]}
                 medianM={26.7}
@@ -777,7 +770,7 @@ export default function Kyrgyzstan() {
               ]} />
             
               <p style={{ fontSize:11, color:C.sub, marginTop:10, lineHeight:1.6 }}>Issyk-Kul as a UNESCO Biosphere Reserve and the World Nomad Games are globally unique assets. CBT presence in 100+ villages shows strong community tourism infrastructure — rare for the region. The $500M 2030 investment target is ambitious but achievable given the growth trajectory.</p>
-              <GradientBar title="Tourism intensity by month (relative)" values={[15,18,25,35,55,70,100,95,60,35,20,12]} colorStops={p => { const r=Math.round(255-(23*p/100)); const g=Math.round(255-(230*p/100)); const b=Math.round(255-(211*p/100)); return `rgb(${r},${g},${b})`; }} unit="%" />
+              <GradientBar title="Tourism intensity by month (relative)" values={[15,18,25,35,55,70,100,95,60,35,20,12]} colorStops={p => `rgb(${Math.round(153+79*p/100)},${Math.round(153-128*p/100)},${Math.round(153-109*p/100)})`} unit="%" />
             </Panel>
           </div>
         </div>
@@ -876,7 +869,7 @@ export default function Kyrgyzstan() {
               ]} />
             
               <p style={{ fontSize:11, color:C.sub, marginTop:10, lineHeight:1.6 }}>25.9% debt/GDP is genuinely low — below the IMF's 40% warning threshold and down from a dangerous 64% in 2020. The +2.2% budget surplus is the first in recent history. A 7.75% Eurobond coupon is elevated (reflecting B3 rating risk) but the 3× oversubscription shows investor confidence is building.</p>
-              <GradientBar title="Trade balance 2015–2024 ($B)" values={[-2.0, -1.8, -2.1, -2.3, -2.6, -1.6, -2.7, -5.0, -8.7, -6.2]} xLabels={['2015', '2016', '2017', '2018', '2019', '2020', '2021', '2022', '2023', '2024']} colorStops={(p, v) => v >= 0 ? `rgb(${Math.round(255-220*p/100)},${Math.round(255-96*p/100)},${Math.round(255-191*p/100)})` : `rgb(${Math.round(255-23*p/100)},${Math.round(255-230*p/100)},${Math.round(255-211*p/100)})`} fmt={v => v > 0 ? `+${v}B` : `${v}B`} absScale={true} />
+              <GradientBar title="Trade balance 2015–2024 ($B)" values={[-2.0, -1.8, -2.1, -2.3, -2.6, -1.6, -2.7, -5.0, -8.7, -6.2]} xLabels={['2015', '2016', '2017', '2018', '2019', '2020', '2021', '2022', '2023', '2024']} colorStops={(p, v) => v >= 0 ? `rgb(${Math.round(153-118*p/100)},${Math.round(153+6*p/100)},${Math.round(153-89*p/100)})` : `rgb(${Math.round(153+79*p/100)},${Math.round(153-128*p/100)},${Math.round(153-109*p/100)})`} fmt={v => v > 0 ? `+${v}B` : `${v}B`} absScale={true} />
             </Panel>
           </div>
         </div>

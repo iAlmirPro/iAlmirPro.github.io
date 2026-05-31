@@ -1,5 +1,5 @@
 # Country Dashboard — Design System
-> Last updated: May 2026 — reflects all changes through the Kyrgyzstan/Kazakhstan/Tajikistan/Uzbekistan session.
+> Last updated: May 2026 — reflects all changes through AgeBar discrete-chunk rewrite, #999 gradient base, 1px marker lines, Record High/Low color rules, and full 5-country palette alignment.
 > Use this file as the single source of truth for all future country dashboards.
 
 ---
@@ -72,34 +72,54 @@ https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,
 
 ```js
 const C = {
-  kg:   '#E8192C', kgL: '#ff3347',   // primary — country color 1
+  kg:   '#E8192C', kgL: '#ff3347',   // primary — country color 1  (use country-code prefix)
   yel:  '#F0B830', yelL: '#ffd060',   // secondary — avg / mid / positive trend
-  red:  '#C8102E', redL: '#f03050',   // warning — critical / negative / risk
-  blu:  '#2E86DE', bluL: '#5ba8ff',   // water / cold / third accent
+  red:  '#E8192C', redL: '#ff3347',   // heat / record high  (always present)
+  blu:  '#2E86DE', bluL: '#5ba8ff',   // water / cold / record low  (always present)
   bg:   '#000',   card: '#111',  border: '#1e1e1e',
   track:'#222',   txt:  '#fff',  sub:   '#999',  dim: '#444',
 };
 ```
+
+> ⚠️ **`red` and `blu` are mandatory in every palette** — they drive Record High and Record Low KpiCard accents and valColor across all dashboards.
 
 > ⚠️ **Naming rule:** Use country-code prefix for primary color keys. Never use codes that clash with other countries or common abbreviations. Examples: `kg` (Kyrgyzstan), `kaz` (Kazakhstan), `uz` (Uzbekistan), `tj` (Tajikistan). Do NOT use `ir` (Ireland conflict).
 
 ### Known Country Palettes
 
 ```
-Kyrgyzstan:  kg  #E8192C / kgL  #ff3347   yel #F0B830 / yelL #ffd060   blu #2E86DE / bluL #5ba8ff
-Kazakhstan:  kaz #00AFCA / kazL #33c8df   yel #FFC72C / yelL #ffd966   blu #2E86DE / bluL #5ba8ff
-Uzbekistan:  uz  #1EB4E5 / uzL  #55ccf5   grn #3DAA5C / grnL #5dc97c   blu #2E86DE / bluL #5ba8ff
-Tajikistan:  tj  #239F40 / tjL  #3dc95a   gld #D4AF37 / gldL #f0cc55   red #C8102E / redL #f03050
+Kyrgyzstan:   kg  #E8192C / kgL  #ff3347   yel #F0B830 / yelL #ffd060   blu #2E86DE / bluL #5ba8ff
+                                            red = kg (#E8192C / #ff3347)
+Kazakhstan:   kaz #00AFCA / kazL #33c8df   yel #FFC72C / yelL #ffd966   blu #2E86DE / bluL #5ba8ff
+                                            red #E8192C / redL #ff3347
+Uzbekistan:   uz  #1EB4E5 / uzL  #55ccf5   grn #3DAA5C / grnL #5dc97c   blu #2E86DE / bluL #5ba8ff
+                                            red #E8192C / redL #ff3347
+Tajikistan:   tj  #239F40 / tjL  #3dc95a   gld #D4AF37 / gldL #f0cc55   blu #2E86DE / bluL #5ba8ff
+                                            red #C8102E / redL #f03050   (Tajik flag red)
+Turkmenistan: tm  #009A44 / tmL  #00c857   yel #F5C518 / yelL #ffd84d   blu #2E86DE / bluL #5ba8ff
+                                            red #C8102E / redL #f03050   (Turkmen flag red)
 ```
+
+> **Note:** `red` uses `#E8192C` for KG/KZ/UZ (design system red) and `#C8102E` for TJ/TM (flag red). Both work — the visual difference is minor. For new countries, default to `#E8192C` unless the flag explicitly has a different red.
 
 ### KpiCard Value Color Logic
 
-The value text color is derived from the accent. Extend per country palette:
+The value text color is derived from the accent. Each file's `valColor` must cover all color tokens used as accents in that file. Minimum required cases for every dashboard:
 ```js
-const valColor = accent === C.kg  ? C.kgL  :
-                 accent === C.yel ? C.yelL :
-                 accent === C.red ? C.redL :
-                 accent === C.blu ? C.bluL : C.txt;
+// Always include C.red and C.blu — they drive Record High / Record Low
+const valColor = accent === C.[primary] ? C.[primaryL] :
+                 accent === C.yel       ? C.yelL        :  // if yel exists
+                 accent === C.red       ? C.redL        :
+                 accent === C.blu       ? C.bluL        : C.txt;
+```
+
+Per-file current `valColor` logic:
+```
+Kyrgyzstan:   C.kg → C.kgL   · C.yel → C.yelL  · C.blu → C.bluL        → else C.txt
+Kazakhstan:   C.kaz → C.kazL · C.yel → C.yelL  · C.blu → C.bluL · C.red → C.redL → else C.txt
+Uzbekistan:   C.uz → C.uzL   · C.grn → C.grnL  · C.blu → C.bluL · C.red → C.redL → else C.txt
+Tajikistan:   C.tj → C.tjL   · C.red → C.redL  · C.gld → C.gldL · C.blu → C.bluL → else C.txt
+Turkmenistan: C.tm → C.tmL   · C.red → C.redL  · C.yel → C.yelL · C.blu → C.bluL → else C.txt
 ```
 When `accent={C.dim}`, value text renders as `C.txt` (white).
 
@@ -110,22 +130,26 @@ When `accent={C.dim}`, value text renders as `C.txt` (white).
 3. **1 colored card preferred** — use 2 only when two metrics genuinely need highlighting
 4. **Balance across the full dashboard** — primary, `yel`, `red`, `blu` should appear roughly equally in total
 5. **Color by meaning:**
-   - `primary (kg/kaz/uz/tj)` → headline achievement or max metric
+   - `primary (kg/kaz/uz/tj/tm)` → headline achievement or max metric
    - `yel` → avg / mid / positive trend / opportunity
-   - `red` → warning / critical / negative / risk
-   - `blu` → water / cold / geographic depth / fiscal milestone
+   - `red` → warning / critical / negative / risk · **always used for Record High temperature**
+   - `blu` → water / cold / geographic depth / fiscal milestone · **always used for Record Low temperature**
 6. **Order cards by importance** — strongest/most important metric first, warnings last
 7. **Never use undefined color variables** — always check the palette before referencing a color key
 
 ### Color Semantic Meaning
 
 ```
-primary (kg / kaz / uz / tj)  →  max / high / hot / headline metric
-yel                            →  avg / mid / opportunity / positive trend
-red                            →  warning / critical / negative / risk
-blu                            →  min / low / cold / water / depth
-dim                            →  neutral — default for most cards
+primary (kg / kaz / uz / tj / tm)  →  max / high / hot / headline metric
+yel                                 →  avg / mid / opportunity / positive trend
+red                                 →  warning / critical / negative / risk / Record High temp
+blu                                 →  min / low / cold / water / depth / Record Low temp
+dim                                 →  neutral — default for most cards
 ```
+
+**Mandatory color assignments:**
+- `accent={C.red}` — **Record High** temperature KpiCard (all countries)
+- `accent={C.blu}` — **Record Low** temperature KpiCard (all countries)
 
 ---
 
@@ -340,7 +364,7 @@ const GradientBar = ({ title, values, colorStops, unit = '', height = 22, xLabel
     <div style={{ marginTop:14 }}>
       {title && <div style={{ fontSize:10, letterSpacing:'0.1em', textTransform:'uppercase', color:C.sub, marginBottom:6 }}>{title}</div>}
       <div style={{ position:'relative', height, borderRadius:4, overflow:'hidden', background:`linear-gradient(to right, ${gradient})` }}>
-        <div style={{ position:'absolute', top:'10%', bottom:'10%', left:`${peakPct}%`, width:2, background:peakColor, transform:'translateX(-50%)', borderRadius:2 }} />
+        <div style={{ position:'absolute', top:'10%', bottom:'10%', left:`${peakPct}%`, width:1, background:peakColor, transform:'translateX(-50%)', borderRadius:1 }} />
       </div>
       <div style={{ display:'flex', marginTop:4 }}>
         {labels.map((l, i) => (
@@ -369,7 +393,7 @@ const GradientBar = ({ title, values, colorStops, unit = '', height = 22, xLabel
 
 **Peak marker line:**
 - Color = `colorStops(100)` darkened to 45% brightness — same hue as gradient peak but visibly darker
-- Width: 2px, height: 80% of bar (10% inset top and bottom), `borderRadius:2`
+- Width: **1px**, height: 80% of bar (10% inset top and bottom), `borderRadius:1`
 - Peak month label: white + bold; all other labels: `C.sub`
 
 **Standard `colorStops` functions:**
@@ -383,27 +407,22 @@ const tempColor = p => {
   const t=(p-75)/25; return `rgb(${Math.round(240-t*30)},${Math.round(80-t*60)},${Math.round(20)})`;
 };
 
-// Rainfall: white (0 mm) → #2E86DE (peak rainfall) — channel-by-channel interpolation
-const rainColor = p => {
-  const r = Math.round(255 - (209 * p / 100));
-  const g = Math.round(255 - (121 * p / 100));
-  const b = Math.round(255 - (33  * p / 100));
-  return `rgb(${r},${g},${b})`;
-};
-// Min=white rgb(255,255,255) · Peak=#2E86DE rgb(46,134,222) — same across all 4 countries
+// Rainfall: #999 (C.sub, 0 mm) → #2E86DE (peak rainfall)
+// Formula: 153 + (peak_channel - 153) * p/100
+const rainColor = p => `rgb(${Math.round(153-107*p/100)},${Math.round(153-19*p/100)},${Math.round(153+69*p/100)})`;
+// Min=#999 rgb(153,153,153) · Peak=#2E86DE rgb(46,134,222) — same across all 5 countries
 
-// Tourism: white (low season) → country primary color (peak season)
-// KG:  p => { const r=Math.round(255-(23*p/100));  const g=Math.round(255-(230*p/100)); const b=Math.round(255-(211*p/100)); return `rgb(${r},${g},${b})`; }  // → #E8192C
-// KAZ: p => { const r=Math.round(255-(255*p/100)); const g=Math.round(255-(80*p/100));  const b=Math.round(255-(53*p/100));  return `rgb(${r},${g},${b})`; }  // → #00AFCA
-// UZB: p => { const r=Math.round(255-(225*p/100)); const g=Math.round(255-(75*p/100));  const b=Math.round(255-(26*p/100));  return `rgb(${r},${g},${b})`; }  // → #1EB4E5
-// TJK: p => { const r=Math.round(255-(220*p/100)); const g=Math.round(255-(96*p/100));  const b=Math.round(255-(191*p/100)); return `rgb(${r},${g},${b})`; }  // → #239F40
-// Formula: 255 - (255 - channel) * p/100  per R, G, B channel of the country primary
+// Tourism: #999 (C.sub, low season) → #E8192C (peak season) — SAME formula across all 5 countries
+// p => `rgb(${Math.round(153+79*p/100)},${Math.round(153-128*p/100)},${Math.round(153-109*p/100)})`
+// Min=#999 · Peak=#E8192C rgb(232,25,44)
+// ⚠️ Values must be normalized: peak month = 100, all others relative to it
 
-// Trade balance: white (zero) → #E8192C (deficit) / #239F40 (surplus) — uses actual value sign
+// Trade balance: #999 (C.sub, zero) → #E8192C (deficit) / #239F40 (surplus) — uses actual value sign
 // (p, v) => v >= 0
-//   ? `rgb(${Math.round(255-220*p/100)},${Math.round(255-96*p/100)},${Math.round(255-191*p/100)})`   // → #239F40 (green surplus)
-//   : `rgb(${Math.round(255-23*p/100)},${Math.round(255-230*p/100)},${Math.round(255-211*p/100)})`   // → #E8192C (red deficit)
+//   ? `rgb(${Math.round(153-118*p/100)},${Math.round(153+6*p/100)},${Math.round(153-89*p/100)})`    // → #239F40 (green surplus)
+//   : `rgb(${Math.round(153+79*p/100)},${Math.round(153-128*p/100)},${Math.round(153-109*p/100)})`  // → #E8192C (red deficit)
 // Always use absScale={true} for trade balance — color intensity = distance from zero
+// Min=#999 for zero balance — color saturates toward peak in both directions
 ```
 
 **Standard GradientBar placements per section:**
@@ -419,59 +438,105 @@ All three climate/tourism bars placed at the **bottom of their panel**, after th
 
 ---
 
-### `<AgeBar>` ← NEW
+### `<AgeBar>`
 
-Stacked dual-bar visualization for population age structure. Male on top (blue or country primary), female below (red). Two separate median age lines.
+Stacked dual-bar visualization for population age structure. Male on top (blue), female below (red). 16 discrete 5-year cohort chunks with % labels inside each chunk. Two median age marker lines.
 
 ```jsx
 const AgeBar = ({ title, male, female, medianM, medianF }) => {
-  const maleColor = /* country primary if not red-ish, else #2E86DE */;
+  const maleColor = '#2E86DE';
   const femaleColor = '#E8192C';
-  const darkM = /* darkened maleColor */;
-  const darkF = '#a01020';
   const decadeLabels = [0,10,20,30,40,50,60,70,80];
   const maxVal = Math.max(...male, ...female);
-  const makeGradient = (arr, color) => arr.map((v, i) => {
+  const barH = 26;
+  const chunkColor = (v, hex) => {
     const alpha = (v / maxVal);
-    const r = parseInt(color.slice(1,3),16);
-    const g = parseInt(color.slice(3,5),16);
-    const b = parseInt(color.slice(5,7),16);
-    const vr = Math.round(r + (255-r)*(1-alpha));
-    const vg = Math.round(g + (255-g)*(1-alpha));
-    const vb = Math.round(b + (255-b)*(1-alpha));
-    return `rgb(${vr},${vg},${vb}) ${(i/15)*100}%`;
-  }).join(', ');
+    const r = parseInt(hex.slice(1,3),16);
+    const g = parseInt(hex.slice(3,5),16);
+    const b = parseInt(hex.slice(5,7),16);
+    return `rgb(${Math.round(153+(r-153)*alpha)},${Math.round(153+(g-153)*alpha)},${Math.round(153+(b-153)*alpha)})`;
+  };
+  // Formula: 153 + (peak_channel - 153) * alpha  →  #999 at zero, full color at max
   const medMPct = Math.min((medianM / 80) * 100, 100);
   const medFPct = Math.min((medianF / 80) * 100, 100);
-  // ... render two stacked bars + decade labels + legend
+  const darkM = /* per-country darkened blue — e.g. '#1a5fa0' */;
+  const darkF = '#a01020';
+  const renderBar = (arr, color, radius) => (
+    <div style={{ height:barH, borderRadius:radius, overflow:'hidden', display:'flex' }}>
+      {arr.map((v, i) => (
+        <div key={i} style={{
+          flex:1, background:chunkColor(v, color),
+          display:'flex', alignItems:'center', justifyContent:'center',
+          fontSize:7, color:'rgba(255,255,255,0.85)', fontWeight:600, lineHeight:1
+        }}>
+          {v.toFixed(1)}
+        </div>
+      ))}
+    </div>
+  );
+  return (
+    <div style={{ marginTop:14 }}>
+      {title && <div style={{ fontSize:10, letterSpacing:'0.1em', textTransform:'uppercase', color:C.sub, marginBottom:6 }}>{title}</div>}
+      <div style={{ position:'relative' }}>
+        {renderBar(male, maleColor, '4px 4px 0 0')}
+        <div style={{ height:2, background:C.bg }} />
+        {renderBar(female, femaleColor, '0 0 4px 4px')}
+        <div style={{ position:'absolute', top:2, height:barH-4, left:`${medMPct}%`,
+          width:1, background:darkM, transform:'translateX(-50%)', borderRadius:1, pointerEvents:'none' }} />
+        <div style={{ position:'absolute', top:barH+4, height:barH-4, left:`${medFPct}%`,
+          width:1, background:darkF, transform:'translateX(-50%)', borderRadius:1, pointerEvents:'none' }} />
+      </div>
+      <div style={{ position:'relative', height:18, marginTop:3 }}>
+        {decadeLabels.filter(age => age !== 0 && age !== 80).map(age => (
+          <div key={age} style={{ position:'absolute', left:`${(age/80)*100}%`, transform:'translateX(-50%)', textAlign:'center' }}>
+            <div style={{ fontSize:8, color:C.sub, lineHeight:1 }}>{age}y</div>
+          </div>
+        ))}
+      </div>
+      <div style={{ display:'flex', alignItems:'center', justifyContent:'center', gap:14, marginTop:3, fontSize:9, color:C.sub, flexWrap:'wrap' }}>
+        <span style={{ display:'flex', alignItems:'center', gap:4 }}>
+          <span style={{ display:'inline-block', width:10, height:4, background:maleColor, borderRadius:1 }} />
+          Male (median <strong style={{ color:maleColor }}>{medianM} yrs<span style={{ color:C.sub, fontWeight:300 }}>)</span></strong>
+        </span>
+        <span style={{ display:'flex', alignItems:'center', gap:4 }}>
+          <span style={{ display:'inline-block', width:10, height:4, background:femaleColor, borderRadius:1 }} />
+          Female (median <strong style={{ color:femaleColor }}>{medianF} yrs<span style={{ color:C.sub, fontWeight:300 }}>)</span></strong>
+        </span>
+      </div>
+    </div>
+  );
 };
 ```
 
-**Male color:**
-- Always `#2E86DE` across all four country dashboards (KG, KAZ, UZB, TJK)
-- Kyrgyzstan primary is red → blue avoids conflict with female bar. All others kept consistent.
+**Chunk color formula:** `153 + (peak_channel - 153) * alpha` — zero cohort = `#999` (C.sub), max cohort = full `maleColor`/`femaleColor`. Consistent with GradientBar #999 baseline.
 
-**Median lines:**
-- Male line: darkened `maleColor`, `top:2, height:14` (80% of 18px bar), on male bar only
-- Female line: `#a01020` (dark red), `top:22, height:14`, on female bar only
-- Lines positioned at `(medianAge / 80) * 100%` across the bar width
+**Male color:** Always `#2E86DE` — fixed across all dashboards to avoid conflict with female (`#E8192C`).
 
-**Gap between bars:** 2px black (`C.bg`)
+**Per-country `darkM`** (median line, darkened blue):
 
-**X-axis:** decade labels filtered to show only 10, 20, 30, 40, 50, 60, 70 — 0 and 80 are hidden:
-```jsx
-{decadeLabels.filter(age => age !== 0 && age !== 80).map(age => (
-  <div key={age} style={{ position:'absolute', left:`${(age/80)*100}%`, transform:'translateX(-50%)', textAlign:'center' }}>
-    <div style={{ fontSize:8, color:C.sub, lineHeight:1 }}>{age}</div>
-  </div>
-))}
-```
+| Country | `darkM` |
+|---|---|
+| Kyrgyzstan | `#1a5fa0` |
+| Kazakhstan | `#006d7e` |
+| Tajikistan | `#145a24` |
+| Uzbekistan | `#0e6d8c` |
+| Turkmenistan | `#1a5fa0` |
 
-**Legend:** colored swatch + "Male (median X yrs)" / "Female (median Y yrs)" + "vertical lines = median age" note
+**Median lines:** `width:1`, `height:barH-4` (22px), 1px wide, `borderRadius:1`
+- Male: `top:2` (inside male bar)
+- Female: `top:barH+4` = `top:30` (inside female bar)
 
-**Data:** 16 cohorts (0–4 through 75+), values as % of total population (male and female separately). Source: UN WPP 2024 / national census.
+**Bar height:** `barH = 26px` per bar; 2px gap between bars
 
-**Placement:** bottom of **Population Growth** panel in §3, after interpretive note.
+**Chunk labels:** `fontSize:7`, `color:'rgba(255,255,255,0.85)'`, `fontWeight:600` — white text inside each chunk showing `v.toFixed(1)`
+
+**X-axis:** Labels `10y`, `20y`, `30y`, `40y`, `50y`, `60y`, `70y` — 0 and 80 hidden
+
+**Legend:** Centered (`justifyContent:'center'`). `)` rendered as `<span style={{ color:C.sub, fontWeight:300 }}>)</span>` inside `<strong>` to prevent JSX whitespace gap.
+
+**Data:** 16 cohorts (0–4 through 75–79+), values as **% of total population** (not % of each sex). Male and female arrays each sum to ~50%. Source: UN WPP 2024 / national census.
+
+**Placement:** Bottom of **Population Growth** panel in §3, after interpretive note.
 
 ---
 

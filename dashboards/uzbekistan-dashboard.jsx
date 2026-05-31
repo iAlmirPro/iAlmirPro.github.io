@@ -5,6 +5,7 @@ const C = {
   uz:   '#1EB4E5', uzL: '#55ccf5',   // primary — Uzbek blue
   grn:  '#3DAA5C', grnL: '#5dc97c',  // secondary — Uzbek green
   blu:  '#2E86DE', bluL: '#5ba8ff',  // water / depth
+  red:  '#E8192C', redL: '#ff3347',  // heat / record high
   bg:   '#000',   card: '#111',  border: '#1e1e1e',
   track:'#222',   txt:  '#fff',  sub:   '#999',  dim: '#444',
 };
@@ -42,7 +43,7 @@ const SectionHeader = ({ icon, label }) => (
 );
 
 const KpiCard = ({ label, value, sub, accent = C.uz, delay = 0 }) => {
-  const valColor = accent === C.uz ? C.uzL : accent === C.grn ? C.grnL : accent === C.blu ? C.bluL : C.txt;
+  const valColor = accent === C.uz ? C.uzL : accent === C.grn ? C.grnL : accent === C.blu ? C.bluL : accent === C.red ? C.redL : C.txt;
   return (
     <div className="kpi" style={{
       background:C.card, border:`1px solid ${C.border}`, padding:'18px 15px 15px',
@@ -134,7 +135,7 @@ const GradientBar = ({ title, values, colorStops, unit = '', height = 22, xLabel
     <div style={{ marginTop:14 }}>
       {title && <div style={{ fontSize:10, letterSpacing:'0.1em', textTransform:'uppercase', color:C.sub, marginBottom:6 }}>{title}</div>}
       <div style={{ position:'relative', height, borderRadius:4, overflow:'hidden', background:`linear-gradient(to right, ${gradient})` }}>
-        <div style={{ position:'absolute', top:'10%', bottom:'10%', left:`${peakPct}%`, width:2, background:peakColor, transform:'translateX(-50%)', borderRadius:2 }} />
+        <div style={{ position:'absolute', top:'10%', bottom:'10%', left:`${peakPct}%`, width:1, background:peakColor, transform:'translateX(-50%)', borderRadius:1 }} />
       </div>
       <div style={{ display:'flex', marginTop:4 }}>
         {labels.map((l, i) => (
@@ -153,63 +154,61 @@ const AgeBar = ({ title, male, female, medianM, medianF }) => {
   const maleColor = '#2E86DE';
   const femaleColor = '#E8192C';
   const decadeLabels = [0,10,20,30,40,50,60,70,80];
-  // 16 cohorts span 0-80+; each cohort = 5 years; total span = 80 years
-  // cohort midpoints for gradient: 2,7,12,...,77.5
   const maxVal = Math.max(...male, ...female);
-  const pctM = v => (v / maxVal) * 100;
-  const makeGradient = (arr, color) => {
-    return arr.map((v, i) => {
-      const alpha = pctM(v) / 100;
-      const r = parseInt(color.slice(1,3),16);
-      const g = parseInt(color.slice(3,5),16);
-      const b = parseInt(color.slice(5,7),16);
-      const vr = Math.round(r + (255-r)*(1-alpha));
-      const vg = Math.round(g + (255-g)*(1-alpha));
-      const vb = Math.round(b + (255-b)*(1-alpha));
-      return `rgb(${vr},${vg},${vb}) ${(i/15)*100}%`;
-    }).join(', ');
+  const barH = 26;
+  const chunkColor = (v, hex) => {
+    const alpha = (v / maxVal);
+    const r = parseInt(hex.slice(1,3),16);
+    const g = parseInt(hex.slice(3,5),16);
+    const b = parseInt(hex.slice(5,7),16);
+    return `rgb(${Math.round(153+(r-153)*alpha)},${Math.round(153+(g-153)*alpha)},${Math.round(153+(b-153)*alpha)})`;
   };
-  // median line position: median age / 80 * 100%
   const medMPct = Math.min((medianM / 80) * 100, 100);
   const medFPct = Math.min((medianF / 80) * 100, 100);
   const darkM = '#0e6d8c';
   const darkF = '#a01020';
+  const renderBar = (arr, color, radius) => (
+    <div style={{ height:barH, borderRadius:radius, overflow:'hidden', display:'flex' }}>
+      {arr.map((v, i) => (
+        <div key={i} style={{
+          flex:1, background:chunkColor(v, color),
+          display:'flex', alignItems:'center', justifyContent:'center',
+          fontSize:7, color:'rgba(255,255,255,0.85)', fontWeight:600, lineHeight:1
+        }}>
+          {v.toFixed(1)}
+        </div>
+      ))}
+    </div>
+  );
   return (
     <div style={{ marginTop:14 }}>
       {title && <div style={{ fontSize:10, letterSpacing:'0.1em', textTransform:'uppercase', color:C.sub, marginBottom:6 }}>{title}</div>}
       <div style={{ position:'relative' }}>
-        {/* Male bar */}
-        <div style={{ height:18, borderRadius:'4px 4px 0 0', overflow:'hidden',
-          background:`linear-gradient(to right, ${makeGradient(male, maleColor)})` }} />
-        {/* 2px gap */}
+        {renderBar(male, maleColor, '4px 4px 0 0')}
         <div style={{ height:2, background:C.bg }} />
-        {/* Female bar */}
-        <div style={{ height:18, borderRadius:'0 0 4px 4px', overflow:'hidden',
-          background:`linear-gradient(to right, ${makeGradient(female, femaleColor)})` }} />
-        {/* Male median line — on male bar only, 80% height centered (top:2px of 18px bar) */}
-        <div style={{ position:'absolute', top:2, height:14, left:`${medMPct}%`,
-          width:2, background:darkM, transform:'translateX(-50%)', borderRadius:2, pointerEvents:'none' }} />
-        {/* Female median line — on female bar only, 80% height centered (top: 18+2gap+2px) */}
-        <div style={{ position:'absolute', top:22, height:14, left:`${medFPct}%`,
-          width:2, background:darkF, transform:'translateX(-50%)', borderRadius:2, pointerEvents:'none' }} />
+        {renderBar(female, femaleColor, '0 0 4px 4px')}
+        <div style={{ position:'absolute', top:2, height:barH-4, left:`${medMPct}%`,
+          width:1, background:darkM, transform:'translateX(-50%)', borderRadius:1, pointerEvents:'none' }} />
+        <div style={{ position:'absolute', top:barH+4, height:barH-4, left:`${medFPct}%`,
+          width:1, background:darkF, transform:'translateX(-50%)', borderRadius:1, pointerEvents:'none' }} />
       </div>
       {/* X-axis decade labels */}
       <div style={{ position:'relative', height:18, marginTop:3 }}>
         {decadeLabels.filter(age => age !== 0 && age !== 80).map(age => (
           <div key={age} style={{ position:'absolute', left:`${(age/80)*100}%`, transform:'translateX(-50%)', textAlign:'center' }}>
-            <div style={{ fontSize:8, color:C.sub, lineHeight:1 }}>{age}</div>
+            <div style={{ fontSize:8, color:C.sub, lineHeight:1 }}>{age}y</div>
           </div>
         ))}
       </div>
-      {/* Legend */}
-      <div style={{ display:'flex', alignItems:'center', gap:14, marginTop:3, fontSize:9, color:C.sub, flexWrap:'wrap' }}>
+      {/* Legend — centered */}
+      <div style={{ display:'flex', alignItems:'center', justifyContent:'center', gap:14, marginTop:3, fontSize:9, color:C.sub, flexWrap:'wrap' }}>
         <span style={{ display:'flex', alignItems:'center', gap:4 }}>
           <span style={{ display:'inline-block', width:10, height:4, background:maleColor, borderRadius:1 }} />
-          Male (median <strong style={{ color:maleColor }}>{medianM} yrs</strong>)
+          Male (median <strong style={{ color:maleColor }}>{medianM} yrs<span style={{ color:C.sub, fontWeight:300 }}>)</span></strong>
         </span>
         <span style={{ display:'flex', alignItems:'center', gap:4 }}>
           <span style={{ display:'inline-block', width:10, height:4, background:femaleColor, borderRadius:1 }} />
-          Female (median <strong style={{ color:femaleColor }}>{medianF} yrs</strong>)
+          Female (median <strong style={{ color:femaleColor }}>{medianF} yrs<span style={{ color:C.sub, fontWeight:300 }}>)</span></strong>
         </span>
       </div>
     </div>
@@ -221,12 +220,7 @@ const tempColor = p => {
   if (p < 75) { const t=(p-50)/25; return `rgb(${Math.round(190+t*50)},${Math.round(160-t*80)},${Math.round(60-t*40)})`; }
   const t=(p-75)/25; return `rgb(${Math.round(240-t*30)},${Math.round(80-t*60)},${Math.round(20)})`;
 };
-const rainColor = p => {
-  const r = Math.round(255 - (209 * p / 100));
-  const g = Math.round(255 - (121 * p / 100));
-  const b = Math.round(255 - (33  * p / 100));
-  return `rgb(${r},${g},${b})`;
-};
+const rainColor = p => `rgb(${Math.round(153-107*p/100)},${Math.round(153-19*p/100)},${Math.round(153+69*p/100)})`;
 
 const Donut = ({ segments, label, sublabel, size = 160 }) => {
   const r = 54, cx = 80, cy = 80, stroke = 22;
@@ -368,7 +362,7 @@ export default function Uzbekistan() {
         <SectionHeader icon={Icons.cloudSun} label="Climate: Weather, Daylight & Rainfall" />
         <div className="row g-1 mb-4">
           <div className="col-6 col-md-4 d-flex"><KpiCard label="Avg Annual Temp (Tashkent)" value="14.8°C" sub="Continental; hot dry summers, cold winters" accent={C.grn} delay={0.05} /></div>
-          <div className="col-6 col-md-4 d-flex"><KpiCard label="Record High" value="48°C" sub="Fergana Valley & southern deserts; extreme summer heat" accent={C.uz} delay={0.10} /></div>
+          <div className="col-6 col-md-4 d-flex"><KpiCard label="Record High" value="48°C" sub="Fergana Valley & southern deserts; extreme summer heat" accent={C.red} delay={0.10} /></div>
           <div className="col-6 col-md-4 d-flex"><KpiCard label="Record Low" value="−38°C" sub="Tashkent 1969; northern Karakalpakstan extreme winters" accent={C.blu} delay={0.15} /></div>
           <div className="col-6 col-md-4 d-flex"><KpiCard label="Annual Rainfall (Tashkent)" value="~370 mm" sub="Most falls Oct–Apr; hot dry summers; south as low as 80 mm" accent={C.dim} delay={0.20} /></div>
           <div className="col-6 col-md-4 d-flex"><KpiCard label="Climate type" value="BSk / BWk" sub="Semi-arid steppe; hot desert in south; severe continental" accent={C.dim} delay={0.25} /></div>
@@ -700,7 +694,7 @@ export default function Uzbekistan() {
                 ['Aral Sea tours (Moynaq)', 'Ship graveyard; environmental tourism'],
               ]} />
               <p style={{ fontSize:11, color:C.sub, marginTop:10, lineHeight:1.6 }}>Uzbekistan has arguably the richest concentration of Islamic architectural heritage anywhere in the world — Samarkand's Registan rivals the Taj Mahal in grandeur. The Aral Sea ship graveyard at Moynaq has become a haunting but significant eco-tourism site — a monument to the world's worst man-made ecological disaster. With 4 UNESCO sites and 90+ visa-free countries, the runway for growth is enormous.</p>
-              <GradientBar title="Tourism intensity by month (relative)" values={[15,20,45,85,100,80,65,70,90,85,30,15]} colorStops={p => { const r=Math.round(255-(225*p/100)); const g=Math.round(255-(75*p/100)); const b=Math.round(255-(26*p/100)); return `rgb(${r},${g},${b})`; }} unit="%" />
+              <GradientBar title="Tourism intensity by month (relative)" values={[15,20,45,85,100,80,65,70,90,85,30,15]} colorStops={p => `rgb(${Math.round(153+79*p/100)},${Math.round(153-128*p/100)},${Math.round(153-109*p/100)})`} unit="%" />
             </Panel>
           </div>
         </div>
@@ -786,7 +780,7 @@ export default function Uzbekistan() {
                 ['GDP growth Jan–Sep 2025 (official)', '+7.7% — record pace'],
               ]} />
               <p style={{ fontSize:11, color:C.sub, marginTop:10, lineHeight:1.6 }}>Investment at 31.9% of GDP is exceptionally high — it is the engine of Uzbekistan's growth story. This is being funded by FDI ($39.7B), multilateral lending (IDB, ADB, World Bank), and the sovereign wealth fund. WTO accession would be the most significant trade reform since independence — opening markets and requiring legal modernisation.</p>
-              <GradientBar title="Trade balance 2015–2024 ($B)" values={[-4.5, -4.8, -5.2, -7.0, -8.1, -8.1, -11.5, -13.7, -15.2, -13.6]} xLabels={['2015', '2016', '2017', '2018', '2019', '2020', '2021', '2022', '2023', '2024']} colorStops={(p, v) => v >= 0 ? `rgb(${Math.round(255-220*p/100)},${Math.round(255-96*p/100)},${Math.round(255-191*p/100)})` : `rgb(${Math.round(255-23*p/100)},${Math.round(255-230*p/100)},${Math.round(255-211*p/100)})`} fmt={v => v > 0 ? `+${v}B` : `${v}B`} absScale={true} />
+              <GradientBar title="Trade balance 2015–2024 ($B)" values={[-4.5, -4.8, -5.2, -7.0, -8.1, -8.1, -11.5, -13.7, -15.2, -13.6]} xLabels={['2015', '2016', '2017', '2018', '2019', '2020', '2021', '2022', '2023', '2024']} colorStops={(p, v) => v >= 0 ? `rgb(${Math.round(153-118*p/100)},${Math.round(153+6*p/100)},${Math.round(153-89*p/100)})` : `rgb(${Math.round(153+79*p/100)},${Math.round(153-128*p/100)},${Math.round(153-109*p/100)})`} fmt={v => v > 0 ? `+${v}B` : `${v}B`} absScale={true} />
             </Panel>
           </div>
         </div>
