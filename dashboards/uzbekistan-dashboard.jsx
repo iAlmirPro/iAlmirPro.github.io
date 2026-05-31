@@ -434,7 +434,7 @@ export default function Uzbekistan() {
               <BarRow label="2026" value="~37.7M" pct={100} color={C.uz} />
               <p style={{ fontSize:11, color:C.sub, marginTop:10, lineHeight:1.6 }}>Uzbekistan's population nearly doubled since independence — from 20.5M to 37.7M (+84%). Unlike Kazakhstan, it did not suffer post-Soviet emigration collapse; natural growth remained high throughout. With 37.7M people, Uzbekistan accounts for ~50% of Central Asia's total population.</p>
               <AgeBar
-                title="Population age structure — male ▲ / female ▼ (% of total)"
+                title="Population age structure — male vs. female (% of total)"
                 male={[5.5,5.2,4.95,4.75,4.5,4.25,4.0,3.6,3.15,2.75,2.4,2.1,1.75,1.3,0.95,1.4]}
                 female={[5.2,4.95,4.7,4.55,4.35,4.15,3.95,3.55,3.1,2.75,2.4,2.1,1.75,1.4,1.1,1.8]}
                 medianM={27.9}

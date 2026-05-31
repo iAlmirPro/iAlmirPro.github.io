@@ -428,7 +428,7 @@ export default function Tajikistan() {
               <BarRow label="2025" value="~10.8M" pct={100} color={C.tj} />
               <p style={{ fontSize:11, color:C.sub, marginTop:10, lineHeight:1.6 }}>Population nearly doubled since independence (+96%) — one of the fastest growth rates in the former Soviet space — driven by a persistently high fertility rate of 3.45. The 1992–1997 civil war caused a dip from out-migration but natural increase quickly resumed. 1M+ migrant workers in Russia mean the de-facto domestic population is smaller.</p>
               <AgeBar
-                title="Population age structure — male ▲ / female ▼ (% of total)"
+                title="Population age structure — male vs. female (% of total)"
                 male={[7.03,5.54,5.58,5.53,5.44,4.6,3.44,2.85,2.57,2.3,1.98,1.27,0.81,0.46,0.49,0.59]}
                 female={[6.61,5.25,5.31,5.32,5.38,4.54,3.37,2.88,2.64,2.4,2.03,1.33,0.86,0.42,0.49,0.68]}
                 medianM={21.5}

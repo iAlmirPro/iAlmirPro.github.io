@@ -451,7 +451,7 @@ export default function Kazakhstan() {
               <BarRow label="2026" value="20.5M" pct={100} color={C.kaz} />
               <p style={{ fontSize:11, color:C.sub, marginTop:10, lineHeight:1.6 }}>Population actually fell from 16.5M (1991) to 14.9M (1999) — a dramatic decline driven by emigration of ethnic Russians, Germans, and Ukrainians after independence. Recovery since 2000 has been strong, driven by high Kazakh birth rates and return migration. The 2026 figure of 20.5M is a record high.</p>
               <AgeBar
-                title="Population age structure — male ▲ / female ▼ (% of total)"
+                title="Population age structure — male vs. female (% of total)"
                 male={[5.48,5.17,4.51,3.39,3.22,3.67,3.96,3.78,3.43,3.01,2.75,2.68,2.04,1.24,0.99,3.25]}
                 female={[5.14,4.88,4.27,3.22,3.31,3.88,4.2,4.04,3.68,3.24,2.96,3.05,2.58,1.92,1.62,5.58]}
                 medianM={29.9}

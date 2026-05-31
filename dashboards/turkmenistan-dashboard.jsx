@@ -455,7 +455,7 @@ export default function Turkmenistan() {
               <BarRow label="2025 est." value="~7.55M" pct={100} color={C.tm} />
               <p style={{ fontSize:11, color:C.sub, marginTop:10, lineHeight:1.6 }}>Growth from 3.7M to 7.5M since independence (+103%) is strong. However, official statistics are unreliable — the government has not published full census results. An estimated 1–2M Turkmen live abroad, primarily in Russia, Turkey, and Uzbekistan. The true domestic population may be closer to 6M.</p>
               <AgeBar
-                title="Population age structure — male ▲ / female ▼ (% of total)"
+                title="Population age structure — male vs. female (% of total)"
                 male={[5.9,5.5,4.8,4.2,3.9,3.7,3.3,2.9,2.5,2.1,1.8,1.5,1.1,0.7,0.4,0.5]}
                 female={[5.6,5.2,4.6,4.0,3.7,3.6,3.3,2.9,2.6,2.2,1.9,1.7,1.4,0.9,0.6,0.8]}
                 medianM={27.0}
