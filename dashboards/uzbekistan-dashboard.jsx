@@ -496,7 +496,7 @@ export default function Uzbekistan() {
                 { mo:'Dec', label:'9h 04m ★', pct:33, color:C.blu },
               ].map(r => <DlRow key={r.mo} mo={r.mo} label={r.label} pct={r.pct} color={r.color || C.uz} dark={r.dark} />)}
               <p style={{ fontSize:11, color:C.sub, marginTop:10, lineHeight:1.6 }}>
-                ★ Summer solstice <strong style={{ color:C.grnL }}>15h 10m</strong> · Winter solstice <strong style={{ color:C.bluL }}>9h 04m</strong> · 300 sunny days/year in Tashkent — excellent solar energy potential
+                ★ Summer solstice <strong style={{ color:C.grnL }}>15h 10m</strong> · Winter solstice <strong style={{ color:C.bluL }}>9h 04m</strong> · 300 sunny days/year in Tashkent — excellent solar energy potential · <em>Daylight values calculated from latitude 41.3°N; not web-verified against observational records</em>
               </p>
               <p style={{ fontSize:11, color:C.sub, marginTop:10, lineHeight:1.6 }}>Tashkent's 300 sunny days and abundant flat desert land give Uzbekistan world-class solar energy potential. The government is developing 42 renewable projects totalling $9.5B — one of Central Asia's most ambitious clean energy programmes.</p>
             </Panel>
@@ -541,7 +541,7 @@ export default function Uzbekistan() {
               <BarRow label="2026" value="~37.7M" pct={100} color={C.uz} />
               <p style={{ fontSize:11, color:C.sub, marginTop:10, lineHeight:1.6 }}>Uzbekistan's population nearly doubled since independence — from 20.6M to 37.7M (+83%). Unlike Kazakhstan, it did not suffer post-Soviet emigration collapse; natural growth remained high throughout. With 37.7M people, Uzbekistan accounts for ~50% of Central Asia's total population.</p>
               <AgeBar
-                title="Population age structure — male vs. female (% of total)"
+                title="Population age structure — male vs. female (% of total) · est.; individual 5-yr cohort values unverified"
                 male={[5.5,5.2,4.95,4.75,4.5,4.25,4.0,3.6,3.15,2.75,2.4,2.1,1.75,1.3,0.95,1.4]}
                 female={[5.2,4.95,4.7,4.55,4.35,4.15,3.95,3.55,3.1,2.75,2.4,2.1,1.75,1.4,1.1,1.8]}
                 medianM={27.9}
@@ -690,7 +690,7 @@ export default function Uzbekistan() {
           <div className="col-6 col-md-4 d-flex"><KpiCard label="Literacy Rate" value="99.9%" sub="Near-universal; Soviet legacy maintained and strengthened" accent={C.uz} delay={0.05} /></div>
           <div className="col-6 col-md-4 d-flex"><KpiCard label="HDI (2023)" value="0.740" sub="High Human Development — rank 107th globally (UNDP HDR 2025)" accent={C.dim} delay={0.10} /></div>
           <div className="col-6 col-md-4 d-flex"><KpiCard label="Avg Years Schooling" value="~12.0 yrs" sub="Improving; free 12-year education system" accent={C.dim} delay={0.15} /></div>
-          <div className="col-6 col-md-4 d-flex"><KpiCard label="Expected Schooling" value="~14.5 yrs" sub="New branch campuses of foreign universities" accent={C.dim} delay={0.20} /></div>
+          <div className="col-6 col-md-4 d-flex"><KpiCard label="Expected Schooling" value="~14.5 yrs" sub="New branch campuses of foreign universities — est.; UNDP value unconfirmed" accent={C.dim} delay={0.20} /></div>
           <div className="col-6 col-md-4 d-flex"><KpiCard label="Education Spending" value="~5% GDP" sub="Rising; international branch universities flagship reform" accent={C.dim} delay={0.25} /></div>
           <div className="col-6 col-md-4 d-flex"><KpiCard label="Foreign university branches" value="~20+" sub="Inha, Webster, Turin, MSU branches; unprecedented for region" accent={C.dim} delay={0.30} /></div>
         </div>
@@ -712,7 +712,7 @@ export default function Uzbekistan() {
                 ['Instruction languages', 'Uzbek (primary); Russian medium schools available'],
                 ['Branch university campuses', '20+: Inha (Korea), Turin Poly, Webster (US)'],
                 ['New Uzbekistan University', 'Est. 2022; English-medium; Mirziyoyev flagship'],
-                ['Presidential schools (elite)', '14 across the country; competitive entry'],
+                ['Presidential schools (elite)', '14 across the country; competitive entry (est.; unverified)'],
                 ['International Math Olympiad medals', 'Strong track record; top-ranked in Asia'],
               ]} />
               <p style={{ fontSize:11, color:C.sub, marginTop:10, lineHeight:1.6 }}>International branch campuses are Uzbekistan's most distinctive education reform — no other lower-middle-income country has attracted this many prestigious foreign institutions. New Uzbekistan University (2022) is modelled on Western research universities and taught entirely in English — a signal of the country's ambition to compete globally for talent and investment.</p>
@@ -764,9 +764,9 @@ export default function Uzbekistan() {
           <div className="col-6 col-md-4 d-flex"><KpiCard label="International Visitors (2024)" value="8.2M" sub="Statistics Agency UZ; fastest-growing in region; up from 2.7M in 2018" accent={C.uz} delay={0.05} /></div>
           <div className="col-6 col-md-4 d-flex"><KpiCard label="Tourism Revenue (2024)" value="~$3.5B" sub="~3% of GDP; target $5B by 2026" accent={C.dim} delay={0.10} /></div>
           <div className="col-6 col-md-4 d-flex"><KpiCard label="Top draw" value="Samarkand" sub="Registan, Bibi-Khanym; UNESCO World Heritage; ~2M visits" accent={C.dim} delay={0.15} /></div>
-          <div className="col-6 col-md-4 d-flex"><KpiCard label="Visa-free countries" value="~90+" sub="Massive expansion since 2018; including EU, USA, China, Japan" accent={C.dim} delay={0.20} /></div>
+          <div className="col-6 col-md-4 d-flex"><KpiCard label="Visa-free countries" value="~90+" sub="Massive expansion since 2018; including EU, USA, China, Japan — est.; unverified" accent={C.dim} delay={0.20} /></div>
           <div className="col-6 col-md-4 d-flex"><KpiCard label="UNESCO World Heritage sites" value="4 sites" sub="Samarkand, Bukhara, Shakhrisabz, Itchan Kala (Khiva)" accent={C.dim} delay={0.25} /></div>
-          <div className="col-6 col-md-4 d-flex"><KpiCard label="2030 visitor target" value="15M" sub="National tourism strategy; hotel investment boom underway" accent={C.dim} delay={0.30} /></div>
+          <div className="col-6 col-md-4 d-flex"><KpiCard label="2030 visitor target" value="15M" sub="National tourism strategy; hotel investment boom underway — est.; unverified" accent={C.dim} delay={0.30} /></div>
         </div>
         <div className="row gy-3 mb-3">
           <div className="col-12 col-md-6">
@@ -900,7 +900,7 @@ export default function Uzbekistan() {
           <div className="col-6 col-md-4 d-flex"><KpiCard label="Gold production (Muruntau)" value="~70 tonnes/yr" sub="World's largest open-pit mine; Kyzylkum Desert" accent={C.grn} delay={0.15} /></div>
           <div className="col-6 col-md-4 d-flex"><KpiCard label="Renewable investment (2025)" value="$9.5B — 42 projects" sub="Solar, wind, hydro; Forum 'Powering the Future' Dec 2025" accent={C.dim} delay={0.20} /></div>
           <div className="col-6 col-md-4 d-flex"><KpiCard label="Solar potential" value="World-class" sub="300+ sunny days; flat desert terrain; ideal for utility-scale solar" accent={C.dim} delay={0.25} /></div>
-          <div className="col-6 col-md-4 d-flex"><KpiCard label="Nuclear power (planned)" value="2.4 GW" sub="Rosatom contract signed; site near Tuzkan Lake; 2030+ target" accent={C.dim} delay={0.30} /></div>
+          <div className="col-6 col-md-4 d-flex"><KpiCard label="Nuclear power (planned)" value="2.4 GW" sub="Rosatom contract signed; site near Tuzkan Lake; 2030+ target — capacity est.; unverified" accent={C.dim} delay={0.30} /></div>
         </div>
         <div className="row gy-3 mb-3">
           <div className="col-12 col-md-6">
@@ -995,7 +995,7 @@ export default function Uzbekistan() {
           </div>
           <div className="col-12 col-md-6">
             <Panel title="Disease & Health Burden" icon={Icons.chart}>
-              <BarRow label="Hypertension prevalence" value="~32%" pct={100} color={C.uz} />
+              <BarRow label="Hypertension prevalence (est.; unverified)" value="~32%" pct={100} color={C.uz} />
               <BarRow label="TB incidence per 100K (2022)" value="~83" pct={100} color={C.grn} />
               <BarRow label="OOP health spending share" value="~53%" pct={66} color={C.blu} />
               <BarRow label="Tashkent PM2.5 (WHO guideline=5)" value="~32 µg/m³" pct={80} color={C.dim} />
@@ -1010,18 +1010,18 @@ export default function Uzbekistan() {
         <div className="row g-1 mb-3">
           <div className="col-6 col-md-4 d-flex"><KpiCard label="Poverty rate ($3.65/day, 2025)" value="~5.1%" sub="Statistics Agency; down from ~27% in 2016 — Mirziyoyev-era reform" accent={C.uz} delay={0.05} /></div>
           <div className="col-6 col-md-4 d-flex"><KpiCard label="Gini Coefficient" value="34.5" sub="World Bank 2023; moderate inequality; rising inequality a risk as economy grows" accent={C.dim} delay={0.10} /></div>
-          <div className="col-6 col-md-4 d-flex"><KpiCard label="Rural-urban income gap" value="~1.6×" sub="Urban incomes ~60% higher; rural employment main challenge" accent={C.dim} delay={0.15} /></div>
+          <div className="col-6 col-md-4 d-flex"><KpiCard label="Rural-urban income gap" value="~1.6×" sub="Urban incomes ~60% higher; rural employment main challenge — est.; unverified" accent={C.dim} delay={0.15} /></div>
           <div className="col-6 col-md-4 d-flex"><KpiCard label="Gender Inequality Index" value="0.274 (rank 83)" sub="UNDP HDR 2024; better than Tajikistan; improving rapidly" accent={C.grn} delay={0.20} /></div>
           <div className="col-6 col-md-4 d-flex"><KpiCard label="Women in parliament" value="~38%" sub="57/150 seats after Oct 2024 elections (IPU); highest in CA" accent={C.blu} delay={0.25} /></div>
-          <div className="col-6 col-md-4 d-flex"><KpiCard label="Mahalla system" value="~10,000 units" sub="Traditional community governance; welfare delivery at local level" accent={C.dim} delay={0.30} /></div>
+          <div className="col-6 col-md-4 d-flex"><KpiCard label="Mahalla system" value="~10,000 units" sub="Traditional community governance; welfare delivery at local level — count est.; unverified" accent={C.dim} delay={0.30} /></div>
         </div>
         <div className="row gy-3 mb-3">
           <div className="col-12 col-md-6">
             <Panel title="Access & Basic Services" icon={Icons.chart}>
               <BarRow label="Access to clean water (urban)" value="~89%" pct={89} color={C.uz} />
               <BarRow label="Access to clean water (rural)" value="~71%" pct={71} color={C.grn} />
-              <BarRow label="Access to sanitation (urban)" value="~95%" pct={95} color={C.dim} />
-              <BarRow label="Access to sanitation (rural)" value="~68%" pct={68} color={C.dim} />
+              <BarRow label="Access to sanitation, urban (est.; unverified)" value="~95%" pct={95} color={C.dim} />
+              <BarRow label="Access to sanitation, rural (est.; unverified)" value="~68%" pct={68} color={C.dim} />
               <BarRow label="Electricity access (national)" value="~100%" pct={100} color={C.blu} />
               <p style={{ fontSize:11, color:C.sub, marginTop:10, lineHeight:1.6 }}>Rural sanitation at 68% is a key infrastructure gap — directly linked to child health outcomes. The mahalla (neighbourhood committee) system is uniquely Uzbek — it provides community welfare, social pressure for compliance, and local governance simultaneously. It was used effectively during COVID-19 for food distribution and monitoring.</p>
             </Panel>
@@ -1049,7 +1049,7 @@ export default function Uzbekistan() {
           <div className="col-6 col-md-4 d-flex"><KpiCard label="Renewable energy target 2030" value="40% of mix" sub="Up from ~4% in 2024; $9.5B in 42 projects committed 2025" accent={C.dim} delay={0.15} /></div>
           <div className="col-6 col-md-4 d-flex"><KpiCard label="Water stress level" value="Extreme" sub="Both Amu Darya & Syr Darya heavily over-abstracted for irrigation" accent={C.blu} delay={0.20} /></div>
           <div className="col-6 col-md-4 d-flex"><KpiCard label="Aralkum toxic dust" value="~57,000 km² exposed" sub="Former seabed now desert; salt & pesticide dust; 2M people affected" accent={C.dim} delay={0.25} /></div>
-          <div className="col-6 col-md-4 d-flex"><KpiCard label="Solar irradiation" value="~1,700–2,200 kWh/m²" sub="Among highest globally; ideal for large-scale solar farms" accent={C.dim} delay={0.30} /></div>
+          <div className="col-6 col-md-4 d-flex"><KpiCard label="Solar irradiation" value="~1,700–2,200 kWh/m²" sub="Among highest globally; ideal for large-scale solar farms — est.; unverified" accent={C.dim} delay={0.30} /></div>
         </div>
         <div className="row gy-3 mb-3">
           <div className="col-12 col-md-6">
@@ -1117,7 +1117,7 @@ export default function Uzbekistan() {
         <SectionHeader icon={Icons.landmark} label="Crime & Security" />
         <div className="row g-1 mb-3">
           <div className="col-6 col-md-4 d-flex"><KpiCard label="Global Peace Index (2024)" value="Rank 67" sub="IEP GPI 2024; among biggest improvers; improving under Mirziyoyev" accent={C.grn} delay={0.05} /></div>
-          <div className="col-6 col-md-4 d-flex"><KpiCard label="Afghanistan border" value="137 km" sub="Terrorism & drug trafficking risk; Uzbekistan maintains strong border" accent={C.uz} delay={0.10} /></div>
+          <div className="col-6 col-md-4 d-flex"><KpiCard label="Afghanistan border" value="137 km" sub="Terrorism & drug trafficking risk; Uzbekistan maintains strong border — length est.; unverified" accent={C.uz} delay={0.10} /></div>
           <div className="col-6 col-md-4 d-flex"><KpiCard label="Homicide rate (est.)" value="~1.4 / 100K" sub="Low; declining; state security apparatus effective" accent={C.dim} delay={0.15} /></div>
           <div className="col-6 col-md-4 d-flex"><KpiCard label="Press Freedom (RSF 2024)" value="Rank 148/180" sub="Dropped 11 places in 2024; status worsened to 'very serious'" accent={C.uz} delay={0.20} /></div>
           <div className="col-6 col-md-4 d-flex"><KpiCard label="Karakalpakstan unrest (2022)" value="18 killed" sub="Autonomy protests; suppressed; internet cut; some reforms followed" accent={C.dim} delay={0.25} /></div>
