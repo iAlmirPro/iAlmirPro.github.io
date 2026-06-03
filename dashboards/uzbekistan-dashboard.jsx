@@ -429,7 +429,7 @@ export default function Uzbekistan() {
           <div className="col-6 col-md-4 d-flex"><KpiCard label="Borders" value="5 countries" sub="Kazakhstan, Kyrgyzstan, Tajikistan, Afghanistan, Turkmenistan" accent={C.dim} delay={0.20} /></div>
           <div className="col-6 col-md-4 d-flex"><KpiCard label="Fergana Valley" value="~22,000 km²" sub="Most densely populated region; 14M+ people in shared basin" accent={C.grn} delay={0.25} /></div>
           <div className="col-6 col-md-4 d-flex"><KpiCard label="Kyzylkum Desert" value="~300,000 km²" sub="World's 11th largest desert; occupies central Uzbekistan" accent={C.dim} delay={0.30} /></div>
-          <div className="col-6 col-md-4 d-flex"><KpiCard label="Aral Sea (Uzbek portion)" value="~6,000 km²" sub="Was 68,000 km²; 91% lost to irrigation diversion" accent={C.dim} delay={0.35} /></div>
+          <div className="col-6 col-md-4 d-flex"><KpiCard label="Aral Sea (Uzbek portion)" value="~3,500 km²" sub="Total sea now ~3,500 km² (4 remnant lakes); was 68,000 km²; 95% lost" accent={C.dim} delay={0.35} /></div>
           <div className="col-6 col-md-4 d-flex"><KpiCard label="Doubly landlocked" value="One of 2 globally" sub="Only Liechtenstein also doubly landlocked; logistic challenge" accent={C.dim} delay={0.40} /></div>
           <div className="col-6 col-md-4 d-flex"><KpiCard label="Arable land" value="~9.1%" sub="Fergana & Zerafshan valleys; highly irrigated (World Bank 2023)" accent={C.dim} delay={0.45} /></div>
         </div>
@@ -449,7 +449,7 @@ export default function Uzbekistan() {
               <Tbl rows={[
                 ['Amu Darya (Oxus) — main river', '2,400 km; originates in Tajikistan'],
                 ['Syr Darya — northern river', '2,212 km; both feed the dying Aral Sea'],
-                ['Aral Sea (former)', 'Was 4th largest lake; now ~9% of original size'],
+                ['Aral Sea (former)', 'Was 4th largest lake; now ~5% of original size; mostly desiccated'],
                 ['Charvak Reservoir (near Tashkent)', '~35 km²; hydropower & recreation'],
                 ['Fergana Valley irrigation canals', '>10,000 km of Soviet-era canals'],
                 ['Muruntau gold mine (Kyzylkum)', "World's largest open-pit gold mine"],
@@ -527,7 +527,7 @@ export default function Uzbekistan() {
           <div className="col-6 col-md-4 d-flex"><KpiCard label="Population (2026 est.)" value="~37.7M" sub="Worldometer; largest in Central Asia; growing ~1.8%/year" accent={C.uz} delay={0.05} /></div>
           <div className="col-6 col-md-4 d-flex"><KpiCard label="Urban Population" value="~47.9%" sub="Urbanisation accelerating; Tashkent agglomeration 4M+" accent={C.dim} delay={0.10} /></div>
           <div className="col-6 col-md-4 d-flex"><KpiCard label="Median Age" value="27 yrs" sub="Young population; ~29% under 15; large working-age cohort" accent={C.grn} delay={0.15} /></div>
-          <div className="col-6 col-md-4 d-flex"><KpiCard label="Population Density" value="89 /km²" sub="High relative to regional peers; Fergana Valley ~900/km²" accent={C.dim} delay={0.20} /></div>
+          <div className="col-6 col-md-4 d-flex"><KpiCard label="Population Density" value="83.6 /km²" sub="National Stats Jan 2025; 85.2/km² by Jan 2026; Fergana Valley ~900/km²" accent={C.dim} delay={0.20} /></div>
           <div className="col-6 col-md-4 d-flex"><KpiCard label="Life Expectancy" value="~75 yrs" sub="Women ~77 · Men ~73; improving steadily" accent={C.dim} delay={0.25} /></div>
           <div className="col-6 col-md-4 d-flex"><KpiCard label="Fertility Rate" value="~3.5" sub="UN WPP 2025: 3.45 births/woman; declining from 3.8 in 2000" accent={C.blu} delay={0.30} /></div>
         </div>
@@ -596,10 +596,10 @@ export default function Uzbekistan() {
         {/* 4. ECONOMY */}
         <SectionHeader icon={Icons.chart} label="Economy & Finance" />
         <div className="row g-1 mb-3">
-          <div className="col-6 col-md-4 d-flex"><KpiCard label="GDP Nominal (2025)" value="~$133B" sub="IMF/President Mirziyoyev address; record high; 58th globally" accent={C.uz} delay={0.05} /></div>
-          <div className="col-6 col-md-4 d-flex"><KpiCard label="GDP per Capita (2025)" value="~$3,500" sub="Lower-middle income; targeting upper-middle by 2030" accent={C.dim} delay={0.10} /></div>
+          <div className="col-6 col-md-4 d-flex"><KpiCard label="GDP Nominal (2025)" value="~$145B" sub="President Mirziyoyev year-end address 2025; record high; fastest-growing" accent={C.uz} delay={0.05} /></div>
+          <div className="col-6 col-md-4 d-flex"><KpiCard label="GDP per Capita (2025)" value="~$3,850" sub="Lower-middle income; targeting upper-middle by 2030" accent={C.dim} delay={0.10} /></div>
           <div className="col-6 col-md-4 d-flex"><KpiCard label="GDP Growth (2025)" value="7.7%" sub="World Bank confirmed; record; exports, consumption & FDI led" accent={C.grn} delay={0.15} /></div>
-          <div className="col-6 col-md-4 d-flex"><KpiCard label="GDP PPP (2026 est.)" value="~$552B" sub="PPP per capita ~$14,179 — reflects large informal economy" accent={C.dim} delay={0.20} /></div>
+          <div className="col-6 col-md-4 d-flex"><KpiCard label="GDP PPP (2025 est.)" value="~$458B" sub="PPP per capita ~$12,147 — IMF WEO; reflects large informal economy" accent={C.dim} delay={0.20} /></div>
           <div className="col-6 col-md-4 d-flex"><KpiCard label="Inflation CPI (2025)" value="~7.3%" sub="Cooling from 12%+ in 2022; Central Bank target 5% by 2028" accent={C.dim} delay={0.25} /></div>
           <div className="col-6 col-md-4 d-flex"><KpiCard label="Currency" value="UZS (Sum)" sub="~12,600 UZS = $1 (2025 avg); free float since 2017 (CBU)" accent={C.dim} delay={0.30} /></div>
         </div>
@@ -607,7 +607,7 @@ export default function Uzbekistan() {
           <div className="col-12 col-md-6">
             <Panel title="GDP by Sector & Major Exports" icon={Icons.chart}>
               <Donut
-                label="$133B"
+                label="$145B"
                 sublabel="GDP 2025"
                 segments={[
                   { label:'Services (trade, finance, tourism)', value:'~49%', pct:49, color:C.uz  },
@@ -642,7 +642,7 @@ export default function Uzbekistan() {
         <SectionHeader icon={Icons.briefcase} label="Employment & Wages" />
         <div className="row g-1 mb-3">
           <div className="col-6 col-md-4 d-flex"><KpiCard label="Avg Monthly Wage (2025)" value="~$529" sub="~6.4M UZS; +19% YoY; National Stats full-year 2025" accent={C.grn} delay={0.05} /></div>
-          <div className="col-6 col-md-4 d-flex"><KpiCard label="Labour Force" value="~21.4M" sub="~55% of population; 53.2% employment rate (2020)" accent={C.dim} delay={0.10} /></div>
+          <div className="col-6 col-md-4 d-flex"><KpiCard label="Labour Force" value="~14.6M" sub="ILO/WB 2025 modeled estimate; 14.2M employed domestically" accent={C.dim} delay={0.10} /></div>
           <div className="col-6 col-md-4 d-flex"><KpiCard label="Unemployment (2025)" value="~4.8%" sub="ILO modeled estimate; youth unemployment ~15%; significant underemployment" accent={C.uz} delay={0.15} /></div>
           <div className="col-6 col-md-4 d-flex"><KpiCard label="Informal employment" value="~40%+" sub="Cotton agriculture, bazaar, construction; improving with formalisation push" accent={C.dim} delay={0.20} /></div>
           <div className="col-6 col-md-4 d-flex"><KpiCard label="Min. Wage (2025)" value="~1,271,000 UZS" sub="~$101/month; raised to 1,155K Jan 2025, then 1,271K Aug 2025 (WageIndicator)" accent={C.blu} delay={0.25} /></div>
@@ -651,19 +651,19 @@ export default function Uzbekistan() {
         <div className="row gy-3 mb-3">
           <div className="col-12 col-md-6">
             <Panel title="Wages by Sector (monthly UZS, est. 2024)" icon={Icons.chart}>
-              <BarRow label="Mining & extraction (gold, gas)" value="~12,000,000" pct={100} color={C.uz} />
-              <BarRow label="Financial & IT services" value="~9,000,000" pct={75} color={C.grn} />
-              <BarRow label="Public administration" value="~5,500,000" pct={46} color={C.blu} />
-              <BarRow label="National average" value="~6,400,000" pct={53} color={C.dim} />
-              <BarRow label="Education & health" value="~4,200,000" pct={35} color={C.dim} />
-              <BarRow label="Agriculture (cotton, wheat)" value="~2,800,000" pct={23} color={C.dim} />
+              <BarRow label="Banking & financial services" value="~15,000,000" pct={100} color={C.uz} />
+              <BarRow label="Mining & extraction (gold, gas)" value="~9,100,000" pct={61} color={C.grn} />
+              <BarRow label="National average (2025)" value="~6,400,000" pct={43} color={C.dim} />
+              <BarRow label="Public administration" value="~5,500,000" pct={37} color={C.blu} />
+              <BarRow label="Education" value="~3,600,000" pct={24} color={C.dim} />
+              <BarRow label="Agriculture (cotton, wheat)" value="~2,800,000" pct={19} color={C.dim} />
               <p style={{ fontSize:11, color:C.sub, marginTop:10, lineHeight:1.6 }}>Wages have tripled in USD terms since 2016 — one of the fastest wage growth rates globally. The 4.3× gap between mining (~$940/month) and agriculture (~$220/month) explains rural-urban migration pressure. With 37.7M people and a young population, job creation is the government's most pressing economic challenge.</p>
             </Panel>
           </div>
           <div className="col-12 col-md-6">
             <Panel title="Employment by Sector" icon={Icons.briefcase}>
               <Donut
-                label="21.4M"
+                label="14.6M"
                 sublabel="labour force"
                 segments={[
                   { label:'Agriculture',               value:'~26%', pct:26, color:C.uz  },
@@ -679,7 +679,7 @@ export default function Uzbekistan() {
                 ['Migrant workers abroad (est.)', '~2,000,000'],
                 ['Remittances (2025)', '~$18.9B (~14% of GDP)'],
               ]} />
-              <p style={{ fontSize:11, color:C.sub, marginTop:10, lineHeight:1.6 }}>Agriculture at 26% is declining as manufacturing expands — a healthy structural shift. The government's "1 million programmers" AI initiative and free economic zones are creating new digital employment. 2M migrant workers abroad represent 9% of the labour force — significant but far less dependent than Tajikistan (45%). Remittances of $18.9B in 2025 (+27% YoY) now equal ~14% of GDP.</p>
+              <p style={{ fontSize:11, color:C.sub, marginTop:10, lineHeight:1.6 }}>Agriculture at 26% is declining as manufacturing expands — a healthy structural shift. The government's "1 million programmers" AI initiative and free economic zones are creating new digital employment. 2M migrant workers abroad represent ~14% of the ILO-estimated domestic labour force — significant but far less remittance-dependent than Tajikistan (45%). Remittances of $18.9B in 2025 (+27% YoY) now equal ~14% of GDP.</p>
             </Panel>
           </div>
         </div>
@@ -809,12 +809,12 @@ export default function Uzbekistan() {
         {/* 9. VITAL STATISTICS */}
         <SectionHeader icon={Icons.people} label="Vital Statistics" />
         <div className="row g-1 mb-3">
-          <div className="col-6 col-md-4 d-flex"><KpiCard label="Births (2024 est.)" value="~960,000" sub="Birth rate ~25.5 per 1,000 (World Bank 2024); high by regional standards" accent={C.uz} delay={0.05} /></div>
-          <div className="col-6 col-md-4 d-flex"><KpiCard label="Natural Increase" value="~500,000" sub="Large absolute growth from young population base" accent={C.dim} delay={0.10} /></div>
-          <div className="col-6 col-md-4 d-flex"><KpiCard label="Ages 0–14" value="~29%" sub="Large but declining youth cohort; fertility falling" accent={C.dim} delay={0.15} /></div>
-          <div className="col-6 col-md-4 d-flex"><KpiCard label="Ages 65+" value="~5.5%" sub="Ageing slowly; pension costs manageable for now" accent={C.dim} delay={0.20} /></div>
-          <div className="col-6 col-md-4 d-flex"><KpiCard label="Deaths (2025 est.)" value="~180,000" sub="Death rate ~4.8 per 1,000 — low; young population" accent={C.dim} delay={0.25} /></div>
-          <div className="col-6 col-md-4 d-flex"><KpiCard label="Infant Mortality" value="~15 / 1,000" sub="Improving; down from 38/1,000 in 2000; still above EU" accent={C.blu} delay={0.30} /></div>
+          <div className="col-6 col-md-4 d-flex"><KpiCard label="Births (2024)" value="~918,000" sub="Birth rate ~25.5 per 1,000 (WB 2024); birth count National Stats 2024" accent={C.uz} delay={0.05} /></div>
+          <div className="col-6 col-md-4 d-flex"><KpiCard label="Natural Increase (2024)" value="~743,000" sub="918K births − 174K deaths; National Stats 2024" accent={C.dim} delay={0.10} /></div>
+          <div className="col-6 col-md-4 d-flex"><KpiCard label="Ages 0–14" value="~31.3%" sub="Large youth cohort; fertility declining but still high" accent={C.dim} delay={0.15} /></div>
+          <div className="col-6 col-md-4 d-flex"><KpiCard label="Ages 65+" value="~6.1%" sub="Ageing slowly; pension costs manageable for now" accent={C.dim} delay={0.20} /></div>
+          <div className="col-6 col-md-4 d-flex"><KpiCard label="Deaths (2024)" value="~174,000" sub="Death rate ~4.8 per 1,000; National Stats 2024" accent={C.dim} delay={0.25} /></div>
+          <div className="col-6 col-md-4 d-flex"><KpiCard label="Infant Mortality" value="~18 / 1,000" sub="2024 WB/UNICEF; down from 38/1,000 in 2000; still above EU" accent={C.blu} delay={0.30} /></div>
         </div>
         <div className="row gy-3 mb-3">
           <div className="col-12 col-md-6">
@@ -826,13 +826,13 @@ export default function Uzbekistan() {
               <BarRow label="Digestive diseases"         value="~5%"  pct={9}   color={C.dim} />
               <BarRow label="Infectious diseases"        value="~4%"  pct={7}   color={C.dim} />
               <BarRow label="Other"                      value="~11%" pct={20}  color={C.dim} />
-              <p style={{ fontSize:11, color:C.sub, marginTop:10, lineHeight:1.6 }}>Circulatory disease at ~55% is above the global average (32%), driven by high hypertension prevalence, high-salt diets, and historically limited preventive care. Infant mortality falling from 38 to ~15/1,000 since 2000 is one of Uzbekistan's most significant health achievements — better than Tajikistan (32) but still above Kazakhstan (8).</p>
+              <p style={{ fontSize:11, color:C.sub, marginTop:10, lineHeight:1.6 }}>Circulatory disease at ~55% is above the global average (32%), driven by high hypertension prevalence, high-salt diets, and historically limited preventive care. Infant mortality falling from 38 to ~18/1,000 since 2000 is one of Uzbekistan's most significant health achievements — better than Tajikistan (32) but still above Kazakhstan (8).</p>
             </Panel>
           </div>
           <div className="col-12 col-md-6">
             <Panel title="Marriage & Vital Trends" icon={Icons.landmark}>
               <Tbl rows={[
-                ['Marriage rate (per 1,000)', '~8.5'],
+                ['Marriage rate (per 1,000)', '~7.1'],
                 ['Divorce rate (per 1,000)', '~1.5'],
                 ['Avg age at first marriage (women)', '~23 yrs'],
                 ['Avg age at first marriage (men)', '~25 yrs'],
@@ -881,7 +881,7 @@ export default function Uzbekistan() {
                 ['Govt debt / GDP (2025)', '~33% — moderate; IMF end-2024: 32.6%; IFI concessional majority'],
                 ['Foreign reserves (end-2025)', '~$66.3B — record; gold-heavy (CBU)'],
                 ['GDP growth target 2030', '$220–230B nominal GDP'],
-                ['Investment / GDP ratio (2025)', '~31.9% — very high; construction boom'],
+                ['Investment / GDP ratio (2025)', '~35% — very high; construction boom (CEIC)'],
                 ['WTO accession target', '2026 (in negotiation)'],
                 ['Free economic zones (FEZs)', '~20 FEZs; 500+ resident companies'],
                 ['GDP growth Jan–Sep 2025 (official)', '+7.7% — record pace'],
@@ -938,7 +938,7 @@ export default function Uzbekistan() {
         <div className="row g-1 mb-3">
           <div className="col-6 col-md-4 d-flex"><KpiCard label="Internet Penetration" value="~84%" sub="DataReportal Jan 2024: 83.3%; ITU 2023 households: 89%; mobile-first" accent={C.grn} delay={0.05} /></div>
           <div className="col-6 col-md-4 d-flex"><KpiCard label="Mobile Subscribers" value="~37M" sub="~100% penetration; Ucell, Beeline, Uzmobile major operators" accent={C.dim} delay={0.10} /></div>
-          <div className="col-6 col-md-4 d-flex"><KpiCard label="Road Network" value="~186,000 km" sub="~40,000 km paved; major expansion underway" accent={C.dim} delay={0.15} /></div>
+          <div className="col-6 col-md-4 d-flex"><KpiCard label="Road Network" value="~86,000 km" sub="~75,000 km paved (87%); major expansion underway" accent={C.dim} delay={0.15} /></div>
           <div className="col-6 col-md-4 d-flex"><KpiCard label="Railway Network" value="~4,643 km" sub="Electrified; high-speed Afrosiyob (Tashkent–Samarkand–Bukhara)" accent={C.dim} delay={0.20} /></div>
           <div className="col-6 col-md-4 d-flex"><KpiCard label="High-speed rail" value="Afrosiyob" sub="250 km/h; Tashkent to Bukhara in 2.5h; Spanish Talgo technology" accent={C.dim} delay={0.25} /></div>
           <div className="col-6 col-md-4 d-flex"><KpiCard label="5G Status" value="Piloting" sub="Tashkent & Samarkand pilots 2024–2025; national rollout planned" accent={C.dim} delay={0.30} /></div>
@@ -964,7 +964,7 @@ export default function Uzbekistan() {
               <BarRow label="E-government service uptake" value="~65%" pct={65} color={C.blu} />
               <BarRow label="Social media penetration" value="~60%" pct={60} color={C.dim} />
               <BarRow label="Fixed broadband" value="~20%" pct={20} color={C.dim} />
-              <p style={{ fontSize:11, color:C.sub, marginTop:10, lineHeight:1.6 }}>Uzbekistan's internet is uncensored — a dramatic change from the Karimov era. 76% penetration is growing fast and social media (Instagram, Telegram) are widely used. The "1 million programmers" initiative and Uzbekistan's growing IT park exports (~$500M in IT services) suggest a digital economy is genuinely taking root.</p>
+              <p style={{ fontSize:11, color:C.sub, marginTop:10, lineHeight:1.6 }}>Uzbekistan's internet is uncensored — a dramatic change from the Karimov era. 84% penetration is growing fast and social media (Instagram, Telegram) are widely used. The "1 million programmers" initiative and Uzbekistan's IT Park (1,900+ resident companies; 0% income tax) suggest a digital economy is genuinely taking root.</p>
             </Panel>
           </div>
         </div>
@@ -972,10 +972,10 @@ export default function Uzbekistan() {
         {/* 13. HEALTH */}
         <SectionHeader icon={Icons.people} label="Health System" />
         <div className="row g-1 mb-3">
-          <div className="col-6 col-md-4 d-flex"><KpiCard label="Health Spending (% GDP)" value="~6.3%" sub="WHO 2022; public share growing; universal health system reform underway" accent={C.grn} delay={0.05} /></div>
-          <div className="col-6 col-md-4 d-flex"><KpiCard label="Out-of-pocket spending" value="~35%" sub="Share of total; high but improving; state insurance expanding" accent={C.uz} delay={0.10} /></div>
-          <div className="col-6 col-md-4 d-flex"><KpiCard label="Infant mortality (2025 est.)" value="~15 / 1,000" sub="Improving; down from 38/1,000 in 2000; still above EU" accent={C.dim} delay={0.15} /></div>
-          <div className="col-6 col-md-4 d-flex"><KpiCard label="TB incidence (2023)" value="~40 / 100K" sub="High but declining; drug-resistant TB concern in prisons" accent={C.dim} delay={0.20} /></div>
+          <div className="col-6 col-md-4 d-flex"><KpiCard label="Health Spending (% GDP)" value="~7.7%" sub="WB 2021: 7.74%; public share growing; universal health system reform underway" accent={C.grn} delay={0.05} /></div>
+          <div className="col-6 col-md-4 d-flex"><KpiCard label="Out-of-pocket spending" value="~53%" sub="Share of total health expenditure (WB 2020); one of highest in region" accent={C.uz} delay={0.10} /></div>
+          <div className="col-6 col-md-4 d-flex"><KpiCard label="Infant mortality (2024)" value="~18 / 1,000" sub="WB/UNICEF 2024; down from 38/1,000 in 2000; still above EU" accent={C.dim} delay={0.15} /></div>
+          <div className="col-6 col-md-4 d-flex"><KpiCard label="TB incidence (2022)" value="~83 / 100K" sub="WHO 2022; high; drug-resistant TB concern; one of highest in region" accent={C.dim} delay={0.20} /></div>
           <div className="col-6 col-md-4 d-flex"><KpiCard label="Life expectancy" value="~75 yrs" sub="One of highest in region; improving under Mirziyoyev reforms" accent={C.dim} delay={0.25} /></div>
           <div className="col-6 col-md-4 d-flex"><KpiCard label="Doctors per 1,000" value="~2.87" sub="2023 National Stats; below Soviet peak; brain drain concern" accent={C.dim} delay={0.30} /></div>
         </div>
@@ -984,9 +984,9 @@ export default function Uzbekistan() {
             <Panel title="Health System Facts" icon={Icons.people}>
               <Tbl rows={[
                 ['Compulsory health insurance', 'In development; phased introduction 2025+'],
-                ['Hospital beds per 1,000', '~4.5 — reasonable stock; quality issue'],
+                ['Hospital beds per 1,000', '~4.9 — above regional average; quality concern'],
                 ['Forced labour in cotton (abolished)', '2021 — ILO confirmed; major reform'],
-                ['Child nutrition — stunting', '~8.5% (under-5); improving'],
+                ['Child nutrition — stunting', '6.7% (under-5, 2024); improving significantly'],
                 ['Karakalpakstan health outcomes', 'Worst in country; Aral Sea dust health crisis'],
                 ['Tashkent air quality', 'PM2.5 ~20 µg/m³ annual; urban pollution growing'],
               ]} />
@@ -996,11 +996,11 @@ export default function Uzbekistan() {
           <div className="col-12 col-md-6">
             <Panel title="Disease & Health Burden" icon={Icons.chart}>
               <BarRow label="Hypertension prevalence" value="~32%" pct={100} color={C.uz} />
-              <BarRow label="TB incidence per 100K (2023)" value="~40" pct={71} color={C.grn} />
-              <BarRow label="OOP health spending share" value="~35%" pct={55} color={C.blu} />
+              <BarRow label="TB incidence per 100K (2022)" value="~83" pct={100} color={C.grn} />
+              <BarRow label="OOP health spending share" value="~53%" pct={66} color={C.blu} />
               <BarRow label="Tashkent PM2.5 (WHO guideline=5)" value="~20 µg/m³" pct={57} color={C.dim} />
               <BarRow label="Aral Sea toxic dust affected pop." value="~2M in Karakalpakstan" pct={45} color={C.dim} />
-              <p style={{ fontSize:11, color:C.sub, marginTop:10, lineHeight:1.6 }}>TB at 40/100K is high but improving — Uzbekistan has run one of the most effective TB control programmes in the region. The Aral Sea dust crisis affecting ~2M Karakalpak people is a chronic, unfixable public health disaster — the sea cannot be restored and the exposed seabed will blow dust for generations.</p>
+              <p style={{ fontSize:11, color:C.sub, marginTop:10, lineHeight:1.6 }}>TB at 83/100K (2022 WHO) is among the highest in the region — above the Central Asian average. Drug-resistant TB is a particular concern. The Aral Sea dust crisis affecting ~2M Karakalpak people is a chronic, unfixable public health disaster — the sea cannot be restored and the exposed seabed will blow dust for generations.</p>
             </Panel>
           </div>
         </div>
@@ -1048,7 +1048,7 @@ export default function Uzbekistan() {
           <div className="col-6 col-md-4 d-flex"><KpiCard label="Aral Sea volume lost" value="~91%" sub="Was world's 4th largest lake; irreversible catastrophe" accent={C.uz} delay={0.10} /></div>
           <div className="col-6 col-md-4 d-flex"><KpiCard label="Renewable energy target 2030" value="40% of mix" sub="Up from ~4% in 2024; $9.5B in 42 projects committed 2025" accent={C.dim} delay={0.15} /></div>
           <div className="col-6 col-md-4 d-flex"><KpiCard label="Water stress level" value="Extreme" sub="Both Amu Darya & Syr Darya heavily over-abstracted for irrigation" accent={C.blu} delay={0.20} /></div>
-          <div className="col-6 col-md-4 d-flex"><KpiCard label="Aralkum toxic dust" value="~150,000 km² exposed" sub="Former seabed; salt & pesticide dust; 2M people affected" accent={C.dim} delay={0.25} /></div>
+          <div className="col-6 col-md-4 d-flex"><KpiCard label="Aralkum toxic dust" value="~57,000 km² exposed" sub="Former seabed now desert; salt & pesticide dust; 2M people affected" accent={C.dim} delay={0.25} /></div>
           <div className="col-6 col-md-4 d-flex"><KpiCard label="Solar irradiation" value="~1,700–2,200 kWh/m²" sub="Among highest globally; ideal for large-scale solar farms" accent={C.dim} delay={0.30} /></div>
         </div>
         <div className="row gy-3 mb-3">
@@ -1060,7 +1060,7 @@ export default function Uzbekistan() {
                 ['UN Special Programme for Aral Sea', 'IFAS fund; Uzbekistan chairs rotating'],
                 ['Saksaul tree planting', 'Largest afforestation in Central Asia'],
                 ['NDC target (2030)', 'Reduce GHG intensity 35% vs 2010'],
-                ['Protected areas', '~3.7% of territory — below average'],
+                ['Protected areas', '~5.8% of territory (WB 2022); target 12% by 2028'],
               ]} />
               <p style={{ fontSize:11, color:C.sub, marginTop:10, lineHeight:1.6 }}>Uzbekistan has taken a global leadership role on the Aral Sea crisis — Mirziyoyev has addressed the UN General Assembly on it multiple times. The saksaul afforestation programme (planting drought-resistant trees on the exposed seabed) is the most practical mitigation measure available — it reduces dust emissions while creating a new ecosystem.</p>
             </Panel>
@@ -1093,7 +1093,7 @@ export default function Uzbekistan() {
                 ["Fitch credit rating", 'BB / Positive (upgraded from BB- in 2024)'],
                 ['CPI score (TI 2024)', '32/100 — rank 121/180; improving from 21/100 in 2016'],
                 ['Free Economic Zones', '~20 FEZs; Navoi (aviation), Urgut, IT Parks'],
-                ['IT Park Uzbekistan', '500+ companies; 0% income tax; growing exports'],
+                ['IT Park Uzbekistan', '1,900+ resident companies; 0% income tax; fast-growing'],
                 ['Currency liberalisation (2017)', 'Free float ended black market; FDI unlocked'],
                 ['WTO observer since', '1994 — accession now actively negotiated'],
               ]} />
@@ -1141,16 +1141,16 @@ export default function Uzbekistan() {
             <Panel title="Security Context" icon={Icons.chart}>
               <BarRow label="Corruption (CPI, 100=clean)" value="32/100" pct={32} color={C.uz} />
               <BarRow label="Press freedom (100=free, est.)" value="~28/100" pct={28} color={C.grn} />
-              <BarRow label="Rule of law (WJP, 100=best)" value="~34/100" pct={34} color={C.blu} />
-              <BarRow label="Political rights (FH, improving)" value="~20/100" pct={20} color={C.dim} />
-              <p style={{ fontSize:11, color:C.sub, marginTop:10, lineHeight:1.6 }}>Uzbekistan's security environment has improved dramatically since 2016 but remains authoritarian. CPI at 33/100 is better than Kazakhstan (39) was a decade ago — on the same improvement trajectory. Press freedom at rank 140 is poor but far better than Tajikistan (162) or Turkmenistan (178). The Mirziyoyev reform story is real but incomplete — the judiciary remains unfree and civil society tightly managed.</p>
+              <BarRow label="Rule of law (WJP 2024, 100=best)" value="49/100" pct={49} color={C.blu} />
+              <BarRow label="Political rights (FH 2024, 100=best)" value="12/100" pct={12} color={C.dim} />
+              <p style={{ fontSize:11, color:C.sub, marginTop:10, lineHeight:1.6 }}>Uzbekistan's security environment has improved dramatically since 2016 but remains authoritarian. CPI at 32/100 (TI 2024) places Uzbekistan rank 121/180. Press freedom at rank 148/180 (RSF 2024) is poor but better than Tajikistan (162) or Turkmenistan (178). Freedom House total score of 12/100 (Not Free) reflects ongoing authoritarian governance. The Mirziyoyev reform story is real but incomplete — the judiciary remains unfree and civil society tightly managed.</p>
             </Panel>
           </div>
         </div>
 
         <div style={{ padding:'8px 0 0', marginTop:8 }}>
           <p style={{ fontSize:10.5, color:'#555', lineHeight:1.7 }}>
-            Sources: Statistics Agency of Uzbekistan · World Bank 2025 · IMF · UNDP HDR 2022 · Transparency International CPI 2023 · WHO · RSF Press Freedom 2024 · World Justice Project 2024 · Freedom House 2024 · ILO · Eurasian Star Country Report 2026 · Euronews · Data as of May 2026.
+            Sources: Statistics Agency of Uzbekistan · World Bank 2025 · IMF WEO April 2026 · UNDP HDR 2025 · Transparency International CPI 2024 · WHO · RSF Press Freedom 2024 · World Justice Project 2024 · Freedom House 2024 · ILO · CBU · climate-data.org · IEA · WNA · IPU · UNICEF · Data verified June 2026.
           </p>
           <p style={{ fontSize:9.5, color:'#444', marginTop:6, lineHeight:1.6 }}>
             Generated June 2026 · Claude Sonnet 4.5 (Anthropic) · iAlmirPro
