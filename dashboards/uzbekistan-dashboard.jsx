@@ -431,7 +431,7 @@ export default function Uzbekistan() {
           <div className="col-6 col-md-4 d-flex"><KpiCard label="Kyzylkum Desert" value="~300,000 km²" sub="World's 11th largest desert; occupies central Uzbekistan" accent={C.dim} delay={0.30} /></div>
           <div className="col-6 col-md-4 d-flex"><KpiCard label="Aral Sea (Uzbek portion)" value="~6,000 km²" sub="Was 68,000 km²; 91% lost to irrigation diversion" accent={C.dim} delay={0.35} /></div>
           <div className="col-6 col-md-4 d-flex"><KpiCard label="Doubly landlocked" value="One of 2 globally" sub="Only Liechtenstein also doubly landlocked; logistic challenge" accent={C.dim} delay={0.40} /></div>
-          <div className="col-6 col-md-4 d-flex"><KpiCard label="Arable land" value="~10.1%" sub="Fergana & Zerafshan valleys; highly irrigated" accent={C.dim} delay={0.45} /></div>
+          <div className="col-6 col-md-4 d-flex"><KpiCard label="Arable land" value="~9.1%" sub="Fergana & Zerafshan valleys; highly irrigated (World Bank 2023)" accent={C.dim} delay={0.45} /></div>
         </div>
         <div className="row gy-3 mb-3">
           <div className="col-12 col-md-6">
@@ -440,7 +440,7 @@ export default function Uzbekistan() {
               <BarRow label="Steppe (north & centre)" value="~10%" pct={13} color={C.grn} />
               <BarRow label="Mountains (east & south-east)" value="~8%" pct={10} color={C.blu} />
               <BarRow label="Fergana Valley (intensively farmed)" value="~5%" pct={6} color={C.dim} />
-              <BarRow label="Irrigated agricultural land" value="~10.1%" pct={13} color={C.dim} />
+              <BarRow label="Irrigated agricultural land" value="~9.1%" pct={12} color={C.dim} />
               <p style={{ fontSize:11, color:C.sub, marginTop:10, lineHeight:1.6 }}>80% desert makes Uzbekistan appear barren, but the Fergana Valley — shared with Kyrgyzstan and Tajikistan — is among Central Asia's most productive agricultural zones. The Kyzylkum Desert contains significant gold deposits (Muruntau mine — world's largest open-pit gold mine) and natural gas reserves.</p>
             </Panel>
           </div>
@@ -468,10 +468,10 @@ export default function Uzbekistan() {
         {/* 2. CLIMATE */}
         <SectionHeader icon={Icons.cloudSun} label="Climate: Weather, Daylight & Rainfall" />
         <div className="row g-1 mb-4">
-          <div className="col-6 col-md-4 d-flex"><KpiCard label="Avg Annual Temp (Tashkent)" value="14.8°C" sub="Continental; hot dry summers, cold winters" accent={C.grn} delay={0.05} /></div>
-          <div className="col-6 col-md-4 d-flex"><KpiCard label="Record High" value="48°C" sub="Fergana Valley & southern deserts; extreme summer heat" accent={C.red} delay={0.10} /></div>
-          <div className="col-6 col-md-4 d-flex"><KpiCard label="Record Low" value="−38°C" sub="Tashkent 1969; northern Karakalpakstan extreme winters" accent={C.blu} delay={0.15} /></div>
-          <div className="col-6 col-md-4 d-flex"><KpiCard label="Annual Rainfall (Tashkent)" value="~370 mm" sub="Most falls Oct–Apr; hot dry summers; south as low as 80 mm" accent={C.dim} delay={0.20} /></div>
+          <div className="col-6 col-md-4 d-flex"><KpiCard label="Avg Annual Temp (Tashkent)" value="14.1°C" sub="Continental; hot dry summers, cold winters (climate-data.org)" accent={C.grn} delay={0.05} /></div>
+          <div className="col-6 col-md-4 d-flex"><KpiCard label="Record High" value="47°C" sub="47.4°C at Buzaubaj (2022); historical claim 50°C in Termez (1944)" accent={C.red} delay={0.10} /></div>
+          <div className="col-6 col-md-4 d-flex"><KpiCard label="Record Low" value="−38°C" sub="Northern Karakalpakstan extreme winters; Tashkent record −29.5°C (1930)" accent={C.blu} delay={0.15} /></div>
+          <div className="col-6 col-md-4 d-flex"><KpiCard label="Annual Rainfall (Tashkent)" value="~450 mm" sub="Most falls Oct–Apr; spring peak Apr ~86mm; summers near-zero" accent={C.dim} delay={0.20} /></div>
           <div className="col-6 col-md-4 d-flex"><KpiCard label="Climate type" value="BSk / BWk" sub="Semi-arid steppe; hot desert in south; severe continental" accent={C.dim} delay={0.25} /></div>
           <div className="col-6 col-md-4 d-flex"><KpiCard label="Tashkent summer avg" value="28°C" sub="Sunny 300 days/year; dust storms from Kyzylkum common" accent={C.dim} delay={0.30} /></div>
           <div className="col-6 col-md-4 d-flex"><KpiCard label="Winter Dec–Feb" value="−2–4°C avg" sub="Snow possible; Tashkent mild; Fergana colder; mountains −20°C" accent={C.blu} delay={0.35} /></div>
@@ -505,18 +505,18 @@ export default function Uzbekistan() {
             <Panel title="Rainfall by Region" icon={Icons.rain}>
               <p style={{ fontSize:11, color:C.sub, marginBottom:11, letterSpacing:'0.04em' }}>Annual precipitation by zone</p>
               <BarRow label="Fergana Valley mountain flanks" value="~600 mm" pct={100} color={C.uz} />
-              <BarRow label="Tashkent & Zerafshan Valley" value="~370 mm" pct={62} color={C.grn} />
+              <BarRow label="Tashkent & Zerafshan Valley" value="~450 mm" pct={75} color={C.grn} />
               <BarRow label="Samarkand & Bukhara" value="~270 mm" pct={45} color={C.blu} />
               <BarRow label="Kyzylkum Desert (centre)" value="~100–150 mm" pct={22} color={C.dim} />
               <BarRow label="Karakalpakstan (Aral basin)" value="~80 mm" pct={13} color={C.dim} />
               <div style={{ height:1, background:C.border, margin:'14px 0' }} />
               <p style={{ fontSize:11, color:C.sub, marginBottom:11, letterSpacing:'0.04em' }}>Tashkent seasonal pattern</p>
-              <BarRow label="March–April (wettest)" value="50–60 mm" pct={100} color={C.uz} />
-              <BarRow label="Jun–Sep (very dry)" value="3–8 mm" pct={10} color={C.grn} />
-              <BarRow label="Jan–Feb (snow possible)" value="20–30 mm" pct={40} color={C.blu} />
+              <BarRow label="April (wettest month)" value="~86 mm" pct={100} color={C.uz} />
+              <BarRow label="Jun–Sep (very dry)" value="3–8 mm" pct={9} color={C.grn} />
+              <BarRow label="Jan–Feb (snow possible)" value="48–52 mm" pct={57} color={C.blu} />
               <p style={{ fontSize:11, color:C.sub, marginTop:10, lineHeight:1.6 }}>Almost zero rainfall in summer (3–8mm/month Jun–Sep) means agriculture is entirely dependent on irrigation from the Amu Darya and Syr Darya — the same rivers that once filled the Aral Sea. Water stress is Uzbekistan's most critical long-term environmental and economic challenge.</p>
               <GradientBar title="Monthly avg temperature — Tashkent (°C)" values={[-1,2,9,16,22,28,30,28,22,14,6,0]} colorStops={tempColor} unit="°" />
-              <GradientBar title="Monthly rainfall — Tashkent (mm)" values={[28,30,40,45,25,8,4,3,5,20,25,30]} colorStops={rainColor} unit="mm" />
+              <GradientBar title="Monthly rainfall — Tashkent (mm)" values={[48,52,70,86,35,8,3,3,8,35,45,52]} colorStops={rainColor} unit="mm" />
             </Panel>
           </div>
         </div>
@@ -626,14 +626,14 @@ export default function Uzbekistan() {
           <div className="col-12 col-md-6">
             <Panel title="Key Economic Indicators" icon={Icons.briefcase}>
               <Tbl rows={[
-                ['Remittances (% of GDP, 2025)', '~13.9B (~10% of GDP); from Russia mainly'],
+                ['Remittances (% of GDP, 2025)', '~$18.9B (~14% of GDP); +27% YoY; from Russia mainly'],
                 ['Gold production (Muruntau)', '~70 tonnes/year — world\'s largest mine'],
-                ['Foreign reserves (2025)', '>$55B — record; strong macro buffer'],
+                ['Foreign reserves (2025)', '~$66B — record; gold-heavy (CBU Jan 2026)'],
                 ['Foreign investment (2025)', '~$35–40B total; BoP FDI ~$2.8B (2024); record inflows'],
                 ['Poverty rate ($3.65/day, 2025)', '~5.1% — dramatic improvement from ~27% in 2016'],
-                ['Gini coefficient', '~33.0 — moderate'],
+                ['Gini coefficient', '34.5 — moderate (World Bank 2023)'],
               ]} />
-              <p style={{ fontSize:11, color:C.sub, marginTop:10, lineHeight:1.6 }}>The poverty reduction since Mirziyoyev's reforms began in 2016 is extraordinary — from ~27% to 5.1% in under a decade. FDI at $39.7B in 2025 is the highest in Central Asia by far. Gold reserves of $55B+ provide unprecedented macro stability for a lower-middle income country. The "Uzbekistan 2030" strategy aims to reach $220–230B GDP — now likely achievable by 2027–28.</p>
+              <p style={{ fontSize:11, color:C.sub, marginTop:10, lineHeight:1.6 }}>The poverty reduction since Mirziyoyev's reforms began in 2016 is extraordinary — from ~27% to 5.1% in under a decade. Total foreign investment (~$35–40B) in 2025 is the highest in Central Asia by far. Foreign reserves of $66B+ provide unprecedented macro stability for a lower-middle income country. The "Uzbekistan 2030" strategy aims to reach $220–230B GDP — now likely achievable by 2027–28.</p>
             </Panel>
           </div>
         </div>
@@ -646,7 +646,7 @@ export default function Uzbekistan() {
           <div className="col-6 col-md-4 d-flex"><KpiCard label="Unemployment (2025)" value="~4.8%" sub="ILO modeled estimate; youth unemployment ~15%; significant underemployment" accent={C.uz} delay={0.15} /></div>
           <div className="col-6 col-md-4 d-flex"><KpiCard label="Informal employment" value="~40%+" sub="Cotton agriculture, bazaar, construction; improving with formalisation push" accent={C.dim} delay={0.20} /></div>
           <div className="col-6 col-md-4 d-flex"><KpiCard label="Min. Wage (2025)" value="~1,271,000 UZS" sub="~$101/month; raised to 1,155K Jan 2025, then 1,271K Aug 2025 (WageIndicator)" accent={C.blu} delay={0.25} /></div>
-          <div className="col-6 col-md-4 d-flex"><KpiCard label="Labour migration abroad" value="~2M workers" sub="Mostly to Russia; remittances ~$13.9B (2025)" accent={C.dim} delay={0.30} /></div>
+          <div className="col-6 col-md-4 d-flex"><KpiCard label="Labour migration abroad" value="~2M workers" sub="Mostly to Russia; remittances ~$18.9B (2025)" accent={C.dim} delay={0.30} /></div>
         </div>
         <div className="row gy-3 mb-3">
           <div className="col-12 col-md-6">
@@ -677,9 +677,9 @@ export default function Uzbekistan() {
               <div style={{ height:1, background:C.border, margin:'16px 0' }} />
               <Tbl rows={[
                 ['Migrant workers abroad (est.)', '~2,000,000'],
-                ['Remittances (2025)', '~$13.9B (~10% of GDP)'],
+                ['Remittances (2025)', '~$18.9B (~14% of GDP)'],
               ]} />
-              <p style={{ fontSize:11, color:C.sub, marginTop:10, lineHeight:1.6 }}>Agriculture at 26% is declining as manufacturing expands — a healthy structural shift. The government's "1 million programmers" AI initiative and free economic zones are creating new digital employment. 2M migrant workers abroad represent 9% of the labour force — significant but far less dependent than Tajikistan (45%).</p>
+              <p style={{ fontSize:11, color:C.sub, marginTop:10, lineHeight:1.6 }}>Agriculture at 26% is declining as manufacturing expands — a healthy structural shift. The government's "1 million programmers" AI initiative and free economic zones are creating new digital employment. 2M migrant workers abroad represent 9% of the labour force — significant but far less dependent than Tajikistan (45%). Remittances of $18.9B in 2025 (+27% YoY) now equal ~14% of GDP.</p>
             </Panel>
           </div>
         </div>
@@ -699,10 +699,10 @@ export default function Uzbekistan() {
             <Panel title="Education Metrics" icon={Icons.graduation}>
               <BarRow label="Primary enrolment rate" value="~99%" pct={99} color={C.uz} />
               <BarRow label="Secondary completion rate" value="~94%" pct={94} color={C.grn} />
-              <BarRow label="Tertiary enrolment" value="~33%" pct={33} color={C.blu} />
+              <BarRow label="Tertiary enrolment" value="~45.8%" pct={46} color={C.blu} />
               <BarRow label="PISA scores vs OECD avg" value="below average" pct={42} color={C.dim} />
               <BarRow label="1 Million Programmers initiative" value="2025 target" pct={60} color={C.dim} />
-              <p style={{ fontSize:11, color:C.sub, marginTop:10, lineHeight:1.6 }}>Tertiary enrolment at 33% has roughly doubled since 2016 — Karimov-era universities were heavily restricted. The 20+ international branch campuses (including Inha University Korea, Webster University USA, Turin Polytechnic) is the most ambitious higher education reform in post-Soviet Central Asia. The "1 million programmers" AI initiative targets a digital workforce.</p>
+              <p style={{ fontSize:11, color:C.sub, marginTop:10, lineHeight:1.6 }}>Tertiary enrolment at 45.8% has more than tripled since 2016 — Karimov-era universities were heavily restricted. The 20+ international branch campuses (including Inha University Korea, Webster University USA, Turin Polytechnic) is the most ambitious higher education reform in post-Soviet Central Asia. The "1 million programmers" AI initiative targets a digital workforce.</p>
             </Panel>
           </div>
           <div className="col-12 col-md-6">
@@ -761,7 +761,7 @@ export default function Uzbekistan() {
         {/* 8. TOURISM */}
         <SectionHeader icon={Icons.briefcase} label="Tourism" />
         <div className="row g-1 mb-3">
-          <div className="col-6 col-md-4 d-flex"><KpiCard label="International Visitors (2024)" value="~7.5M" sub="Tourism Committee UZ; fastest-growing in region; up from 2.7M in 2018" accent={C.uz} delay={0.05} /></div>
+          <div className="col-6 col-md-4 d-flex"><KpiCard label="International Visitors (2024)" value="8.2M" sub="Statistics Agency UZ; fastest-growing in region; up from 2.7M in 2018" accent={C.uz} delay={0.05} /></div>
           <div className="col-6 col-md-4 d-flex"><KpiCard label="Tourism Revenue (2024)" value="~$3.5B" sub="~3% of GDP; target $5B by 2026" accent={C.dim} delay={0.10} /></div>
           <div className="col-6 col-md-4 d-flex"><KpiCard label="Top draw" value="Samarkand" sub="Registan, Bibi-Khanym; UNESCO World Heritage; ~2M visits" accent={C.dim} delay={0.15} /></div>
           <div className="col-6 col-md-4 d-flex"><KpiCard label="Visa-free countries" value="~90+" sub="Massive expansion since 2018; including EU, USA, China, Japan" accent={C.dim} delay={0.20} /></div>
@@ -786,7 +786,7 @@ export default function Uzbekistan() {
                   <span style={{ fontFamily:'Fraunces,serif', fontWeight:700, fontSize:13, color:C.txt, flexShrink:0 }}>{pct}</span>
                 </div>
               ))}
-              <p style={{ fontSize:11, color:C.sub, marginTop:10, lineHeight:1.6 }}>Tourism has been Uzbekistan's most dramatic reform success story — visitors grew from 2.7M (2018) to 7.5M (2024) — a near-3× increase in 6 years. The Silk Road trio of Samarkand, Bukhara, and Khiva is a world-class heritage destination finally opened to the world. Chinese tourism is the key growth market.</p>
+              <p style={{ fontSize:11, color:C.sub, marginTop:10, lineHeight:1.6 }}>Tourism has been Uzbekistan's most dramatic reform success story — visitors grew from 2.7M (2018) to 8.2M (2024) — a near-3× increase in 6 years. The Silk Road trio of Samarkand, Bukhara, and Khiva is a world-class heritage destination finally opened to the world. Chinese tourism is the key growth market.</p>
             </Panel>
           </div>
           <div className="col-12 col-md-6">
@@ -809,7 +809,7 @@ export default function Uzbekistan() {
         {/* 9. VITAL STATISTICS */}
         <SectionHeader icon={Icons.people} label="Vital Statistics" />
         <div className="row g-1 mb-3">
-          <div className="col-6 col-md-4 d-flex"><KpiCard label="Births (2025 est.)" value="~680,000" sub="Birth rate ~18 per 1,000; declining but still high" accent={C.uz} delay={0.05} /></div>
+          <div className="col-6 col-md-4 d-flex"><KpiCard label="Births (2024 est.)" value="~960,000" sub="Birth rate ~25.5 per 1,000 (World Bank 2024); high by regional standards" accent={C.uz} delay={0.05} /></div>
           <div className="col-6 col-md-4 d-flex"><KpiCard label="Natural Increase" value="~500,000" sub="Large absolute growth from young population base" accent={C.dim} delay={0.10} /></div>
           <div className="col-6 col-md-4 d-flex"><KpiCard label="Ages 0–14" value="~29%" sub="Large but declining youth cohort; fertility falling" accent={C.dim} delay={0.15} /></div>
           <div className="col-6 col-md-4 d-flex"><KpiCard label="Ages 65+" value="~5.5%" sub="Ageing slowly; pension costs manageable for now" accent={C.dim} delay={0.20} /></div>
@@ -848,8 +848,8 @@ export default function Uzbekistan() {
         <SectionHeader icon={Icons.chart} label="Economic Depth & Fiscal Position" />
         <div className="row g-1 mb-3">
           <div className="col-6 col-md-4 d-flex"><KpiCard label="Foreign Reserves (end-2025)" value="~$66B" sub="Record $66.3B as of Jan 1 2026; includes gold; +61% YoY (CBU)" accent={C.uz} delay={0.05} /></div>
-          <div className="col-6 col-md-4 d-flex"><KpiCard label="Govt Debt / GDP (2025)" value="~28%" sub="World Bank; manageable; mostly concessional IFI lending" accent={C.dim} delay={0.10} /></div>
-          <div className="col-6 col-md-4 d-flex"><KpiCard label="FDI Inflow (2025)" value="~$39.7B" sub="Record; Central Asia leader; manufacturing & energy dominate" accent={C.grn} delay={0.15} /></div>
+          <div className="col-6 col-md-4 d-flex"><KpiCard label="Govt Debt / GDP (2025)" value="~33%" sub="IMF 2025 Article IV: 32.6% end-2024; mostly concessional IFI lending" accent={C.dim} delay={0.10} /></div>
+          <div className="col-6 col-md-4 d-flex"><KpiCard label="Foreign Investment (2025)" value="~$35–40B" sub="Total incl. loans & portfolio; BoP FDI ~$2.8B (2024); Central Asia leader" accent={C.grn} delay={0.15} /></div>
           <div className="col-6 col-md-4 d-flex"><KpiCard label="Exports (2025)" value="~$33.8B" sub="+23% YoY; gold, gas, copper, uranium, textiles, food" accent={C.dim} delay={0.20} /></div>
           <div className="col-6 col-md-4 d-flex"><KpiCard label="Imports (2025)" value="~$47.4B" sub="Machinery, equipment, chemicals; trade deficit funded by FDI" accent={C.dim} delay={0.25} /></div>
           <div className="col-6 col-md-4 d-flex"><KpiCard label="Current Account (2025)" value="~−3.3% GDP" sub="World Bank; narrowing; investment-driven import surge" accent={C.dim} delay={0.30} /></div>
@@ -878,7 +878,7 @@ export default function Uzbekistan() {
           <div className="col-12 col-md-6">
             <Panel title="Key Fiscal Indicators" icon={Icons.chart}>
               <Tbl rows={[
-                ['Govt debt / GDP (2025)', '~28% — moderate; IFI concessional majority'],
+                ['Govt debt / GDP (2025)', '~33% — moderate; IMF end-2024: 32.6%; IFI concessional majority'],
                 ['Foreign reserves (end-2025)', '~$66.3B — record; gold-heavy (CBU)'],
                 ['GDP growth target 2030', '$220–230B nominal GDP'],
                 ['Investment / GDP ratio (2025)', '~31.9% — very high; construction boom'],
@@ -895,7 +895,7 @@ export default function Uzbekistan() {
         {/* 11. ENERGY */}
         <SectionHeader icon={Icons.mountain} label="Energy & Resources" />
         <div className="row g-1 mb-3">
-          <div className="col-6 col-md-4 d-flex"><KpiCard label="Electricity Generation" value="~75 TWh/yr" sub="Coal & gas dominant; massive renewable transition underway" accent={C.uz} delay={0.05} /></div>
+          <div className="col-6 col-md-4 d-flex"><KpiCard label="Electricity Generation" value="81.5 TWh/yr" sub="2024 actual (IEA/UZ Stats); +4.7% YoY; gas-dominant; renewables growing" accent={C.uz} delay={0.05} /></div>
           <div className="col-6 col-md-4 d-flex"><KpiCard label="Natural gas reserves" value="~1.9 trillion m³" sub="Proven reserves end-2024 (Institute of Energy); production declining" accent={C.dim} delay={0.10} /></div>
           <div className="col-6 col-md-4 d-flex"><KpiCard label="Gold production (Muruntau)" value="~70 tonnes/yr" sub="World's largest open-pit mine; Kyzylkum Desert" accent={C.grn} delay={0.15} /></div>
           <div className="col-6 col-md-4 d-flex"><KpiCard label="Renewable investment (2025)" value="$9.5B — 42 projects" sub="Solar, wind, hydro; Forum 'Powering the Future' Dec 2025" accent={C.dim} delay={0.20} /></div>
@@ -906,16 +906,16 @@ export default function Uzbekistan() {
           <div className="col-12 col-md-6">
             <Panel title="Electricity Generation Mix (2024 est.)" icon={Icons.chart}>
               <Donut
-                label="~75 TWh"
+                label="81.5 TWh"
                 sublabel="generated 2024"
                 segments={[
-                  { label:'Natural gas (dominant)',    value:'~80%', pct:80, color:C.uz  },
-                  { label:'Hydro (rivers & reservoirs)', value:'~11%', pct:11, color:C.blu },
-                  { label:'Coal',                      value:'~5%',  pct:5,  color:'#666'},
+                  { label:'Natural gas (dominant)',    value:'~76%', pct:76, color:C.uz  },
+                  { label:'Coal',                      value:'~11%', pct:11, color:'#666'},
+                  { label:'Hydro (rivers & reservoirs)', value:'~9%', pct:9, color:C.blu },
                   { label:'Solar & wind (growing)',    value:'~4%',  pct:4,  color:C.grn },
                 ]}
               />
-              <p style={{ fontSize:11, color:C.sub, marginTop:12, lineHeight:1.6 }}>80% gas-fired is relatively clean compared to Kazakhstan's coal-heavy grid. However, natural gas production is declining (~7%/year) — making the $9.5B renewable push urgent. Uzbekistan has signed deals for 20GW of solar and wind by 2030. The Rosatom nuclear plant would provide baseload power independence.</p>
+              <p style={{ fontSize:11, color:C.sub, marginTop:12, lineHeight:1.6 }}>~76% gas-fired is relatively clean compared to Kazakhstan's coal-heavy grid. Coal at ~11% is higher than previously reported (corrected 2024 data). However, natural gas production is declining (~7%/year) — making the $9.5B renewable push urgent. Uzbekistan has signed deals for 20GW of solar and wind by 2030. The Rosatom nuclear plant would provide baseload power independence.</p>
             </Panel>
           </div>
           <div className="col-12 col-md-6">
@@ -977,7 +977,7 @@ export default function Uzbekistan() {
           <div className="col-6 col-md-4 d-flex"><KpiCard label="Infant mortality (2025 est.)" value="~15 / 1,000" sub="Improving; down from 38/1,000 in 2000; still above EU" accent={C.dim} delay={0.15} /></div>
           <div className="col-6 col-md-4 d-flex"><KpiCard label="TB incidence (2023)" value="~40 / 100K" sub="High but declining; drug-resistant TB concern in prisons" accent={C.dim} delay={0.20} /></div>
           <div className="col-6 col-md-4 d-flex"><KpiCard label="Life expectancy" value="~75 yrs" sub="One of highest in region; improving under Mirziyoyev reforms" accent={C.dim} delay={0.25} /></div>
-          <div className="col-6 col-md-4 d-flex"><KpiCard label="Doctors per 1,000" value="~2.4" sub="Below Soviet peak; brain drain concern; salary increases helping" accent={C.dim} delay={0.30} /></div>
+          <div className="col-6 col-md-4 d-flex"><KpiCard label="Doctors per 1,000" value="~2.87" sub="2023 National Stats; below Soviet peak; brain drain concern" accent={C.dim} delay={0.30} /></div>
         </div>
         <div className="row gy-3 mb-3">
           <div className="col-12 col-md-6">
@@ -1009,17 +1009,17 @@ export default function Uzbekistan() {
         <SectionHeader icon={Icons.people} label="Social Indicators & Inequality" />
         <div className="row g-1 mb-3">
           <div className="col-6 col-md-4 d-flex"><KpiCard label="Poverty rate ($3.65/day, 2025)" value="~5.1%" sub="Statistics Agency; down from ~27% in 2016 — Mirziyoyev-era reform" accent={C.uz} delay={0.05} /></div>
-          <div className="col-6 col-md-4 d-flex"><KpiCard label="Gini Coefficient" value="~33.0" sub="Moderate inequality; rising inequality a risk as economy grows" accent={C.dim} delay={0.10} /></div>
+          <div className="col-6 col-md-4 d-flex"><KpiCard label="Gini Coefficient" value="34.5" sub="World Bank 2023; moderate inequality; rising inequality a risk as economy grows" accent={C.dim} delay={0.10} /></div>
           <div className="col-6 col-md-4 d-flex"><KpiCard label="Rural-urban income gap" value="~1.6×" sub="Urban incomes ~60% higher; rural employment main challenge" accent={C.dim} delay={0.15} /></div>
-          <div className="col-6 col-md-4 d-flex"><KpiCard label="Gender Inequality Index" value="0.240 (rank 68)" sub="UNDP 2022; better than Tajikistan; improving rapidly" accent={C.grn} delay={0.20} /></div>
+          <div className="col-6 col-md-4 d-flex"><KpiCard label="Gender Inequality Index" value="0.274 (rank 83)" sub="UNDP HDR 2024; better than Tajikistan; improving rapidly" accent={C.grn} delay={0.20} /></div>
           <div className="col-6 col-md-4 d-flex"><KpiCard label="Women in parliament" value="~38%" sub="57/150 seats after Oct 2024 elections (IPU); highest in CA" accent={C.blu} delay={0.25} /></div>
           <div className="col-6 col-md-4 d-flex"><KpiCard label="Mahalla system" value="~10,000 units" sub="Traditional community governance; welfare delivery at local level" accent={C.dim} delay={0.30} /></div>
         </div>
         <div className="row gy-3 mb-3">
           <div className="col-12 col-md-6">
             <Panel title="Access & Basic Services" icon={Icons.chart}>
-              <BarRow label="Access to clean water (urban)" value="~97%" pct={97} color={C.uz} />
-              <BarRow label="Access to clean water (rural)" value="~80%" pct={80} color={C.grn} />
+              <BarRow label="Access to clean water (urban)" value="~89%" pct={89} color={C.uz} />
+              <BarRow label="Access to clean water (rural)" value="~71%" pct={71} color={C.grn} />
               <BarRow label="Access to sanitation (urban)" value="~95%" pct={95} color={C.dim} />
               <BarRow label="Access to sanitation (rural)" value="~68%" pct={68} color={C.dim} />
               <BarRow label="Electricity access (national)" value="~100%" pct={100} color={C.blu} />
@@ -1029,14 +1029,14 @@ export default function Uzbekistan() {
           <div className="col-12 col-md-6">
             <Panel title="Social Cohesion & Gender" icon={Icons.people}>
               <Tbl rows={[
-                ['Gini (Statistics Agency, 2021)', '~33.0 — moderate'],
+                ['Gini (World Bank 2023)', '34.5 — moderate'],
                 ['Women in parliament (2024)', '~38% (57/150 seats) — highest in Central Asia (IPU)'],
-                ['Gender Inequality Index (UNDP)', '0.240 — rank 68/191'],
+                ['Gender Inequality Index (UNDP 2024)', '0.274 — rank 83/191'],
                 ['Women in labour force', '~47% — improving'],
                 ['Forced cotton labour (abolished)', '2021; confirmed by ILO'],
                 ['Karakalpak autonomy status', 'Autonomous Republic; 2022 unrest suppressed'],
               ]} />
-              <p style={{ fontSize:11, color:C.sub, marginTop:10, lineHeight:1.6 }}>Women in parliament at 32% is the highest in Central Asia — reflecting genuine quota-backed progress. The abolition of forced cotton labour was a landmark; for decades, millions of teachers, students, and public servants were mobilised each autumn for cotton harvesting — a Soviet-era practice that persisted long after independence. Its end in 2021 was transformative for rural women in particular.</p>
+              <p style={{ fontSize:11, color:C.sub, marginTop:10, lineHeight:1.6 }}>Women in parliament at 38% is the highest in Central Asia — reflecting genuine quota-backed progress. The abolition of forced cotton labour was a landmark; for decades, millions of teachers, students, and public servants were mobilised each autumn for cotton harvesting — a Soviet-era practice that persisted long after independence. Its end in 2021 was transformative for rural women in particular.</p>
             </Panel>
           </div>
         </div>
@@ -1090,7 +1090,7 @@ export default function Uzbekistan() {
           <div className="col-12 col-md-6">
             <Panel title="Investment Climate Summary" icon={Icons.briefcase}>
               <Tbl rows={[
-                ["Fitch credit rating", 'BB- / Stable (sub-investment grade but improving)'],
+                ["Fitch credit rating", 'BB / Positive (upgraded from BB- in 2024)'],
                 ['CPI score (TI 2024)', '32/100 — rank 121/180; improving from 21/100 in 2016'],
                 ['Free Economic Zones', '~20 FEZs; Navoi (aviation), Urgut, IT Parks'],
                 ['IT Park Uzbekistan', '500+ companies; 0% income tax; growing exports'],
