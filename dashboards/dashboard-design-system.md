@@ -1,5 +1,5 @@
 # Country Dashboard — Design System
-> Last updated: May 2026 — reflects all changes through AgeBar discrete-chunk rewrite, #999 gradient base, 1px marker lines, Record High/Low color rules, and full 5-country palette alignment.
+> Last updated: May 2026 — reflects all changes through the Kyrgyzstan/Kazakhstan/Tajikistan/Uzbekistan session.
 > Use this file as the single source of truth for all future country dashboards.
 
 ---
@@ -23,6 +23,17 @@
 - Every meaningful change = new version: `v1 → v2 → v3...`
 - **Never overwrite** an existing version — copy first, then edit.
 - Always present `.jsx` after each version.
+
+---
+
+## Reference Files
+
+| File | Purpose |
+|---|---|
+| `at-a-glance-instructions.md` | Structure, tile anatomy, icons and map tile for the At-a-Glance section |
+| `country-map-instructions.md` | D3 choropleth map component — projection, colours, label positioning via Python/Shapely |
+
+> Always read both files before building or updating the At-a-Glance section or the map tile.
 
 ---
 
@@ -163,7 +174,7 @@ body { background: #000; }
 .dash {
   background: #000; color: #fff;
   font-family: 'Inter', sans-serif; font-weight: 300; line-height: 1.6;
-  padding: 0 22px 80px; max-width: 1020px; margin: 0 auto;
+  padding: 0 22px 80px; max-width: 1020px; margin: 0 auto; overflow-x: hidden;
 }
 @keyframes up {
   from { opacity: 0; transform: translateY(10px); }
@@ -370,7 +381,7 @@ const GradientBar = ({ title, values, colorStops, unit = '', height = 22, xLabel
         {labels.map((l, i) => (
           <div key={l} style={{ textAlign:'center', flex:1 }}>
             <div style={{ fontSize:8, color: i===usePeakIdx ? '#fff' : labelColor, fontWeight: i===usePeakIdx ? 600 : 300, lineHeight:1 }}>{l}</div>
-            <div style={{ fontSize:8, color:'#555', lineHeight:1.4 }}>{fmt ? fmt(values[i]) : `${values[i]}${unit}`}</div>
+            <div style={{ fontSize:8, color: i===usePeakIdx ? '#fff' : labelColor, lineHeight:1.4 }}>{fmt ? fmt(values[i]) : `${values[i]}${unit}`}</div>
           </div>
         ))}
       </div>

@@ -22,6 +22,9 @@ except ImportError:
 # ── npm packages needed by the Node renderer ──────────────────────────────────
 NPM = ["@babel/core", "@babel/plugin-transform-react-jsx", "react", "react-dom"]
 
+# ── npm packages needed for server-side map SVG rendering ─────────────────────
+MAP_NPM = ["d3", "topojson-client", "jsdom"]
+
 # ── Node.js: compile JSX → renderToStaticMarkup → pure HTML ──────────────────
 NODE_SCRIPT = r"""
 const babel = require('@babel/core');
@@ -32,7 +35,7 @@ const fs = require('fs');
 const src = fs.readFileSync(process.argv[2], 'utf8')
   .replace(/const\s*\{[^}]+\}\s*=\s*React;/, '')
   .replace('export default function', 'function')
-  .replace(/useEffect\s*\(\s*\(\s*\)\s*=>\s*\{[\s\S]*?\}\s*,\s*\[\s*\]\s*\)/g, '');
+  .replace(/(React\.)?useEffect\s*\(\s*\(\s*\)\s*=>\s*\{[\s\S]*?\}\s*,\s*\[\s*\]\s*\)/g, '');
 
 const js = babel.transformSync(src, {
   plugins: ['@babel/plugin-transform-react-jsx'], filename: 'dashboard.jsx'
@@ -43,6 +46,106 @@ const Component = new Function('require','React', js + '\nreturn ' + fn + ';')(r
 
 fs.writeFileSync(process.argv[3], renderToStaticMarkup(React.createElement(Component)), 'utf8');
 console.log('OK');
+"""
+
+# ── Node.js: extract drawMap from JSX, run it in jsdom, output SVG ────────────
+MAP_NODE_SCRIPT = r"""
+const { JSDOM } = require('jsdom');
+const d3mod = require('d3');
+const topo  = require('topojson-client');
+const fs    = require('fs');
+const https = require('https');
+
+const jsxPath   = process.argv[2];
+const atlasPath = process.argv[3];
+const src       = fs.readFileSync(jsxPath, 'utf8');
+
+// ── Fetch / cache world atlas ─────────────────────────────────────────────────
+function getAtlas() {
+  if (fs.existsSync(atlasPath))
+    return Promise.resolve(JSON.parse(fs.readFileSync(atlasPath, 'utf8')));
+  return new Promise((resolve, reject) => {
+    process.stderr.write('🌍  Downloading world atlas (once)...\n');
+    https.get('https://cdn.jsdelivr.net/npm/world-atlas@2/countries-50m.json', res => {
+      let data = '';
+      res.on('data', c => data += c);
+      res.on('end', () => { fs.writeFileSync(atlasPath, data); resolve(JSON.parse(data)); });
+    }).on('error', reject);
+  });
+}
+
+// ── Extract inner content of { } block starting after fromIdx ─────────────────
+function innerBraces(text, fromIdx) {
+  let i = text.indexOf('{', fromIdx);
+  if (i < 0) return null;
+  let depth = 0, start = i;
+  while (i < text.length) {
+    if      (text[i] === '{') depth++;
+    else if (text[i] === '}') { if (--depth === 0) return text.slice(start + 1, i); }
+    i++;
+  }
+  return null;
+}
+
+getAtlas().then(worldData => {
+  // 1. Extract const C = { ... }
+  const cIdx  = src.search(/\bconst C\s*=/);
+  const cBody = innerBraces(src, cIdx);
+  if (cBody === null) throw new Error('const C not found in JSX');
+  const cDef = `const C = {${cBody}};`;
+
+  // 2. Extract drawMap inner body
+  const dmIdx   = src.indexOf('async function drawMap()');
+  if (dmIdx < 0) throw new Error('drawMap() not found in JSX');
+  const dmInner = innerBraces(src, dmIdx);
+  if (!dmInner) throw new Error('drawMap body not found');
+
+  // 3. Minimal transforms — only remove runtime-only guards
+  //    CDN loading, fetch, window.d3 are handled by mocking the environment below
+  let code = dmInner
+    .replace(/if\s*\(!cancelled\)\s*setMapLoaded\(true\)\s*;/g, '')
+    .replace(/let cancelled\s*=\s*false\s*;/, '')
+    .replace(/if\s*\(cancelled\)\s*return\s*;/g, '')
+    .replace(/return\s*\(\)\s*=>\s*\{[\s\S]*?cancelled[\s\S]*?\}\s*;/, '');
+
+  // 4. Extract try { } inner content
+  const tryIdx   = code.indexOf('try');
+  const tryInner = tryIdx >= 0 ? innerBraces(code, tryIdx) : code;
+
+  // 5. Set up jsdom
+  const dom = new JSDOM('<!DOCTYPE html><html><body><svg id="m" viewBox="0 0 960 540"></svg></body></html>');
+  const win = dom.window;
+  const doc = win.document;
+
+  // Pre-create the CDN script elements → if(!getElementById('d3-cdn')) is false → blocks skipped
+  ['d3-cdn', 'topo-cdn'].forEach(id => {
+    const s = doc.createElement('script'); s.id = id; doc.head.appendChild(s);
+  });
+
+  // Inject d3 and topojson into window → const d3=window.d3 works as-is
+  win.d3       = d3mod;
+  win.topojson = topo;
+
+  // Mock fetch → const world = await fetch(...).then(r=>r.json()) works as-is
+  win.fetch = () => Promise.resolve({ json: () => Promise.resolve(worldData) });
+
+  global.document = doc;
+  global.window   = win;
+
+  const svgEl = doc.getElementById('m');
+
+  // 6. Run as async function (the drawMap code uses await)
+  const AsyncFn = Object.getPrototypeOf(async function(){}).constructor;
+  const fn = new AsyncFn('mapRef', cDef + '\n' + tryInner);
+
+  fn({ current: svgEl }).then(() => {
+    const out = svgEl.outerHTML
+      .replace(/^<svg[^>]*/,
+        '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 540" width="100%" style="display:block;border-radius:4px"');
+    process.stdout.write(out + '\n');
+  }).catch(e => { process.stderr.write('❌ draw: ' + e.message + '\n'); process.exit(1); });
+
+}).catch(e => { process.stderr.write('❌ ' + e.message + '\n' + e.stack + '\n'); process.exit(1); });
 """
 
 # ── Helpers ───────────────────────────────────────────────────────────────────
@@ -66,6 +169,54 @@ def ensure_npm(cache):
     if r.returncode != 0:
         print("❌  npm install failed:\n" + r.stderr); sys.exit(1)
     print("✓  npm packages installed")
+
+def ensure_map_npm(cache):
+    if os.path.isfile(os.path.join(cache, "node_modules", "jsdom", "package.json")):
+        return
+    print("📦  Installing map packages (first run only)...")
+    r = subprocess.run(["npm", "install", "--save"] + MAP_NPM, cwd=cache,
+                       capture_output=True, text=True)
+    if r.returncode != 0:
+        print(f"❌  Map package install failed.\n"
+              f"    Run manually: npm install --save {' '.join(MAP_NPM)} --prefix {cache}\n"
+              f"    Error: {r.stderr[:300]}")
+        sys.exit(1)
+    if not os.path.isfile(os.path.join(cache, "node_modules", "jsdom", "package.json")):
+        print(f"❌  jsdom still not found after install.\n"
+              f"    Run manually: npm install --save {' '.join(MAP_NPM)} --prefix {cache}")
+        sys.exit(1)
+    print("✓  Map packages installed")
+
+def render_map_svg(jsx_path, cache):
+    """Run the drawMap code from the JSX inside jsdom and return an SVG string."""
+    ensure_map_npm(cache)
+
+    atlas_path = os.path.join(cache, "world-atlas.json")
+    node_js    = os.path.join(cache, "render_map.js")
+    with open(node_js, "w") as f:
+        f.write(MAP_NODE_SCRIPT)
+
+    r = subprocess.run(
+        ["node", node_js, jsx_path, atlas_path],
+        cwd=cache, capture_output=True, text=True, timeout=60
+    )
+    if r.returncode != 0:
+        print(f"⚠️  Map render failed:\n{r.stderr[:600]}")
+        return None
+    return r.stdout.strip()
+
+def inject_map_svg(html, svg):
+    """Replace the empty map SVG placeholder with the pre-rendered SVG."""
+    # Match any empty <svg> with viewBox "0 0 960 540" (BeautifulSoup lowercases attrs)
+    pattern = re.compile(
+        r'<svg[^>]*viewbox="0 0 960 540"[^>]*/?>\s*(?:</svg>)?',
+        re.IGNORECASE
+    )
+    m = pattern.search(html)
+    if m:
+        return html[:m.start()] + svg + html[m.end():]
+    print("⚠️  Map SVG placeholder not found in HTML — skipping embed")
+    return html
 
 def beautify_html(html):
     INLINE = ['em', 'strong', 'b', 'i', 'span', 'code', 'sup', 'sub', 'small']
@@ -216,6 +367,15 @@ def convert(jsx_path):
 
     html = indent_style(html)
     html = re.sub(r'<title>[\s\S]*?</title>', f'<title>{page_title}</title>', html)
+
+    # Embed map SVG if the JSX contains a D3 map component
+    if 'async function drawMap()' in src:
+        print("🗺️   Rendering map SVG...")
+        map_svg = render_map_svg(jsx_path, cache)
+        if map_svg:
+            html = inject_map_svg(html, map_svg)
+            html = re.sub(r'<div[^>]*>\s*Loading map[^<\n]*\s*</div>', '', html, count=1)
+            print("✓  Map SVG embedded")
 
     with open(out_path, "w") as f:
         f.write(html)
