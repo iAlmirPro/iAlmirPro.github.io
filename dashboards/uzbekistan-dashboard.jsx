@@ -1080,7 +1080,7 @@ export default function Uzbekistan() {
         <SectionHeader icon={Icons.briefcase} label="Business & Investment Climate" />
         <div className="row g-1 mb-3">
           <div className="col-6 col-md-4 d-flex"><KpiCard label="Corporate tax rate" value="15%" sub="Standard rate (reduced from 20% in 2023); FEZ residents lower" accent={C.grn} delay={0.05} /></div>
-          <div className="col-6 col-md-4 d-flex"><KpiCard label="FDI inflow (2025)" value="~$39.7B" sub="Record; Central Asia leader; manufacturing, energy, construction" accent={C.dim} delay={0.10} /></div>
+          <div className="col-6 col-md-4 d-flex"><KpiCard label="Foreign Investment (2025)" value="~$35–40B" sub="Total incl. loans & portfolio; BoP FDI ~$2.8B (2024); record inflows; Central Asia leader" accent={C.dim} delay={0.10} /></div>
           <div className="col-6 col-md-4 d-flex"><KpiCard label="Ease of Doing Business" value="~Rank 69/190" sub="World Bank 2019; massive improvement from rank 166 in 2012" accent={C.dim} delay={0.15} /></div>
           <div className="col-6 col-md-4 d-flex"><KpiCard label="VAT rate" value="12%" sub="Reduced from 20% in 2019; significant tax reform package" accent={C.dim} delay={0.20} /></div>
           <div className="col-6 col-md-4 d-flex"><KpiCard label="Corruption Index (TI 2023)" value="33/100" sub="Rank 121/180; improving from 21/100 in 2016 under Karimov" accent={C.uz} delay={0.25} /></div>
