@@ -60,7 +60,7 @@ The single source of truth for all dashboard design is **`dashboards/dashboard-d
 1. Copy `kyrgyzstan-dashboard.jsx` as `[country]-dashboard-v1.jsx`
 2. Update the `C` color palette using country-code prefix (e.g. `kaz`, `uz`, `tj`, `tm`) — never use codes that clash (`ir` = Ireland)
 3. Update `Flag` SVG, hero H1/eyebrow/description
-4. Replace all data section by section — verify every KPI via web search
+4. Replace all data section by section — **every single value must be confirmed via web search before writing** (see Data Verification Standard in dashboard-design-system.md). No assumptions, no training knowledge, no test data. Values that cannot be confirmed must be marked `est.; unverified` in their sub/label field.
 5. Run duplicate check: visual component takes priority over table row; remove table row if duplicated
 6. Run color audit: max 2 colored KpiCards per section
 7. Add `GradientBar` and `AgeBar` at required placements (§2 Climate, §3 Population Growth, §8 Tourism, §10 Fiscal)

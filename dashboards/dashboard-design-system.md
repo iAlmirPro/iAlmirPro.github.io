@@ -681,24 +681,91 @@ grep -n 'value:"\|sub:"\|accent:"\|label:"' [file].jsx
 
 ## Data Verification Standard
 
+### ⚠️ MANDATORY RULE — NO EXCEPTIONS
+
+**Every single data value in every dashboard must be confirmed via web search before it is written into the file.**
+
+- **No assumptions.** Training knowledge is not a source. A value that "sounds right" is not verified.
+- **No test data.** Placeholder numbers, rounded guesses, and carry-overs from similar countries are forbidden.
+- **No prioritising.** There is no tier of "important" vs "minor" values. Every KpiCard value, every BarRow value, every Tbl row value, every GradientBar array, every Donut segment percentage, every AgeBar cohort, every narrative figure inside `<p>` text — all must be searched and confirmed individually.
+- **No batching without searching.** Do not write a batch of 30 values and search 10 of them. Search first, write after.
+- **No deferring.** A value is either confirmed (search done, source found) or it is unverified. There is no middle ground of "probably correct" or "will check later."
+
+### The only two valid states for any value
+
+| State | Meaning | What to do |
+|---|---|---|
+| **Confirmed** | Web search returned a source that directly supports the value | Write the value; cite the source in the `sub` field |
+| **Unverified** | No web search was done, or search returned no usable result | Write the value AND append `est.; unverified` to the `sub` field, label, or Tbl row |
+
+### How to mark unverified values
+
+Append `— est.; unverified` directly in the field where the value appears:
+
+```jsx
+// KpiCard sub text
+<KpiCard label="Solar irradiation" value="~1,700–2,200 kWh/m²"
+  sub="Among highest globally; ideal for solar — est.; unverified" />
+
+// BarRow label
+<BarRow label="Hypertension prevalence (est.; unverified)" value="~32%" pct={100} />
+
+// Tbl row
+['Presidential schools (elite)', '14 across the country — est.; unverified'],
+
+// AgeBar title
+<AgeBar title="Population age structure — est.; individual 5-yr cohort values unverified" ... />
+
+// Panel title
+<Panel title="Causes of Death (est.; breakdown unverified)" ...>
+```
+
+The annotation must appear **where the data is displayed**, not in a comment or elsewhere.
+
+### Verification process — required sequence
+
+1. **Read the full section** before writing anything.
+2. **Search every value** in that section via web search. Run searches in parallel where possible.
+3. **Record the confirmed value and source** for each data point.
+4. **Write the value** with the source cited in `sub`.
+5. **Mark anything unconfirmed** with `est.; unverified` before committing.
+6. **Never commit a file** that contains unverified values without the `est.; unverified` annotation.
+
+### Approved sources by data type
+
 | Source | Use for |
 |---|---|
-| World Bank Open Data | GDP, per capita, growth, population |
-| IMF WEO / Article IV reports | Inflation, fiscal balance, debt |
-| National statistics agencies | Wages, employment, vital statistics |
-| UNDP HDR | HDI, education, gender indices |
-| UN World Population Prospects | Age structure, cohort data, median age by gender |
-| Wikipedia economy/demographics | Cross-reference (acceptable when citing primary sources) |
+| World Bank Open Data | GDP, per capita, growth, population, enrollment, health |
+| IMF WEO / Article IV reports | Inflation, fiscal balance, debt ratios |
+| National statistics agencies | Wages, employment, vital statistics, city populations |
+| UNDP HDR | HDI, mean/expected years schooling, GII |
+| UN World Population Prospects | Age structure, cohort data, fertility, median age |
 | Transparency International | CPI / corruption index |
-| RSF | Press freedom ranking |
-| WHO / World Bank health data | TB, infant mortality, health spending |
+| RSF (Reporters Without Borders) | Press freedom ranking |
+| WHO / World Bank health data | TB, infant mortality, health spending, disease burden |
 | IEP (Institute for Economics & Peace) | Global Peace Index |
-| CIA World Factbook | Median age by gender, demographic structure |
+| ILO | Labour force, unemployment, informal employment |
+| IQAir / WHO | Air quality (PM2.5) annual averages |
+| UNWTO / national tourism agencies | Visitor numbers, visitor origins, tourism revenue |
+| en.climate-data.org / timeanddate.com | Monthly temperature and rainfall averages |
+| Worldometer / populationpyramid.net | Population pyramid cohort data |
+| OEC / national customs agencies | Export product shares and destination percentages |
 
-- Flag uncertain estimates with `~` prefix
-- Cite the source in the `sub` field of KpiCard
-- Always verify: GDP, population, inflation, poverty rate, remittances, tourism visitors
-- Common AI errors: GDP too high, poverty rate too low, tourism numbers unverified, tourist origin ranking wrong
+### Known high-error fields — always search these
+
+These fields are systematically wrong when generated from training data alone:
+
+- GDP total and per capita (often overstated)
+- Tourism visitor count and **visitor origin percentages** (origin ranking is frequently wrong)
+- Export product shares and percentages (proportions shift year to year)
+- Monthly temperature arrays (Jan/Dec are commonly too low)
+- Historical population figures (Soviet-era and 2010–2020 figures often off)
+- City populations (secondary cities frequently wrong)
+- Homicide rate (often overstated)
+- PM2.5 / air quality values (often understated)
+- Age at first marriage (men's age consistently understated)
+- Mobile penetration (often overstated as "~100%")
+- Primary/secondary school enrollment rates (often overstated as "~99%")
 
 ---
 
