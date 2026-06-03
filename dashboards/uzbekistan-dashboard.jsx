@@ -515,7 +515,7 @@ export default function Uzbekistan() {
               <BarRow label="Jun–Sep (very dry)" value="3–8 mm" pct={9} color={C.grn} />
               <BarRow label="Jan–Feb (snow possible)" value="48–52 mm" pct={57} color={C.blu} />
               <p style={{ fontSize:11, color:C.sub, marginTop:10, lineHeight:1.6 }}>Almost zero rainfall in summer (3–8mm/month Jun–Sep) means agriculture is entirely dependent on irrigation from the Amu Darya and Syr Darya — the same rivers that once filled the Aral Sea. Water stress is Uzbekistan's most critical long-term environmental and economic challenge.</p>
-              <GradientBar title="Monthly avg temperature — Tashkent (°C)" values={[-1,2,9,16,22,28,30,28,22,14,6,0]} colorStops={tempColor} unit="°" />
+              <GradientBar title="Monthly avg temperature — Tashkent (°C)" values={[3,5,11,18,23,29,30,28,22,15,8,3]} colorStops={tempColor} unit="°" />
               <GradientBar title="Monthly rainfall — Tashkent (mm)" values={[48,52,70,86,35,8,3,3,8,35,45,52]} colorStops={rainColor} unit="mm" />
             </Panel>
           </div>
@@ -534,12 +534,12 @@ export default function Uzbekistan() {
         <div className="row gy-3 mb-3">
           <div className="col-12 col-md-6">
             <Panel title="Population Growth" icon={Icons.chart}>
-              <BarRow label="1991 (independence)" value="20.5M" pct={54} color={C.dim} />
-              <BarRow label="2000" value="24.6M" pct={65} color={C.dim} />
-              <BarRow label="2010" value="29.1M" pct={77} color={C.blu} />
-              <BarRow label="2020" value="34.9M" pct={93} color={C.grn} />
+              <BarRow label="1991 (independence)" value="20.6M" pct={54} color={C.dim} />
+              <BarRow label="2000" value="24.5M" pct={65} color={C.dim} />
+              <BarRow label="2010" value="28.0M" pct={74} color={C.blu} />
+              <BarRow label="2020" value="33.9M" pct={90} color={C.grn} />
               <BarRow label="2026" value="~37.7M" pct={100} color={C.uz} />
-              <p style={{ fontSize:11, color:C.sub, marginTop:10, lineHeight:1.6 }}>Uzbekistan's population nearly doubled since independence — from 20.5M to 37.7M (+84%). Unlike Kazakhstan, it did not suffer post-Soviet emigration collapse; natural growth remained high throughout. With 37.7M people, Uzbekistan accounts for ~50% of Central Asia's total population.</p>
+              <p style={{ fontSize:11, color:C.sub, marginTop:10, lineHeight:1.6 }}>Uzbekistan's population nearly doubled since independence — from 20.6M to 37.7M (+83%). Unlike Kazakhstan, it did not suffer post-Soviet emigration collapse; natural growth remained high throughout. With 37.7M people, Uzbekistan accounts for ~50% of Central Asia's total population.</p>
               <AgeBar
                 title="Population age structure — male vs. female (% of total)"
                 male={[5.5,5.2,4.95,4.75,4.5,4.25,4.0,3.6,3.15,2.75,2.4,2.1,1.75,1.3,0.95,1.4]}
@@ -554,8 +554,8 @@ export default function Uzbekistan() {
               <BarRow label="Tashkent (capital)" value="3,000,000+" pct={100} color={C.uz} />
               <BarRow label="Namangan (Fergana Valley)" value="~700,000" pct={23} color={C.grn} />
               <BarRow label="Samarkand (ancient capital)" value="~600,000" pct={20} color={C.blu} />
-              <BarRow label="Andijan (Fergana Valley)" value="~560,000" pct={19} color={C.dim} />
-              <BarRow label="Bukhara (Silk Road oasis)" value="~340,000" pct={11} color={C.dim} />
+              <BarRow label="Andijan (Fergana Valley)" value="~500,000" pct={17} color={C.dim} />
+              <BarRow label="Bukhara (Silk Road oasis)" value="~280,000" pct={9} color={C.dim} />
               <p style={{ fontSize:11, color:C.sub, marginTop:10, lineHeight:1.6 }}>Tashkent at 3M+ is Central Asia's largest city — but notably, the Fergana Valley cities (Namangan, Andijan, Fergana city) together hold more people than Tashkent. The Valley's extreme density (~900/km²) creates significant pressure on water, land, and employment — making it Central Asia's most politically sensitive zone.</p>
             </Panel>
           </div>
@@ -610,16 +610,16 @@ export default function Uzbekistan() {
                 label="$145B"
                 sublabel="GDP 2025"
                 segments={[
-                  { label:'Services (trade, finance, tourism)', value:'~49%', pct:49, color:C.uz  },
-                  { label:'Industry (mining, manufacturing)',   value:'~34%', pct:34, color:C.grn },
-                  { label:'Agriculture (cotton, wheat, fruit)', value:'~17%', pct:17, color:C.blu },
+                  { label:'Services (trade, finance, tourism)', value:'~47%', pct:47, color:C.uz  },
+                  { label:'Industry (mining, manufacturing)',   value:'~26%', pct:26, color:C.grn },
+                  { label:'Agriculture (cotton, wheat, fruit)', value:'~19%', pct:19, color:C.blu },
                 ]}
               />
               <div style={{ height:1, background:C.border, margin:'16px 0' }} />
-              <BarRow label="Gold (Muruntau — world #1 open-pit)" value="~35% of exports" pct={100} color={C.uz} />
-              <BarRow label="Natural gas & energy products" value="~15%" pct={43} color={C.grn} />
-              <BarRow label="Copper, zinc, uranium" value="~10%" pct={29} color={C.blu} />
-              <BarRow label="Cotton fibre & textiles" value="~8%" pct={23} color={C.dim} />
+              <BarRow label="Gold (Muruntau — world #1 open-pit)" value="~42% of exports" pct={100} color={C.uz} />
+              <BarRow label="Natural gas & energy products" value="~6%" pct={14} color={C.grn} />
+              <BarRow label="Copper, zinc, uranium" value="~3%" pct={7} color={C.blu} />
+              <BarRow label="Cotton fibre & textiles" value="~6–7%" pct={15} color={C.dim} />
               <p style={{ fontSize:11, color:C.sub, marginTop:10, lineHeight:1.6 }}>Muruntau gold mine (Kyzylkum Desert) is the world's largest open-pit gold mine — producing ~70 tonnes/year. Gold at 35% of exports makes Uzbekistan highly exposed to gold price swings. The 7.7% GDP growth in 2025 is driven by a rare combination: natural resources, manufacturing, services, and FDI all expanding simultaneously.</p>
             </Panel>
           </div>
@@ -697,7 +697,7 @@ export default function Uzbekistan() {
         <div className="row gy-3 mb-3">
           <div className="col-12 col-md-6">
             <Panel title="Education Metrics" icon={Icons.graduation}>
-              <BarRow label="Primary enrolment rate" value="~99%" pct={99} color={C.uz} />
+              <BarRow label="Primary enrolment rate" value="~93%" pct={93} color={C.uz} />
               <BarRow label="Secondary completion rate" value="~94%" pct={94} color={C.grn} />
               <BarRow label="Tertiary enrolment" value="~45.8%" pct={46} color={C.blu} />
               <BarRow label="PISA scores vs OECD avg" value="below average" pct={42} color={C.dim} />
@@ -772,12 +772,12 @@ export default function Uzbekistan() {
           <div className="col-12 col-md-6">
             <Panel title="Top Visitor Origins (2024 est.)" icon={Icons.people}>
               {[
-                { flag:'🇰🇿', country:'Kazakhstan',  val:'cross-border; largest neighbour market', pct:'~28%' },
-                { flag:'🇷🇺', country:'Russia',      val:'business & cultural tourism',           pct:'~18%' },
-                { flag:'🇨🇳', country:'China',       val:'Silk Road heritage; fastest growing',   pct:'~12%' },
-                { flag:'🇩🇪', country:'Germany',     val:'heritage & adventure travel',           pct:'~6%'  },
-                { flag:'🇺🇸', country:'USA',         val:'high-spend; Silk Road explorer',        pct:'~5%'  },
-                { flag:'🇬🇧', country:'UK & EU',     val:'Registan, Bukhara; art history tours',  pct:'~8%'  },
+                { flag:'🇰🇬', country:'Kyrgyzstan',  val:'cross-border; largest source market 2024', pct:'~26%' },
+                { flag:'🇹🇯', country:'Tajikistan',  val:'cross-border; trade & visits',             pct:'~23%' },
+                { flag:'🇰🇿', country:'Kazakhstan',  val:'business & leisure; southern border',      pct:'~17%' },
+                { flag:'🇷🇺', country:'Russia',      val:'business & cultural tourism',              pct:'~9%'  },
+                { flag:'🇨🇳', country:'China',       val:'Silk Road heritage; top non-CIS growth',   pct:'~1%'  },
+                { flag:'🇩🇪', country:'Europe & US', val:'heritage tourism; Registan, Bukhara',      pct:'~4%'  },
               ].map(({ flag, country, val, pct }) => (
                 <div key={country} style={{ display:'flex', alignItems:'center', gap:10, padding:'9px 0' }}>
                   <span style={{ fontSize:18, flexShrink:0 }}>{flag}</span>
@@ -786,7 +786,7 @@ export default function Uzbekistan() {
                   <span style={{ fontFamily:'Fraunces,serif', fontWeight:700, fontSize:13, color:C.txt, flexShrink:0 }}>{pct}</span>
                 </div>
               ))}
-              <p style={{ fontSize:11, color:C.sub, marginTop:10, lineHeight:1.6 }}>Tourism has been Uzbekistan's most dramatic reform success story — visitors grew from 2.7M (2018) to 8.2M (2024) — a near-3× increase in 6 years. The Silk Road trio of Samarkand, Bukhara, and Khiva is a world-class heritage destination finally opened to the world. Chinese tourism is the key growth market.</p>
+              <p style={{ fontSize:11, color:C.sub, marginTop:10, lineHeight:1.6 }}>Tourism has been Uzbekistan's most dramatic reform success story — visitors grew from 2.7M (2018) to 8.2M (2024) — a near-3× increase in 6 years. The Silk Road trio of Samarkand, Bukhara, and Khiva is a world-class heritage destination finally opened to the world. Most visitors are regional neighbours (Kyrgyzstan, Tajikistan, Kazakhstan); Chinese tourism grew 63% in 2024 and is the fastest-growing long-haul market.</p>
             </Panel>
           </div>
           <div className="col-12 col-md-6">
@@ -834,8 +834,8 @@ export default function Uzbekistan() {
               <Tbl rows={[
                 ['Marriage rate (per 1,000)', '~7.1'],
                 ['Divorce rate (per 1,000)', '~1.5'],
-                ['Avg age at first marriage (women)', '~23 yrs'],
-                ['Avg age at first marriage (men)', '~25 yrs'],
+                ['Avg age at first marriage (women)', '~22 yrs'],
+                ['Avg age at first marriage (men)', '~27 yrs'],
                 ['Maternal mortality ratio (2023 est.)', '~29 per 100,000'],
                 ['Child stunting rate', '~8.5% — declining; above world avg'],
               ]} />
@@ -937,11 +937,11 @@ export default function Uzbekistan() {
         <SectionHeader icon={Icons.map} label="Infrastructure & Digital Connectivity" />
         <div className="row g-1 mb-3">
           <div className="col-6 col-md-4 d-flex"><KpiCard label="Internet Penetration" value="~84%" sub="DataReportal Jan 2024: 83.3%; ITU 2023 households: 89%; mobile-first" accent={C.grn} delay={0.05} /></div>
-          <div className="col-6 col-md-4 d-flex"><KpiCard label="Mobile Subscribers" value="~37M" sub="~100% penetration; Ucell, Beeline, Uzmobile major operators" accent={C.dim} delay={0.10} /></div>
+          <div className="col-6 col-md-4 d-flex"><KpiCard label="Mobile Subscribers" value="~36M" sub="~81% penetration (WB 2025); Ucell, Beeline, Uzmobile major operators" accent={C.dim} delay={0.10} /></div>
           <div className="col-6 col-md-4 d-flex"><KpiCard label="Road Network" value="~86,000 km" sub="~75,000 km paved (87%); major expansion underway" accent={C.dim} delay={0.15} /></div>
           <div className="col-6 col-md-4 d-flex"><KpiCard label="Railway Network" value="~4,643 km" sub="Electrified; high-speed Afrosiyob (Tashkent–Samarkand–Bukhara)" accent={C.dim} delay={0.20} /></div>
-          <div className="col-6 col-md-4 d-flex"><KpiCard label="High-speed rail" value="Afrosiyob" sub="250 km/h; Tashkent to Bukhara in 2.5h; Spanish Talgo technology" accent={C.dim} delay={0.25} /></div>
-          <div className="col-6 col-md-4 d-flex"><KpiCard label="5G Status" value="Piloting" sub="Tashkent & Samarkand pilots 2024–2025; national rollout planned" accent={C.dim} delay={0.30} /></div>
+          <div className="col-6 col-md-4 d-flex"><KpiCard label="High-speed rail" value="Afrosiyob" sub="250 km/h max; Tashkent–Bukhara in ~3h 20m; Spanish Talgo technology" accent={C.dim} delay={0.25} /></div>
+          <div className="col-6 col-md-4 d-flex"><KpiCard label="5G Status" value="Deployed" sub="Uztelecom & others launched 2022–2024; 3,500+ base stations nationwide" accent={C.dim} delay={0.30} /></div>
         </div>
         <div className="row gy-3 mb-3">
           <div className="col-12 col-md-6">
@@ -960,7 +960,7 @@ export default function Uzbekistan() {
           <div className="col-12 col-md-6">
             <Panel title="Digital Indicators" icon={Icons.chart}>
               <BarRow label="Internet penetration" value="~84%" pct={84} color={C.uz} />
-              <BarRow label="Mobile penetration" value="~100%" pct={100} color={C.grn} />
+              <BarRow label="Mobile penetration" value="~81%" pct={81} color={C.grn} />
               <BarRow label="E-government service uptake" value="~65%" pct={65} color={C.blu} />
               <BarRow label="Social media penetration" value="~60%" pct={60} color={C.dim} />
               <BarRow label="Fixed broadband" value="~20%" pct={20} color={C.dim} />
@@ -988,7 +988,7 @@ export default function Uzbekistan() {
                 ['Forced labour in cotton (abolished)', '2021 — ILO confirmed; major reform'],
                 ['Child nutrition — stunting', '6.7% (under-5, 2024); improving significantly'],
                 ['Karakalpakstan health outcomes', 'Worst in country; Aral Sea dust health crisis'],
-                ['Tashkent air quality', 'PM2.5 ~20 µg/m³ annual; urban pollution growing'],
+                ['Tashkent air quality', 'PM2.5 ~32 µg/m³ annual avg 2024 (IQAir); ~6× WHO guideline'],
               ]} />
               <p style={{ fontSize:11, color:C.sub, marginTop:10, lineHeight:1.6 }}>Karakalpakstan (Aral Sea region) has the worst health outcomes in Uzbekistan — the toxic salt dust from the exposed Aralkum Desert causes severe respiratory disease, cancer, and maternal health crises. This is a direct consequence of the Aral Sea disaster. Abolishing forced cotton labour in 2021 removed a major human rights stain and improved rural health outcomes.</p>
             </Panel>
@@ -998,7 +998,7 @@ export default function Uzbekistan() {
               <BarRow label="Hypertension prevalence" value="~32%" pct={100} color={C.uz} />
               <BarRow label="TB incidence per 100K (2022)" value="~83" pct={100} color={C.grn} />
               <BarRow label="OOP health spending share" value="~53%" pct={66} color={C.blu} />
-              <BarRow label="Tashkent PM2.5 (WHO guideline=5)" value="~20 µg/m³" pct={57} color={C.dim} />
+              <BarRow label="Tashkent PM2.5 (WHO guideline=5)" value="~32 µg/m³" pct={80} color={C.dim} />
               <BarRow label="Aral Sea toxic dust affected pop." value="~2M in Karakalpakstan" pct={45} color={C.dim} />
               <p style={{ fontSize:11, color:C.sub, marginTop:10, lineHeight:1.6 }}>TB at 83/100K (2022 WHO) is among the highest in the region — above the Central Asian average. Drug-resistant TB is a particular concern. The Aral Sea dust crisis affecting ~2M Karakalpak people is a chronic, unfixable public health disaster — the sea cannot be restored and the exposed seabed will blow dust for generations.</p>
             </Panel>
@@ -1069,7 +1069,7 @@ export default function Uzbekistan() {
             <Panel title="Water Stress & Pollution" icon={Icons.chart}>
               <BarRow label="Amu Darya water use vs flow" value="Over-abstracted" pct={95} color={C.uz} />
               <BarRow label="Irrigation efficiency (Soviet canals)" value="~40% (very poor)" pct={40} color={C.grn} />
-              <BarRow label="Tashkent PM2.5 vs WHO (5 µg/m³)" value="~20 µg/m³ (4× over)" pct={57} color={C.blu} />
+              <BarRow label="Tashkent PM2.5 vs WHO (5 µg/m³)" value="~32 µg/m³ (6× over)" pct={80} color={C.blu} />
               <BarRow label="Aralkum dust events per year" value="~30 major events" pct={60} color={C.dim} />
               <p style={{ fontSize:11, color:C.sub, marginTop:10, lineHeight:1.6 }}>Water is Uzbekistan's most existential environmental challenge. Soviet-era irrigation canals waste 60% of the water they carry — efficiency improvements could free enormous volumes without new supply. Climate change is reducing the glacial meltwater from Tajikistan and Kyrgyzstan that feeds the rivers, making the crisis worse each decade.</p>
             </Panel>
@@ -1118,7 +1118,7 @@ export default function Uzbekistan() {
         <div className="row g-1 mb-3">
           <div className="col-6 col-md-4 d-flex"><KpiCard label="Global Peace Index (2024)" value="Rank 67" sub="IEP GPI 2024; among biggest improvers; improving under Mirziyoyev" accent={C.grn} delay={0.05} /></div>
           <div className="col-6 col-md-4 d-flex"><KpiCard label="Afghanistan border" value="137 km" sub="Terrorism & drug trafficking risk; Uzbekistan maintains strong border" accent={C.uz} delay={0.10} /></div>
-          <div className="col-6 col-md-4 d-flex"><KpiCard label="Homicide rate (est.)" value="~2.5 / 100K" sub="Low; declining; state security apparatus effective" accent={C.dim} delay={0.15} /></div>
+          <div className="col-6 col-md-4 d-flex"><KpiCard label="Homicide rate (est.)" value="~1.4 / 100K" sub="Low; declining; state security apparatus effective" accent={C.dim} delay={0.15} /></div>
           <div className="col-6 col-md-4 d-flex"><KpiCard label="Press Freedom (RSF 2024)" value="Rank 148/180" sub="Dropped 11 places in 2024; status worsened to 'very serious'" accent={C.uz} delay={0.20} /></div>
           <div className="col-6 col-md-4 d-flex"><KpiCard label="Karakalpakstan unrest (2022)" value="18 killed" sub="Autonomy protests; suppressed; internet cut; some reforms followed" accent={C.dim} delay={0.25} /></div>
           <div className="col-6 col-md-4 d-flex"><KpiCard label="Andijan massacre (2005)" value="Historical" sub="200–1,500 killed; Karimov-era; Uzbekistan expelled from US base" accent={C.dim} delay={0.30} /></div>
@@ -1127,7 +1127,7 @@ export default function Uzbekistan() {
           <div className="col-12 col-md-6">
             <Panel title="Crime & Security Indicators" icon={Icons.landmark}>
               <Tbl rows={[
-                ['Homicide rate (est.)', '~2.5 per 100,000 — low'],
+                ['Homicide rate (est.)', '~1.4 per 100,000 — low (UNODC/WB)'],
                 ['Global Peace Index 2024', 'Rank 67 / 163 (IEP)'],
                 ['Afghanistan border security', 'Well-managed; military hardware investment'],
                 ['Drug trafficking', 'Transit country for Afghan opiates; contained'],
