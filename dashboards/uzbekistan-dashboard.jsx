@@ -1152,6 +1152,9 @@ export default function Uzbekistan() {
           <p style={{ fontSize:10.5, color:'#555', lineHeight:1.7 }}>
             Sources: Statistics Agency of Uzbekistan · World Bank 2025 · IMF · UNDP HDR 2022 · Transparency International CPI 2023 · WHO · RSF Press Freedom 2024 · World Justice Project 2024 · Freedom House 2024 · ILO · Eurasian Star Country Report 2026 · Euronews · Data as of May 2026.
           </p>
+          <p style={{ fontSize:9.5, color:'#444', marginTop:6, lineHeight:1.6 }}>
+            Generated June 2026 · Claude Sonnet 4.5 (Anthropic) · iAlmirPro
+          </p>
         </div>
 
       </div>

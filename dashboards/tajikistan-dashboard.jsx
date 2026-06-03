@@ -1146,6 +1146,9 @@ export default function Tajikistan() {
           <p style={{ fontSize:10.5, color:'#555', lineHeight:1.7 }}>
             Sources: State Committee on Statistics TJ · World Bank Economic Update 2025 · IMF · UNDP HDR 2023 · Transparency International CPI 2024 · WHO · RSF Press Freedom 2024 · World Justice Project 2024 · Freedom House 2024 · UNODC · CIA World Factbook 2025 · Data as of May 2026.
           </p>
+          <p style={{ fontSize:9.5, color:'#444', marginTop:6, lineHeight:1.6 }}>
+            Generated June 2026 · Claude Sonnet 4.5 (Anthropic) · iAlmirPro
+          </p>
         </div>
 
       </div>

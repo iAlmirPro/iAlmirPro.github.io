@@ -11,7 +11,7 @@ Requirements:
   - npm  (packages auto-installed on first run into ~/.jsx_to_html_cache/)
 """
 
-import sys, os, re, json, shutil, subprocess
+import sys, os, re, json, shutil, subprocess, datetime
 
 try:
     from bs4 import BeautifulSoup
@@ -376,6 +376,10 @@ def convert(jsx_path):
             html = inject_map_svg(html, map_svg)
             html = re.sub(r'<div[^>]*>\s*Loading map[^<\n]*\s*</div>', '', html, count=1)
             print("✓  Map SVG embedded")
+
+    # Inject exact build date into footer generation line
+    build_date = datetime.datetime.now().strftime('%-d %B %Y')
+    html = re.sub(r'Generated [A-Za-z]+ \d{4}', f'Generated {build_date}', html)
 
     with open(out_path, "w") as f:
         f.write(html)

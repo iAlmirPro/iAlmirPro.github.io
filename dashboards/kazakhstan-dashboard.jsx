@@ -1250,6 +1250,9 @@ export default function Kazakhstan() {
           <p style={{ fontSize:10.5, color:'#555', lineHeight:1.7 }}>
             Sources: Bureau of National Statistics KZ · World Bank · IMF Art. IV May 2025 · Moody's · Transparency International CPI 2023 · IQAir · WHO Observatory 2024 · Trading Economics · World Nuclear Association 2024 · RSF Press Freedom Index 2024 · World Justice Project 2024 · UNODC · Worldometer · Britannica · Data as of May 2026.
           </p>
+          <p style={{ fontSize:9.5, color:'#444', marginTop:6, lineHeight:1.6 }}>
+            Generated June 2026 · Claude Sonnet 4.5 (Anthropic) · iAlmirPro
+          </p>
         </div>
 
       </div>

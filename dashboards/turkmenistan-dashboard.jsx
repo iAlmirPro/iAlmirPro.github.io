@@ -1249,6 +1249,9 @@ export default function Turkmenistan() {
           <p style={{ fontSize:10.5, color:'#555', lineHeight:1.7 }}>
             Sources: IMF Art. IV 2025 · World Bank · ADB Country Partnership Strategy 2024–2028 · Enerdata 2024 · Freedom House 2024 · RSF Press Freedom Index 2024 · Transparency International CPI 2024 · UNDP HDR 2023 · Oxford Institute for Energy Studies 2024 · Worldometer · CIA World Factbook · UN WPP 2024 · BTI 2026 Turkmenistan Report · Note: Data quality is limited — Turkmenistan restricts independent statistical verification. All figures should be treated with caution. Data as of May 2026.
           </p>
+          <p style={{ fontSize:9.5, color:'#444', marginTop:6, lineHeight:1.6 }}>
+            Generated June 2026 · Claude Sonnet 4.5 (Anthropic) · iAlmirPro
+          </p>
         </div>
 
       </div>

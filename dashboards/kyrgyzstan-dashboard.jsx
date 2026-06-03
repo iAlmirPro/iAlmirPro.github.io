@@ -1287,6 +1287,9 @@ export default function Kyrgyzstan() {
           <p style={{ fontSize:10.5, color:'#555', lineHeight:1.7 }}>
             Sources: NSC KR · World Bank · IMF 2025 Art. IV · EBRD Transition Report 2024 · Moody's · Transparency International CPI 2024 · IQAir · WHO/Euro Observatory 2024 · Climatescope 2024 · Times of Central Asia · Trading Economics · Freedom House · World Justice Project 2024 · UNODC · Worldometer · Data as of May 2026.
           </p>
+          <p style={{ fontSize:9.5, color:'#444', marginTop:6, lineHeight:1.6 }}>
+            Generated June 2026 · Claude Sonnet 4.5 (Anthropic) · iAlmirPro
+          </p>
         </div>
 
       </div>

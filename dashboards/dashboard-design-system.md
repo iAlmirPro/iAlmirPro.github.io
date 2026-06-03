@@ -649,8 +649,13 @@ Each section follows this pattern:
   <p style={{ fontSize:10.5, color:'#555', lineHeight:1.7 }}>
     Sources: NSC KR · World Bank · IMF 2025 · ... · Data as of May 2026.
   </p>
+  <p style={{ fontSize:9.5, color:'#444', marginTop:6, lineHeight:1.6 }}>
+    Generated [Month Year] · Claude Sonnet 4.5 (Anthropic) · iAlmirPro
+  </p>
 </div>
 ```
+
+> `[Month Year]` is hardcoded at time of authoring (e.g. `June 2026`). The `jsx_to_html.py` script replaces it with the exact build date (e.g. `3 June 2026`) when generating the static HTML.
 
 ---
 
