@@ -698,7 +698,7 @@ export default function Uzbekistan() {
           <div className="col-12 col-md-6">
             <Panel title="Education Metrics" icon={Icons.graduation}>
               <BarRow label="Primary enrolment rate" value="~93%" pct={93} color={C.uz} />
-              <BarRow label="Secondary completion rate" value="~94%" pct={94} color={C.grn} />
+              <BarRow label="Secondary completion rate (est.; unverified)" value="~94%" pct={94} color={C.grn} />
               <BarRow label="Tertiary enrolment" value="~45.8%" pct={46} color={C.blu} />
               <BarRow label="PISA scores vs OECD avg" value="below average" pct={42} color={C.dim} />
               <BarRow label="1 Million Programmers initiative" value="2025 target" pct={60} color={C.dim} />
@@ -818,14 +818,14 @@ export default function Uzbekistan() {
         </div>
         <div className="row gy-3 mb-3">
           <div className="col-12 col-md-6">
-            <Panel title="Causes of Death (est.)" icon={Icons.chart}>
-              <BarRow label="Circulatory diseases"      value="~55%" pct={100} color={C.uz}  />
-              <BarRow label="Cancer (neoplasms)"         value="~11%" pct={20}  color={C.grn} />
-              <BarRow label="Respiratory diseases"       value="~8%"  pct={15}  color={C.blu} />
-              <BarRow label="External causes (accidents)" value="~6%" pct={11}  color={C.dim} />
-              <BarRow label="Digestive diseases"         value="~5%"  pct={9}   color={C.dim} />
-              <BarRow label="Infectious diseases"        value="~4%"  pct={7}   color={C.dim} />
-              <BarRow label="Other"                      value="~11%" pct={20}  color={C.dim} />
+            <Panel title="Causes of Death (est.; breakdown unverified)" icon={Icons.chart}>
+              <BarRow label="Circulatory diseases (est.; unverified)"      value="~55%" pct={100} color={C.uz}  />
+              <BarRow label="Cancer (neoplasms) (est.; unverified)"         value="~11%" pct={20}  color={C.grn} />
+              <BarRow label="Respiratory diseases (est.; unverified)"       value="~8%"  pct={15}  color={C.blu} />
+              <BarRow label="External causes (est.; unverified)"            value="~6%"  pct={11}  color={C.dim} />
+              <BarRow label="Digestive diseases (est.; unverified)"         value="~5%"  pct={9}   color={C.dim} />
+              <BarRow label="Infectious diseases (est.; unverified)"        value="~4%"  pct={7}   color={C.dim} />
+              <BarRow label="Other (est.; unverified)"                      value="~11%" pct={20}  color={C.dim} />
               <p style={{ fontSize:11, color:C.sub, marginTop:10, lineHeight:1.6 }}>Circulatory disease at ~55% is above the global average (32%), driven by high hypertension prevalence, high-salt diets, and historically limited preventive care. Infant mortality falling from 38 to ~18/1,000 since 2000 is one of Uzbekistan's most significant health achievements — better than Tajikistan (32) but still above Kazakhstan (8).</p>
             </Panel>
           </div>
@@ -1141,8 +1141,8 @@ export default function Uzbekistan() {
             <Panel title="Security Context" icon={Icons.chart}>
               <BarRow label="Corruption (CPI, 100=clean)" value="32/100" pct={32} color={C.uz} />
               <BarRow label="Press freedom (100=free, est.)" value="~28/100" pct={28} color={C.grn} />
-              <BarRow label="Rule of law (WJP 2024, 100=best)" value="49/100" pct={49} color={C.blu} />
-              <BarRow label="Political rights (FH 2024, 100=best)" value="12/100" pct={12} color={C.dim} />
+              <BarRow label="Rule of law (WJP 2024, 100=best) (est.; unverified)" value="49/100" pct={49} color={C.blu} />
+              <BarRow label="Political rights (FH 2024, 100=best) (est.; unverified)" value="12/100" pct={12} color={C.dim} />
               <p style={{ fontSize:11, color:C.sub, marginTop:10, lineHeight:1.6 }}>Uzbekistan's security environment has improved dramatically since 2016 but remains authoritarian. CPI at 32/100 (TI 2024) places Uzbekistan rank 121/180. Press freedom at rank 148/180 (RSF 2024) is poor but better than Tajikistan (162) or Turkmenistan (178). Freedom House total score of 12/100 (Not Free) reflects ongoing authoritarian governance. The Mirziyoyev reform story is real but incomplete — the judiciary remains unfree and civil society tightly managed.</p>
             </Panel>
           </div>
