@@ -377,21 +377,21 @@ export default function Uzbekistan() {
           const fasvg = (vb, d) => <svg xmlns="http://www.w3.org/2000/svg" viewBox={vb} width="24" height="24" fill="#fff"><path d={d}/></svg>;
 
           const tiles = [
-    { icon: fasvg('0 0 512 512', 'M64 64c0-17.7-14.3-32-32-32S0 46.3 0 64L0 400c0 44.2 35.8 80 80 80l400 0c17.7 0 32-14.3 32-32s-14.3-32-32-32L80 416c-8.8 0-16-7.2-16-16L64 64zm406.6 86.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L320 210.7l-57.4-57.4c-12.5-12.5-32.8-12.5-45.3 0l-112 112c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L240 221.3l57.4 57.4c12.5 12.5 32.8 12.5 45.3 0l128-128z'), label: 'GDP', value: '~$105B', note: 'World Bank 2024' },
-    { icon: fasvg('0 0 320 512', 'M160 0c17.7 0 32 14.3 32 32l0 35.7c1.6 .2 3.1 .4 4.7 .7c.4 .1 .7 .1 1.1 .2l48 8.8c17.4 3.2 28.9 19.9 25.7 37.2s-19.9 28.9-37.2 25.7l-47.5-8.7c-31.3-4.6-58.9-1.5-78.3 6.2s-27.2 18.3-29 28.1c-2 10.7-.5 16.7 1.2 20.4c1.8 3.9 5.5 8.3 12.8 13.2c16.3 10.7 41.3 17.7 73.7 26.3l2.9 .8c28.6 7.6 63.6 16.8 89.6 33.8c14.2 9.3 27.6 21.9 35.9 39.5c8.5 17.9 10.3 37.9 6.4 59.2c-6.9 38-33.1 63.4-65.6 76.7c-13.7 5.6-28.6 9.2-44.4 11l0 33.4c0 17.7-14.3 32-32 32s-32-14.3-32-32l0-34.9c-.4-.1-.9-.1-1.3-.2l-.2 0s0 0 0 0c-24.4-3.8-64.5-14.3-91.5-26.3c-16.1-7.2-23.4-26.1-16.2-42.2s26.1-23.4 42.2-16.2c20.9 9.3 55.3 18.5 75.2 21.6c31.9 4.7 58.2 2 76-5.3c16.9-6.9 24.6-16.9 26.8-28.9c1.9-10.6 .4-16.7-1.3-20.4c-1.9-4-5.6-8.4-13-13.3c-16.4-10.7-41.5-17.7-74-26.3l-2.8-.7s0 0 0 0C119.4 279.3 84.4 270 58.4 253c-14.2-9.3-27.5-22-35.8-39.6c-8.4-17.9-10.1-37.9-6.1-59.2C23.7 116 52.3 91.2 84.8 78.3c13.3-5.3 27.9-8.9 43.2-11L128 32c0-17.7 14.3-32 32-32z'), label: 'GDP per Capita', value: '~$2,900', note: 'World Bank 2024' },
-    { icon: fasvg('0 0 576 512', 'M384 160c-17.7 0-32-14.3-32-32s14.3-32 32-32l160 0c17.7 0 32 14.3 32 32l0 160c0 17.7-14.3 32-32 32s-32-14.3-32-32l0-82.7L342.6 374.6c-12.5 12.5-32.8 12.5-45.3 0L192 269.3 54.6 406.6c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3l160-160c12.5-12.5 32.8-12.5 45.3 0L320 306.7 466.7 160 384 160z'), label: 'GDP Growth', value: '~6%', note: '2024 IMF estimate' },
-    { icon: fasvg('0 0 640 512', 'M144 0a80 80 0 1 1 0 160A80 80 0 1 1 144 0zM512 0a80 80 0 1 1 0 160A80 80 0 1 1 512 0zM0 298.7C0 239.8 47.8 192 106.7 192l42.7 0c15.9 0 31 3.5 44.6 9.7c-1.3 7.2-1.9 14.7-1.9 22.3c0 38.2 16.8 72.5 43.3 96c-.2 0-.4 0-.7 0L21.3 320C9.6 320 0 310.4 0 298.7zM405.3 320c-.2 0-.4 0-.7 0c26.6-23.5 43.3-57.8 43.3-96c0-7.6-.7-15-1.9-22.3c13.6-6.3 28.7-9.7 44.6-9.7l42.7 0C592.2 192 640 239.8 640 298.7c0 11.8-9.6 21.3-21.3 21.3l-213.3 0zM224 224a96 96 0 1 1 192 0 96 96 0 1 1 -192 0zM128 485.3C128 411.7 187.7 352 261.3 352l117.3 0C452.3 352 512 411.7 512 485.3c0 14.7-11.9 26.7-26.7 26.7l-330.7 0c-14.7 0-26.7-11.9-26.7-26.7z'), label: 'Population', value: '~37M', note: '2025 estimate' },
-    { icon: fasvg('0 0 576 512', 'M0 112.5L0 422.3c0 18 10.1 35 27 41.3c87 32.5 174 10.3 261-11.9c79.8-20.3 159.6-40.7 239.3-18.9c23 6.3 48.7-9.5 48.7-33.4l0-309.9c0-18-10.1-35-27-41.3C462 15.9 375 38.1 288 60.3C208.2 80.6 128.4 100.9 48.7 79.1C25.6 72.8 0 88.6 0 112.5zM288 352c-44.2 0-80-43-80-96s35.8-96 80-96s80 43 80 96s-35.8 96-80 96zM64 352c35.3 0 64 28.7 64 64l-64 0 0-64zm64-208c0 35.3-28.7 64-64 64l0-64 64 0zM512 304l0 64-64 0c0-35.3 28.7-64 64-64zM448 96l64 0 0 64c-35.3 0-64-28.7-64-64z'), label: 'Currency', value: 'UZS Som', note: '~11,400 UZS = $1' },
-    { icon: fasvg('0 0 448 512', 'M0 80L0 229.5c0 17 6.7 33.3 18.7 45.3l176 176c25 25 65.5 25 90.5 0L418.7 317.3c25-25 25-65.5 0-90.5l-176-176c-12-12-28.3-18.7-45.3-18.7L48 32C21.5 32 0 53.5 0 80zm112 32a32 32 0 1 1 0 64 32 32 0 1 1 0-64z'), label: 'Inflation', value: '~10%', note: '2025 IMF est.' },
-    { icon: fasvg('0 0 576 512', 'M112 48a48 48 0 1 1 96 0 48 48 0 1 1 -96 0zm40 304l0 128c0 17.7-14.3 32-32 32s-32-14.3-32-32l0-223.1L59.4 304.5c-9.1 15.1-28.8 20-43.9 10.9s-20-28.8-10.9-43.9l58.3-97c17.4-28.9 48.6-46.6 82.3-46.6l29.7 0c33.7 0 64.9 17.7 82.3 46.6l44.9 74.7c-16.1 17.6-28.6 38.5-36.6 61.5c-1.9-1.8-3.5-3.9-4.9-6.3L232 256.9 232 480c0 17.7-14.3 32-32 32s-32-14.3-32-32l0-128-16 0zM432 224a144 144 0 1 1 0 288 144 144 0 1 1 0-288zm59.3 107.3c6.2-6.2 6.2-16.4 0-22.6s-16.4-6.2-22.6 0L432 345.4l-36.7-36.7c-6.2-6.2-16.4-6.2-22.6 0s-6.2 16.4 0 22.6L409.4 368l-36.7 36.7c-6.2 6.2-6.2 16.4 0 22.6s16.4 6.2 22.6 0L432 390.6l36.7 36.7c6.2 6.2 16.4 6.2 22.6 0s6.2-16.4 0-22.6L454.6 368l36.7-36.7z'), label: 'Unemployment', value: '~9%', note: 'ILO 2025' },
-    { icon: fasvg('0 0 576 512', 'M249.6 471.5c10.8 3.8 22.4-4.1 22.4-15.5l0-377.4c0-4.2-1.6-8.4-5-11C247.4 52 202.4 32 144 32C93.5 32 46.3 45.3 18.1 56.1C6.8 60.5 0 71.7 0 83.8L0 454.1c0 11.9 12.8 20.2 24.1 16.5C55.6 460.1 105.5 448 144 448c33.9 0 79 14 105.6 23.5zm76.8 0C353 462 398.1 448 432 448c38.5 0 88.4 12.1 119.9 22.6c11.3 3.8 24.1-4.6 24.1-16.5l0-370.3c0-12.1-6.8-23.3-18.1-27.6C529.7 45.3 482.5 32 432 32c-58.4 0-103.4 20-123 35.6c-3.3 2.6-5 6.8-5 11L304 456c0 11.4 11.7 19.3 22.4 15.5z'), label: 'Literacy', value: '99.7%', note: 'UNESCO 2024' },
-    { icon: fasvg('0 0 640 512', 'M351.2 4.8c3.2-2 6.6-3.3 10-4.1c4.7-1 9.6-.9 14.1 .1c7.7 1.8 14.8 6.5 19.4 13.6L514.6 194.2c8.8 13.1 13.4 28.6 13.4 44.4l0 73.5c0 6.9 4.4 13 10.9 15.2l79.2 26.4C631.2 358 640 370.2 640 384l0 96c0 9.9-4.6 19.3-12.5 25.4s-18.1 8.1-27.7 5.5L431 465.9c-56-14.9-95-65.7-95-123.7L336 224c0-17.7 14.3-32 32-32s32 14.3 32 32l0 80c0 8.8 7.2 16 16 16s16-7.2 16-16l0-84.9c0-7-1.8-13.8-5.3-19.8L340.3 48.1c-1.7-3-2.9-6.1-3.6-9.3c-1-4.7-1-9.6 .1-14.1c1.9-8 6.8-15.2 14.3-19.9zm-62.4 0c7.5 4.6 12.4 11.9 14.3 19.9c1.1 4.6 1.2 9.4 .1 14.1c-.7 3.2-1.9 6.3-3.6 9.3L213.3 199.3c-3.5 6-5.3 12.9-5.3 19.8l0 84.9c0 8.8 7.2 16 16 16s16-7.2 16-16l0-80c0-17.7 14.3-32 32-32s32 14.3 32 32l0 118.2c0 58-39 108.7-95 123.7l-168.7 45c-9.6 2.6-19.9 .5-27.7-5.5S0 490 0 480l0-96c0-13.8 8.8-26 21.9-30.4l79.2-26.4c6.5-2.2 10.9-8.3 10.9-15.2l0-73.5c0-15.8 4.7-31.2 13.4-44.4L245.2 14.5c4.6-7.1 11.7-11.8 19.4-13.6c4.6-1.1 9.4-1.2 14.1-.1c3.5 .8 6.9 2.1 10 4.1z'), label: 'Religion', value: '~93% Muslim', note: 'Sunni majority' },
+    { icon: fasvg('0 0 512 512', 'M64 64c0-17.7-14.3-32-32-32S0 46.3 0 64L0 400c0 44.2 35.8 80 80 80l400 0c17.7 0 32-14.3 32-32s-14.3-32-32-32L80 416c-8.8 0-16-7.2-16-16L64 64zm406.6 86.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L320 210.7l-57.4-57.4c-12.5-12.5-32.8-12.5-45.3 0l-112 112c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L240 221.3l57.4 57.4c12.5 12.5 32.8 12.5 45.3 0l128-128z'), label: 'GDP', value: '~$115B', note: 'World Bank 2024: $114.97B' },
+    { icon: fasvg('0 0 320 512', 'M160 0c17.7 0 32 14.3 32 32l0 35.7c1.6 .2 3.1 .4 4.7 .7c.4 .1 .7 .1 1.1 .2l48 8.8c17.4 3.2 28.9 19.9 25.7 37.2s-19.9 28.9-37.2 25.7l-47.5-8.7c-31.3-4.6-58.9-1.5-78.3 6.2s-27.2 18.3-29 28.1c-2 10.7-.5 16.7 1.2 20.4c1.8 3.9 5.5 8.3 12.8 13.2c16.3 10.7 41.3 17.7 73.7 26.3l2.9 .8c28.6 7.6 63.6 16.8 89.6 33.8c14.2 9.3 27.6 21.9 35.9 39.5c8.5 17.9 10.3 37.9 6.4 59.2c-6.9 38-33.1 63.4-65.6 76.7c-13.7 5.6-28.6 9.2-44.4 11l0 33.4c0 17.7-14.3 32-32 32s-32-14.3-32-32l0-34.9c-.4-.1-.9-.1-1.3-.2l-.2 0s0 0 0 0c-24.4-3.8-64.5-14.3-91.5-26.3c-16.1-7.2-23.4-26.1-16.2-42.2s26.1-23.4 42.2-16.2c20.9 9.3 55.3 18.5 75.2 21.6c31.9 4.7 58.2 2 76-5.3c16.9-6.9 24.6-16.9 26.8-28.9c1.9-10.6 .4-16.7-1.3-20.4c-1.9-4-5.6-8.4-13-13.3c-16.4-10.7-41.5-17.7-74-26.3l-2.8-.7s0 0 0 0C119.4 279.3 84.4 270 58.4 253c-14.2-9.3-27.5-22-35.8-39.6c-8.4-17.9-10.1-37.9-6.1-59.2C23.7 116 52.3 91.2 84.8 78.3c13.3-5.3 27.9-8.9 43.2-11L128 32c0-17.7 14.3-32 32-32z'), label: 'GDP per Capita', value: '~$3,160', note: 'World Bank 2024: $3,162' },
+    { icon: fasvg('0 0 576 512', 'M384 160c-17.7 0-32-14.3-32-32s14.3-32 32-32l160 0c17.7 0 32 14.3 32 32l0 160c0 17.7-14.3 32-32 32s-32-14.3-32-32l0-82.7L342.6 374.6c-12.5 12.5-32.8 12.5-45.3 0L192 269.3 54.6 406.6c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3l160-160c12.5-12.5 32.8-12.5 45.3 0L320 306.7 466.7 160 384 160z'), label: 'GDP Growth', value: '~6.7%', note: 'World Bank 2024 final' },
+    { icon: fasvg('0 0 640 512', 'M144 0a80 80 0 1 1 0 160A80 80 0 1 1 144 0zM512 0a80 80 0 1 1 0 160A80 80 0 1 1 512 0zM0 298.7C0 239.8 47.8 192 106.7 192l42.7 0c15.9 0 31 3.5 44.6 9.7c-1.3 7.2-1.9 14.7-1.9 22.3c0 38.2 16.8 72.5 43.3 96c-.2 0-.4 0-.7 0L21.3 320C9.6 320 0 310.4 0 298.7zM405.3 320c-.2 0-.4 0-.7 0c26.6-23.5 43.3-57.8 43.3-96c0-7.6-.7-15-1.9-22.3c13.6-6.3 28.7-9.7 44.6-9.7l42.7 0C592.2 192 640 239.8 640 298.7c0 11.8-9.6 21.3-21.3 21.3l-213.3 0zM224 224a96 96 0 1 1 192 0 96 96 0 1 1 -192 0zM128 485.3C128 411.7 187.7 352 261.3 352l117.3 0C452.3 352 512 411.7 512 485.3c0 14.7-11.9 26.7-26.7 26.7l-330.7 0c-14.7 0-26.7-11.9-26.7-26.7z'), label: 'Population', value: '~37.9M', note: 'National Stats Jul 2025' },
+    { icon: fasvg('0 0 576 512', 'M0 112.5L0 422.3c0 18 10.1 35 27 41.3c87 32.5 174 10.3 261-11.9c79.8-20.3 159.6-40.7 239.3-18.9c23 6.3 48.7-9.5 48.7-33.4l0-309.9c0-18-10.1-35-27-41.3C462 15.9 375 38.1 288 60.3C208.2 80.6 128.4 100.9 48.7 79.1C25.6 72.8 0 88.6 0 112.5zM288 352c-44.2 0-80-43-80-96s35.8-96 80-96s80 43 80 96s-35.8 96-80 96zM64 352c35.3 0 64 28.7 64 64l-64 0 0-64zm64-208c0 35.3-28.7 64-64 64l0-64 64 0zM512 304l0 64-64 0c0-35.3 28.7-64 64-64zM448 96l64 0 0 64c-35.3 0-64-28.7-64-64z'), label: 'Currency', value: 'UZS Som', note: '~12,600 UZS = $1 (2025 avg)' },
+    { icon: fasvg('0 0 448 512', 'M0 80L0 229.5c0 17 6.7 33.3 18.7 45.3l176 176c25 25 65.5 25 90.5 0L418.7 317.3c25-25 25-65.5 0-90.5l-176-176c-12-12-28.3-18.7-45.3-18.7L48 32C21.5 32 0 53.5 0 80zm112 32a32 32 0 1 1 0 64 32 32 0 1 1 0-64z'), label: 'Inflation', value: '~7.3%', note: '2025 final (9-year low)' },
+    { icon: fasvg('0 0 576 512', 'M112 48a48 48 0 1 1 96 0 48 48 0 1 1 -96 0zm40 304l0 128c0 17.7-14.3 32-32 32s-32-14.3-32-32l0-223.1L59.4 304.5c-9.1 15.1-28.8 20-43.9 10.9s-20-28.8-10.9-43.9l58.3-97c17.4-28.9 48.6-46.6 82.3-46.6l29.7 0c33.7 0 64.9 17.7 82.3 46.6l44.9 74.7c-16.1 17.6-28.6 38.5-36.6 61.5c-1.9-1.8-3.5-3.9-4.9-6.3L232 256.9 232 480c0 17.7-14.3 32-32 32s-32-14.3-32-32l0-128-16 0zM432 224a144 144 0 1 1 0 288 144 144 0 1 1 0-288zm59.3 107.3c6.2-6.2 6.2-16.4 0-22.6s-16.4-6.2-22.6 0L432 345.4l-36.7-36.7c-6.2-6.2-16.4-6.2-22.6 0s-6.2 16.4 0 22.6L409.4 368l-36.7 36.7c-6.2 6.2-6.2 16.4 0 22.6s16.4 6.2 22.6 0L432 390.6l36.7 36.7c6.2 6.2 16.4 6.2 22.6 0s6.2-16.4 0-22.6L454.6 368l36.7-36.7z'), label: 'Unemployment', value: '~4.8%', note: 'ILO modeled 2025' },
+    { icon: fasvg('0 0 576 512', 'M249.6 471.5c10.8 3.8 22.4-4.1 22.4-15.5l0-377.4c0-4.2-1.6-8.4-5-11C247.4 52 202.4 32 144 32C93.5 32 46.3 45.3 18.1 56.1C6.8 60.5 0 71.7 0 83.8L0 454.1c0 11.9 12.8 20.2 24.1 16.5C55.6 460.1 105.5 448 144 448c33.9 0 79 14 105.6 23.5zm76.8 0C353 462 398.1 448 432 448c38.5 0 88.4 12.1 119.9 22.6c11.3 3.8 24.1-4.6 24.1-16.5l0-370.3c0-12.1-6.8-23.3-18.1-27.6C529.7 45.3 482.5 32 432 32c-58.4 0-103.4 20-123 35.6c-3.3 2.6-5 6.8-5 11L304 456c0 11.4 11.7 19.3 22.4 15.5z'), label: 'Literacy', value: '99.9%', note: 'UNESCO/World Bank' },
+    { icon: fasvg('0 0 640 512', 'M351.2 4.8c3.2-2 6.6-3.3 10-4.1c4.7-1 9.6-.9 14.1 .1c7.7 1.8 14.8 6.5 19.4 13.6L514.6 194.2c8.8 13.1 13.4 28.6 13.4 44.4l0 73.5c0 6.9 4.4 13 10.9 15.2l79.2 26.4C631.2 358 640 370.2 640 384l0 96c0 9.9-4.6 19.3-12.5 25.4s-18.1 8.1-27.7 5.5L431 465.9c-56-14.9-95-65.7-95-123.7L336 224c0-17.7 14.3-32 32-32s32 14.3 32 32l0 80c0 8.8 7.2 16 16 16s16-7.2 16-16l0-84.9c0-7-1.8-13.8-5.3-19.8L340.3 48.1c-1.7-3-2.9-6.1-3.6-9.3c-1-4.7-1-9.6 .1-14.1c1.9-8 6.8-15.2 14.3-19.9zm-62.4 0c7.5 4.6 12.4 11.9 14.3 19.9c1.1 4.6 1.2 9.4 .1 14.1c-.7 3.2-1.9 6.3-3.6 9.3L213.3 199.3c-3.5 6-5.3 12.9-5.3 19.8l0 84.9c0 8.8 7.2 16 16 16s16-7.2 16-16l0-80c0-17.7 14.3-32 32-32s32 14.3 32 32l0 118.2c0 58-39 108.7-95 123.7l-168.7 45c-9.6 2.6-19.9 .5-27.7-5.5S0 490 0 480l0-96c0-13.8 8.8-26 21.9-30.4l79.2-26.4c6.5-2.2 10.9-8.3 10.9-15.2l0-73.5c0-15.8 4.7-31.2 13.4-44.4L245.2 14.5c4.6-7.1 11.7-11.8 19.4-13.6c4.6-1.1 9.4-1.2 14.1-.1c3.5 .8 6.9 2.1 10 4.1z'), label: 'Religion', value: '~88% Muslim', note: 'CIA WF; Sunni Hanafi majority' },
     { icon: fasvg('0 0 640 512', 'M0 128C0 92.7 28.7 64 64 64l192 0 48 0 16 0 256 0c35.3 0 64 28.7 64 64l0 256c0 35.3-28.7 64-64 64l-256 0-16 0-48 0L64 448c-35.3 0-64-28.7-64-64L0 128zm320 0l0 256 256 0 0-256-256 0zM178.3 175.9c-3.2-7.2-10.4-11.9-18.3-11.9s-15.1 4.7-18.3 11.9l-64 144c-4.5 10.1 .1 21.9 10.2 26.4s21.9-.1 26.4-10.2l8.9-20.1 73.6 0 8.9 20.1c4.5 10.1 16.3 14.6 26.4 10.2s14.6-16.3 10.2-26.4l-64-144zM160 233.2L179 276l-38 0 19-42.8zM448 164c11 0 20 9 20 20l0 4 44 0 16 0c11 0 20 9 20 20s-9 20-20 20l-2 0-1.6 4.5c-8.9 24.4-22.4 46.6-39.6 65.4c.9 .6 1.8 1.1 2.7 1.6l18.9 11.3c9.5 5.7 12.5 18 6.9 27.4s-18 12.5-27.4 6.9l-18.9-11.3c-4.5-2.7-8.8-5.5-13.1-8.5c-10.6 7.5-21.9 14-34 19.4l-3.6 1.6c-10.1 4.5-21.9-.1-26.4-10.2s.1-21.9 10.2-26.4l3.6-1.6c6.4-2.9 12.6-6.1 18.5-9.8l-12.2-12.2c-7.8-7.8-7.8-20.5 0-28.3s20.5-7.8 28.3 0l14.6 14.6 .5 .5c12.4-13.1 22.5-28.3 29.8-45L448 228l-72 0c-11 0-20-9-20-20s9-20 20-20l52 0 0-4c0-11 9-20 20-20z'), label: 'Language', value: 'Uzbek', note: 'Turkic; Latin script' },
     { icon: fasvg('0 0 512 512', 'M228.3 469.1L47.6 300.4c-4.2-3.9-8.2-8.1-11.9-12.4l87 0c22.6 0 43-13.6 51.7-34.5l10.5-25.2 49.3 109.5c3.8 8.5 12.1 14 21.4 14.1s17.8-5 22-13.3L320 253.7l1.7 3.4c9.5 19 28.9 31 50.1 31l104.5 0c-3.7 4.3-7.7 8.5-11.9 12.4L283.7 469.1c-7.5 7-17.4 10.9-27.7 10.9s-20.2-3.9-27.7-10.9zM503.7 240l-132 0c-3 0-5.8-1.7-7.2-4.4l-23.2-46.3c-4.1-8.1-12.4-13.3-21.5-13.3s-17.4 5.1-21.5 13.3l-41.4 82.8L205.9 158.2c-3.9-8.7-12.7-14.3-22.2-14.1s-18.1 5.9-21.8 14.8l-31.8 76.3c-1.2 3-4.2 4.9-7.4 4.9L16 240c-2.6 0-5 .4-7.3 1.1C3 225.2 0 208.2 0 190.9l0-5.8c0-69.9 50.5-129.5 119.4-141C165 36.5 211.4 51.4 244 84l12 12 12-12c32.6-32.6 79-47.5 124.6-39.9C461.5 55.6 512 115.2 512 185.1l0 5.8c0 16.9-2.8 33.5-8.3 49.1z'), label: 'Life Expectancy', value: '75 yrs', note: 'Women 77 / Men 72' },
-    { icon: fasvg('0 0 512 512', 'M352 256c0 22.2-1.2 43.6-3.3 64l-185.3 0c-2.2-20.4-3.3-41.8-3.3-64s1.2-43.6 3.3-64l185.3 0c2.2 20.4 3.3 41.8 3.3 64zm28.8-64l123.1 0c5.3 20.5 8.1 41.9 8.1 64s-2.8 43.5-8.1 64l-123.1 0c2.1-20.6 3.2-42 3.2-64s-1.1-43.4-3.2-64zm112.6-32l-116.7 0c-10-63.9-29.8-117.4-55.3-151.6c78.3 20.7 142 77.5 171.9 151.6zm-149.1 0l-176.6 0c6.1-36.4 15.5-68.6 27-94.7c10.5-23.6 22.2-40.7 33.5-51.5C239.4 3.2 248.7 0 256 0s16.6 3.2 27.8 13.8c11.3 10.8 23 27.9 33.5 51.5c11.6 26 20.9 58.2 27 94.7zm-209 0L18.6 160C48.6 85.9 112.2 29.1 190.6 8.4C165.1 42.6 145.3 96.1 135.3 160zM8.1 192l123.1 0c-2.1 20.6-3.2 42-3.2 64s1.1 43.4 3.2 64L8.1 320C2.8 299.5 0 278.1 0 256s2.8-43.5 8.1-64zM194.7 446.6c-11.6-26-20.9-58.2-27-94.6l176.6 0c-6.1 36.4-15.5 68.6-27 94.6c-10.5 23.6-22.2 40.7-33.5 51.5C272.6 508.8 263.3 512 256 512s-16.6-3.2-27.8-13.8c-11.3-10.8-23-27.9-33.5-51.5zM135.3 352c10 63.9 29.8 117.4 55.3 151.6C112.2 482.9 48.6 426.1 18.6 352l116.7 0zm358.1 0c-30 74.1-93.6 130.9-171.9 151.6c25.5-34.2 45.2-87.7 55.3-151.6l116.7 0z'), label: 'HDI', value: '0.727', note: 'Rank 108 globally' },
+    { icon: fasvg('0 0 512 512', 'M352 256c0 22.2-1.2 43.6-3.3 64l-185.3 0c-2.2-20.4-3.3-41.8-3.3-64s1.2-43.6 3.3-64l185.3 0c2.2 20.4 3.3 41.8 3.3 64zm28.8-64l123.1 0c5.3 20.5 8.1 41.9 8.1 64s-2.8 43.5-8.1 64l-123.1 0c2.1-20.6 3.2-42 3.2-64s-1.1-43.4-3.2-64zm112.6-32l-116.7 0c-10-63.9-29.8-117.4-55.3-151.6c78.3 20.7 142 77.5 171.9 151.6zm-149.1 0l-176.6 0c6.1-36.4 15.5-68.6 27-94.7c10.5-23.6 22.2-40.7 33.5-51.5C239.4 3.2 248.7 0 256 0s16.6 3.2 27.8 13.8c11.3 10.8 23 27.9 33.5 51.5c11.6 26 20.9 58.2 27 94.7zm-209 0L18.6 160C48.6 85.9 112.2 29.1 190.6 8.4C165.1 42.6 145.3 96.1 135.3 160zM8.1 192l123.1 0c-2.1 20.6-3.2 42-3.2 64s1.1 43.4 3.2 64L8.1 320C2.8 299.5 0 278.1 0 256s2.8-43.5 8.1-64zM194.7 446.6c-11.6-26-20.9-58.2-27-94.6l176.6 0c-6.1 36.4-15.5 68.6-27 94.6c-10.5 23.6-22.2 40.7-33.5 51.5C272.6 508.8 263.3 512 256 512s-16.6-3.2-27.8-13.8c-11.3-10.8-23-27.9-33.5-51.5zM135.3 352c10 63.9 29.8 117.4 55.3 151.6C112.2 482.9 48.6 426.1 18.6 352l116.7 0zm358.1 0c-30 74.1-93.6 130.9-171.9 151.6c25.5-34.2 45.2-87.7 55.3-151.6l116.7 0z'), label: 'HDI', value: '0.740', note: 'Rank 107 (UNDP HDR 2025)' },
     { icon: fasvg('0 0 512 512', 'M240.1 4.2c9.8-5.6 21.9-5.6 31.8 0l171.8 98.1L448 104l0 .9 47.9 27.4c12.6 7.2 18.8 22 15.1 36s-16.4 23.8-30.9 23.8L32 192c-14.5 0-27.2-9.8-30.9-23.8s2.5-28.8 15.1-36L64 104.9l0-.9 4.4-1.6L240.1 4.2zM64 224l64 0 0 192 40 0 0-192 64 0 0 192 48 0 0-192 64 0 0 192 40 0 0-192 64 0 0 196.3c.6 .3 1.2 .7 1.8 1.1l48 32c11.7 7.8 17 22.4 12.9 35.9S494.1 512 480 512L32 512c-14.1 0-26.5-9.2-30.6-22.7s1.1-28.1 12.9-35.9l48-32c.6-.4 1.2-.7 1.8-1.1L64 224z'), label: 'Government', value: 'Presidential', note: 'Republic since 1991' },
-    { icon: fasvg('0 0 384 512', 'M372.5 256.5l-.7-1.9C337.8 160.8 282 76.5 209.1 8.5l-3.3-3C202.1 2 197.1 0 192 0s-10.1 2-13.8 5.5l-3.3 3C102 76.5 46.2 160.8 12.2 254.6l-.7 1.9C3.9 277.3 0 299.4 0 321.6C0 426.7 86.8 512 192 512s192-85.3 192-190.4c0-22.2-3.9-44.2-11.5-65.1zm-90.8 49.5c4.1 9.3 6.2 19.4 6.2 29.5c0 53-43 96.5-96 96.5s-96-43.5-96-96.5c0-10.1 2.1-20.3 6.2-29.5l1.9-4.3c15.8-35.4 37.9-67.7 65.3-95.1l8.9-8.9c3.6-3.6 8.5-5.6 13.6-5.6s10 2 13.6 5.6l8.9 8.9c27.4 27.4 49.6 59.7 65.3 95.1l1.9 4.3z'), label: 'Natural Gas', value: '#1 in CA', note: 'Largest reserves' },
-    { icon: fasvg('0 0 512 512', 'M256 0c4.6 0 9.2 1 13.4 2.9L457.7 82.8c22 9.3 38.4 31 38.3 57.2c-.5 99.2-41.3 280.7-213.6 363.2c-16.7 8-36.1 8-52.8 0C57.3 420.7 16.5 239.2 16 140c-.1-26.2 16.3-47.9 38.3-57.2L242.7 2.9C246.8 1 251.4 0 256 0zm0 66.8l0 378.1C394 378 431.1 230.1 432 141.4L256 66.8s0 0 0 0z'), label: 'Peace Index', value: 'Rank ~87', note: 'IEP 2024' },
+    { icon: fasvg('0 0 384 512', 'M372.5 256.5l-.7-1.9C337.8 160.8 282 76.5 209.1 8.5l-3.3-3C202.1 2 197.1 0 192 0s-10.1 2-13.8 5.5l-3.3 3C102 76.5 46.2 160.8 12.2 254.6l-.7 1.9C3.9 277.3 0 299.4 0 321.6C0 426.7 86.8 512 192 512s192-85.3 192-190.4c0-22.2-3.9-44.2-11.5-65.1zm-90.8 49.5c4.1 9.3 6.2 19.4 6.2 29.5c0 53-43 96.5-96 96.5s-96-43.5-96-96.5c0-10.1 2.1-20.3 6.2-29.5l1.9-4.3c15.8-35.4 37.9-67.7 65.3-95.1l8.9-8.9c3.6-3.6 8.5-5.6 13.6-5.6s10 2 13.6 5.6l8.9 8.9c27.4 27.4 49.6 59.7 65.3 95.1l1.9 4.3z'), label: 'Natural Gas', value: '#2 in CA', note: '~1.9 trillion m³ proven; Turkmenistan #1' },
+    { icon: fasvg('0 0 512 512', 'M256 0c4.6 0 9.2 1 13.4 2.9L457.7 82.8c22 9.3 38.4 31 38.3 57.2c-.5 99.2-41.3 280.7-213.6 363.2c-16.7 8-36.1 8-52.8 0C57.3 420.7 16.5 239.2 16 140c-.1-26.2 16.3-47.9 38.3-57.2L242.7 2.9C246.8 1 251.4 0 256 0zm0 66.8l0 378.1C394 378 431.1 230.1 432 141.4L256 66.8s0 0 0 0z'), label: 'Peace Index', value: 'Rank 67', note: 'GPI 2024 (IEP)' },
     { icon: fasvg('0 0 512 512', 'M352 256c0 22.2-1.2 43.6-3.3 64l-185.3 0c-2.2-20.4-3.3-41.8-3.3-64s1.2-43.6 3.3-64l185.3 0c2.2 20.4 3.3 41.8 3.3 64zm28.8-64l123.1 0c5.3 20.5 8.1 41.9 8.1 64s-2.8 43.5-8.1 64l-123.1 0c2.1-20.6 3.2-42 3.2-64s-1.1-43.4-3.2-64zm112.6-32l-116.7 0c-10-63.9-29.8-117.4-55.3-151.6c78.3 20.7 142 77.5 171.9 151.6zm-149.1 0l-176.6 0c6.1-36.4 15.5-68.6 27-94.7c10.5-23.6 22.2-40.7 33.5-51.5C239.4 3.2 248.7 0 256 0s16.6 3.2 27.8 13.8c11.3 10.8 23 27.9 33.5 51.5c11.6 26 20.9 58.2 27 94.7zm-209 0L18.6 160C48.6 85.9 112.2 29.1 190.6 8.4C165.1 42.6 145.3 96.1 135.3 160zM8.1 192l123.1 0c-2.1 20.6-3.2 42-3.2 64s1.1 43.4 3.2 64L8.1 320C2.8 299.5 0 278.1 0 256s2.8-43.5 8.1-64zM194.7 446.6c-11.6-26-20.9-58.2-27-94.6l176.6 0c-6.1 36.4-15.5 68.6-27 94.6c-10.5 23.6-22.2 40.7-33.5 51.5C272.6 508.8 263.3 512 256 512s-16.6-3.2-27.8-13.8c-11.3-10.8-23-27.9-33.5-51.5zM135.3 352c10 63.9 29.8 117.4 55.3 151.6C112.2 482.9 48.6 426.1 18.6 352l116.7 0zm358.1 0c-30 74.1-93.6 130.9-171.9 151.6c25.5-34.2 45.2-87.7 55.3-151.6l116.7 0z'), label: 'Area', value: '448,978 km²', note: 'Doubly landlocked' },
           ];
 
@@ -529,7 +529,7 @@ export default function Uzbekistan() {
           <div className="col-6 col-md-4 d-flex"><KpiCard label="Median Age" value="27 yrs" sub="Young population; ~29% under 15; large working-age cohort" accent={C.grn} delay={0.15} /></div>
           <div className="col-6 col-md-4 d-flex"><KpiCard label="Population Density" value="89 /km²" sub="High relative to regional peers; Fergana Valley ~900/km²" accent={C.dim} delay={0.20} /></div>
           <div className="col-6 col-md-4 d-flex"><KpiCard label="Life Expectancy" value="~75 yrs" sub="Women ~77 · Men ~73; improving steadily" accent={C.dim} delay={0.25} /></div>
-          <div className="col-6 col-md-4 d-flex"><KpiCard label="Fertility Rate" value="~2.8" sub="Declining from 3.8 in 2000; still above replacement" accent={C.blu} delay={0.30} /></div>
+          <div className="col-6 col-md-4 d-flex"><KpiCard label="Fertility Rate" value="~3.5" sub="UN WPP 2025: 3.45 births/woman; declining from 3.8 in 2000" accent={C.blu} delay={0.30} /></div>
         </div>
         <div className="row gy-3 mb-3">
           <div className="col-12 col-md-6">
@@ -601,7 +601,7 @@ export default function Uzbekistan() {
           <div className="col-6 col-md-4 d-flex"><KpiCard label="GDP Growth (2025)" value="7.7%" sub="World Bank confirmed; record; exports, consumption & FDI led" accent={C.grn} delay={0.15} /></div>
           <div className="col-6 col-md-4 d-flex"><KpiCard label="GDP PPP (2026 est.)" value="~$552B" sub="PPP per capita ~$14,179 — reflects large informal economy" accent={C.dim} delay={0.20} /></div>
           <div className="col-6 col-md-4 d-flex"><KpiCard label="Inflation CPI (2025)" value="~7.3%" sub="Cooling from 12%+ in 2022; Central Bank target 5% by 2028" accent={C.dim} delay={0.25} /></div>
-          <div className="col-6 col-md-4 d-flex"><KpiCard label="Currency" value="UZS (Sum)" sub="~12,800 UZS = $1 (2025 avg); free float since 2017" accent={C.dim} delay={0.30} /></div>
+          <div className="col-6 col-md-4 d-flex"><KpiCard label="Currency" value="UZS (Sum)" sub="~12,600 UZS = $1 (2025 avg); free float since 2017 (CBU)" accent={C.dim} delay={0.30} /></div>
         </div>
         <div className="row gy-3 mb-3">
           <div className="col-12 col-md-6">
@@ -629,7 +629,7 @@ export default function Uzbekistan() {
                 ['Remittances (% of GDP, 2025)', '~13.9B (~10% of GDP); from Russia mainly'],
                 ['Gold production (Muruntau)', '~70 tonnes/year — world\'s largest mine'],
                 ['Foreign reserves (2025)', '>$55B — record; strong macro buffer'],
-                ['FDI inflow (2025)', '~$39.7B — record; manufacturing-led'],
+                ['Foreign investment (2025)', '~$35–40B total; BoP FDI ~$2.8B (2024); record inflows'],
                 ['Poverty rate ($3.65/day, 2025)', '~5.1% — dramatic improvement from ~27% in 2016'],
                 ['Gini coefficient', '~33.0 — moderate'],
               ]} />
@@ -641,11 +641,11 @@ export default function Uzbekistan() {
         {/* 5. EMPLOYMENT */}
         <SectionHeader icon={Icons.briefcase} label="Employment & Wages" />
         <div className="row g-1 mb-3">
-          <div className="col-6 col-md-4 d-flex"><KpiCard label="Avg Monthly Wage (2025)" value="~$450" sub="~5.7M UZS; rising rapidly; tripled since 2016 in USD terms" accent={C.grn} delay={0.05} /></div>
+          <div className="col-6 col-md-4 d-flex"><KpiCard label="Avg Monthly Wage (2025)" value="~$529" sub="~6.4M UZS; +19% YoY; National Stats full-year 2025" accent={C.grn} delay={0.05} /></div>
           <div className="col-6 col-md-4 d-flex"><KpiCard label="Labour Force" value="~21.4M" sub="~55% of population; 53.2% employment rate (2020)" accent={C.dim} delay={0.10} /></div>
-          <div className="col-6 col-md-4 d-flex"><KpiCard label="Unemployment (2024)" value="~6.3%" sub="Official; youth unemployment ~15%; significant underemployment" accent={C.uz} delay={0.15} /></div>
+          <div className="col-6 col-md-4 d-flex"><KpiCard label="Unemployment (2025)" value="~4.8%" sub="ILO modeled estimate; youth unemployment ~15%; significant underemployment" accent={C.uz} delay={0.15} /></div>
           <div className="col-6 col-md-4 d-flex"><KpiCard label="Informal employment" value="~40%+" sub="Cotton agriculture, bazaar, construction; improving with formalisation push" accent={C.dim} delay={0.20} /></div>
-          <div className="col-6 col-md-4 d-flex"><KpiCard label="Min. Wage (2025)" value="~1,050,000 UZS" sub="~$82/month; raised multiple times since 2016" accent={C.blu} delay={0.25} /></div>
+          <div className="col-6 col-md-4 d-flex"><KpiCard label="Min. Wage (2025)" value="~1,271,000 UZS" sub="~$101/month; raised to 1,155K Jan 2025, then 1,271K Aug 2025 (WageIndicator)" accent={C.blu} delay={0.25} /></div>
           <div className="col-6 col-md-4 d-flex"><KpiCard label="Labour migration abroad" value="~2M workers" sub="Mostly to Russia; remittances ~$13.9B (2025)" accent={C.dim} delay={0.30} /></div>
         </div>
         <div className="row gy-3 mb-3">
@@ -654,7 +654,7 @@ export default function Uzbekistan() {
               <BarRow label="Mining & extraction (gold, gas)" value="~12,000,000" pct={100} color={C.uz} />
               <BarRow label="Financial & IT services" value="~9,000,000" pct={75} color={C.grn} />
               <BarRow label="Public administration" value="~5,500,000" pct={46} color={C.blu} />
-              <BarRow label="National average" value="~5,700,000" pct={48} color={C.dim} />
+              <BarRow label="National average" value="~6,400,000" pct={53} color={C.dim} />
               <BarRow label="Education & health" value="~4,200,000" pct={35} color={C.dim} />
               <BarRow label="Agriculture (cotton, wheat)" value="~2,800,000" pct={23} color={C.dim} />
               <p style={{ fontSize:11, color:C.sub, marginTop:10, lineHeight:1.6 }}>Wages have tripled in USD terms since 2016 — one of the fastest wage growth rates globally. The 4.3× gap between mining (~$940/month) and agriculture (~$220/month) explains rural-urban migration pressure. With 37.7M people and a young population, job creation is the government's most pressing economic challenge.</p>
@@ -688,7 +688,7 @@ export default function Uzbekistan() {
         <SectionHeader icon={Icons.graduation} label="Education & Human Development" />
         <div className="row g-1 mb-3">
           <div className="col-6 col-md-4 d-flex"><KpiCard label="Literacy Rate" value="99.9%" sub="Near-universal; Soviet legacy maintained and strengthened" accent={C.uz} delay={0.05} /></div>
-          <div className="col-6 col-md-4 d-flex"><KpiCard label="HDI (2022)" value="0.757" sub="High Human Development — rank 106th globally (UNDP)" accent={C.dim} delay={0.10} /></div>
+          <div className="col-6 col-md-4 d-flex"><KpiCard label="HDI (2023)" value="0.740" sub="High Human Development — rank 107th globally (UNDP HDR 2025)" accent={C.dim} delay={0.10} /></div>
           <div className="col-6 col-md-4 d-flex"><KpiCard label="Avg Years Schooling" value="~12.0 yrs" sub="Improving; free 12-year education system" accent={C.dim} delay={0.15} /></div>
           <div className="col-6 col-md-4 d-flex"><KpiCard label="Expected Schooling" value="~14.5 yrs" sub="New branch campuses of foreign universities" accent={C.dim} delay={0.20} /></div>
           <div className="col-6 col-md-4 d-flex"><KpiCard label="Education Spending" value="~5% GDP" sub="Rising; international branch universities flagship reform" accent={C.dim} delay={0.25} /></div>
@@ -847,7 +847,7 @@ export default function Uzbekistan() {
         {/* 10. ECONOMIC DEPTH */}
         <SectionHeader icon={Icons.chart} label="Economic Depth & Fiscal Position" />
         <div className="row g-1 mb-3">
-          <div className="col-6 col-md-4 d-flex"><KpiCard label="Foreign Reserves (2025)" value=">$55B" sub="Record; includes gold; ~5 months import cover; strong buffer" accent={C.uz} delay={0.05} /></div>
+          <div className="col-6 col-md-4 d-flex"><KpiCard label="Foreign Reserves (end-2025)" value="~$66B" sub="Record $66.3B as of Jan 1 2026; includes gold; +61% YoY (CBU)" accent={C.uz} delay={0.05} /></div>
           <div className="col-6 col-md-4 d-flex"><KpiCard label="Govt Debt / GDP (2025)" value="~28%" sub="World Bank; manageable; mostly concessional IFI lending" accent={C.dim} delay={0.10} /></div>
           <div className="col-6 col-md-4 d-flex"><KpiCard label="FDI Inflow (2025)" value="~$39.7B" sub="Record; Central Asia leader; manufacturing & energy dominate" accent={C.grn} delay={0.15} /></div>
           <div className="col-6 col-md-4 d-flex"><KpiCard label="Exports (2025)" value="~$33.8B" sub="+23% YoY; gold, gas, copper, uranium, textiles, food" accent={C.dim} delay={0.20} /></div>
@@ -879,14 +879,14 @@ export default function Uzbekistan() {
             <Panel title="Key Fiscal Indicators" icon={Icons.chart}>
               <Tbl rows={[
                 ['Govt debt / GDP (2025)', '~28% — moderate; IFI concessional majority'],
-                ['Foreign reserves', '>$55B — record; gold-heavy'],
+                ['Foreign reserves (end-2025)', '~$66.3B — record; gold-heavy (CBU)'],
                 ['GDP growth target 2030', '$220–230B nominal GDP'],
                 ['Investment / GDP ratio (2025)', '~31.9% — very high; construction boom'],
                 ['WTO accession target', '2026 (in negotiation)'],
                 ['Free economic zones (FEZs)', '~20 FEZs; 500+ resident companies'],
                 ['GDP growth Jan–Sep 2025 (official)', '+7.7% — record pace'],
               ]} />
-              <p style={{ fontSize:11, color:C.sub, marginTop:10, lineHeight:1.6 }}>Investment at 31.9% of GDP is exceptionally high — it is the engine of Uzbekistan's growth story. This is being funded by FDI ($39.7B), multilateral lending (IDB, ADB, World Bank), and the sovereign wealth fund. WTO accession would be the most significant trade reform since independence — opening markets and requiring legal modernisation.</p>
+              <p style={{ fontSize:11, color:C.sub, marginTop:10, lineHeight:1.6 }}>Investment at 31.9% of GDP is exceptionally high — it is the engine of Uzbekistan's growth story. This is being funded by broad foreign investment (~$35–40B total), multilateral lending (IDB, ADB, World Bank), and the sovereign wealth fund. WTO accession would be the most significant trade reform since independence — opening markets and requiring legal modernisation.</p>
               <GradientBar title="Trade balance 2015–2024 ($B)" values={[-4.5, -4.8, -5.2, -7.0, -8.1, -8.1, -11.5, -13.7, -15.2, -13.6]} xLabels={['2015', '2016', '2017', '2018', '2019', '2020', '2021', '2022', '2023', '2024']} colorStops={(p, v) => v >= 0 ? `rgb(${Math.round(153-118*p/100)},${Math.round(153+6*p/100)},${Math.round(153-89*p/100)})` : `rgb(${Math.round(153+79*p/100)},${Math.round(153-128*p/100)},${Math.round(153-109*p/100)})`} fmt={v => v > 0 ? `+${v}B` : `${v}B`} absScale={true} />
             </Panel>
           </div>
@@ -896,7 +896,7 @@ export default function Uzbekistan() {
         <SectionHeader icon={Icons.mountain} label="Energy & Resources" />
         <div className="row g-1 mb-3">
           <div className="col-6 col-md-4 d-flex"><KpiCard label="Electricity Generation" value="~75 TWh/yr" sub="Coal & gas dominant; massive renewable transition underway" accent={C.uz} delay={0.05} /></div>
-          <div className="col-6 col-md-4 d-flex"><KpiCard label="Natural gas reserves" value="~1.1 trillion m³" sub="Large domestic reserves; production declining; priority domestic use" accent={C.dim} delay={0.10} /></div>
+          <div className="col-6 col-md-4 d-flex"><KpiCard label="Natural gas reserves" value="~1.9 trillion m³" sub="Proven reserves end-2024 (Institute of Energy); production declining" accent={C.dim} delay={0.10} /></div>
           <div className="col-6 col-md-4 d-flex"><KpiCard label="Gold production (Muruntau)" value="~70 tonnes/yr" sub="World's largest open-pit mine; Kyzylkum Desert" accent={C.grn} delay={0.15} /></div>
           <div className="col-6 col-md-4 d-flex"><KpiCard label="Renewable investment (2025)" value="$9.5B — 42 projects" sub="Solar, wind, hydro; Forum 'Powering the Future' Dec 2025" accent={C.dim} delay={0.20} /></div>
           <div className="col-6 col-md-4 d-flex"><KpiCard label="Solar potential" value="World-class" sub="300+ sunny days; flat desert terrain; ideal for utility-scale solar" accent={C.dim} delay={0.25} /></div>
@@ -921,9 +921,9 @@ export default function Uzbekistan() {
           <div className="col-12 col-md-6">
             <Panel title="Energy & Resources Facts" icon={Icons.landmark}>
               <Tbl rows={[
-                ['Natural gas production', '~49 billion m³/year (declining)'],
+                ['Natural gas production', '~44.6 billion m³/year (2024; declining from 59 bcm in 2019)'],
                 ['Oil production', '~55,000 bbl/day (minor)'],
-                ['Uranium production (2024)', '~3,500 tonnes/year — world top-10'],
+                ['Uranium production (2024)', '~4,000 tonnes/year — world 5th (WNA 2024)'],
                 ['Copper (Almalyk mine)', 'Major producer; expanding capacity'],
                 ['Coal reserves', 'Modest; ~3.3 billion tonnes'],
                 ['Muruntau gold mine annual output', '~70 tonnes — world\'s largest open-pit'],
@@ -936,7 +936,7 @@ export default function Uzbekistan() {
         {/* 12. INFRASTRUCTURE */}
         <SectionHeader icon={Icons.map} label="Infrastructure & Digital Connectivity" />
         <div className="row g-1 mb-3">
-          <div className="col-6 col-md-4 d-flex"><KpiCard label="Internet Penetration" value="~76%" sub="ITU 2023; rapidly expanding; mobile-first" accent={C.grn} delay={0.05} /></div>
+          <div className="col-6 col-md-4 d-flex"><KpiCard label="Internet Penetration" value="~84%" sub="DataReportal Jan 2024: 83.3%; ITU 2023 households: 89%; mobile-first" accent={C.grn} delay={0.05} /></div>
           <div className="col-6 col-md-4 d-flex"><KpiCard label="Mobile Subscribers" value="~37M" sub="~100% penetration; Ucell, Beeline, Uzmobile major operators" accent={C.dim} delay={0.10} /></div>
           <div className="col-6 col-md-4 d-flex"><KpiCard label="Road Network" value="~186,000 km" sub="~40,000 km paved; major expansion underway" accent={C.dim} delay={0.15} /></div>
           <div className="col-6 col-md-4 d-flex"><KpiCard label="Railway Network" value="~4,643 km" sub="Electrified; high-speed Afrosiyob (Tashkent–Samarkand–Bukhara)" accent={C.dim} delay={0.20} /></div>
@@ -959,7 +959,7 @@ export default function Uzbekistan() {
           </div>
           <div className="col-12 col-md-6">
             <Panel title="Digital Indicators" icon={Icons.chart}>
-              <BarRow label="Internet penetration" value="~76%" pct={76} color={C.uz} />
+              <BarRow label="Internet penetration" value="~84%" pct={84} color={C.uz} />
               <BarRow label="Mobile penetration" value="~100%" pct={100} color={C.grn} />
               <BarRow label="E-government service uptake" value="~65%" pct={65} color={C.blu} />
               <BarRow label="Social media penetration" value="~60%" pct={60} color={C.dim} />
@@ -1012,7 +1012,7 @@ export default function Uzbekistan() {
           <div className="col-6 col-md-4 d-flex"><KpiCard label="Gini Coefficient" value="~33.0" sub="Moderate inequality; rising inequality a risk as economy grows" accent={C.dim} delay={0.10} /></div>
           <div className="col-6 col-md-4 d-flex"><KpiCard label="Rural-urban income gap" value="~1.6×" sub="Urban incomes ~60% higher; rural employment main challenge" accent={C.dim} delay={0.15} /></div>
           <div className="col-6 col-md-4 d-flex"><KpiCard label="Gender Inequality Index" value="0.240 (rank 68)" sub="UNDP 2022; better than Tajikistan; improving rapidly" accent={C.grn} delay={0.20} /></div>
-          <div className="col-6 col-md-4 d-flex"><KpiCard label="Women in parliament" value="~32%" sub="2024 election result; well above regional average" accent={C.blu} delay={0.25} /></div>
+          <div className="col-6 col-md-4 d-flex"><KpiCard label="Women in parliament" value="~38%" sub="57/150 seats after Oct 2024 elections (IPU); highest in CA" accent={C.blu} delay={0.25} /></div>
           <div className="col-6 col-md-4 d-flex"><KpiCard label="Mahalla system" value="~10,000 units" sub="Traditional community governance; welfare delivery at local level" accent={C.dim} delay={0.30} /></div>
         </div>
         <div className="row gy-3 mb-3">
@@ -1030,7 +1030,7 @@ export default function Uzbekistan() {
             <Panel title="Social Cohesion & Gender" icon={Icons.people}>
               <Tbl rows={[
                 ['Gini (Statistics Agency, 2021)', '~33.0 — moderate'],
-                ['Women in parliament (2024)', '~32% — highest in Central Asia'],
+                ['Women in parliament (2024)', '~38% (57/150 seats) — highest in Central Asia (IPU)'],
                 ['Gender Inequality Index (UNDP)', '0.240 — rank 68/191'],
                 ['Women in labour force', '~47% — improving'],
                 ['Forced cotton labour (abolished)', '2021; confirmed by ILO'],
@@ -1083,7 +1083,7 @@ export default function Uzbekistan() {
           <div className="col-6 col-md-4 d-flex"><KpiCard label="Foreign Investment (2025)" value="~$35–40B" sub="Total incl. loans & portfolio; BoP FDI ~$2.8B (2024); record inflows; Central Asia leader" accent={C.dim} delay={0.10} /></div>
           <div className="col-6 col-md-4 d-flex"><KpiCard label="Ease of Doing Business" value="~Rank 69/190" sub="World Bank 2019; massive improvement from rank 166 in 2012" accent={C.dim} delay={0.15} /></div>
           <div className="col-6 col-md-4 d-flex"><KpiCard label="VAT rate" value="12%" sub="Reduced from 20% in 2019; significant tax reform package" accent={C.dim} delay={0.20} /></div>
-          <div className="col-6 col-md-4 d-flex"><KpiCard label="Corruption Index (TI 2023)" value="33/100" sub="Rank 121/180; improving from 21/100 in 2016 under Karimov" accent={C.uz} delay={0.25} /></div>
+          <div className="col-6 col-md-4 d-flex"><KpiCard label="Corruption Index (TI 2024)" value="32/100" sub="Rank 121/180; improving from 21/100 in 2016 under Karimov (TI CPI 2024)" accent={C.uz} delay={0.25} /></div>
           <div className="col-6 col-md-4 d-flex"><KpiCard label="WTO accession" value="Target 2026" sub="Observer since 1994; 30+ year process nearing completion" accent={C.dim} delay={0.30} /></div>
         </div>
         <div className="row gy-3 mb-3">
@@ -1091,7 +1091,7 @@ export default function Uzbekistan() {
             <Panel title="Investment Climate Summary" icon={Icons.briefcase}>
               <Tbl rows={[
                 ["Fitch credit rating", 'BB- / Stable (sub-investment grade but improving)'],
-                ['CPI score (TI 2023)', '33/100 — rank 121/180; improving rapidly'],
+                ['CPI score (TI 2024)', '32/100 — rank 121/180; improving from 21/100 in 2016'],
                 ['Free Economic Zones', '~20 FEZs; Navoi (aviation), Urgut, IT Parks'],
                 ['IT Park Uzbekistan', '500+ companies; 0% income tax; growing exports'],
                 ['Currency liberalisation (2017)', 'Free float ended black market; FDI unlocked'],
@@ -1116,10 +1116,10 @@ export default function Uzbekistan() {
         {/* 17. CRIME & SECURITY */}
         <SectionHeader icon={Icons.landmark} label="Crime & Security" />
         <div className="row g-1 mb-3">
-          <div className="col-6 col-md-4 d-flex"><KpiCard label="Global Peace Index (2024)" value="~Rank 81" sub="IEP; medium-high peace; improving under Mirziyoyev" accent={C.grn} delay={0.05} /></div>
+          <div className="col-6 col-md-4 d-flex"><KpiCard label="Global Peace Index (2024)" value="Rank 67" sub="IEP GPI 2024; among biggest improvers; improving under Mirziyoyev" accent={C.grn} delay={0.05} /></div>
           <div className="col-6 col-md-4 d-flex"><KpiCard label="Afghanistan border" value="137 km" sub="Terrorism & drug trafficking risk; Uzbekistan maintains strong border" accent={C.uz} delay={0.10} /></div>
           <div className="col-6 col-md-4 d-flex"><KpiCard label="Homicide rate (est.)" value="~2.5 / 100K" sub="Low; declining; state security apparatus effective" accent={C.dim} delay={0.15} /></div>
-          <div className="col-6 col-md-4 d-flex"><KpiCard label="Press Freedom (RSF 2024)" value="Rank 140/180" sub="Improving from 165/180 in 2016; still limited but opening" accent={C.uz} delay={0.20} /></div>
+          <div className="col-6 col-md-4 d-flex"><KpiCard label="Press Freedom (RSF 2024)" value="Rank 148/180" sub="Dropped 11 places in 2024; status worsened to 'very serious'" accent={C.uz} delay={0.20} /></div>
           <div className="col-6 col-md-4 d-flex"><KpiCard label="Karakalpakstan unrest (2022)" value="18 killed" sub="Autonomy protests; suppressed; internet cut; some reforms followed" accent={C.dim} delay={0.25} /></div>
           <div className="col-6 col-md-4 d-flex"><KpiCard label="Andijan massacre (2005)" value="Historical" sub="200–1,500 killed; Karimov-era; Uzbekistan expelled from US base" accent={C.dim} delay={0.30} /></div>
         </div>
@@ -1128,7 +1128,7 @@ export default function Uzbekistan() {
             <Panel title="Crime & Security Indicators" icon={Icons.landmark}>
               <Tbl rows={[
                 ['Homicide rate (est.)', '~2.5 per 100,000 — low'],
-                ['Global Peace Index 2024', '~Rank 81 / 163'],
+                ['Global Peace Index 2024', 'Rank 67 / 163 (IEP)'],
                 ['Afghanistan border security', 'Well-managed; military hardware investment'],
                 ['Drug trafficking', 'Transit country for Afghan opiates; contained'],
                 ['Political prisoners', 'Hundreds released (Karimov-era); new arrests fewer'],
@@ -1139,7 +1139,7 @@ export default function Uzbekistan() {
           </div>
           <div className="col-12 col-md-6">
             <Panel title="Security Context" icon={Icons.chart}>
-              <BarRow label="Corruption (CPI, 100=clean)" value="33/100" pct={33} color={C.uz} />
+              <BarRow label="Corruption (CPI, 100=clean)" value="32/100" pct={32} color={C.uz} />
               <BarRow label="Press freedom (100=free, est.)" value="~28/100" pct={28} color={C.grn} />
               <BarRow label="Rule of law (WJP, 100=best)" value="~34/100" pct={34} color={C.blu} />
               <BarRow label="Political rights (FH, improving)" value="~20/100" pct={20} color={C.dim} />
