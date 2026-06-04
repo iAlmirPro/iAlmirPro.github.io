@@ -550,7 +550,7 @@ export default function Uzbekistan() {
             </Panel>
           </div>
           <div className="col-12 col-md-6">
-            <Panel title="Largest Cities (2025 est.)" icon={Icons.landmark}>
+            <Panel title="Largest Cities (2025 est. — no inter-census registry; city boundaries vary by source)" icon={Icons.landmark}>
               <BarRow label="Tashkent (capital)" value="3,000,000+" pct={100} color={C.uz} />
               <BarRow label="Namangan (Fergana Valley)" value="~700,000" pct={23} color={C.grn} />
               <BarRow label="Samarkand (ancient capital)" value="~600,000" pct={20} color={C.blu} />
@@ -650,7 +650,7 @@ export default function Uzbekistan() {
         </div>
         <div className="row gy-3 mb-3">
           <div className="col-12 col-md-6">
-            <Panel title="Wages by Sector (monthly UZS, est. 2024)" icon={Icons.chart}>
+            <Panel title="Wages by Sector (monthly UZS, est. 2024 — sectoral breakdown modelled from National Stats avg + ILO ratios)" icon={Icons.chart}>
               <BarRow label="Banking & financial services" value="~15,000,000" pct={100} color={C.uz} />
               <BarRow label="Mining & extraction (gold, gas)" value="~9,100,000" pct={61} color={C.grn} />
               <BarRow label="National average (2025)" value="~6,400,000" pct={43} color={C.dim} />
@@ -676,7 +676,7 @@ export default function Uzbekistan() {
               />
               <div style={{ height:1, background:C.border, margin:'16px 0' }} />
               <Tbl rows={[
-                ['Migrant workers abroad (est.)', '~2,000,000'],
+                ['Migrant workers abroad (est. — no official registry; ILO modelled)', '~2,000,000'],
                 ['Remittances (2025)', '~$18.9B (~14% of GDP)'],
               ]} />
               <p style={{ fontSize:11, color:C.sub, marginTop:10, lineHeight:1.6 }}>Agriculture at 26% is declining as manufacturing expands — a healthy structural shift. The government's "1 million programmers" AI initiative and free economic zones are creating new digital employment. 2M migrant workers abroad represent ~14% of the ILO-estimated domestic labour force — significant but far less remittance-dependent than Tajikistan (45%). Remittances of $18.9B in 2025 (+27% YoY) now equal ~14% of GDP.</p>
@@ -770,7 +770,7 @@ export default function Uzbekistan() {
         </div>
         <div className="row gy-3 mb-3">
           <div className="col-12 col-md-6">
-            <Panel title="Top Visitor Origins (2024 est.)" icon={Icons.people}>
+            <Panel title="Top Visitor Origins (2024 est. — origin % derived from border crossings; no passport-level breakdown published)" icon={Icons.people}>
               {[
                 { flag:'🇰🇬', country:'Kyrgyzstan',  val:'cross-border; largest source market 2024', pct:'~26%' },
                 { flag:'🇹🇯', country:'Tajikistan',  val:'cross-border; trade & visits',             pct:'~23%' },
@@ -836,7 +836,7 @@ export default function Uzbekistan() {
                 ['Divorce rate (per 1,000)', '~1.5'],
                 ['Avg age at first marriage (women)', '~22 yrs'],
                 ['Avg age at first marriage (men)', '~27 yrs'],
-                ['Maternal mortality ratio (2023 est.)', '~29 per 100,000'],
+                ['Maternal mortality ratio (2023 est. — WHO/UNICEF joint modelled estimate, not direct count)', '~29 per 100,000'],
                 ['Child stunting rate', '~8.5% — declining; above world avg'],
               ]} />
               <p style={{ fontSize:11, color:C.sub, marginTop:10, lineHeight:1.6 }}>Maternal mortality at ~29/100,000 is improving but still 2× Kazakhstan. Uzbekistan was the first Central Asian country to formally abolish forced labour in cotton harvesting (2021) — a significant human rights milestone, addressing a practice that affected millions of students and public workers annually.</p>
@@ -904,7 +904,7 @@ export default function Uzbekistan() {
         </div>
         <div className="row gy-3 mb-3">
           <div className="col-12 col-md-6">
-            <Panel title="Electricity Generation Mix (2024 est.)" icon={Icons.chart}>
+            <Panel title="Electricity Generation Mix (2024 est. — IEA/UZ Stats; fuel-type split modelled, not metered per source)" icon={Icons.chart}>
               <Donut
                 label="81.5 TWh"
                 sublabel="generated 2024"
@@ -995,7 +995,7 @@ export default function Uzbekistan() {
           </div>
           <div className="col-12 col-md-6">
             <Panel title="Disease & Health Burden" icon={Icons.chart}>
-              <BarRow label="Hypertension prevalence (est.; unverified)" value="~32%" pct={100} color={C.uz} />
+              <BarRow label="Hypertension prevalence (est.; unverified — most recent WHO STEPS survey is 2019; 2024 data not publicly available)" value="~32%" pct={100} color={C.uz} />
               <BarRow label="TB incidence per 100K (2022)" value="~83" pct={100} color={C.grn} />
               <BarRow label="OOP health spending share" value="~53%" pct={66} color={C.blu} />
               <BarRow label="Tashkent PM2.5 (WHO guideline=5)" value="~32 µg/m³" pct={80} color={C.dim} />
@@ -1118,7 +1118,7 @@ export default function Uzbekistan() {
         <div className="row g-1 mb-3">
           <div className="col-6 col-md-4 d-flex"><KpiCard label="Global Peace Index (2024)" value="Rank 67" sub="IEP GPI 2024; among biggest improvers; improving under Mirziyoyev" accent={C.grn} delay={0.05} /></div>
           <div className="col-6 col-md-4 d-flex"><KpiCard label="Afghanistan border" value="144 km" sub="Terrorism & drug trafficking risk; Uzbekistan maintains strong border (Wikipedia / CIA WF)" accent={C.uz} delay={0.10} /></div>
-          <div className="col-6 col-md-4 d-flex"><KpiCard label="Homicide rate (est.)" value="~1.4 / 100K" sub="Low; declining; state security apparatus effective" accent={C.dim} delay={0.15} /></div>
+          <div className="col-6 col-md-4 d-flex"><KpiCard label="Homicide rate (est.)" value="~1.4 / 100K" sub="UNODC/WB modelled estimate; Uzbekistan does not publish official homicide statistics" accent={C.dim} delay={0.15} /></div>
           <div className="col-6 col-md-4 d-flex"><KpiCard label="Press Freedom (RSF 2024)" value="Rank 148/180" sub="Dropped 11 places in 2024; status worsened to 'very serious'" accent={C.uz} delay={0.20} /></div>
           <div className="col-6 col-md-4 d-flex"><KpiCard label="Karakalpakstan unrest (2022)" value="18 killed" sub="Autonomy protests; suppressed; internet cut; some reforms followed" accent={C.dim} delay={0.25} /></div>
           <div className="col-6 col-md-4 d-flex"><KpiCard label="Andijan massacre (2005)" value="Historical" sub="200–1,500 killed; Karimov-era; Uzbekistan expelled from US base" accent={C.dim} delay={0.30} /></div>
@@ -1140,7 +1140,7 @@ export default function Uzbekistan() {
           <div className="col-12 col-md-6">
             <Panel title="Security Context" icon={Icons.chart}>
               <BarRow label="Corruption (CPI, 100=clean)" value="32/100" pct={32} color={C.uz} />
-              <BarRow label="Press freedom (100=free, est.)" value="~28/100" pct={28} color={C.grn} />
+              <BarRow label="Press freedom (100=free, est. — RSF rank 148/180 converted to score; RSF does not publish a numeric score)" value="~28/100" pct={28} color={C.grn} />
               <BarRow label="Rule of law (WJP 2024, 100=best)" value="49/100" pct={49} color={C.blu} />
               <BarRow label="Political rights (FH 2024, 100=best)" value="12/100" pct={12} color={C.dim} />
               <p style={{ fontSize:11, color:C.sub, marginTop:10, lineHeight:1.6 }}>Uzbekistan's security environment has improved dramatically since 2016 but remains authoritarian. CPI at 32/100 (TI 2024) places Uzbekistan rank 121/180. Press freedom at rank 148/180 (RSF 2024) is poor but better than Tajikistan (162) or Turkmenistan (178). Freedom House total score of 12/100 (Not Free) reflects ongoing authoritarian governance. The Mirziyoyev reform story is real but incomplete — the judiciary remains unfree and civil society tightly managed.</p>
