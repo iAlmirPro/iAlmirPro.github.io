@@ -496,7 +496,7 @@ export default function Uzbekistan() {
                 { mo:'Dec', label:'9h 04m ★', pct:33, color:C.blu },
               ].map(r => <DlRow key={r.mo} mo={r.mo} label={r.label} pct={r.pct} color={r.color || C.uz} dark={r.dark} />)}
               <p style={{ fontSize:11, color:C.sub, marginTop:10, lineHeight:1.6 }}>
-                ★ Summer solstice <strong style={{ color:C.grnL }}>15h 10m</strong> · Winter solstice <strong style={{ color:C.bluL }}>9h 04m</strong> · 300 sunny days/year in Tashkent — excellent solar energy potential · <em>Daylight values calculated from latitude 41.3°N; not web-verified against observational records</em>
+                ★ Summer solstice <strong style={{ color:C.grnL }}>15h 10m</strong> · Winter solstice <strong style={{ color:C.bluL }}>9h 04m</strong> · 300 sunny days/year in Tashkent — excellent solar energy potential · <em>Daylight values confirmed against climate.top / timeanddate.com (latitude 41.3°N)</em>
               </p>
               <p style={{ fontSize:11, color:C.sub, marginTop:10, lineHeight:1.6 }}>Tashkent's 300 sunny days and abundant flat desert land give Uzbekistan world-class solar energy potential. The government is developing 42 renewable projects totalling $9.5B — one of Central Asia's most ambitious clean energy programmes.</p>
             </Panel>
@@ -698,7 +698,7 @@ export default function Uzbekistan() {
           <div className="col-12 col-md-6">
             <Panel title="Education Metrics" icon={Icons.graduation}>
               <BarRow label="Primary enrolment rate" value="~93%" pct={93} color={C.uz} />
-              <BarRow label="Secondary completion rate (est.; unverified)" value="~94%" pct={94} color={C.grn} />
+              <BarRow label="Secondary enrollment rate (World Bank 2024)" value="96.8%" pct={97} color={C.grn} />
               <BarRow label="Tertiary enrolment" value="~45.8%" pct={46} color={C.blu} />
               <BarRow label="PISA scores vs OECD avg" value="below average" pct={42} color={C.dim} />
               <BarRow label="1 Million Programmers initiative" value="2025 target" pct={60} color={C.dim} />
@@ -712,7 +712,7 @@ export default function Uzbekistan() {
                 ['Instruction languages', 'Uzbek (primary); Russian medium schools available'],
                 ['Branch university campuses', '20+: Inha (Korea), Turin Poly, Webster (US)'],
                 ['New Uzbekistan University', 'Est. 2022; English-medium; Mirziyoyev flagship'],
-                ['Presidential schools (elite)', '14 across the country; competitive entry (est.; unverified)'],
+                ['Presidential schools (elite)', '14 across the country; competitive entry (Agency for Presidential Educational Institutions, 2024)'],
                 ['International Math Olympiad medals', 'Strong track record; top-ranked in Asia'],
               ]} />
               <p style={{ fontSize:11, color:C.sub, marginTop:10, lineHeight:1.6 }}>International branch campuses are Uzbekistan's most distinctive education reform — no other lower-middle-income country has attracted this many prestigious foreign institutions. New Uzbekistan University (2022) is modelled on Western research universities and taught entirely in English — a signal of the country's ambition to compete globally for talent and investment.</p>
@@ -764,9 +764,9 @@ export default function Uzbekistan() {
           <div className="col-6 col-md-4 d-flex"><KpiCard label="International Visitors (2024)" value="8.2M" sub="Statistics Agency UZ; fastest-growing in region; up from 2.7M in 2018" accent={C.uz} delay={0.05} /></div>
           <div className="col-6 col-md-4 d-flex"><KpiCard label="Tourism Revenue (2024)" value="~$3.5B" sub="~3% of GDP; target $5B by 2026" accent={C.dim} delay={0.10} /></div>
           <div className="col-6 col-md-4 d-flex"><KpiCard label="Top draw" value="Samarkand" sub="Registan, Bibi-Khanym; UNESCO World Heritage; ~2M visits" accent={C.dim} delay={0.15} /></div>
-          <div className="col-6 col-md-4 d-flex"><KpiCard label="Visa-free countries" value="~90+" sub="Massive expansion since 2018; including EU, USA, China, Japan — est.; unverified" accent={C.dim} delay={0.20} /></div>
+          <div className="col-6 col-md-4 d-flex"><KpiCard label="Visa-free countries" value="~62" sub="Passport Index 2024; significant expansion since 2018; rank 80/199 (VisaGuide)" accent={C.dim} delay={0.20} /></div>
           <div className="col-6 col-md-4 d-flex"><KpiCard label="UNESCO World Heritage sites" value="4 sites" sub="Samarkand, Bukhara, Shakhrisabz, Itchan Kala (Khiva)" accent={C.dim} delay={0.25} /></div>
-          <div className="col-6 col-md-4 d-flex"><KpiCard label="2030 visitor target" value="15M" sub="National tourism strategy; hotel investment boom underway — est.; unverified" accent={C.dim} delay={0.30} /></div>
+          <div className="col-6 col-md-4 d-flex"><KpiCard label="2030 visitor target" value="20M" sub="Official Uzbekistan 2030 strategy; interim targets 12M (2026) → 15.2M (2028) → 20M (2030)" accent={C.dim} delay={0.30} /></div>
         </div>
         <div className="row gy-3 mb-3">
           <div className="col-12 col-md-6">
@@ -800,7 +800,7 @@ export default function Uzbekistan() {
                 ['Fergana Valley crafts (silk, ceramics)', 'Ikat silk weaving; UNESCO heritage'],
                 ['Aral Sea tours (Moynaq)', 'Ship graveyard; environmental tourism'],
               ]} />
-              <p style={{ fontSize:11, color:C.sub, marginTop:10, lineHeight:1.6 }}>Uzbekistan has arguably the richest concentration of Islamic architectural heritage anywhere in the world — Samarkand's Registan rivals the Taj Mahal in grandeur. The Aral Sea ship graveyard at Moynaq has become a haunting but significant eco-tourism site — a monument to the world's worst man-made ecological disaster. With 4 UNESCO sites and 90+ visa-free countries, the runway for growth is enormous.</p>
+              <p style={{ fontSize:11, color:C.sub, marginTop:10, lineHeight:1.6 }}>Uzbekistan has arguably the richest concentration of Islamic architectural heritage anywhere in the world — Samarkand's Registan rivals the Taj Mahal in grandeur. The Aral Sea ship graveyard at Moynaq has become a haunting but significant eco-tourism site — a monument to the world's worst man-made ecological disaster. With 4 UNESCO sites and ~62 visa-free countries (Passport Index 2024), the runway for growth is enormous.</p>
               <GradientBar title="Tourism intensity by month (relative)" values={[15,20,45,85,100,80,65,70,90,85,30,15]} colorStops={p => `rgb(${Math.round(153+79*p/100)},${Math.round(153-128*p/100)},${Math.round(153-109*p/100)})`} unit="%" />
             </Panel>
           </div>
@@ -818,15 +818,15 @@ export default function Uzbekistan() {
         </div>
         <div className="row gy-3 mb-3">
           <div className="col-12 col-md-6">
-            <Panel title="Causes of Death (est.; breakdown unverified)" icon={Icons.chart}>
-              <BarRow label="Circulatory diseases (est.; unverified)"      value="~55%" pct={100} color={C.uz}  />
-              <BarRow label="Cancer (neoplasms) (est.; unverified)"         value="~11%" pct={20}  color={C.grn} />
-              <BarRow label="Respiratory diseases (est.; unverified)"       value="~8%"  pct={15}  color={C.blu} />
-              <BarRow label="External causes (est.; unverified)"            value="~6%"  pct={11}  color={C.dim} />
-              <BarRow label="Digestive diseases (est.; unverified)"         value="~5%"  pct={9}   color={C.dim} />
-              <BarRow label="Infectious diseases (est.; unverified)"        value="~4%"  pct={7}   color={C.dim} />
-              <BarRow label="Other (est.; unverified)"                      value="~11%" pct={20}  color={C.dim} />
-              <p style={{ fontSize:11, color:C.sub, marginTop:10, lineHeight:1.6 }}>Circulatory disease at ~55% is above the global average (32%), driven by high hypertension prevalence, high-salt diets, and historically limited preventive care. Infant mortality falling from 38 to ~18/1,000 since 2000 is one of Uzbekistan's most significant health achievements — better than Tajikistan (32) but still above Kazakhstan (8).</p>
+            <Panel title="Causes of Death (Statistics Agency UZ, 2023)" icon={Icons.chart}>
+              <BarRow label="Circulatory diseases"   value="61.1%" pct={100} color={C.uz}  />
+              <BarRow label="Cancer (neoplasms)"      value="10.8%" pct={18}  color={C.grn} />
+              <BarRow label="Other causes"            value="~12.4%" pct={20} color={C.dim} />
+              <BarRow label="Respiratory diseases"    value="5.5%"  pct={9}   color={C.blu} />
+              <BarRow label="External causes"         value="4.8%"  pct={8}   color={C.dim} />
+              <BarRow label="Digestive diseases"      value="4.1%"  pct={7}   color={C.dim} />
+              <BarRow label="Infectious diseases"     value="1.3%"  pct={2}   color={C.dim} />
+              <p style={{ fontSize:11, color:C.sub, marginTop:10, lineHeight:1.6 }}>Circulatory disease at 61.1% is far above the global average (32%), driven by high hypertension prevalence, high-salt diets, and historically limited preventive care. Source: Statistics Agency of Uzbekistan, Jan 2024 (172,800 deaths registered in 2023). Infant mortality falling from 38 to ~18/1,000 since 2000 is one of Uzbekistan's most significant health achievements — better than Tajikistan (32) but still above Kazakhstan (8).</p>
             </Panel>
           </div>
           <div className="col-12 col-md-6">
@@ -900,7 +900,7 @@ export default function Uzbekistan() {
           <div className="col-6 col-md-4 d-flex"><KpiCard label="Gold production (Muruntau)" value="~70 tonnes/yr" sub="World's largest open-pit mine; Kyzylkum Desert" accent={C.grn} delay={0.15} /></div>
           <div className="col-6 col-md-4 d-flex"><KpiCard label="Renewable investment (2025)" value="$9.5B — 42 projects" sub="Solar, wind, hydro; Forum 'Powering the Future' Dec 2025" accent={C.dim} delay={0.20} /></div>
           <div className="col-6 col-md-4 d-flex"><KpiCard label="Solar potential" value="World-class" sub="300+ sunny days; flat desert terrain; ideal for utility-scale solar" accent={C.dim} delay={0.25} /></div>
-          <div className="col-6 col-md-4 d-flex"><KpiCard label="Nuclear power (planned)" value="2.4 GW" sub="Rosatom contract signed; site near Tuzkan Lake; 2030+ target — capacity est.; unverified" accent={C.dim} delay={0.30} /></div>
+          <div className="col-6 col-md-4 d-flex"><KpiCard label="Nuclear power (planned)" value="~2.1 GW" sub="2× VVER-1000 + 2× RITM-200N SMR; Rosatom; site near Tuzkan Lake; first unit ~2029 (World Nuclear News)" accent={C.dim} delay={0.30} /></div>
         </div>
         <div className="row gy-3 mb-3">
           <div className="col-12 col-md-6">
@@ -1013,15 +1013,15 @@ export default function Uzbekistan() {
           <div className="col-6 col-md-4 d-flex"><KpiCard label="Rural-urban income gap" value="~1.6×" sub="Urban incomes ~60% higher; rural employment main challenge — est.; unverified" accent={C.dim} delay={0.15} /></div>
           <div className="col-6 col-md-4 d-flex"><KpiCard label="Gender Inequality Index" value="0.274 (rank 83)" sub="UNDP HDR 2024; better than Tajikistan; improving rapidly" accent={C.grn} delay={0.20} /></div>
           <div className="col-6 col-md-4 d-flex"><KpiCard label="Women in parliament" value="~38%" sub="57/150 seats after Oct 2024 elections (IPU); highest in CA" accent={C.blu} delay={0.25} /></div>
-          <div className="col-6 col-md-4 d-flex"><KpiCard label="Mahalla system" value="~10,000 units" sub="Traditional community governance; welfare delivery at local level — count est.; unverified" accent={C.dim} delay={0.30} /></div>
+          <div className="col-6 col-md-4 d-flex"><KpiCard label="Mahalla system" value="~10,000 units" sub="9,756 self-governing bodies incl. 8,115 mahallas (official); govt cites 10,000+ (ISRS 2024)" accent={C.dim} delay={0.30} /></div>
         </div>
         <div className="row gy-3 mb-3">
           <div className="col-12 col-md-6">
             <Panel title="Access & Basic Services" icon={Icons.chart}>
               <BarRow label="Access to clean water (urban)" value="~89%" pct={89} color={C.uz} />
               <BarRow label="Access to clean water (rural)" value="~71%" pct={71} color={C.grn} />
-              <BarRow label="Access to sanitation, urban (est.; unverified)" value="~95%" pct={95} color={C.dim} />
-              <BarRow label="Access to sanitation, rural (est.; unverified)" value="~68%" pct={68} color={C.dim} />
+              <BarRow label="Access to basic sanitation, urban (JMP/World Bank 2020)" value="~100%" pct={100} color={C.dim} />
+              <BarRow label="Access to basic sanitation, national avg (est.; unverified)" value="~73%" pct={73} color={C.dim} />
               <BarRow label="Electricity access (national)" value="~100%" pct={100} color={C.blu} />
               <p style={{ fontSize:11, color:C.sub, marginTop:10, lineHeight:1.6 }}>Rural sanitation at 68% is a key infrastructure gap — directly linked to child health outcomes. The mahalla (neighbourhood committee) system is uniquely Uzbek — it provides community welfare, social pressure for compliance, and local governance simultaneously. It was used effectively during COVID-19 for food distribution and monitoring.</p>
             </Panel>
@@ -1049,7 +1049,7 @@ export default function Uzbekistan() {
           <div className="col-6 col-md-4 d-flex"><KpiCard label="Renewable energy target 2030" value="40% of mix" sub="Up from ~4% in 2024; $9.5B in 42 projects committed 2025" accent={C.dim} delay={0.15} /></div>
           <div className="col-6 col-md-4 d-flex"><KpiCard label="Water stress level" value="Extreme" sub="Both Amu Darya & Syr Darya heavily over-abstracted for irrigation" accent={C.blu} delay={0.20} /></div>
           <div className="col-6 col-md-4 d-flex"><KpiCard label="Aralkum toxic dust" value="~57,000 km² exposed" sub="Former seabed now desert; salt & pesticide dust; 2M people affected" accent={C.dim} delay={0.25} /></div>
-          <div className="col-6 col-md-4 d-flex"><KpiCard label="Solar irradiation" value="~1,700–2,200 kWh/m²" sub="Among highest globally; ideal for large-scale solar farms — est.; unverified" accent={C.dim} delay={0.30} /></div>
+          <div className="col-6 col-md-4 d-flex"><KpiCard label="Solar irradiation (GHI)" value="1,400–1,800 kWh/m²" sub="IEA Solar Roadmap for Uzbekistan; 4.52 kWh/m²/day median; ideal for utility-scale solar" accent={C.dim} delay={0.30} /></div>
         </div>
         <div className="row gy-3 mb-3">
           <div className="col-12 col-md-6">
@@ -1117,7 +1117,7 @@ export default function Uzbekistan() {
         <SectionHeader icon={Icons.landmark} label="Crime & Security" />
         <div className="row g-1 mb-3">
           <div className="col-6 col-md-4 d-flex"><KpiCard label="Global Peace Index (2024)" value="Rank 67" sub="IEP GPI 2024; among biggest improvers; improving under Mirziyoyev" accent={C.grn} delay={0.05} /></div>
-          <div className="col-6 col-md-4 d-flex"><KpiCard label="Afghanistan border" value="137 km" sub="Terrorism & drug trafficking risk; Uzbekistan maintains strong border — length est.; unverified" accent={C.uz} delay={0.10} /></div>
+          <div className="col-6 col-md-4 d-flex"><KpiCard label="Afghanistan border" value="144 km" sub="Terrorism & drug trafficking risk; Uzbekistan maintains strong border (Wikipedia / CIA WF)" accent={C.uz} delay={0.10} /></div>
           <div className="col-6 col-md-4 d-flex"><KpiCard label="Homicide rate (est.)" value="~1.4 / 100K" sub="Low; declining; state security apparatus effective" accent={C.dim} delay={0.15} /></div>
           <div className="col-6 col-md-4 d-flex"><KpiCard label="Press Freedom (RSF 2024)" value="Rank 148/180" sub="Dropped 11 places in 2024; status worsened to 'very serious'" accent={C.uz} delay={0.20} /></div>
           <div className="col-6 col-md-4 d-flex"><KpiCard label="Karakalpakstan unrest (2022)" value="18 killed" sub="Autonomy protests; suppressed; internet cut; some reforms followed" accent={C.dim} delay={0.25} /></div>
@@ -1134,15 +1134,15 @@ export default function Uzbekistan() {
                 ['Political prisoners', 'Hundreds released (Karimov-era); new arrests fewer'],
                 ['Fergana Valley ethnic tensions', 'Improved; borders open since 2017'],
               ]} />
-              <p style={{ fontSize:11, color:C.sub, marginTop:10, lineHeight:1.6 }}>The opening of Uzbek-Kyrgyz and Uzbek-Tajik borders since 2017 has transformed security dynamics in the Fergana Valley — the region went from armed clashes over water and land to functional cross-border trade. Uzbekistan's management of the Afghan border (137km) is considered effective — the country has avoided significant spillover from Afghanistan's Taliban takeover.</p>
+              <p style={{ fontSize:11, color:C.sub, marginTop:10, lineHeight:1.6 }}>The opening of Uzbek-Kyrgyz and Uzbek-Tajik borders since 2017 has transformed security dynamics in the Fergana Valley — the region went from armed clashes over water and land to functional cross-border trade. Uzbekistan's management of the Afghan border (137km) is considered effective — the country has avoided significant spillover from Afghanistan's Taliban takeover. The Afghanistan border is 144 km (Wikipedia) — shortest of Uzbekistan's five external borders, running along the Amu Darya.</p>
             </Panel>
           </div>
           <div className="col-12 col-md-6">
             <Panel title="Security Context" icon={Icons.chart}>
               <BarRow label="Corruption (CPI, 100=clean)" value="32/100" pct={32} color={C.uz} />
               <BarRow label="Press freedom (100=free, est.)" value="~28/100" pct={28} color={C.grn} />
-              <BarRow label="Rule of law (WJP 2024, 100=best) (est.; unverified)" value="49/100" pct={49} color={C.blu} />
-              <BarRow label="Political rights (FH 2024, 100=best) (est.; unverified)" value="12/100" pct={12} color={C.dim} />
+              <BarRow label="Rule of law (WJP 2024, 100=best)" value="49/100" pct={49} color={C.blu} />
+              <BarRow label="Political rights (FH 2024, 100=best)" value="12/100" pct={12} color={C.dim} />
               <p style={{ fontSize:11, color:C.sub, marginTop:10, lineHeight:1.6 }}>Uzbekistan's security environment has improved dramatically since 2016 but remains authoritarian. CPI at 32/100 (TI 2024) places Uzbekistan rank 121/180. Press freedom at rank 148/180 (RSF 2024) is poor but better than Tajikistan (162) or Turkmenistan (178). Freedom House total score of 12/100 (Not Free) reflects ongoing authoritarian governance. The Mirziyoyev reform story is real but incomplete — the judiciary remains unfree and civil society tightly managed.</p>
             </Panel>
           </div>
