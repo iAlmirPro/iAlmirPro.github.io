@@ -373,6 +373,8 @@ def convert(jsx_path):
         print("🗺️   Rendering map SVG...")
         map_svg = render_map_svg(jsx_path, cache)
         if map_svg:
+            # Trim SVG coordinate precision: 6 decimal places → 1 (no visible quality loss at dashboard scale)
+            map_svg = re.sub(r'(\d+\.\d)\d+', r'\1', map_svg)
             html = inject_map_svg(html, map_svg)
             html = re.sub(r'<div[^>]*>\s*Loading map[^<\n]*\s*</div>', '', html, count=1)
             print("✓  Map SVG embedded")
