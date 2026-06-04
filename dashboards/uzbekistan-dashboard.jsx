@@ -1,5 +1,34 @@
 const { useState, useEffect } = React;
 
+/* ── Political Era Timeline data ── */
+const ERAS = [
+  { id:'russian',     label:'Russian Empire',           short:'Tsarist Rule',           start:1900, end:1917, color:'#8B5E3C', colorL:'#b07d52',
+    desc:'Uzbekistan (Russian Turkestan) under Tsarist colonial rule. Tashkent the administrative centre. Jadidist reform movement emerges.',
+    events:['1905 — Jadidist reform movement grows','1916 — Anti-conscription uprising suppressed'] },
+  { id:'civil',       label:'Revolutionary Period',     short:'Revolution & Resistance', start:1917, end:1924, color:'#C8102E', colorL:'#f03050',
+    desc:'Bolshevik takeover. Basmachi resistance movement fights Soviet rule across Central Asia. Short-lived Kokand Autonomy crushed.',
+    events:['1917 — Kokand Autonomy declared','1918 — Kokand Autonomy crushed by Red Army','1920 — Red Army secures Uzbekistan','1921 — Basmachi Rebellion peaks'] },
+  { id:'early_soviet',label:'Early Soviet',             short:'Uzbek SSR Founded',       start:1924, end:1953, color:'#C8102E', colorL:'#f03050',
+    desc:'Uzbek SSR established 1924. Forced collectivisation, cotton monoculture imposed. Stalinist purges devastate local leadership. WWII: 1.4M Uzbeks serve in Red Army.',
+    events:['1924 — Uzbek SSR created','1930s — Forced collectivisation & cotton monoculture','1937–38 — Stalinist purges; local leadership decimated','1941–45 — WWII: Tashkent becomes evacuation hub'] },
+  { id:'mature_soviet',label:'Soviet Maturity',         short:'Khrushchev–Brezhnev Era', start:1953, end:1985, color:'#E8192C', colorL:'#ff3347',
+    desc:'Relative stability. Cotton economy dominates — Aral Sea begins shrinking. Corruption institutionalised (Cotton Affair). Tashkent metro opens 1977.',
+    events:['1966 — Tashkent earthquake; rebuilt with Soviet aid','1977 — First metro in Central Asia opens','1970s–80s — Cotton Affair corruption scandal exposed'] },
+  { id:'glasnost',    label:'Glasnost & Perestroika',   short:'Late Soviet',             start:1985, end:1991, color:'#F0B830', colorL:'#ffd060',
+    desc:'Gorbachev reforms allow limited openness. Uzbek national consciousness rises. 1989 Fergana Valley ethnic violence. Karimov becomes First Secretary.',
+    events:['1989 — Fergana Valley ethnic violence','1989 — Islam Karimov becomes First Secretary','1990 — Sovereignty declared'] },
+  { id:'independence',label:'Independence',             short:'Post-Soviet Transition',  start:1991, end:2000, color:'#1EB4E5', colorL:'#55ccf5',
+    desc:'Independence declared 31 Aug 1991. Karimov wins presidency. Communist party renamed — same leadership. Opposition banned. Nominal multi-party democracy, authoritarian reality.',
+    events:['1991 — Independence declared (31 Aug)','1992 — New Constitution adopted','1992 — UN membership','1999 — Tashkent bombings; crackdown intensifies'] },
+  { id:'karimov',     label:'Karimov Authoritarianism', short:'Karimov Era',             start:2000, end:2016, color:'#555', colorL:'#777',
+    desc:'Tightly controlled authoritarian state. Press fully censored. 2005 Andijan massacre: 187–1,500 killed (est. varies). Regional isolation. Gas & cotton drive economy.',
+    events:['2005 — Andijan massacre (200–1,500 killed, est. varies)','2008 — US expelled from Karshi-Khanabad base','2012 — EU lifts sanctions'] },
+  { id:'mirziyoyev',  label:'Reform Era',               short:'Mirziyoyev Reforms',      start:2016, end:2025, color:'#1EB4E5', colorL:'#55ccf5',
+    desc:'Karimov dies 2016. Shavkat Mirziyoyev takes power. Significant economic opening: currency liberalised, foreign investment invited, regional diplomacy restored, political prisoners released.',
+    events:['2016 — Karimov dies; Mirziyoyev elected','2017 — Currency liberalised (free float)','2021 — Forced cotton labour abolished (ILO confirmed)','2022 — Karakalpakstan unrest suppressed','2023 — New constitution; Mirziyoyev re-elected 87%'] },
+];
+const ERA_TOTAL = 2025 - 1900;
+
 // Uzbekistan flag: blue (#1EB4E5) top, white middle, green (#3DAA5C) bottom + red stripes, white crescent & 12 stars
 const C = {
   uz:   '#1EB4E5', uzL: '#55ccf5',   // primary — Uzbek blue
@@ -754,6 +783,109 @@ export default function Uzbekistan() {
                 </div>
               ))}
               <p style={{ fontSize:11, color:C.sub, marginTop:10, lineHeight:1.6 }}>The contrast between Karimov (1991–2016) and Mirziyoyev is one of the most dramatic policy reversals in post-Soviet history. Karimov presided over one of the world's most repressive regimes (boiling dissidents alive was reported); Mirziyoyev has opened the economy, released political prisoners, and welcomed foreign investment — though the state remains authoritarian.</p>
+            </Panel>
+          </div>
+        </div>
+        <div className="row gy-3 mb-3">
+          <div className="col-12">
+            <Panel title="125 Years of Governance — Interactive Era Timeline (1900–2025)" icon={Icons.chart}>
+
+              {/* Era bar — data-era index used by vanilla JS below */}
+              <div style={{ display:'flex', height:40, borderRadius:4, overflow:'hidden', gap:1 }}>
+                {ERAS.map((era, i) => (
+                  <div key={era.id}
+                    data-era={i}
+                    className="era-seg"
+                    title={`${era.label} (${era.start}–${era.end})`}
+                    style={{ width:`${((era.end - era.start) / ERA_TOTAL) * 100}%`, background:era.color, cursor:'pointer', transition:'background 0.2s', flexShrink:0 }}
+                  />
+                ))}
+              </div>
+
+              {/* Year labels */}
+              <div style={{ position:'relative', height:28, marginTop:5 }}>
+                {ERAS.map(era => {
+                  const left = ((era.start - 1900) / ERA_TOTAL) * 100;
+                  return (
+                    <div key={era.id} style={{ position:'absolute', left:`${left}%`, top:0, transform:'translateX(-50%)' }}>
+                      <div style={{ fontSize:9, color:C.sub, whiteSpace:'nowrap', transform:'rotate(-90deg)', transformOrigin:'center 50%', marginTop:10 }}>{era.start}</div>
+                    </div>
+                  );
+                })}
+                <div style={{ position:'absolute', right:0, top:0 }}>
+                  <div style={{ fontSize:9, color:C.sub, whiteSpace:'nowrap', transform:'rotate(-90deg)', transformOrigin:'center 50%', marginTop:10 }}>2025</div>
+                </div>
+              </div>
+
+              {/* Placeholder shown when nothing selected */}
+              <div id="era-placeholder" style={{ background:C.bg, border:`1px solid ${C.border}`, padding:'8px 16px', borderRadius:2, marginTop:12, fontSize:11, color:C.sub, textAlign:'center' }}>
+                Click any era above to see details and key events.
+              </div>
+
+              {/* All era detail panels — hidden by default, shown by JS */}
+              {ERAS.map((era, i) => (
+                <div key={era.id} id={`era-panel-${i}`}
+                  style={{ display:'none', background:C.bg, border:`1px solid ${C.border}`, borderLeft:`3px solid ${era.color}`, padding:'16px 18px', borderRadius:2, marginTop:12 }}>
+                  <div style={{ display:'flex', justifyContent:'space-between', alignItems:'baseline', marginBottom:8, flexWrap:'wrap', gap:6 }}>
+                    <div>
+                      <div style={{ fontSize:10, letterSpacing:'0.15em', textTransform:'uppercase', color:era.colorL, marginBottom:3 }}>{era.start} – {era.end}</div>
+                      <div style={{ fontFamily:'Fraunces,serif', fontWeight:700, fontSize:17, color:C.txt }}>{era.label}</div>
+                    </div>
+                    <div style={{ fontFamily:'Fraunces,serif', fontWeight:900, fontSize:24, color:era.color, opacity:0.4 }}>{era.end - era.start}y</div>
+                  </div>
+                  <p style={{ fontSize:12, color:C.sub, lineHeight:1.7, marginBottom:12 }}>{era.desc}</p>
+                  <div style={{ display:'flex', flexDirection:'column', gap:5 }}>
+                    {era.events.map((ev, j) => (
+                      <div key={j} style={{ display:'flex', alignItems:'flex-start', gap:8 }}>
+                        <div style={{ width:4, height:4, borderRadius:'50%', background:era.colorL, marginTop:5, flexShrink:0 }} />
+                        <div style={{ fontSize:11.5, color:C.txt, lineHeight:1.5 }}>{ev}</div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              ))}
+
+              {/* Legend */}
+              <div style={{ display:'flex', flexWrap:'wrap', gap:10, marginTop:14 }}>
+                {ERAS.map((era, i) => (
+                  <div key={era.id} data-era={i} className="era-leg"
+                    style={{ display:'flex', alignItems:'center', gap:5, cursor:'pointer' }}>
+                    <div style={{ width:8, height:8, borderRadius:2, background:era.color, flexShrink:0 }} />
+                    <span className={`era-leg-lbl era-leg-lbl-${i}`} style={{ fontSize:10, color:C.sub, letterSpacing:'0.05em' }}>{era.short}</span>
+                  </div>
+                ))}
+              </div>
+
+              {/* Vanilla JS — survives renderToStaticMarkup */}
+              <script dangerouslySetInnerHTML={{ __html: `
+(function(){
+  var COLORS = ${JSON.stringify(ERAS.map(e => ({ color: e.color, colorL: e.colorL })))};
+  var active = null;
+  function select(i) {
+    var segs = document.querySelectorAll('.era-seg');
+    var legs = document.querySelectorAll('.era-leg-lbl');
+    // toggle
+    if (active === i) { i = null; }
+    // hide all panels + placeholder
+    document.getElementById('era-placeholder').style.display = (i === null) ? 'block' : 'none';
+    for (var k = 0; k < ${ERAS.length}; k++) {
+      var p = document.getElementById('era-panel-' + k);
+      if (p) p.style.display = (k === i) ? 'block' : 'none';
+      if (segs[k]) segs[k].style.background = (k === i) ? COLORS[k].colorL : COLORS[k].color;
+      if (legs[k]) legs[k].style.color = (k === i) ? COLORS[k].colorL : '#999';
+    }
+    active = i;
+  }
+  document.querySelectorAll('.era-seg').forEach(function(el) {
+    el.addEventListener('click', function(){ select(parseInt(el.getAttribute('data-era'))); });
+  });
+  document.querySelectorAll('.era-leg').forEach(function(el) {
+    el.addEventListener('click', function(){ select(parseInt(el.getAttribute('data-era'))); });
+  });
+})();
+              `}} />
+
+              <p style={{ fontSize:11, color:C.sub, marginTop:14, lineHeight:1.6 }}>The contrast between Karimov (1991–2016) and Mirziyoyev is one of the most dramatic policy reversals in post-Soviet history. Karimov presided over one of the world's most repressive regimes; Mirziyoyev has opened the economy, released political prisoners, and welcomed foreign investment — though the state remains authoritarian.</p>
             </Panel>
           </div>
         </div>

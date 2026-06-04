@@ -551,6 +551,158 @@ const AgeBar = ({ title, male, female, medianM, medianF }) => {
 
 ---
 
+### `<EraTimeline>` — Interactive Political History Bar
+
+A proportional horizontal bar divided into colour-coded political eras. Clicking any era reveals a detail panel with description and bullet events. Clicking again collapses it. A legend below mirrors the bar and is also clickable.
+
+**Why vanilla JS, not React state:** `jsx_to_html.py` uses `renderToStaticMarkup` which strips all `onClick` handlers and React state. The pattern that works in compiled static HTML is:
+- All era detail panels pre-rendered as hidden `div`s (`display:none`)
+- A `<script dangerouslySetInnerHTML>` block at the end activates click handlers
+- Bar segments and legend items carry `data-era={i}` and CSS class names for the script to target
+
+**ERAS data structure** — define once at module level, after the `C` palette:
+
+```js
+const ERAS = [
+  {
+    id: 'era_id',           // unique string key
+    label: 'Full Era Name', // shown in detail panel heading
+    short: 'Short Name',    // shown in legend
+    start: 1900,            // start year (integer)
+    end:   1924,            // end year (integer)
+    color:  '#8B5E3C',      // base colour — bar segment, detail panel left border
+    colorL: '#b07d52',      // light colour — active bar, year label, bullet dots
+    desc: 'One paragraph narrative description of the era.',
+    events: [               // bullet list — format "YEAR — description"
+      '1905 — Key event',
+      '1916 — Another event',
+    ],
+  },
+  // … repeat for all eras
+];
+const ERA_TOTAL = [last_year] - [first_year]; // e.g. 2025 - 1900 = 125
+```
+
+**Full JSX structure** (place in its own `row gy-3 mb-3` below the other §7 panels):
+
+```jsx
+<div className="row gy-3 mb-3">
+  <div className="col-12">
+    <Panel title="[N] Years of Governance — Interactive Era Timeline ([start]–[end])" icon={Icons.chart}>
+
+      {/* Proportional era bar */}
+      <div style={{ display:'flex', height:40, borderRadius:4, overflow:'hidden', gap:1 }}>
+        {ERAS.map((era, i) => (
+          <div key={era.id} data-era={i} className="era-seg"
+            title={`${era.label} (${era.start}–${era.end})`}
+            style={{ width:`${((era.end - era.start) / ERA_TOTAL) * 100}%`,
+              background:era.color, cursor:'pointer', transition:'background 0.2s', flexShrink:0 }}
+          />
+        ))}
+      </div>
+
+      {/* Year labels — rotated 90°, one per era boundary + final year */}
+      <div style={{ position:'relative', height:28, marginTop:5 }}>
+        {ERAS.map(era => {
+          const left = ((era.start - [first_year]) / ERA_TOTAL) * 100;
+          return (
+            <div key={era.id} style={{ position:'absolute', left:`${left}%`, top:0, transform:'translateX(-50%)' }}>
+              <div style={{ fontSize:9, color:C.sub, whiteSpace:'nowrap', transform:'rotate(-90deg)', transformOrigin:'center 50%', marginTop:10 }}>{era.start}</div>
+            </div>
+          );
+        })}
+        <div style={{ position:'absolute', right:0, top:0 }}>
+          <div style={{ fontSize:9, color:C.sub, whiteSpace:'nowrap', transform:'rotate(-90deg)', transformOrigin:'center 50%', marginTop:10 }}>[last_year]</div>
+        </div>
+      </div>
+
+      {/* Placeholder — visible when no era selected */}
+      <div id="era-placeholder" style={{ background:C.bg, border:`1px solid ${C.border}`,
+        padding:'8px 16px', borderRadius:2, marginTop:12, fontSize:11, color:C.sub, textAlign:'center' }}>
+        Click any era above to see details and key events.
+      </div>
+
+      {/* All detail panels — pre-rendered hidden; JS shows active one */}
+      {ERAS.map((era, i) => (
+        <div key={era.id} id={`era-panel-${i}`}
+          style={{ display:'none', background:C.bg, border:`1px solid ${C.border}`,
+            borderLeft:`3px solid ${era.color}`, padding:'16px 18px', borderRadius:2, marginTop:12 }}>
+          <div style={{ display:'flex', justifyContent:'space-between', alignItems:'baseline', marginBottom:8, flexWrap:'wrap', gap:6 }}>
+            <div>
+              <div style={{ fontSize:10, letterSpacing:'0.15em', textTransform:'uppercase', color:era.colorL, marginBottom:3 }}>{era.start} – {era.end}</div>
+              <div style={{ fontFamily:'Fraunces,serif', fontWeight:700, fontSize:17, color:C.txt }}>{era.label}</div>
+            </div>
+            <div style={{ fontFamily:'Fraunces,serif', fontWeight:900, fontSize:24, color:era.color, opacity:0.4 }}>{era.end - era.start}y</div>
+          </div>
+          <p style={{ fontSize:12, color:C.sub, lineHeight:1.7, marginBottom:12 }}>{era.desc}</p>
+          <div style={{ display:'flex', flexDirection:'column', gap:5 }}>
+            {era.events.map((ev, j) => (
+              <div key={j} style={{ display:'flex', alignItems:'flex-start', gap:8 }}>
+                <div style={{ width:4, height:4, borderRadius:'50%', background:era.colorL, marginTop:5, flexShrink:0 }} />
+                <div style={{ fontSize:11.5, color:C.txt, lineHeight:1.5 }}>{ev}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      ))}
+
+      {/* Legend */}
+      <div style={{ display:'flex', flexWrap:'wrap', gap:10, marginTop:14 }}>
+        {ERAS.map((era, i) => (
+          <div key={era.id} data-era={i} className="era-leg"
+            style={{ display:'flex', alignItems:'center', gap:5, cursor:'pointer' }}>
+            <div style={{ width:8, height:8, borderRadius:2, background:era.color, flexShrink:0 }} />
+            <span className={`era-leg-lbl era-leg-lbl-${i}`} style={{ fontSize:10, color:C.sub, letterSpacing:'0.05em' }}>{era.short}</span>
+          </div>
+        ))}
+      </div>
+
+      {/* Vanilla JS click handler — must be last child of Panel */}
+      <script dangerouslySetInnerHTML={{ __html: `
+(function(){
+  var COLORS = ${JSON.stringify(ERAS.map(e => ({ color: e.color, colorL: e.colorL })))};
+  var active = null;
+  function select(i) {
+    var segs = document.querySelectorAll('.era-seg');
+    var legs = document.querySelectorAll('.era-leg-lbl');
+    if (active === i) { i = null; }
+    document.getElementById('era-placeholder').style.display = (i === null) ? 'block' : 'none';
+    for (var k = 0; k < ${ERAS.length}; k++) {
+      var p = document.getElementById('era-panel-' + k);
+      if (p) p.style.display = (k === i) ? 'block' : 'none';
+      if (segs[k]) segs[k].style.background = (k === i) ? COLORS[k].colorL : COLORS[k].color;
+      if (legs[k]) legs[k].style.color = (k === i) ? COLORS[k].colorL : '#999';
+    }
+    active = i;
+  }
+  document.querySelectorAll('.era-seg').forEach(function(el) {
+    el.addEventListener('click', function(){ select(parseInt(el.getAttribute('data-era'))); });
+  });
+  document.querySelectorAll('.era-leg').forEach(function(el) {
+    el.addEventListener('click', function(){ select(parseInt(el.getAttribute('data-era'))); });
+  });
+})();
+      `}} />
+
+      <p style={{ fontSize:11, color:C.sub, marginTop:14, lineHeight:1.6 }}>Interpretive note here.</p>
+    </Panel>
+  </div>
+</div>
+```
+
+**Key rules:**
+- **No React state** — never use `useState` for the active era. The compiled HTML is static; React state is stripped. Always use the vanilla JS `<script>` pattern above.
+- **`dangerouslySetInnerHTML`** is required on `<script>` — JSX does not render script content otherwise.
+- **`ERA_TOTAL`** must equal `last_year - first_year` — it drives the proportional widths.
+- **All panels hidden by default** (`display:'none'`) — JS reveals the active one.
+- **`data-era={i}`** on both `.era-seg` and `.era-leg` divs — the script uses these to map clicks to panel IDs.
+- **Place in its own row** (`row gy-3 mb-3`) — never nest inside the row containing other §7 panels, or JSX tag balance breaks.
+- **Do not delete the Political Timeline panel** — the EraTimeline is an addition below it, not a replacement.
+
+**Placement:** Own `row gy-3 mb-3` at the **bottom of §7**, after the election results + political timeline row.
+
+---
+
 ## Standard Section Structure
 
 Each section follows this pattern:
@@ -592,7 +744,7 @@ Each section follows this pattern:
 | 4 | Economy & Finance | chart | 6 | GDP by sector (donut + export bars) · Key economic indicators (table) · Real estate cards | — |
 | 5 | Employment & Wages | briefcase | 6 | Wages by sector (bars) · Employment by sector (donut + table) | — |
 | 6 | Education & Human Development | graduation | 6 | Education metrics (bars) · Key education facts (table) | — |
-| 7 | Political Landscape | landmark | 6 | Election results (bars) · Political timeline (inline) | — |
+| 7 | Political Landscape | landmark | 6 | Election results (bars) · Political timeline (inline) · Era timeline (interactive bar) | **EraTimeline** in its own row below the other panels |
 | 8 | Tourism | briefcase | 6 | Visitor origins (flag+%+desc rows) · Tourism highlights (table) | **GradientBar: tourism intensity** at bottom of Tourism Highlights panel |
 | 9 | Vital Statistics | people | 6 | Causes of death (bars — NOT donut) · Marriage & vital trends (table) | — |
 
