@@ -722,6 +722,37 @@ Append `— est.; unverified` directly in the field where the value appears:
 
 The annotation must appear **where the data is displayed**, not in a comment or elsewhere.
 
+### Every `est.` annotation must explain WHY
+
+A bare `(est.)` label is not sufficient. Every estimate or unverified value must include a brief reason explaining **why** it is an estimate — so any reader (or future editor) understands the limitation without having to investigate.
+
+**Required:** reason in the same field as the annotation.
+
+```jsx
+// ❌ WRONG — bare, unexplained
+<BarRow label="Hypertension prevalence (est.; unverified)" value="~32%" pct={100} />
+['Migrant workers abroad (est.)', '~2,000,000'],
+<Panel title="Wages by Sector (monthly UZS, est. 2024)" ...>
+
+// ✅ CORRECT — reason included
+<BarRow label="Hypertension prevalence (est.; unverified — most recent WHO STEPS survey is 2019; 2024 data not publicly available)" value="~32%" pct={100} />
+['Migrant workers abroad (est. — no official registry; ILO modelled)', '~2,000,000'],
+<Panel title="Wages by Sector (monthly UZS, est. 2024 — sectoral breakdown modelled from National Stats avg + ILO ratios)" ...>
+```
+
+**Common valid reasons by type:**
+
+| Reason type | Example wording |
+|---|---|
+| No official registry | `no official registry; ILO modelled` |
+| Modelled/estimated by international body | `WHO/UNICEF joint modelled estimate, not direct count` |
+| Most recent survey is outdated | `most recent WHO STEPS survey is 2019; 2024 data not publicly available` |
+| Data not published by government | `Uzbekistan does not publish official homicide statistics; UNODC/WB modelled` |
+| Derived/converted metric | `RSF rank 148/180 converted to score; RSF does not publish a numeric score` |
+| No passport-level breakdown | `origin % derived from border crossings; no passport-level breakdown published` |
+| City boundary variation | `no inter-census registry; city boundaries vary by source` |
+| Sectoral split modelled | `fuel-type split modelled, not metered per source` |
+
 ### Verification process — required sequence
 
 1. **Read the full section** before writing anything.
