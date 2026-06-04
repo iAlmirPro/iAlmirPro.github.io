@@ -769,6 +769,68 @@ These fields are systematically wrong when generated from training data alone:
 
 ---
 
+## Inconsistency Check Protocol
+
+### When to run
+Run an inconsistency check **after all sections are written** and **before any commit**. Also run when the user asks "check for inconsistencies."
+
+### What to check
+
+Every value that appears in more than one place must be **identical** (or clearly labeled with different years/sources if they genuinely differ). The most common cross-section conflicts:
+
+| At-a-Glance tile | Must match |
+|---|---|
+| GDP | §4 Economy KpiCard (same year) |
+| GDP per Capita | §4 Economy KpiCard (same year) |
+| GDP Growth | §4 Economy KpiCard (same year) |
+| Population | §3 KpiCard · §3 Donut label · §3 population BarRows · any `<p>` text mentioning the figure |
+| Life Expectancy (total / men / women) | §3 KpiCard · §13 Health KpiCard |
+| Inflation | §4 KpiCard |
+| Unemployment | §5 KpiCard |
+| Literacy | §6 KpiCard |
+| HDI | §6 KpiCard |
+| Peace Index | §17 KpiCard · §17 Tbl |
+| Area | §1 Geography KpiCard |
+| Religion % | §3 Tbl |
+
+Also check these cross-section pairs independently of At-a-Glance:
+
+| Value | Appears in |
+|---|---|
+| Infant mortality | §9 KpiCard · §13 KpiCard |
+| Foreign reserves | §4 Tbl · §10 KpiCard · §10 Tbl |
+| Foreign investment | §4 Tbl · §10 KpiCard · §16 KpiCard |
+| Remittances | §4 Tbl · §5 KpiCard sub · §5 Donut Tbl · §5 paragraph |
+| Gini coefficient | §4 Tbl · §14 KpiCard · §14 Tbl |
+| Women in parliament | §14 KpiCard · §14 Tbl |
+| Poverty rate | §4 Tbl · §14 KpiCard |
+| Gold production | §4 Tbl · §11 KpiCard · §11 Tbl |
+| Corruption CPI | §16 KpiCard · §16 Tbl · §17 BarRow |
+| PM2.5 | §13 Tbl · §13 BarRow · §15 BarRow |
+
+### How to run the check
+
+1. `grep` for each value that appears multiple times — compare every instance
+2. Any discrepancy: **search and confirm the correct value first**, then fix all instances in one edit pass
+3. If two figures differ because they use different years, both must carry a year label in their `sub` or Tbl cell — a bare number with no year is never acceptable when multiple years exist in the same dashboard
+
+### Known traps — do not confuse these
+
+- **Area**: multiple sources cite different figures for the same country. Use FAO / CIA World Factbook / World Bank. Do **not** use Wikipedia or Worldometer for area.
+- **Population**: the national statistics agency mid-year figure is the most current. Worldometer is often 3–6 months behind. Always use the national agency figure and label it with the exact date (e.g. `Jul 2025: 37,859,698`).
+- **Life expectancy**: national statistics agencies often report ~2 years higher than World Bank (different methodology). Use the national agency figure for the `sub` note and cite it. Make the at-a-glance note and the section KpiCard sub consistent — use the **same source** for both.
+- **GDP**: at-a-glance tiles typically show the most recent confirmed year (e.g. World Bank 2024 final). §4 may show a 2025 estimate. These may legitimately differ — both must carry their year label clearly.
+
+### Fix procedure
+
+When an inconsistency is found:
+1. Search and confirm the correct value via web search
+2. Report what was found (both the wrong value and the confirmed correct value, with source)
+3. Fix **all instances** in one edit pass — never fix only one occurrence and leave others wrong
+4. Cite the source in every `sub` / Tbl cell that carries the fixed value
+
+---
+
 ## Approval & Versioning Protocol
 
 - **Never make changes without explicit approval** — always propose first, act only after confirmation
