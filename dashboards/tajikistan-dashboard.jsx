@@ -589,8 +589,8 @@ export default function Tajikistan() {
         {/* 4. ECONOMY */}
         <SectionHeader icon={Icons.chart} label="Economy & Finance" />
         <div className="row g-1 mb-3">
-          <div className="col-6 col-md-4 d-flex"><KpiCard label="GDP Nominal (2025 est.)" value="~$18.8B" sub="IMF; fastest-growing in Central Asia at 8.4% in 2024" accent={C.tj} delay={0.05} /></div>
-          <div className="col-6 col-md-4 d-flex"><KpiCard label="GDP per Capita" value="~$1,780" sub="IMF 2025; lowest in Central Asia; lower-middle income" accent={C.dim} delay={0.10} /></div>
+          <div className="col-6 col-md-4 d-flex"><KpiCard label="GDP Nominal (2025 est.)" value="~$15.3B" sub="WB 2024 actual $14.2B × ~8% growth; fastest-growing in Central Asia" accent={C.tj} delay={0.05} /></div>
+          <div className="col-6 col-md-4 d-flex"><KpiCard label="GDP per Capita" value="~$1,415" sub="2025 est. ($15.3B / 10.8M); lowest in Central Asia; lower-middle income" accent={C.dim} delay={0.10} /></div>
           <div className="col-6 col-md-4 d-flex"><KpiCard label="GDP Growth (2024)" value="8.4%" sub="World Bank confirmed; services & industry led" accent={C.gld} delay={0.15} /></div>
           <div className="col-6 col-md-4 d-flex"><KpiCard label="GDP PPP (2025)" value="~$62.6B" sub="PPP per capita ~$6,048 — masks remittance dependency" accent={C.dim} delay={0.20} /></div>
           <div className="col-6 col-md-4 d-flex"><KpiCard label="Inflation CPI (2025)" value="~3.1%" sub="IMF estimate; among lowest in the region; subsidised prices" accent={C.dim} delay={0.25} /></div>
@@ -600,8 +600,8 @@ export default function Tajikistan() {
           <div className="col-12 col-md-6">
             <Panel title="GDP by Sector & Major Exports" icon={Icons.chart}>
               <Donut
-                label="$18.8B"
-                sublabel="GDP 2025"
+                label="~$15.3B"
+                sublabel="GDP 2025 est."
                 segments={[
                   { label:'Services',              value:'~54%', pct:54, color:C.tj  },
                   { label:'Industry (aluminium, mining)', value:'~23%', pct:23, color:C.gld },

@@ -619,8 +619,8 @@ export default function Kazakhstan() {
           <div className="col-6 col-md-4 d-flex"><KpiCard label="GDP per Capita (2024)" value="$14,155" sub="Upper-middle income; highest in Central Asia (World Bank 2024)" accent={C.dim} delay={0.10} /></div>
           <div className="col-6 col-md-4 d-flex"><KpiCard label="GDP Growth (2024)" value="4.8%" sub="IMF confirmed; accelerating to 6.5% 2025" accent={C.yel} delay={0.15} /></div>
           <div className="col-6 col-md-4 d-flex"><KpiCard label="GDP PPP per Capita (2024)" value="$35,905" sub="Trading Economics; approaching upper-middle-income threshold" accent={C.dim} delay={0.20} /></div>
-          <div className="col-6 col-md-4 d-flex"><KpiCard label="Inflation CPI (2025)" value="~10.7%" sub="IMF forecast; above NBK target band; easing from 2022 peak" accent={C.blu} delay={0.25} /></div>
-          <div className="col-6 col-md-4 d-flex"><KpiCard label="Currency" value="KZT (Tenge)" sub="~475 KZT = $1 (2025 avg)" accent={C.dim} delay={0.30} /></div>
+          <div className="col-6 col-md-4 d-flex"><KpiCard label="Inflation CPI (2025)" value="~11.4%" sub="IMF/BNS; above NBK 4–6% target band; Dec 2025 at 12.3%" accent={C.blu} delay={0.25} /></div>
+          <div className="col-6 col-md-4 d-flex"><KpiCard label="Currency" value="KZT (Tenge)" sub="~521 KZT = $1 (2025 avg; tenge weakened vs 2022)" accent={C.dim} delay={0.30} /></div>
         </div>
 
         <div className="row gy-3 mb-3">
@@ -687,11 +687,11 @@ export default function Kazakhstan() {
         <SectionHeader icon={Icons.briefcase} label="Employment & Wages" />
 
         <div className="row g-1 mb-3">
-          <div className="col-6 col-md-4 d-flex"><KpiCard label="Avg Monthly Wage (2025)" value="~$821" sub="~387,600 KZT net; highest in Central Asia" accent={C.yel} delay={0.05} /></div>
+          <div className="col-6 col-md-4 d-flex"><KpiCard label="Avg Monthly Wage (2025)" value="~$744" sub="~387,600 KZT net (~521 KZT/$); highest in Central Asia" accent={C.yel} delay={0.05} /></div>
           <div className="col-6 col-md-4 d-flex"><KpiCard label="Labour Force" value="~9.3M" sub="~45% of population; 95.4% employment rate" accent={C.dim} delay={0.10} /></div>
           <div className="col-6 col-md-4 d-flex"><KpiCard label="Unemployment" value="~4.6%" sub="Official 2026 estimate; youth unemployment ~8%" accent={C.kaz} delay={0.15} /></div>
           <div className="col-6 col-md-4 d-flex"><KpiCard label="Informal employment" value="~20–25%" sub="Significant in agriculture, retail, construction" accent={C.dim} delay={0.20} /></div>
-          <div className="col-6 col-md-4 d-flex"><KpiCard label="Min. Wage (2025)" value="~85,000 KZT" sub="~$180/month; raised annually; below urban living wage" accent={C.blu} delay={0.25} /></div>
+          <div className="col-6 col-md-4 d-flex"><KpiCard label="Min. Wage (2025)" value="~85,000 KZT" sub="~$163/month; raised annually; below urban living wage" accent={C.blu} delay={0.25} /></div>
           <div className="col-6 col-md-4 d-flex"><KpiCard label="Labour Participation" value="~73%" sub="Women ~68% vs men ~78%; strong for Central Asia" accent={C.dim} delay={0.30} /></div>
         </div>
 
@@ -916,7 +916,7 @@ export default function Kazakhstan() {
           <div className="col-6 col-md-4 d-flex"><KpiCard label="Trade Balance (2024)" value="+$17.2B" sub="Exports $87.2B vs Imports $70B; structural surplus" accent={C.dim} delay={0.30} /></div>
           <div className="col-6 col-md-4 d-flex"><KpiCard label="Current Account (2024)" value="−1.3% GDP" sub="IMF 2025; widening to ~−3.5% in 2025 on lower oil prices" accent={C.dim} delay={0.35} /></div>
           <div className="col-6 col-md-4 d-flex"><KpiCard label="Foreign Reserves (2025)" value="~$37B" sub="NBK reserves excl. NFRK; ~8 months import cover" accent={C.dim} delay={0.40} /></div>
-          <div className="col-6 col-md-4 d-flex"><KpiCard label="Inflation (2025)" value="~10.7%" sub="IMF forecast; above 4–6% NBK target; consumer credit boom driver" accent={C.dim} delay={0.45} /></div>
+          <div className="col-6 col-md-4 d-flex"><KpiCard label="Inflation (2025)" value="~11.4%" sub="IMF/BNS actual; above 4–6% NBK target; Dec 2025 at 12.3%" accent={C.dim} delay={0.45} /></div>
         </div>
 
         <div className="row gy-3 mb-3">

@@ -704,7 +704,7 @@ export default function Kyrgyzstan() {
           <div className="col-6 col-md-4 d-flex"><KpiCard label="Labour Force" value="~2.9M" sub="~39% of population" accent={C.dim} delay={0.10} /></div>
           <div className="col-6 col-md-4 d-flex"><KpiCard label="Unemployment" value="~3.5%" sub="ILO modelled estimate (2025); official NSC reports ~2.7%" accent={C.kg} delay={0.15} /></div>
           <div className="col-6 col-md-4 d-flex"><KpiCard label="Informal employment" value="~25–30%" sub="Bazaar trade, agriculture, services" accent={C.dim} delay={0.20} /></div>
-          <div className="col-6 col-md-4 d-flex"><KpiCard label="Min. Wage (2025)" value="2,460 KGS" sub="~$28/month; below living wage" accent={C.blu} delay={0.25} /></div>
+          <div className="col-6 col-md-4 d-flex"><KpiCard label="Min. Wage (2025)" value="2,863 KGS" sub="~$32/month; raised 13% Jan 2025 (WageIndicator); below living wage" accent={C.blu} delay={0.25} /></div>
           <div className="col-6 col-md-4 d-flex"><KpiCard label="Labour Participation" value="~60%" sub="Women 48% vs men 73%" accent={C.dim} delay={0.30} /></div>
         </div>
 
