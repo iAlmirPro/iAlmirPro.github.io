@@ -4,25 +4,11 @@
 
 ---
 
-## Approval Protocol & Versioning
-
-### Approval Protocol
-- **Never make changes without explicit final approval.** Always propose first, describe in plain language, wait for confirmation, then act.
-- **Always ask before acting** — even when the fix seems obvious.
-- Report findings (color audits, duplicate checks, etc.) first — ask what to do next before touching anything.
-- One approved task at a time — do not chain unrequested changes.
-- **Never change anything not explicitly requested** — e.g. if asked to change bar colors, do not also change label colors.
-
-### No Exceptions Rule
+## No Exceptions Rule
 - **"Obvious" fixes are not exceptions.** A bug, an overflow, a broken layout — none of these bypass the approval protocol. Propose first, always.
 - **Screenshots and error reports are findings, not work orders.** When the user shares a screenshot showing a problem, respond by describing what you see and what you would change — then STOP and wait.
 - **The correct response to any reported problem is:** "I can see [X]. I would fix it by [Y]. Shall I proceed?"
 - **Never interpret a problem report as implicit approval to fix it.**
-
-### Versioning Convention
-- Every meaningful change = new version: `v1 → v2 → v3...`
-- **Never overwrite** an existing version — copy first, then edit.
-- Always present `.jsx` after each version.
 
 ---
 
@@ -51,16 +37,8 @@
 10. Insert `AgeBar` into §3 Population Growth panel
 11. Insert Trade Balance `GradientBar` into §10 Key Fiscal Indicators panel
 12. Run inconsistency check (see Inconsistency Check Protocol)
-13. Run syntax check: `grep -n 'value:"\|sub:"\|accent:"'` — must return zero results
+13. Run syntax check: `grep -n 'value:"\|sub:"\|accent:"\|label:"'` — must return zero results
 14. Present final `.jsx` for download — **only after all sections have cleared Gate 5**
-
----
-
-## File Structure
-
-```
-[country]-dashboard-v1.jsx    ← React JSX source
-```
 
 ---
 
@@ -148,20 +126,6 @@ When `accent={C.dim}`, value text renders as `C.txt` (white).
    - `blu` → water / cold / geographic depth / fiscal milestone · **always used for Record Low temperature**
 6. **Order cards by importance** — strongest/most important metric first, warnings last
 7. **Never use undefined color variables** — always check the palette before referencing a color key
-
-### Color Semantic Meaning
-
-```
-primary (kg / kaz / uz / tj / tm)  →  max / high / hot / headline metric
-yel                                 →  avg / mid / opportunity / positive trend
-red                                 →  warning / critical / negative / risk / Record High temp
-blu                                 →  min / low / cold / water / depth / Record Low temp
-dim                                 →  neutral — default for most cards
-```
-
-**Mandatory color assignments:**
-- `accent={C.red}` — **Record High** temperature KpiCard (all countries)
-- `accent={C.blu}` — **Record Low** temperature KpiCard (all countries)
 
 ---
 
@@ -348,7 +312,7 @@ SVG paths are copied verbatim from Font Awesome 6 free set — see `kyrgyzstan-d
 
 ---
 
-### `<GradientBar>` ← NEW
+### `<GradientBar>`
 
 Horizontal gradient visualization for time-series or continuous data. Used for temperature, rainfall, tourism seasonality, and trade balance.
 
@@ -556,10 +520,14 @@ const AgeBar = ({ title, male, female, medianM, medianF }) => {
 
 A proportional horizontal bar divided into colour-coded political eras. Clicking any era reveals a detail panel with description and bullet events. Clicking again collapses it. A legend below mirrors the bar and is also clickable.
 
-**Why vanilla JS, not React state:** `jsx_to_html.py` uses `renderToStaticMarkup` which strips all `onClick` handlers and React state. The pattern that works in compiled static HTML is:
-- All era detail panels pre-rendered as hidden `div`s (`display:none`)
-- A `<script dangerouslySetInnerHTML>` block at the end activates click handlers
-- Bar segments and legend items carry `data-era={i}` and CSS class names for the script to target
+**Why vanilla JS, not React state:** `jsx_to_html.py` uses `renderToStaticMarkup` which strips all React state (`useState`) and event handlers (`onClick`). `dangerouslySetInnerHTML` script content is also stripped. The compiled HTML is fully static.
+
+**How interactivity works in compiled HTML:** `jsx_to_html.py` detects the `ERAS` array in the JSX source, extracts `color`/`colorL` per era, and injects a self-contained `<script>` block before `</body>` automatically. No manual script wiring needed in the JSX.
+
+**What the JSX must provide:**
+- The `ERAS` array defined at module level (the compiler reads it)
+- All era detail panels pre-rendered as hidden `div`s (`display:none`) — JS reveals the active one
+- Bar segments and legend items with `data-era={i}` and CSS class names for the injected script to target
 
 **ERAS data structure** — define once at module level, after the `C` palette:
 
@@ -658,32 +626,7 @@ const ERA_TOTAL = [last_year] - [first_year]; // e.g. 2025 - 1900 = 125
         ))}
       </div>
 
-      {/* Vanilla JS click handler — must be last child of Panel */}
-      <script dangerouslySetInnerHTML={{ __html: `
-(function(){
-  var COLORS = ${JSON.stringify(ERAS.map(e => ({ color: e.color, colorL: e.colorL })))};
-  var active = null;
-  function select(i) {
-    var segs = document.querySelectorAll('.era-seg');
-    var legs = document.querySelectorAll('.era-leg-lbl');
-    if (active === i) { i = null; }
-    document.getElementById('era-placeholder').style.display = (i === null) ? 'block' : 'none';
-    for (var k = 0; k < ${ERAS.length}; k++) {
-      var p = document.getElementById('era-panel-' + k);
-      if (p) p.style.display = (k === i) ? 'block' : 'none';
-      if (segs[k]) segs[k].style.background = (k === i) ? COLORS[k].colorL : COLORS[k].color;
-      if (legs[k]) legs[k].style.color = (k === i) ? COLORS[k].colorL : '#999';
-    }
-    active = i;
-  }
-  document.querySelectorAll('.era-seg').forEach(function(el) {
-    el.addEventListener('click', function(){ select(parseInt(el.getAttribute('data-era'))); });
-  });
-  document.querySelectorAll('.era-leg').forEach(function(el) {
-    el.addEventListener('click', function(){ select(parseInt(el.getAttribute('data-era'))); });
-  });
-})();
-      `}} />
+      {/* jsx_to_html.py injects the click handler script automatically from the ERAS array — no script tag needed here */}
 
       <p style={{ fontSize:11, color:C.sub, marginTop:14, lineHeight:1.6 }}>Interpretive note here.</p>
     </Panel>
@@ -692,8 +635,7 @@ const ERA_TOTAL = [last_year] - [first_year]; // e.g. 2025 - 1900 = 125
 ```
 
 **Key rules:**
-- **No React state** — never use `useState` for the active era. The compiled HTML is static; React state is stripped. Always use the vanilla JS `<script>` pattern above.
-- **`dangerouslySetInnerHTML`** is required on `<script>` — JSX does not render script content otherwise.
+- **No React state** — never use `useState` for the active era. React state is stripped by the compiler. The click handler is injected automatically by `jsx_to_html.py` from the `ERAS` array.
 - **`ERA_TOTAL`** must equal `last_year - first_year` — it drives the proportional widths.
 - **All panels hidden by default** (`display:'none'`) — JS reveals the active one.
 - **`data-era={i}`** on both `.era-seg` and `.era-leg` divs — the script uses these to map clicks to panel IDs.
@@ -771,11 +713,11 @@ Each section follows this pattern:
   alignItems:'end', gap:32, marginBottom:8 }}>
   <div>
     <div style={{ fontSize:10, letterSpacing:'0.28em', textTransform:'uppercase',
-      color:C.kg, marginBottom:14 }}>Country Dashboard 2025</div>
+      color:C.[primary], marginBottom:14 }}>Country Dashboard 2025</div>
     <h1 style={{ fontFamily:'Fraunces,serif', fontWeight:900,
       fontSize:'clamp(44px,9vw,96px)', lineHeight:0.9,
       letterSpacing:'-0.02em', marginBottom:16 }}>
-      Kyrgy<em style={{ fontStyle:'italic', color:C.kg, fontWeight:400 }}>zstan</em>
+      Coun<em style={{ fontStyle:'italic', color:C.[primary], fontWeight:400 }}>try</em>
     </h1>
     <p style={{ fontSize:14, color:C.sub, maxWidth:480, lineHeight:1.7 }}>
       Description text here.
@@ -803,7 +745,7 @@ Each section follows this pattern:
     Sources: NSC KR · World Bank · IMF 2025 · ... · Data as of May 2026.
   </p>
   <p style={{ fontSize:9.5, color:'#444', marginTop:6, lineHeight:1.6 }}>
-    Generated [Month Year] · Claude Sonnet 4.5 (Anthropic) · iAlmirPro
+    Generated [Month Year] · Claude Sonnet 4.6 (Anthropic) · iAlmirPro
   </p>
 </div>
 ```
@@ -1031,6 +973,8 @@ No gate descriptions. No bullet lists of what was searched. No explanations of w
 
 ### Verification process — required sequence
 
+<!-- TO REVIEW: this is a compressed summary of Gates 1–5 above. Consider whether it adds value or is redundant. -->
+
 1. Read the full section before writing anything.
 2. List every data point this section will contain (Gate 1).
 3. Search every value individually before writing a single line of JSX (Gate 2).
@@ -1038,24 +982,6 @@ No gate descriptions. No bullet lists of what was searched. No explanations of w
 5. Write the JSX with confirmed values sourced and unverified values annotated (Gate 4).
 6. Self-check before moving to the next section (Gate 5).
 7. Never present the file until all sections have cleared Gate 5.
-
----
-
-### Known high-error fields — always search these
-
-These fields are systematically wrong when generated from training data alone:
-
-- GDP total and per capita (often overstated)
-- Tourism visitor count and **visitor origin percentages** (origin ranking is frequently wrong)
-- Export product shares and percentages (proportions shift year to year)
-- Monthly temperature arrays (Jan/Dec are commonly too low)
-- Historical population figures (Soviet-era and 2010–2020 figures often off)
-- City populations (secondary cities frequently wrong)
-- Homicide rate (often overstated)
-- PM2.5 / air quality values (often understated)
-- Age at first marriage (men's age consistently understated)
-- Mobile penetration (often overstated as "~100%")
-- Primary/secondary school enrollment rates (often overstated as "~99%")
 
 ---
 
@@ -1155,7 +1081,7 @@ If the user has not responded with approval, no change has been authorised. Proc
 After approval, the **first and only** action is to copy the file to the new version number:
 
 ```bash
-cp turkmenistan-dashboard-v2.jsx turkmenistan-dashboard-v3.jsx
+cp [country]-dashboard-v[N].jsx [country]-dashboard-v[N+1].jsx
 ```
 
 No edits until the new file exists. Never modify the current version file directly. If the copy has not been made, no editing may begin.
