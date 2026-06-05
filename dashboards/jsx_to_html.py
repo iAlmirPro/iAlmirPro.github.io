@@ -324,6 +324,67 @@ def inject_comments(html, sections, panels):
         html = html[:pos] + cmt + html[pos:]
     return html
 
+def extract_era_script(src):
+    """If the JSX uses the EraTimeline pattern, return a self-contained <script> string, else None."""
+    if 'const ERAS' not in src or '.era-seg' not in src:
+        return None
+
+    # Find the ERAS array boundaries
+    eras_match = re.search(r'const ERAS\s*=\s*\[', src)
+    if not eras_match:
+        return None
+    start = eras_match.end() - 1  # position of '['
+    depth, i = 0, start
+    while i < len(src):
+        if   src[i] == '[': depth += 1
+        elif src[i] == ']':
+            depth -= 1
+            if depth == 0:
+                eras_src = src[start:i + 1]
+                break
+        i += 1
+    else:
+        return None
+
+    # Extract color / colorL pairs in order from the ERAS block
+    era_colors = re.findall(
+        r'color:\s*[\'"]([^\'\"]+)[\'"].*?colorL:\s*[\'"]([^\'\"]+)[\'"]',
+        eras_src, re.DOTALL
+    )
+    if not era_colors:
+        return None
+
+    colors_json = json.dumps([{'color': c, 'colorL': cl} for c, cl in era_colors])
+    n = len(era_colors)
+
+    return f"""<script>
+(function(){{
+  var ERA_COLORS = {colors_json};
+  var active = null;
+  function selectEra(i) {{
+    var segs = document.querySelectorAll('.era-seg');
+    var legs = document.querySelectorAll('.era-leg-lbl');
+    if (active === i) {{ i = null; }}
+    var ph = document.getElementById('era-placeholder');
+    if (ph) ph.style.display = (i === null) ? 'block' : 'none';
+    for (var k = 0; k < {n}; k++) {{
+      var p = document.getElementById('era-panel-' + k);
+      if (p) p.style.display = (k === i) ? 'block' : 'none';
+      if (segs[k]) segs[k].style.background = (k === i) ? ERA_COLORS[k].colorL : ERA_COLORS[k].color;
+      if (legs[k]) legs[k].style.color = (k === i) ? ERA_COLORS[k].colorL : '#999';
+    }}
+    active = i;
+  }}
+  document.querySelectorAll('.era-seg').forEach(function(el) {{
+    el.addEventListener('click', function(){{ selectEra(parseInt(el.getAttribute('data-era'))); }});
+  }});
+  document.querySelectorAll('.era-leg').forEach(function(el) {{
+    el.addEventListener('click', function(){{ selectEra(parseInt(el.getAttribute('data-era'))); }});
+  }});
+}})();
+</script>"""
+
+
 def indent_style(html):
     def replace(m):
         nl = "\n"
@@ -415,6 +476,12 @@ def convert(jsx_path):
             html = inject_map_svg(html, map_svg)
             html = re.sub(r'<div[^>]*>\s*Loading map[^<\n]*\s*</div>', '', html, count=1)
             print("✓  Map SVG embedded")
+
+    # Inject EraTimeline click handler script if present
+    era_script = extract_era_script(src)
+    if era_script:
+        html = html.replace('</body>', era_script + '\n</body>', 1)
+        print("🎯  EraTimeline script injected")
 
     # Inject exact build date into footer generation line
     build_date = datetime.datetime.now().strftime('%-d %B %Y')

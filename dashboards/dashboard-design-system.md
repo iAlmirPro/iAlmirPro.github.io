@@ -43,15 +43,16 @@
 2. Update the `C` color object with the new country's flag colors — use country-code prefix (e.g. `kg`, `kaz`, `uz`, `tj`) — **never use generic country codes that clash** (e.g. `ir` = Ireland, not Iran — use `tj` for Tajikistan)
 3. Update the `Flag` SVG component
 4. Update hero H1, eyebrow label, description text
-5. Replace all data section by section — verify every KPI value via web search
+5. **Replace all data section by section — applying the MANDATORY GATED PROCESS (Gate 1→5) for every section without exception. Do not proceed to the next section until the current section has cleared all five gates. After each section clears Gate 5, immediately save/update the artifact so the result is visible. See Data Verification Standard.**
 6. Run duplicate check: no label/key should appear in both a visual component and a table row — if duplicated, remove the table row; the visual takes priority
 7. Run color audit: max 2 colored KpiCards per section, balanced across dashboard
 8. Add `GradientBar` and `AgeBar` components (see Visualization Components section)
 9. Insert the three standard `GradientBar` visualizations into §2 Climate and §8 Tourism panels
 10. Insert `AgeBar` into §3 Population Growth panel
 11. Insert Trade Balance `GradientBar` into §10 Key Fiscal Indicators panel
-12. Run syntax check: `grep -n 'value:"\|sub:"\|accent:"'` — must return zero results
-13. Present `.jsx` for download
+12. Run inconsistency check (see Inconsistency Check Protocol)
+13. Run syntax check: `grep -n 'value:"\|sub:"\|accent:"'` — must return zero results
+14. Present final `.jsx` for download — **only after all sections have cleared Gate 5**
 
 ---
 
@@ -833,86 +834,163 @@ grep -n 'value:"\|sub:"\|accent:"\|label:"' [file].jsx
 
 ## Data Verification Standard
 
-### ⚠️ MANDATORY RULE — NO EXCEPTIONS
+---
 
-**Every single data value in every dashboard must be confirmed via web search before it is written into the file.**
+### ⛔ HARD RULE — ZERO EXCEPTIONS — READ THIS BEFORE TOUCHING ANY DATA
 
-- **No assumptions.** Training knowledge is not a source. A value that "sounds right" is not verified.
-- **No test data.** Placeholder numbers, rounded guesses, and carry-overs from similar countries are forbidden.
-- **No prioritising.** There is no tier of "important" vs "minor" values. Every KpiCard value, every BarRow value, every Tbl row value, every GradientBar array, every Donut segment percentage, every AgeBar cohort, every narrative figure inside `<p>` text — all must be searched and confirmed individually.
-- **No batching without searching.** Do not write a batch of 30 values and search 10 of them. Search first, write after.
-- **No deferring.** A value is either confirmed (search done, source found) or it is unverified. There is no middle ground of "probably correct" or "will check later."
+**Writing a value without first completing a web search for it is a protocol violation. A dashboard built with unverified values that are not annotated `est.; unverified` is incorrect output and must be rebuilt from scratch.**
+
+Training knowledge is not a source. "Sounds right" is not verified. "Similar to the last country" is not verified. Fast output is never a justification for skipping searches.
+
+---
 
 ### The only two valid states for any value
 
 | State | Meaning | What to do |
 |---|---|---|
-| **Confirmed** | Web search returned a source that directly supports the value | Write the value; cite the source in the `sub` field |
-| **Unverified** | No web search was done, or search returned no usable result | Write the value AND append `est.; unverified` to the `sub` field, label, or Tbl row |
+| **Confirmed** | Web search returned a source that directly supports the value | Write the value; cite the source in `sub` |
+| **Unverified** | No search was done, or search returned no usable result | Write the value AND annotate `est.; unverified — [reason]` in `sub`, label, or Tbl row |
 
-### How to mark unverified values
+There is no third state. "Probably correct", "will check later", and "low priority" do not exist.
 
-Append `— est.; unverified` directly in the field where the value appears:
+---
+
+### MANDATORY GATED PROCESS — one section at a time, no skipping gates
+
+Every section (§1 Geography, §2 Climate, §3 Population … §17 Crime) must pass through all five gates **in order** before the JSX for that section is written. Do not start the next section until the current one has cleared all five gates.
+
+---
+
+#### GATE 1 — READ
+**STOP. Read the full section plan before doing anything else.**
+- Identify every data point this section will contain: every KpiCard value, every BarRow value, every Tbl row, every GradientBar array, every Donut segment %, every AgeBar cohort, every figure inside `<p>` narrative text.
+- Write out the full list. Do not proceed until the list is complete.
+
+> ✅ Gate 1 cleared when: full data point list for this section exists.
+
+---
+
+#### GATE 2 — SEARCH EVERY VALUE
+**STOP. For every item on the list from Gate 1, run a web search.**
+- One search per data point, or a combined search if multiple points share a source (e.g. all climate values from one fetch).
+- Do not write any JSX yet. Searching and writing are separate phases.
+- Known high-error fields (listed below) require an explicit search even if you are confident — no exceptions.
+
+> ✅ Gate 2 cleared when: every item on the Gate 1 list has been searched.
+
+---
+
+#### GATE 3 — RECORD RESULT FOR EACH VALUE
+**STOP. For each searched value, record one of two outcomes:**
+- **Found:** confirmed value + source name + year. Example: `GDP $64.24B — World Bank WDI 2024`
+- **Not found:** reason why. Example: `City populations — Turkmenistan suppresses data; no reliable published source`
+
+Do not proceed to writing until every item has a recorded outcome. A value with no recorded outcome has not been searched.
+
+> ✅ Gate 3 cleared when: every item has either a confirmed source or a documented reason it cannot be confirmed.
+
+---
+
+#### GATE 4 — WRITE THE JSX
+**NOW write the JSX for this section.**
+- Confirmed values: write the value, cite the source in `sub`.
+- Unverified values: write the value AND append `est.; unverified — [reason]` in the same field. See annotation rules below.
+- Do not write any value that was not on the Gate 1 list and searched in Gate 2. If a new value is needed, go back to Gate 2 for it.
+
+> ✅ Gate 4 cleared when: section JSX is written with all confirmed values sourced and all unverified values annotated.
+
+---
+
+#### GATE 5 — SECTION SELF-CHECK
+**STOP. Before moving to the next section, run this check on what was just written:**
+- Every value in this section appears on the Gate 1 list. ✓/✗
+- Every confirmed value has a source cited in `sub`. ✓/✗
+- Every unverified value has `est.; unverified — [reason]` in the field. ✓/✗
+- No value was written from training knowledge without annotation. ✓/✗
+
+If any check fails: fix it before proceeding. Do not carry errors forward.
+
+**After all four checks pass: immediately save/update the artifact with the current state of the file. The user must be able to see the section result before the next section begins.**
+
+> ✅ Gate 5 cleared when: all four checks pass and artifact is updated.
+
+---
+
+### After all sections: final checks before presenting the file
+
+Only after every section has cleared all five gates:
+
+1. Run the inconsistency check (see Inconsistency Check Protocol below)
+2. Run the duplicate check: `grep -n 'value:"\|sub:"\|accent:"\|label:"'` — must return zero results
+3. Present the `.jsx` file
+
+**A file presented before all sections have cleared Gate 5 is incomplete output.**
+
+---
+
+### Known high-error fields — Gate 2 is mandatory for these even if you are certain
+
+These fields are systematically wrong when generated from training data alone. There are no exceptions — search every one of these, every time:
+
+- GDP total and per capita (often overstated)
+- Tourism visitor count and **visitor origin percentages** (origin ranking is frequently wrong)
+- Export product shares and destination percentages (proportions shift year to year)
+- **Monthly temperature arrays** (Jan/Dec values commonly too low — always fetch from en.climate-data.org or climatestotravel.com)
+- **Monthly rainfall arrays** (always fetch — do not estimate)
+- Historical population figures (Soviet-era and 2010–2020 figures often off)
+- City populations (secondary cities frequently wrong — note: some countries suppress this data entirely; if so, annotate)
+- Homicide rate (often overstated)
+- PM2.5 / air quality values (often understated — fetch from IQAir)
+- Age at first marriage (men's age consistently understated)
+- Mobile penetration (often overstated as "~100%")
+- Primary/secondary school enrollment rates (often overstated as "~99%")
+- Literacy rate (verify — do not assume)
+- Fertility rate (verify from UN WPP)
+- Median age (verify from UN WPP)
+- Religion percentages (verify — CIA WF or national census)
+- Ethnic composition percentages (verify — national census)
+- Wage figures (if government does not publish: annotate as modelled — do not invent)
+- Employment sector splits (if no labour force survey: annotate as modelled)
+
+---
+
+### How to annotate unverified values
+
+Append `— est.; unverified — [reason]` directly in the field where the value appears. The annotation must be in the same field as the value, not in a comment.
 
 ```jsx
-// KpiCard sub text
+// ✅ CORRECT — reason included, annotation in-field
 <KpiCard label="Solar irradiation" value="~1,700–2,200 kWh/m²"
-  sub="Among highest globally; ideal for solar — est.; unverified" />
+  sub="Among highest globally — est.; unverified — no IQAir/NASA POWER search done" />
 
-// BarRow label
-<BarRow label="Hypertension prevalence (est.; unverified)" value="~32%" pct={100} />
+<BarRow label="Hypertension prevalence (est.; unverified — most recent WHO STEPS survey 2019; 2024 data not available)" value="~32%" pct={100} />
 
-// Tbl row
-['Presidential schools (elite)', '14 across the country — est.; unverified'],
-
-// AgeBar title
-<AgeBar title="Population age structure — est.; individual 5-yr cohort values unverified" ... />
-
-// Panel title
-<Panel title="Causes of Death (est.; breakdown unverified)" ...>
-```
-
-The annotation must appear **where the data is displayed**, not in a comment or elsewhere.
-
-### Every `est.` annotation must explain WHY
-
-A bare `(est.)` label is not sufficient. Every estimate or unverified value must include a brief reason explaining **why** it is an estimate — so any reader (or future editor) understands the limitation without having to investigate.
-
-**Required:** reason in the same field as the annotation.
-
-```jsx
-// ❌ WRONG — bare, unexplained
-<BarRow label="Hypertension prevalence (est.; unverified)" value="~32%" pct={100} />
-['Migrant workers abroad (est.)', '~2,000,000'],
-<Panel title="Wages by Sector (monthly UZS, est. 2024)" ...>
-
-// ✅ CORRECT — reason included
-<BarRow label="Hypertension prevalence (est.; unverified — most recent WHO STEPS survey is 2019; 2024 data not publicly available)" value="~32%" pct={100} />
 ['Migrant workers abroad (est. — no official registry; ILO modelled)', '~2,000,000'],
-<Panel title="Wages by Sector (monthly UZS, est. 2024 — sectoral breakdown modelled from National Stats avg + ILO ratios)" ...>
+
+<Panel title="Wages by Sector (est. — sectoral breakdown modelled from national avg + ILO ratios; no official data published)">
+
+<AgeBar title="Population age structure — est.; individual 5-yr cohort values unverified — UN WPP fetched but cohort split modelled" ... />
+
+// ❌ WRONG — bare annotation, no reason
+<BarRow label="Hypertension prevalence (est.)" value="~32%" pct={100} />
+['Migrant workers abroad (est.)', '~2,000,000'],
 ```
 
-**Common valid reasons by type:**
+**Common valid reasons:**
 
 | Reason type | Example wording |
 |---|---|
 | No official registry | `no official registry; ILO modelled` |
-| Modelled/estimated by international body | `WHO/UNICEF joint modelled estimate, not direct count` |
-| Most recent survey is outdated | `most recent WHO STEPS survey is 2019; 2024 data not publicly available` |
-| Data not published by government | `Uzbekistan does not publish official homicide statistics; UNODC/WB modelled` |
-| Derived/converted metric | `RSF rank 148/180 converted to score; RSF does not publish a numeric score` |
+| Modelled by international body | `WHO/UNICEF joint modelled estimate, not direct count` |
+| Survey outdated | `most recent WHO STEPS survey is 2019; 2024 data not available` |
+| Government does not publish | `[country] does not publish official homicide statistics; UNODC/WB modelled` |
+| Derived/converted metric | `RSF rank 148/180 converted to score; RSF does not publish numeric score` |
 | No passport-level breakdown | `origin % derived from border crossings; no passport-level breakdown published` |
 | City boundary variation | `no inter-census registry; city boundaries vary by source` |
 | Sectoral split modelled | `fuel-type split modelled, not metered per source` |
+| Country suppresses data | `[country] does not publish city population data; estimate from UN/external sources` |
 
-### Verification process — required sequence
-
-1. **Read the full section** before writing anything.
-2. **Search every value** in that section via web search. Run searches in parallel where possible.
-3. **Record the confirmed value and source** for each data point.
-4. **Write the value** with the source cited in `sub`.
-5. **Mark anything unconfirmed** with `est.; unverified` before committing.
-6. **Never commit a file** that contains unverified values without the `est.; unverified` annotation.
+---
 
 ### Approved sources by data type
 
@@ -930,9 +1008,38 @@ A bare `(est.)` label is not sufficient. Every estimate or unverified value must
 | ILO | Labour force, unemployment, informal employment |
 | IQAir / WHO | Air quality (PM2.5) annual averages |
 | UNWTO / national tourism agencies | Visitor numbers, visitor origins, tourism revenue |
-| en.climate-data.org / timeanddate.com | Monthly temperature and rainfall averages |
+| en.climate-data.org / climatestotravel.com / timeanddate.com | Monthly temperature and rainfall averages |
 | Worldometer / populationpyramid.net | Population pyramid cohort data |
 | OEC / national customs agencies | Export product shares and destination percentages |
+
+### Gate output format — internal only
+
+The gate process is executed internally. Do not narrate gate steps in prose. Output only the status line per section, using this exact format:
+
+```
+§1 Geography
+[G1] N data points identified ✅
+[G2] Searched N values ✅
+[G3] N confirmed · N unverified (field name, field name — reason) ✅
+[G4] JSX written ✅
+[G5] All confirmed sourced · unverified annotated ✅
+```
+
+No gate descriptions. No bullet lists of what was searched. No explanations of what each gate means. The status line is the only output.
+
+---
+
+### Verification process — required sequence
+
+1. Read the full section before writing anything.
+2. List every data point this section will contain (Gate 1).
+3. Search every value individually before writing a single line of JSX (Gate 2).
+4. Record confirmed value + source, or reason why unconfirmable (Gate 3).
+5. Write the JSX with confirmed values sourced and unverified values annotated (Gate 4).
+6. Self-check before moving to the next section (Gate 5).
+7. Never present the file until all sections have cleared Gate 5.
+
+---
 
 ### Known high-error fields — always search these
 
@@ -1016,10 +1123,71 @@ When an inconsistency is found:
 
 ## Approval & Versioning Protocol
 
-- **Never make changes without explicit approval** — always propose first, act only after confirmation
-- **Always ask** before running a color audit, duplicate check, or any bulk change
-- **Never change anything not explicitly asked for** — if asked to update bar colors, do not also update label colors, legend colors, or anything else
-- **One task at a time** — do not chain unrequested changes
-- **New version for every meaningful change:** `v1 → v2 → v3...`
-- **Never overwrite** an existing version — copy first, then edit
-- Present `.jsx` after each version
+---
+
+### ⛔ HARD RULE — THIS APPLIES TO EVERY CHANGE WITHOUT EXCEPTION
+
+**Completing the task is never more important than following this process. Errors and bugs are not exceptions. Urgency is not an exception. There are no exceptions.**
+
+If this process is skipped, the output is invalid regardless of whether it works.
+
+---
+
+### STEP 1 — PROPOSE BEFORE TOUCHING ANYTHING
+
+Before modifying any file, Claude must output this block in the chat and stop:
+
+```
+Proposed change: [exactly what will be changed]
+Reason: [why]
+File: [current filename → new filename with incremented version]
+Awaiting approval.
+```
+
+**Do not open the file. Do not run any command. Do not write any code. Stop and wait.**
+
+If the user has not responded with approval, no change has been authorised. Proceeding without this block in the chat is a protocol violation.
+
+---
+
+### STEP 2 — INCREMENT VERSION FIRST
+
+After approval, the **first and only** action is to copy the file to the new version number:
+
+```bash
+cp turkmenistan-dashboard-v2.jsx turkmenistan-dashboard-v3.jsx
+```
+
+No edits until the new file exists. Never modify the current version file directly. If the copy has not been made, no editing may begin.
+
+Version numbering: `v1 → v2 → v3...` — every meaningful change increments. A meaningful change is any edit to data, layout, logic, or structure. Fixing a typo in a comment is not meaningful. Everything else is.
+
+---
+
+### STEP 3 — MAKE ONLY THE APPROVED CHANGE
+
+Make exactly and only what was proposed in Step 1. Nothing more.
+
+- Asked to fix a color → fix only that color. Do not also fix label colors, legend colors, or spacing.
+- Asked to fix a bug → fix only that bug. Do not also refactor, clean up, or improve nearby code.
+- Asked to update a value → update only that value. Do not also update related values not mentioned.
+
+Every additional change requires its own Step 1 proposal and approval.
+
+---
+
+### STEP 4 — PRESENT THE FILE
+
+After the approved change is made: present the new versioned file immediately. Do not make further changes before presenting.
+
+---
+
+### Why this process exists
+
+The pattern that required this protocol: Claude repeatedly read and acknowledged the rules, then bypassed them when focused on solving a problem — weighting "fix the issue" above "follow the process." This is not fixed by reminders or apologies. It is fixed by making the process structural: the proposal block must appear in the chat before any action, making it impossible to act without first producing visible evidence of the gate.
+
+---
+
+### One task at a time
+
+Do not chain unrequested changes. Do not fix things that weren't broken. Do not improve things that weren't asked about. Each task is its own cycle of Step 1 → approval → Step 2 → Step 3 → Step 4.

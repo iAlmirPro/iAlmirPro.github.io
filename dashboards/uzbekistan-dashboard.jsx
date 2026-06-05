@@ -400,6 +400,30 @@ export default function Uzbekistan() {
               } catch(e){console.error('map',e);}
             }
             drawMap();
+            // Set up timeline clicks after render
+            var ERA_COLORS = ERAS.map(function(e){ return { color: e.color, colorL: e.colorL }; });
+            var ERA_COUNT = ERAS.length;
+            var active = null;
+            function selectEra(i) {
+              var segs = document.querySelectorAll('.era-seg');
+              var legs = document.querySelectorAll('.era-leg-lbl');
+              if (active === i) { i = null; }
+              var ph = document.getElementById('era-placeholder');
+              if (ph) ph.style.display = (i === null) ? 'block' : 'none';
+              for (var k = 0; k < ERA_COUNT; k++) {
+                var p = document.getElementById('era-panel-' + k);
+                if (p) p.style.display = (k === i) ? 'block' : 'none';
+                if (segs[k]) segs[k].style.background = (k === i) ? ERA_COLORS[k].colorL : ERA_COLORS[k].color;
+                if (legs[k]) legs[k].style.color = (k === i) ? ERA_COLORS[k].colorL : '#999';
+              }
+              active = i;
+            }
+            document.querySelectorAll('.era-seg').forEach(function(el) {
+              el.addEventListener('click', function(){ selectEra(parseInt(el.getAttribute('data-era'))); });
+            });
+            document.querySelectorAll('.era-leg').forEach(function(el) {
+              el.addEventListener('click', function(){ selectEra(parseInt(el.getAttribute('data-era'))); });
+            });
             return ()=>{cancelled=true;};
           }, []);
 
@@ -555,7 +579,7 @@ export default function Uzbekistan() {
         <div className="row g-1 mb-3">
           <div className="col-6 col-md-4 d-flex"><KpiCard label="Population (Jul 2025)" value="~37.9M" sub="Statistics Agency UZ Jul 2025: 37,859,698; largest in Central Asia" accent={C.uz} delay={0.05} /></div>
           <div className="col-6 col-md-4 d-flex"><KpiCard label="Urban Population" value="~47.9%" sub="Urbanisation accelerating; Tashkent agglomeration 4M+" accent={C.dim} delay={0.10} /></div>
-          <div className="col-6 col-md-4 d-flex"><KpiCard label="Median Age" value="27 yrs" sub="Young population; ~29% under 15; large working-age cohort" accent={C.grn} delay={0.15} /></div>
+          <div className="col-6 col-md-4 d-flex"><KpiCard label="Median Age" value="♂ 27.9 · ♀ 29.5" sub="Overall ~28 yrs (UN WPP 2024); young population; ~29% under 15" accent={C.grn} delay={0.15} /></div>
           <div className="col-6 col-md-4 d-flex"><KpiCard label="Population Density" value="83.6 /km²" sub="National Stats Jan 2025; 85.2/km² by Jan 2026; Fergana Valley ~900/km²" accent={C.dim} delay={0.20} /></div>
           <div className="col-6 col-md-4 d-flex"><KpiCard label="Life Expectancy" value="~75 yrs" sub="Women ~77 · Men ~73; improving steadily" accent={C.dim} delay={0.25} /></div>
           <div className="col-6 col-md-4 d-flex"><KpiCard label="Fertility Rate" value="~3.5" sub="UN WPP 2025: 3.45 births/woman; declining from 3.8 in 2000" accent={C.blu} delay={0.30} /></div>
@@ -569,13 +593,6 @@ export default function Uzbekistan() {
               <BarRow label="2020" value="33.9M" pct={90} color={C.grn} />
               <BarRow label="2025 (Jul)" value="~37.9M" pct={100} color={C.uz} />
               <p style={{ fontSize:11, color:C.sub, marginTop:10, lineHeight:1.6 }}>Uzbekistan's population nearly doubled since independence — from 20.6M to 37.9M (+84%). Unlike Kazakhstan, it did not suffer post-Soviet emigration collapse; natural growth remained high throughout. With 37.9M people, Uzbekistan accounts for ~50% of Central Asia's total population.</p>
-              <AgeBar
-                title="Population age structure — male vs. female (% of total) · est.; individual 5-yr cohort values unverified"
-                male={[5.5,5.2,4.95,4.75,4.5,4.25,4.0,3.6,3.15,2.75,2.4,2.1,1.75,1.3,0.95,1.4]}
-                female={[5.2,4.95,4.7,4.55,4.35,4.15,3.95,3.55,3.1,2.75,2.4,2.1,1.75,1.4,1.1,1.8]}
-                medianM={27.9}
-                medianF={29.5}
-              />
             </Panel>
           </div>
           <div className="col-12 col-md-6">
@@ -857,34 +874,6 @@ export default function Uzbekistan() {
               </div>
 
               {/* Vanilla JS — survives renderToStaticMarkup */}
-              <script dangerouslySetInnerHTML={{ __html: `
-(function(){
-  var COLORS = ${JSON.stringify(ERAS.map(e => ({ color: e.color, colorL: e.colorL })))};
-  var active = null;
-  function select(i) {
-    var segs = document.querySelectorAll('.era-seg');
-    var legs = document.querySelectorAll('.era-leg-lbl');
-    // toggle
-    if (active === i) { i = null; }
-    // hide all panels + placeholder
-    document.getElementById('era-placeholder').style.display = (i === null) ? 'block' : 'none';
-    for (var k = 0; k < ${ERAS.length}; k++) {
-      var p = document.getElementById('era-panel-' + k);
-      if (p) p.style.display = (k === i) ? 'block' : 'none';
-      if (segs[k]) segs[k].style.background = (k === i) ? COLORS[k].colorL : COLORS[k].color;
-      if (legs[k]) legs[k].style.color = (k === i) ? COLORS[k].colorL : '#999';
-    }
-    active = i;
-  }
-  document.querySelectorAll('.era-seg').forEach(function(el) {
-    el.addEventListener('click', function(){ select(parseInt(el.getAttribute('data-era'))); });
-  });
-  document.querySelectorAll('.era-leg').forEach(function(el) {
-    el.addEventListener('click', function(){ select(parseInt(el.getAttribute('data-era'))); });
-  });
-})();
-              `}} />
-
               <p style={{ fontSize:11, color:C.sub, marginTop:14, lineHeight:1.6 }}>The contrast between Karimov (1991–2016) and Mirziyoyev is one of the most dramatic policy reversals in post-Soviet history. Karimov presided over one of the world's most repressive regimes; Mirziyoyev has opened the economy, released political prisoners, and welcomed foreign investment — though the state remains authoritarian.</p>
             </Panel>
           </div>
