@@ -269,7 +269,7 @@ The map is rendered inside an **IIFE** in the dashboard's main component return 
   ];
 
   return (
-    <div style={{ margin:'28px 0 8px' }}>
+    <div id="glance" style={{ margin:'28px 0 8px' }}>
       <div style={{ fontSize:10, letterSpacing:'0.28em', textTransform:'uppercase', color:C.sub, marginBottom:14 }}>At a glance</div>
       <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr 1fr 1fr', gap:3 }}>
         {tiles.map(({ icon, label, value, note }) => (

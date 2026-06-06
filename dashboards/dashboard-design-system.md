@@ -184,9 +184,11 @@ useEffect(() => {
 
 ```jsx
 const SectionHeader = ({ icon, label }) => (
-  <div style={{ display:'flex', alignItems:'center', gap:10, marginBottom:28, paddingTop:24 }}>
-    <span style={{ color:C.txt, fontSize:16, flexShrink:0 }}>{icon}</span>
-    <span style={{ fontSize:13, letterSpacing:'0.18em', textTransform:'uppercase', color:C.txt, fontWeight:500 }}>{label}</span>
+  <div id="section" className="row my-3">
+    <div className="col-12 d-flex align-items-center gap-2">
+      <span style={{ color:C.txt, fontSize:16, flexShrink:0 }}>{icon}</span>
+      <span style={{ fontSize:13, letterSpacing:'0.18em', textTransform:'uppercase', color:C.txt, fontWeight:500 }}>{label}</span>
+    </div>
   </div>
 );
 ```
@@ -194,8 +196,8 @@ const SectionHeader = ({ icon, label }) => (
 Usage: `<SectionHeader icon={Icons.mountain} label="Geography & Landscape" />`
 
 - No border-top, no rule line — clean minimal header
-- `paddingTop: 24` creates spacing from the section above
-- `marginBottom: 28` before the first KPI grid
+- `my-3` provides vertical spacing above and below
+- `id="section"` enables anchor targeting per section
 
 ---
 
@@ -233,14 +235,27 @@ Usage:
 
 ### `<Panel>`, `<BarRow>`, `<Tbl>`, `<RegCard>`, `<DlRow>`, `<Donut>`
 
-See `kyrgyzstan-dashboard.jsx` for full component source — these are unchanged from the original design system.
+See `kyrgyzstan-dashboard.jsx` for full component source. Key `id` attribute added in uzbekistan update:
+- `<Tbl>` — outer `<table>` has `id="paneltbl"`
+
+**Panel component source** (updated from uzbekistan — `id` attributes and padding):
+```jsx
+const Panel = ({ title, icon, children }) => (
+  <div id="panel" style={{ background:C.card, border:`1px solid ${C.border}`, padding:'20px 20px', height:'100%' }}>
+    <div id="title" style={{ fontFamily:'Fraunces,serif', fontWeight:700, fontSize:13, color:C.txt, marginBottom:16, paddingBottom:11, borderBottom:`1px solid ${C.border}`, display:'flex', alignItems:'center', gap:8 }}>
+      <span style={{ color:C.txt, flexShrink:0 }}>{icon}</span>{title}
+    </div>
+    {children}
+  </div>
+);
+```
 
 **Panel usage:**
 ```jsx
 <div className="col-12 col-md-6">
   <Panel title="Key Economic Indicators" icon={Icons.briefcase}>
     <Tbl rows={[...]} />
-    <p style={{ fontSize:11, color:C.sub, marginTop:10, lineHeight:1.6 }}>
+    <p id="subnote" style={{ fontSize:11, color:C.sub, marginTop:10, marginBottom:0, lineHeight:1.6 }}>
       Interpretive note here — what do these values mean? High/low/normal compared to global or regional benchmarks.
     </p>
   </Panel>
@@ -559,30 +574,32 @@ const ERA_TOTAL = [last_year] - [first_year]; // e.g. 2025 - 1900 = 125
   <div className="col-12">
     <Panel title="[N] Years of Governance — Interactive Era Timeline ([start]–[end])" icon={Icons.chart}>
 
-      {/* Proportional era bar */}
-      <div style={{ display:'flex', height:40, borderRadius:4, overflow:'hidden', gap:1 }}>
+      {/* Proportional era bar — no gap, borderRight separates segments so % label positions stay exact */}
+      <div style={{ display:'flex', height:40, borderRadius:4, overflow:'hidden' }}>
         {ERAS.map((era, i) => (
           <div key={era.id} data-era={i} className="era-seg"
             title={`${era.label} (${era.start}–${era.end})`}
             style={{ width:`${((era.end - era.start) / ERA_TOTAL) * 100}%`,
-              background:era.color, cursor:'pointer', transition:'background 0.2s', flexShrink:0 }}
+              background:era.color, cursor:'pointer', transition:'background 0.2s', flexShrink:0,
+              borderRight:'1px solid #000' }}
           />
         ))}
       </div>
 
-      {/* Year labels — rotated 90°, one per era boundary + final year */}
+      {/* Year labels — bottom-to-top rotated, pinned to era boundaries */}
       <div style={{ position:'relative', height:28, marginTop:5 }}>
-        {ERAS.map(era => {
+        {ERAS.map((era, i) => {
           const left = ((era.start - [first_year]) / ERA_TOTAL) * 100;
+          const isFirst = i === 0;
           return (
-            <div key={era.id} style={{ position:'absolute', left:`${left}%`, top:0, transform:'translateX(-50%)' }}>
-              <div style={{ fontSize:9, color:C.sub, whiteSpace:'nowrap', transform:'rotate(-90deg)', transformOrigin:'center 50%', marginTop:10 }}>{era.start}</div>
-            </div>
+            <div key={era.id} style={{
+              position:'absolute', left:`${left}%`, top:0,
+              transform: isFirst ? 'scaleX(-1) scaleY(-1)' : 'translateX(-50%) scaleX(-1) scaleY(-1)',
+              fontSize:9, color:C.sub, whiteSpace:'nowrap', writingMode:'vertical-lr',
+            }}>{era.start}</div>
           );
         })}
-        <div style={{ position:'absolute', right:0, top:0 }}>
-          <div style={{ fontSize:9, color:C.sub, whiteSpace:'nowrap', transform:'rotate(-90deg)', transformOrigin:'center 50%', marginTop:10 }}>[last_year]</div>
-        </div>
+        <div style={{ position:'absolute', right:0, top:0, fontSize:9, color:C.sub, whiteSpace:'nowrap', writingMode:'vertical-lr', transform:'scaleX(-1) scaleY(-1)' }}>[last_year]</div>
       </div>
 
       {/* Placeholder — visible when no era selected */}
@@ -655,18 +672,18 @@ Each section follows this pattern:
 <SectionHeader icon={Icons.chart} label="Section Name" />
 
 {/* KPI card grid */}
-<div className="row g-1 mb-3">
+<div id="item" className="row g-1 mb-3">
   <div className="col-6 col-md-4 d-flex"><KpiCard ... /></div>
   <div className="col-6 col-md-4 d-flex"><KpiCard ... /></div>
   {/* 6–9 cards */}
 </div>
 
 {/* Panel row */}
-<div className="row gy-3 mb-3">
+<div id="item" className="row gy-3 mb-3">
   <div className="col-12 col-md-6">
     <Panel title="..." icon={Icons.chart}>
       <BarRow ... />
-      <p style={{ fontSize:11, color:C.sub, marginTop:10, lineHeight:1.6 }}>Note.</p>
+      <p id="subnote" style={{ fontSize:11, color:C.sub, marginTop:10, marginBottom:0, lineHeight:1.6 }}>Note.</p>
       {/* GradientBar or AgeBar inserted here if applicable */}
     </Panel>
   </div>
@@ -709,7 +726,7 @@ Each section follows this pattern:
 ## Hero Section
 
 ```jsx
-<div style={{ padding:'20px 0 0', display:'grid', gridTemplateColumns:'1fr auto',
+<div id="top" style={{ padding:'20px 0 0', display:'grid', gridTemplateColumns:'1fr auto',
   alignItems:'end', gap:32, marginBottom:8 }}>
   <div>
     <div style={{ fontSize:10, letterSpacing:'0.28em', textTransform:'uppercase',
@@ -740,11 +757,11 @@ Each section follows this pattern:
 ## Footer / Sources Line
 
 ```jsx
-<div style={{ padding:'8px 0 0', marginTop:8 }}>
+<div id="footer" style={{ padding:'8px 0 0', marginTop:8 }}>
   <p style={{ fontSize:10.5, color:'#555', lineHeight:1.7 }}>
     Sources: NSC KR · World Bank · IMF 2025 · ... · Data as of May 2026.
   </p>
-  <p style={{ fontSize:9.5, color:'#444', marginTop:6, lineHeight:1.6 }}>
+  <p style={{ fontSize:9.5, color:'#444', marginTop:6, lineHeight:1.6, textAlign:'center' }}>
     Generated [Month Year] · Claude Sonnet 4.6 (Anthropic) · iAlmirPro
   </p>
 </div>

@@ -18,7 +18,7 @@
   </head>
   <body style="margin:0;background:#000">
     <div class="dash">
-      <div style="padding:20px 0 0;display:grid;grid-template-columns:1fr auto;align-items:end;gap:32px;margin-bottom:8px">
+      <div id="top" style="padding:20px 0 0;display:grid;grid-template-columns:1fr auto;align-items:end;gap:32px;margin-bottom:8px">
         <div>
           <div style="font-size:10px;letter-spacing:0.28em;text-transform:uppercase;color:#1EB4E5;margin-bottom:14px">
             Country Dashboard 2025
@@ -73,7 +73,7 @@
           </div>
         </div>
       </div>
-      <div style="margin:28px 0 8px">
+      <div id="glance" style="margin:28px 0 8px">
         <div style="font-size:10px;letter-spacing:0.28em;text-transform:uppercase;color:#999;margin-bottom:14px">
           At a glance
         </div>
@@ -361,18 +361,17 @@
           </div>
         </div>
       </div>
-      <!-- *************************************************** -->
-      <!-- GEOGRAPHY & LANDSCAPE                               -->
-      <!-- *************************************************** -->
-      <div style="display:flex;align-items:center;gap:10px;margin-bottom:28px;padding-top:24px">
-        <span style="color:#fff;font-size:16px;flex-shrink:0">
-        <svg fill="currentColor" height="14" viewbox="0 0 512 512" width="14" xmlns="http://www.w3.org/2000/svg">
-          <path d="M256 32L32 480h448L256 32zm0 77l163 291H93L256 109z">
-          </path>
-        </svg>
-        </span><span style="font-size:13px;letter-spacing:0.18em;text-transform:uppercase;color:#fff;font-weight:500">Geography &amp; Landscape</span>
+      <div class="row my-3" id="section">
+        <div class="col-12 d-flex align-items-center gap-2">
+          <span style="color:#fff;font-size:16px;flex-shrink:0">
+          <svg fill="currentColor" height="14" viewbox="0 0 512 512" width="14" xmlns="http://www.w3.org/2000/svg">
+            <path d="M256 32L32 480h448L256 32zm0 77l163 291H93L256 109z">
+            </path>
+          </svg>
+          </span><span style="font-size:13px;letter-spacing:0.18em;text-transform:uppercase;color:#fff;font-weight:500">Geography &amp; Landscape</span>
+        </div>
       </div>
-      <div class="row g-1 mb-3">
+      <div class="row g-1 mb-3" id="item">
         <div class="col-6 col-md-4 d-flex">
           <!-- KPI Card: Total Area -->
           <div class="kpi" style="background:#111;border:1px solid #1e1e1e;padding:18px 15px 15px;position:relative;overflow:hidden;animation-delay:0.05s;width:100%;flex:1">
@@ -518,11 +517,10 @@
           </div>
         </div>
       </div>
-      <div class="row gy-3 mb-3">
+      <div class="row gy-3 mb-3" id="item">
         <div class="col-12 col-md-6">
-          <!-- Panel: Major Terrain Zones -->
-          <div style="background:#111;border:1px solid #1e1e1e;padding:24px 20px;height:100%">
-            <div style="font-family:Fraunces,serif;font-weight:700;font-size:13px;color:#fff;margin-bottom:16px;padding-bottom:11px;border-bottom:1px solid #1e1e1e;display:flex;align-items:center;gap:8px">
+          <div id="panel" style="background:#111;border:1px solid #1e1e1e;padding:20px 20px;height:100%">
+            <div id="title" style="font-family:Fraunces,serif;font-weight:700;font-size:13px;color:#fff;margin-bottom:16px;padding-bottom:11px;border-bottom:1px solid #1e1e1e;display:flex;align-items:center;gap:8px">
               <span style="color:#fff;flex-shrink:0">
               <svg fill="currentColor" height="14" viewbox="0 0 576 512" width="14" xmlns="http://www.w3.org/2000/svg">
                 <path d="M384 476.1L192 421.2V35.9L384 90.8v385.3zm32-1.2V88.4l127.1-42.4c5.7-1.9 11.9.3 15.3 5.3 1.7 2.5 2.6 5.5 2.6 8.5V440c0 6.1-3.9 11.5-9.7 13.4L416 474.9zM15.7 56.4L160 10.7V98.6l-128 43.4V69c0-6.1 3.9-11.5 9.7-13.4zM192 421.2L32 474.9V138.7l160-54.2v336.7z">
@@ -575,15 +573,14 @@
                 </div>
               </div>
             </div>
-            <p style="font-size:11px;color:#999;margin-top:10px;line-height:1.6">
+            <p id="subnote" style="font-size:11px;color:#999;margin-top:10px;margin-bottom:0;line-height:1.6">
               80% desert makes Uzbekistan appear barren, but the Fergana Valley — shared with Kyrgyzstan and Tajikistan — is among Central Asia's most productive agricultural zones. The Kyzylkum Desert contains significant gold deposits (Muruntau mine — world's largest open-pit gold mine) and natural gas reserves.
             </p>
           </div>
         </div>
         <div class="col-12 col-md-6">
-          <!-- Panel: Key Water Bodies & Features -->
-          <div style="background:#111;border:1px solid #1e1e1e;padding:24px 20px;height:100%">
-            <div style="font-family:Fraunces,serif;font-weight:700;font-size:13px;color:#fff;margin-bottom:16px;padding-bottom:11px;border-bottom:1px solid #1e1e1e;display:flex;align-items:center;gap:8px">
+          <div id="panel" style="background:#111;border:1px solid #1e1e1e;padding:20px 20px;height:100%">
+            <div id="title" style="font-family:Fraunces,serif;font-weight:700;font-size:13px;color:#fff;margin-bottom:16px;padding-bottom:11px;border-bottom:1px solid #1e1e1e;display:flex;align-items:center;gap:8px">
               <span style="color:#fff;flex-shrink:0">
               <svg fill="currentColor" height="14" viewbox="0 0 576 512" width="14" xmlns="http://www.w3.org/2000/svg">
                 <path d="M269.5 69.9c11.1-7.9 25.9-7.9 37 0C329 85.4 356.5 96 384 96c26.9 0 55.4-10.1 80.4-25.1 16-9.7 36.4-8.1 50.7 4.2s18.2 31.6 11.2 48.6C520.1 140 516 159 516 178c0 49.7 20 87.5 38.2 106.9l.4.4c17 18 22.4 44.5 13.4 67.8S536.6 391 511.4 391H64c-25.2 0-47.6-15.3-56.6-38.5s-3.6-49.8 13.4-67.8l.4-.4C39 265.5 59 227.7 59 178c0-18.4-3.4-36.3-9.9-52.4-7-17-2.9-36.3 11.2-48.6S105 62.9 121 72.9C146 87.9 173.1 96 200 96c27.5 0 55-10.6 77.5-26.1z">
@@ -591,7 +588,7 @@
               </svg>
               </span>Key Water Bodies &amp; Features
             </div>
-            <table style="width:100%;border-collapse:collapse;table-layout:fixed">
+            <table id="paneltbl" style="width:100%;border-collapse:collapse;table-layout:fixed">
               <tbody>
                 <tr style="border-bottom:1px solid #1e1e1e">
                   <td style="padding:9px 4px;font-size:12.5px;color:#999;width:58%;overflow-wrap:break-word">
@@ -643,13 +640,13 @@
                 </tr>
               </tbody>
             </table>
-            <p style="font-size:11px;color:#999;margin-top:10px;line-height:1.6">
+            <p id="subnote" style="font-size:11px;color:#999;margin-top:10px;margin-bottom:0;line-height:1.6">
               The Aral Sea disaster — shared with Kazakhstan — is one of the world's worst ecological catastrophes. Soviet cotton irrigation drained both the Amu Darya and Syr Darya, shrinking the sea by 91%. The exposed seabed (Aralkum desert) now generates toxic salt dust storms affecting millions. Uzbekistan has taken global leadership in Aral Sea advocacy.
             </p>
           </div>
         </div>
       </div>
-      <div class="row g-1 mb-3">
+      <div class="row g-1 mb-3" id="item">
         <div class="col-6 col-md-3 d-flex">
           <div style="background:#111;border:1px solid #1e1e1e;padding:18px 14px;position:relative;overflow:hidden;height:100%">
             <div style="position:absolute;top:0;left:0;right:0;height:3px;background:#1EB4E5">
@@ -660,7 +657,7 @@
             <div style="font-size:10px;letter-spacing:0.09em;text-transform:uppercase;color:#999;margin-bottom:9px">
               Capital · industrial hub
             </div>
-            <div style="font-size:12px;color:#888;line-height:1.6">
+            <div id="subnote" style="font-size:12px;color:#888;line-height:1.6">
               Capital (3M+). Major Soviet industrial city. Modernising rapidly under Mirziyoyev. Central Asia's largest city.
             </div>
           </div>
@@ -675,7 +672,7 @@
             <div style="font-size:10px;letter-spacing:0.09em;text-transform:uppercase;color:#999;margin-bottom:9px">
               Tourism · silk road
             </div>
-            <div style="font-size:12px;color:#888;line-height:1.6">
+            <div id="subnote" style="font-size:12px;color:#888;line-height:1.6">
               UNESCO World Heritage city. Registan, Bibi-Khanym Mosque. Was capital of Tamerlane's empire. 2M visitors/yr.
             </div>
           </div>
@@ -690,7 +687,7 @@
             <div style="font-size:10px;letter-spacing:0.09em;text-transform:uppercase;color:#999;margin-bottom:9px">
               Agriculture · dense
             </div>
-            <div style="font-size:12px;color:#888;line-height:1.6">
+            <div id="subnote" style="font-size:12px;color:#888;line-height:1.6">
               Namangan, Fergana, Andijan cities. Cotton, silk, fruit. ~14M people in shared basin. Most contested region.
             </div>
           </div>
@@ -705,24 +702,23 @@
             <div style="font-size:10px;letter-spacing:0.09em;text-transform:uppercase;color:#999;margin-bottom:9px">
               Heritage · west
             </div>
-            <div style="font-size:12px;color:#888;line-height:1.6">
+            <div id="subnote" style="font-size:12px;color:#888;line-height:1.6">
               Ancient oasis cities on Silk Road. Bukhara old city (UNESCO). Natural gas fields. Khiva walled city.
             </div>
           </div>
         </div>
       </div>
-      <!-- *************************************************** -->
-      <!-- CLIMATE: WEATHER, DAYLIGHT & RAINFALL               -->
-      <!-- *************************************************** -->
-      <div style="display:flex;align-items:center;gap:10px;margin-bottom:28px;padding-top:24px">
-        <span style="color:#fff;font-size:16px;flex-shrink:0">
-        <svg fill="currentColor" height="14" viewbox="0 0 640 512" width="14" xmlns="http://www.w3.org/2000/svg">
-          <path d="M294.2 1.2c5.1 2.1 8.7 6.7 9.6 12.1l18.4 107.5 107.5 18.4c5.4.9 10 4.5 12.1 9.6s1.5 10.9-1.6 15.4l-62.3 90.3 46.5 60.7c3.1 4.5 3.7 10.2 1.6 15.2s-6.6 8.6-11.9 9.6L301.7 358l-19.9 107.9c-1 5.3-4.6 9.8-9.6 11.9s-10.7 1.5-15.2-1.6L167.7 414l-90.4 62.2c-4.5 3.1-10.2 3.7-15.2 1.6s-8.6-6.6-9.6-11.9L33.6 358 1.2 294.2c-2.1-5-1.5-10.7 1.6-15.2L65 218.7 2.8 128.4c-3.1-4.5-3.7-10.2-1.6-15.4s6.7-8.7 12.1-9.6L121.8 85 140.2 13c1-5.4 4.5-10 9.6-12.1S160.5-.6 165 2.5L256 64.9 347 2.5c4.5-3.1 10.1-3.6 15.2-1.3z">
-          </path>
-        </svg>
-        </span><span style="font-size:13px;letter-spacing:0.18em;text-transform:uppercase;color:#fff;font-weight:500">Climate: Weather, Daylight &amp; Rainfall</span>
+      <div class="row my-3" id="section">
+        <div class="col-12 d-flex align-items-center gap-2">
+          <span style="color:#fff;font-size:16px;flex-shrink:0">
+          <svg fill="currentColor" height="14" viewbox="0 0 640 512" width="14" xmlns="http://www.w3.org/2000/svg">
+            <path d="M294.2 1.2c5.1 2.1 8.7 6.7 9.6 12.1l18.4 107.5 107.5 18.4c5.4.9 10 4.5 12.1 9.6s1.5 10.9-1.6 15.4l-62.3 90.3 46.5 60.7c3.1 4.5 3.7 10.2 1.6 15.2s-6.6 8.6-11.9 9.6L301.7 358l-19.9 107.9c-1 5.3-4.6 9.8-9.6 11.9s-10.7 1.5-15.2-1.6L167.7 414l-90.4 62.2c-4.5 3.1-10.2 3.7-15.2 1.6s-8.6-6.6-9.6-11.9L33.6 358 1.2 294.2c-2.1-5-1.5-10.7 1.6-15.2L65 218.7 2.8 128.4c-3.1-4.5-3.7-10.2-1.6-15.4s6.7-8.7 12.1-9.6L121.8 85 140.2 13c1-5.4 4.5-10 9.6-12.1S160.5-.6 165 2.5L256 64.9 347 2.5c4.5-3.1 10.1-3.6 15.2-1.3z">
+            </path>
+          </svg>
+          </span><span style="font-size:13px;letter-spacing:0.18em;text-transform:uppercase;color:#fff;font-weight:500">Climate: Weather, Daylight &amp; Rainfall</span>
+        </div>
       </div>
-      <div class="row g-1 mb-4">
+      <div class="row g-1 mb-4" id="item">
         <div class="col-6 col-md-4 d-flex">
           <!-- KPI Card: Avg Annual Temp (Tashkent) -->
           <div class="kpi" style="background:#111;border:1px solid #1e1e1e;padding:18px 15px 15px;position:relative;overflow:hidden;animation-delay:0.05s;width:100%;flex:1">
@@ -868,11 +864,10 @@
           </div>
         </div>
       </div>
-      <div class="row gy-3 mb-3">
+      <div class="row gy-3 mb-3" id="item">
         <div class="col-12 col-md-6">
-          <!-- Panel: Daylight Hours — Tashkent (41.3°N) -->
-          <div style="background:#111;border:1px solid #1e1e1e;padding:24px 20px;height:100%">
-            <div style="font-family:Fraunces,serif;font-weight:700;font-size:13px;color:#fff;margin-bottom:16px;padding-bottom:11px;border-bottom:1px solid #1e1e1e;display:flex;align-items:center;gap:8px">
+          <div id="panel" style="background:#111;border:1px solid #1e1e1e;padding:20px 20px;height:100%">
+            <div id="title" style="font-family:Fraunces,serif;font-weight:700;font-size:13px;color:#fff;margin-bottom:16px;padding-bottom:11px;border-bottom:1px solid #1e1e1e;display:flex;align-items:center;gap:8px">
               <span style="color:#fff;flex-shrink:0">
               <svg fill="currentColor" height="14" viewbox="0 0 512 512" width="14" xmlns="http://www.w3.org/2000/svg">
                 <path d="M361.5 1.2c5 2.1 8.6 6.6 9.6 11.9L391 121l107.9 19.8c5.3 1 9.8 4.6 11.9 9.6s1.5 10.7-1.6 15.2L446.9 256l62.3 90.3c3.1 4.5 3.7 10.2 1.6 15.2s-6.6 8.6-11.9 9.6L391 391 371.1 498.9c-1 5.3-4.6 9.8-9.6 11.9s-10.7 1.5-15.2-1.6L256 446.9l-90.3 62.3c-4.5 3.1-10.2 3.7-15.2 1.6s-8.6-6.6-9.6-11.9L121 391 13.1 371.1c-5.3-1-9.8-4.6-11.9-9.6s-1.5-10.7 1.6-15.2L65.1 256 2.8 165.7c-3.1-4.5-3.7-10.2-1.6-15.2s6.6-8.6 11.9-9.6L121 121 140.9 13.1c1-5.3 4.6-9.8 9.6-11.9s10.7-1.5 15.2 1.6L256 65.1 346.3 2.8c4.5-3.1 10.2-3.7 15.2-1.6zM160 256a96 96 0 1 1 192 0 96 96 0 1 1-192 0z">
@@ -976,18 +971,17 @@
                 </div>
               </div>
             </div>
-            <p style="font-size:11px;color:#999;margin-top:10px;line-height:1.6">
+            <p id="subnote" style="font-size:11px;color:#999;margin-top:10px;margin-bottom:0;line-height:1.6">
               ★ Summer solstice <strong style="color:#5dc97c">15h 10m</strong> · Winter solstice <strong style="color:#5ba8ff">9h 04m</strong> · 300 sunny days/year in Tashkent — excellent solar energy potential · <em>Daylight values confirmed against climate.top / timeanddate.com (latitude 41.3°N)</em>
             </p>
-            <p style="font-size:11px;color:#999;margin-top:10px;line-height:1.6">
+            <p id="subnote" style="font-size:11px;color:#999;margin-top:10px;margin-bottom:0;line-height:1.6">
               Tashkent's 300 sunny days and abundant flat desert land give Uzbekistan world-class solar energy potential. The government is developing 42 renewable projects totalling $9.5B — one of Central Asia's most ambitious clean energy programmes.
             </p>
           </div>
         </div>
         <div class="col-12 col-md-6">
-          <!-- Panel: Rainfall by Region -->
-          <div style="background:#111;border:1px solid #1e1e1e;padding:24px 20px;height:100%">
-            <div style="font-family:Fraunces,serif;font-weight:700;font-size:13px;color:#fff;margin-bottom:16px;padding-bottom:11px;border-bottom:1px solid #1e1e1e;display:flex;align-items:center;gap:8px">
+          <div id="panel" style="background:#111;border:1px solid #1e1e1e;padding:20px 20px;height:100%">
+            <div id="title" style="font-family:Fraunces,serif;font-weight:700;font-size:13px;color:#fff;margin-bottom:16px;padding-bottom:11px;border-bottom:1px solid #1e1e1e;display:flex;align-items:center;gap:8px">
               <span style="color:#fff;flex-shrink:0">
               <svg fill="currentColor" height="14" viewbox="0 0 512 512" width="14" xmlns="http://www.w3.org/2000/svg">
                 <path d="M96 320c-53 0-96-43-96-96 0-42.5 27.6-78.6 65.9-91.2C64.7 126.1 64 119.1 64 112 64 50.1 114.1 0 176 0c43.1 0 80.5 24.3 99.8 60 14.7-17.1 36.5-28 60.2-28 44.2 0 80 35.8 80 80 0 5.5-.6 10.8-1.6 16 .5 0 1.1 0 1.6 0 53 0 96 43 96 96s-43 96-96 96H96zm-8 96c0-13.3 10.7-24 24-24s24 10.7 24 24v80c0 13.3-10.7 24-24 24s-24-10.7-24-24v-80zm120-24c13.3 0 24 10.7 24 24v80c0 13.3-10.7 24-24 24s-24-10.7-24-24v-80c0-13.3 10.7-24 24-24zm96 24c0-13.3 10.7-24 24-24s24 10.7 24 24v80c0 13.3-10.7 24-24 24s-24-10.7-24-24v-80zm120-24c13.3 0 24 10.7 24 24v80c0 13.3-10.7 24-24 24s-24-10.7-24-24v-80c0-13.3 10.7-24 24-24z">
@@ -1075,7 +1069,7 @@
                 </div>
               </div>
             </div>
-            <p style="font-size:11px;color:#999;margin-top:10px;line-height:1.6">
+            <p id="subnote" style="font-size:11px;color:#999;margin-top:10px;margin-bottom:0;line-height:1.6">
               Almost zero rainfall in summer (3–8mm/month Jun–Sep) means agriculture is entirely dependent on irrigation from the Amu Darya and Syr Darya — the same rivers that once filled the Aral Sea. Water stress is Uzbekistan's most critical long-term environmental and economic challenge.
             </p>
             <div style="margin-top:14px">
@@ -1295,18 +1289,17 @@
           </div>
         </div>
       </div>
-      <!-- *************************************************** -->
-      <!-- POPULATION & DEMOGRAPHICS                           -->
-      <!-- *************************************************** -->
-      <div style="display:flex;align-items:center;gap:10px;margin-bottom:28px;padding-top:24px">
-        <span style="color:#fff;font-size:16px;flex-shrink:0">
-        <svg fill="currentColor" height="14" viewbox="0 0 640 512" width="14" xmlns="http://www.w3.org/2000/svg">
-          <path d="M72 88a56 56 0 1 1 112 0A56 56 0 1 1 72 88zM64 245.7C54 256.9 48 271.8 48 288s6 31.1 16 42.3V245.7zm144.4-49.3C178.7 222.7 160 261.2 160 304c0 34.3 12 65.8 32 90.5V416c0 17.7-14.3 32-32 32H96c-17.7 0-32-14.3-32-32V389.2C26.2 371.2 0 332.7 0 288c0-61.9 50.1-112 112-112c29.3 0 56 11.3 75.9 29.7zM320 32a64 64 0 1 1 0 128A64 64 0 1 1 320 32zM448 304c0 44.7-26.2 83.2-64 101.2V448c0 17.7-14.3 32-32 32H288c-17.7 0-32-14.3-32-32V405.2c-37.8-18-64-56.5-64-101.2c0-61.9 50.1-112 112-112h32c61.9 0 112 50.1 112 112z">
-          </path>
-        </svg>
-        </span><span style="font-size:13px;letter-spacing:0.18em;text-transform:uppercase;color:#fff;font-weight:500">Population &amp; Demographics</span>
+      <div class="row my-3" id="section">
+        <div class="col-12 d-flex align-items-center gap-2">
+          <span style="color:#fff;font-size:16px;flex-shrink:0">
+          <svg fill="currentColor" height="14" viewbox="0 0 640 512" width="14" xmlns="http://www.w3.org/2000/svg">
+            <path d="M72 88a56 56 0 1 1 112 0A56 56 0 1 1 72 88zM64 245.7C54 256.9 48 271.8 48 288s6 31.1 16 42.3V245.7zm144.4-49.3C178.7 222.7 160 261.2 160 304c0 34.3 12 65.8 32 90.5V416c0 17.7-14.3 32-32 32H96c-17.7 0-32-14.3-32-32V389.2C26.2 371.2 0 332.7 0 288c0-61.9 50.1-112 112-112c29.3 0 56 11.3 75.9 29.7zM320 32a64 64 0 1 1 0 128A64 64 0 1 1 320 32zM448 304c0 44.7-26.2 83.2-64 101.2V448c0 17.7-14.3 32-32 32H288c-17.7 0-32-14.3-32-32V405.2c-37.8-18-64-56.5-64-101.2c0-61.9 50.1-112 112-112h32c61.9 0 112 50.1 112 112z">
+            </path>
+          </svg>
+          </span><span style="font-size:13px;letter-spacing:0.18em;text-transform:uppercase;color:#fff;font-weight:500">Population &amp; Demographics</span>
+        </div>
       </div>
-      <div class="row g-1 mb-3">
+      <div class="row g-1 mb-3" id="item">
         <div class="col-6 col-md-4 d-flex">
           <!-- KPI Card: Population (Jul 2025) -->
           <div class="kpi" style="background:#111;border:1px solid #1e1e1e;padding:18px 15px 15px;position:relative;overflow:hidden;animation-delay:0.05s;width:100%;flex:1">
@@ -1404,11 +1397,10 @@
           </div>
         </div>
       </div>
-      <div class="row gy-3 mb-3">
+      <div class="row gy-3 mb-3" id="item">
         <div class="col-12 col-md-6">
-          <!-- Panel: Population Growth -->
-          <div style="background:#111;border:1px solid #1e1e1e;padding:24px 20px;height:100%">
-            <div style="font-family:Fraunces,serif;font-weight:700;font-size:13px;color:#fff;margin-bottom:16px;padding-bottom:11px;border-bottom:1px solid #1e1e1e;display:flex;align-items:center;gap:8px">
+          <div id="panel" style="background:#111;border:1px solid #1e1e1e;padding:20px 20px;height:100%">
+            <div id="title" style="font-family:Fraunces,serif;font-weight:700;font-size:13px;color:#fff;margin-bottom:16px;padding-bottom:11px;border-bottom:1px solid #1e1e1e;display:flex;align-items:center;gap:8px">
               <span style="color:#fff;flex-shrink:0">
               <svg fill="currentColor" height="14" viewbox="0 0 512 512" width="14" xmlns="http://www.w3.org/2000/svg">
                 <path d="M64 64c0-17.7-14.3-32-32-32S0 46.3 0 64V400c0 44.2 35.8 80 80 80H480c17.7 0 32-14.3 32-32s-14.3-32-32-32H80c-8.8 0-16-7.2-16-16V64zm406.6 86.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L320 210.7l-57.4-57.4c-12.5-12.5-32.8-12.5-45.3 0l-112 112c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L240 221.3l57.4 57.4c12.5 12.5 32.8 12.5 45.3 0l128-128z">
@@ -1461,21 +1453,20 @@
                 </div>
               </div>
             </div>
-            <p style="font-size:11px;color:#999;margin-top:10px;line-height:1.6">
+            <p id="subnote" style="font-size:11px;color:#999;margin-top:10px;margin-bottom:0;line-height:1.6">
               Uzbekistan's population nearly doubled since independence — from 20.6M to 37.9M (+84%). Unlike Kazakhstan, it did not suffer post-Soviet emigration collapse; natural growth remained high throughout. With 37.9M people, Uzbekistan accounts for ~50% of Central Asia's total population.
             </p>
           </div>
         </div>
         <div class="col-12 col-md-6">
-          <!-- Panel: Largest Cities (2025 est. — no inter-census registry; city boundaries vary by source) -->
-          <div style="background:#111;border:1px solid #1e1e1e;padding:24px 20px;height:100%">
-            <div style="font-family:Fraunces,serif;font-weight:700;font-size:13px;color:#fff;margin-bottom:16px;padding-bottom:11px;border-bottom:1px solid #1e1e1e;display:flex;align-items:center;gap:8px">
+          <div id="panel" style="background:#111;border:1px solid #1e1e1e;padding:20px 20px;height:100%">
+            <div id="title" style="font-family:Fraunces,serif;font-weight:700;font-size:13px;color:#fff;margin-bottom:16px;padding-bottom:11px;border-bottom:1px solid #1e1e1e;display:flex;align-items:center;gap:8px">
               <span style="color:#fff;flex-shrink:0">
               <svg fill="currentColor" height="14" viewbox="0 0 512 512" width="14" xmlns="http://www.w3.org/2000/svg">
                 <path d="M240.1 4.2c9.8-5.6 21.9-5.6 31.8 0l208 120c9.2 5.3 14.1 15.6 12.2 26.1s-10.4 18.5-21 18.5h-24.9L448 464H480c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H64L66.7 168.8H41.7c-10.6 0-19.2-7.9-21-18.5s3-20.8 12.2-26.1l208-120z">
                 </path>
               </svg>
-              </span>Largest Cities (2025 est. — no inter-census registry; city boundaries vary by source)
+              </span>Largest Cities (2025 est.)
             </div>
             <div style="margin-bottom:13px">
               <div style="display:flex;justify-content:space-between;align-items:baseline;font-size:12px;color:#999;margin-bottom:5px;gap:4px">
@@ -1522,17 +1513,19 @@
                 </div>
               </div>
             </div>
-            <p style="font-size:11px;color:#999;margin-top:10px;line-height:1.6">
+            <p id="subnote" style="font-size:11px;color:#999;margin-top:10px;margin-bottom:0;line-height:1.6">
+              2025 est. — no inter-census registry; city boundaries vary by source.
+            </p>
+            <p id="subnote" style="font-size:11px;color:#999;margin-top:10px;margin-bottom:0;line-height:1.6">
               Tashkent at 3M+ is Central Asia's largest city — but notably, the Fergana Valley cities (Namangan, Andijan, Fergana city) together hold more people than Tashkent. The Valley's extreme density (~900/km²) creates significant pressure on water, land, and employment — making it Central Asia's most politically sensitive zone.
             </p>
           </div>
         </div>
       </div>
-      <div class="row gy-3 mb-3">
+      <div class="row gy-3 mb-3" id="item">
         <div class="col-12 col-md-6">
-          <!-- Panel: Ethnic Composition (2021) -->
-          <div style="background:#111;border:1px solid #1e1e1e;padding:24px 20px;height:100%">
-            <div style="font-family:Fraunces,serif;font-weight:700;font-size:13px;color:#fff;margin-bottom:16px;padding-bottom:11px;border-bottom:1px solid #1e1e1e;display:flex;align-items:center;gap:8px">
+          <div id="panel" style="background:#111;border:1px solid #1e1e1e;padding:20px 20px;height:100%">
+            <div id="title" style="font-family:Fraunces,serif;font-weight:700;font-size:13px;color:#fff;margin-bottom:16px;padding-bottom:11px;border-bottom:1px solid #1e1e1e;display:flex;align-items:center;gap:8px">
               <span style="color:#fff;flex-shrink:0">
               <svg fill="currentColor" height="14" viewbox="0 0 640 512" width="14" xmlns="http://www.w3.org/2000/svg">
                 <path d="M72 88a56 56 0 1 1 112 0A56 56 0 1 1 72 88zM64 245.7C54 256.9 48 271.8 48 288s6 31.1 16 42.3V245.7zm144.4-49.3C178.7 222.7 160 261.2 160 304c0 34.3 12 65.8 32 90.5V416c0 17.7-14.3 32-32 32H96c-17.7 0-32-14.3-32-32V389.2C26.2 371.2 0 332.7 0 288c0-61.9 50.1-112 112-112c29.3 0 56 11.3 75.9 29.7zM320 32a64 64 0 1 1 0 128A64 64 0 1 1 320 32zM448 304c0 44.7-26.2 83.2-64 101.2V448c0 17.7-14.3 32-32 32H288c-17.7 0-32-14.3-32-32V405.2c-37.8-18-64-56.5-64-101.2c0-61.9 50.1-112 112-112h32c61.9 0 112 50.1 112 112z">
@@ -1593,15 +1586,14 @@
                 </div>
               </div>
             </div>
-            <p style="font-size:11px;color:#999;margin-top:10px;line-height:1.6">
+            <p id="subnote" style="font-size:11px;color:#999;margin-top:10px;margin-bottom:0;line-height:1.6">
               The Tajik share (4.8%) is likely significantly underreported — Samarkand and Bukhara have historically large Tajik-speaking populations. Many Tajik-speakers registered as Uzbek during Soviet-era censuses. This is a cultural and political sensitivity in Uzbek-Tajik relations.
             </p>
           </div>
         </div>
         <div class="col-12 col-md-6">
-          <!-- Panel: Religion & Language -->
-          <div style="background:#111;border:1px solid #1e1e1e;padding:24px 20px;height:100%">
-            <div style="font-family:Fraunces,serif;font-weight:700;font-size:13px;color:#fff;margin-bottom:16px;padding-bottom:11px;border-bottom:1px solid #1e1e1e;display:flex;align-items:center;gap:8px">
+          <div id="panel" style="background:#111;border:1px solid #1e1e1e;padding:20px 20px;height:100%">
+            <div id="title" style="font-family:Fraunces,serif;font-weight:700;font-size:13px;color:#fff;margin-bottom:16px;padding-bottom:11px;border-bottom:1px solid #1e1e1e;display:flex;align-items:center;gap:8px">
               <span style="color:#fff;flex-shrink:0">
               <svg fill="currentColor" height="14" viewbox="0 0 512 512" width="14" xmlns="http://www.w3.org/2000/svg">
                 <path d="M240.1 4.2c9.8-5.6 21.9-5.6 31.8 0l208 120c9.2 5.3 14.1 15.6 12.2 26.1s-10.4 18.5-21 18.5h-24.9L448 464H480c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H64L66.7 168.8H41.7c-10.6 0-19.2-7.9-21-18.5s3-20.8 12.2-26.1l208-120z">
@@ -1609,7 +1601,7 @@
               </svg>
               </span>Religion &amp; Language
             </div>
-            <table style="width:100%;border-collapse:collapse;table-layout:fixed">
+            <table id="paneltbl" style="width:100%;border-collapse:collapse;table-layout:fixed">
               <tbody>
                 <tr style="border-bottom:1px solid #1e1e1e">
                   <td style="padding:9px 4px;font-size:12.5px;color:#999;width:58%;overflow-wrap:break-word">
@@ -1669,24 +1661,23 @@
                 </tr>
               </tbody>
             </table>
-            <p style="font-size:11px;color:#999;margin-top:10px;line-height:1.6">
+            <p id="subnote" style="font-size:11px;color:#999;margin-top:10px;margin-bottom:0;line-height:1.6">
               Uzbekistan's Hanafi Sunni Islam is generally moderate — a secular tradition reinforced under Karimov (1991–2016). Mirziyoyev has cautiously opened religious expression while maintaining state control. The Uzbek Latin script transition (from Cyrillic) is ongoing — most adults still use Cyrillic while youth learn Latin.
             </p>
           </div>
         </div>
       </div>
-      <!-- *************************************************** -->
-      <!-- ECONOMY & FINANCE                                   -->
-      <!-- *************************************************** -->
-      <div style="display:flex;align-items:center;gap:10px;margin-bottom:28px;padding-top:24px">
-        <span style="color:#fff;font-size:16px;flex-shrink:0">
-        <svg fill="currentColor" height="14" viewbox="0 0 512 512" width="14" xmlns="http://www.w3.org/2000/svg">
-          <path d="M64 64c0-17.7-14.3-32-32-32S0 46.3 0 64V400c0 44.2 35.8 80 80 80H480c17.7 0 32-14.3 32-32s-14.3-32-32-32H80c-8.8 0-16-7.2-16-16V64zm406.6 86.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L320 210.7l-57.4-57.4c-12.5-12.5-32.8-12.5-45.3 0l-112 112c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L240 221.3l57.4 57.4c12.5 12.5 32.8 12.5 45.3 0l128-128z">
-          </path>
-        </svg>
-        </span><span style="font-size:13px;letter-spacing:0.18em;text-transform:uppercase;color:#fff;font-weight:500">Economy &amp; Finance</span>
+      <div class="row my-3" id="section">
+        <div class="col-12 d-flex align-items-center gap-2">
+          <span style="color:#fff;font-size:16px;flex-shrink:0">
+          <svg fill="currentColor" height="14" viewbox="0 0 512 512" width="14" xmlns="http://www.w3.org/2000/svg">
+            <path d="M64 64c0-17.7-14.3-32-32-32S0 46.3 0 64V400c0 44.2 35.8 80 80 80H480c17.7 0 32-14.3 32-32s-14.3-32-32-32H80c-8.8 0-16-7.2-16-16V64zm406.6 86.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L320 210.7l-57.4-57.4c-12.5-12.5-32.8-12.5-45.3 0l-112 112c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L240 221.3l57.4 57.4c12.5 12.5 32.8 12.5 45.3 0l128-128z">
+            </path>
+          </svg>
+          </span><span style="font-size:13px;letter-spacing:0.18em;text-transform:uppercase;color:#fff;font-weight:500">Economy &amp; Finance</span>
+        </div>
       </div>
-      <div class="row g-1 mb-3">
+      <div class="row g-1 mb-3" id="item">
         <div class="col-6 col-md-4 d-flex">
           <!-- KPI Card: GDP Nominal (2025) -->
           <div class="kpi" style="background:#111;border:1px solid #1e1e1e;padding:18px 15px 15px;position:relative;overflow:hidden;animation-delay:0.05s;width:100%;flex:1">
@@ -1784,11 +1775,10 @@
           </div>
         </div>
       </div>
-      <div class="row gy-3 mb-3">
+      <div class="row gy-3 mb-3" id="item">
         <div class="col-12 col-md-6">
-          <!-- Panel: GDP by Sector & Major Exports -->
-          <div style="background:#111;border:1px solid #1e1e1e;padding:24px 20px;height:100%">
-            <div style="font-family:Fraunces,serif;font-weight:700;font-size:13px;color:#fff;margin-bottom:16px;padding-bottom:11px;border-bottom:1px solid #1e1e1e;display:flex;align-items:center;gap:8px">
+          <div id="panel" style="background:#111;border:1px solid #1e1e1e;padding:20px 20px;height:100%">
+            <div id="title" style="font-family:Fraunces,serif;font-weight:700;font-size:13px;color:#fff;margin-bottom:16px;padding-bottom:11px;border-bottom:1px solid #1e1e1e;display:flex;align-items:center;gap:8px">
               <span style="color:#fff;flex-shrink:0">
               <svg fill="currentColor" height="14" viewbox="0 0 512 512" width="14" xmlns="http://www.w3.org/2000/svg">
                 <path d="M64 64c0-17.7-14.3-32-32-32S0 46.3 0 64V400c0 44.2 35.8 80 80 80H480c17.7 0 32-14.3 32-32s-14.3-32-32-32H80c-8.8 0-16-7.2-16-16V64zm406.6 86.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L320 210.7l-57.4-57.4c-12.5-12.5-32.8-12.5-45.3 0l-112 112c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L240 221.3l57.4 57.4c12.5 12.5 32.8 12.5 45.3 0l128-128z">
@@ -1873,15 +1863,14 @@
                 </div>
               </div>
             </div>
-            <p style="font-size:11px;color:#999;margin-top:10px;line-height:1.6">
+            <p id="subnote" style="font-size:11px;color:#999;margin-top:10px;margin-bottom:0;line-height:1.6">
               Muruntau gold mine (Kyzylkum Desert) is the world's largest open-pit gold mine — producing ~70 tonnes/year. Gold at 35% of exports makes Uzbekistan highly exposed to gold price swings. The 7.7% GDP growth in 2025 is driven by a rare combination: natural resources, manufacturing, services, and FDI all expanding simultaneously.
             </p>
           </div>
         </div>
         <div class="col-12 col-md-6">
-          <!-- Panel: Key Economic Indicators -->
-          <div style="background:#111;border:1px solid #1e1e1e;padding:24px 20px;height:100%">
-            <div style="font-family:Fraunces,serif;font-weight:700;font-size:13px;color:#fff;margin-bottom:16px;padding-bottom:11px;border-bottom:1px solid #1e1e1e;display:flex;align-items:center;gap:8px">
+          <div id="panel" style="background:#111;border:1px solid #1e1e1e;padding:20px 20px;height:100%">
+            <div id="title" style="font-family:Fraunces,serif;font-weight:700;font-size:13px;color:#fff;margin-bottom:16px;padding-bottom:11px;border-bottom:1px solid #1e1e1e;display:flex;align-items:center;gap:8px">
               <span style="color:#fff;flex-shrink:0">
               <svg fill="currentColor" height="14" viewbox="0 0 512 512" width="14" xmlns="http://www.w3.org/2000/svg">
                 <path d="M184 48H328c4.4 0 8 3.6 8 8V96H176V56c0-4.4 3.6-8 8-8zm-56 8V96H64C28.7 96 0 124.7 0 160v96H192 320 512V160c0-35.3-28.7-64-64-64H384V56c0-30.9-25.1-56-56-56H184c-30.9 0-56 25.1-56 56zM512 288H320v32c0 17.7-14.3 32-32 32H224c-17.7 0-32-14.3-32-32V288H0V416c0 35.3 28.7 64 64 64H448c35.3 0 64-28.7 64-64V288z">
@@ -1889,7 +1878,7 @@
               </svg>
               </span>Key Economic Indicators
             </div>
-            <table style="width:100%;border-collapse:collapse;table-layout:fixed">
+            <table id="paneltbl" style="width:100%;border-collapse:collapse;table-layout:fixed">
               <tbody>
                 <tr style="border-bottom:1px solid #1e1e1e">
                   <td style="padding:9px 4px;font-size:12.5px;color:#999;width:58%;overflow-wrap:break-word">
@@ -1941,24 +1930,23 @@
                 </tr>
               </tbody>
             </table>
-            <p style="font-size:11px;color:#999;margin-top:10px;line-height:1.6">
+            <p id="subnote" style="font-size:11px;color:#999;margin-top:10px;margin-bottom:0;line-height:1.6">
               The poverty reduction since Mirziyoyev's reforms began in 2016 is extraordinary — from ~27% to 5.1% in under a decade. Total foreign investment (~$35–40B) in 2025 is the highest in Central Asia by far. Foreign reserves of $66B+ provide unprecedented macro stability for a lower-middle income country. The "Uzbekistan 2030" strategy aims to reach $220–230B GDP — now likely achievable by 2027–28.
             </p>
           </div>
         </div>
       </div>
-      <!-- *************************************************** -->
-      <!-- EMPLOYMENT & WAGES                                  -->
-      <!-- *************************************************** -->
-      <div style="display:flex;align-items:center;gap:10px;margin-bottom:28px;padding-top:24px">
-        <span style="color:#fff;font-size:16px;flex-shrink:0">
-        <svg fill="currentColor" height="14" viewbox="0 0 512 512" width="14" xmlns="http://www.w3.org/2000/svg">
-          <path d="M184 48H328c4.4 0 8 3.6 8 8V96H176V56c0-4.4 3.6-8 8-8zm-56 8V96H64C28.7 96 0 124.7 0 160v96H192 320 512V160c0-35.3-28.7-64-64-64H384V56c0-30.9-25.1-56-56-56H184c-30.9 0-56 25.1-56 56zM512 288H320v32c0 17.7-14.3 32-32 32H224c-17.7 0-32-14.3-32-32V288H0V416c0 35.3 28.7 64 64 64H448c35.3 0 64-28.7 64-64V288z">
-          </path>
-        </svg>
-        </span><span style="font-size:13px;letter-spacing:0.18em;text-transform:uppercase;color:#fff;font-weight:500">Employment &amp; Wages</span>
+      <div class="row my-3" id="section">
+        <div class="col-12 d-flex align-items-center gap-2">
+          <span style="color:#fff;font-size:16px;flex-shrink:0">
+          <svg fill="currentColor" height="14" viewbox="0 0 512 512" width="14" xmlns="http://www.w3.org/2000/svg">
+            <path d="M184 48H328c4.4 0 8 3.6 8 8V96H176V56c0-4.4 3.6-8 8-8zm-56 8V96H64C28.7 96 0 124.7 0 160v96H192 320 512V160c0-35.3-28.7-64-64-64H384V56c0-30.9-25.1-56-56-56H184c-30.9 0-56 25.1-56 56zM512 288H320v32c0 17.7-14.3 32-32 32H224c-17.7 0-32-14.3-32-32V288H0V416c0 35.3 28.7 64 64 64H448c35.3 0 64-28.7 64-64V288z">
+            </path>
+          </svg>
+          </span><span style="font-size:13px;letter-spacing:0.18em;text-transform:uppercase;color:#fff;font-weight:500">Employment &amp; Wages</span>
+        </div>
       </div>
-      <div class="row g-1 mb-3">
+      <div class="row g-1 mb-3" id="item">
         <div class="col-6 col-md-4 d-flex">
           <!-- KPI Card: Avg Monthly Wage (2025) -->
           <div class="kpi" style="background:#111;border:1px solid #1e1e1e;padding:18px 15px 15px;position:relative;overflow:hidden;animation-delay:0.05s;width:100%;flex:1">
@@ -2056,17 +2044,16 @@
           </div>
         </div>
       </div>
-      <div class="row gy-3 mb-3">
+      <div class="row gy-3 mb-3" id="item">
         <div class="col-12 col-md-6">
-          <!-- Panel: Wages by Sector (monthly UZS, est. 2024 — sectoral breakdown modelled from National Stats avg + ILO ratios) -->
-          <div style="background:#111;border:1px solid #1e1e1e;padding:24px 20px;height:100%">
-            <div style="font-family:Fraunces,serif;font-weight:700;font-size:13px;color:#fff;margin-bottom:16px;padding-bottom:11px;border-bottom:1px solid #1e1e1e;display:flex;align-items:center;gap:8px">
+          <div id="panel" style="background:#111;border:1px solid #1e1e1e;padding:20px 20px;height:100%">
+            <div id="title" style="font-family:Fraunces,serif;font-weight:700;font-size:13px;color:#fff;margin-bottom:16px;padding-bottom:11px;border-bottom:1px solid #1e1e1e;display:flex;align-items:center;gap:8px">
               <span style="color:#fff;flex-shrink:0">
               <svg fill="currentColor" height="14" viewbox="0 0 512 512" width="14" xmlns="http://www.w3.org/2000/svg">
                 <path d="M64 64c0-17.7-14.3-32-32-32S0 46.3 0 64V400c0 44.2 35.8 80 80 80H480c17.7 0 32-14.3 32-32s-14.3-32-32-32H80c-8.8 0-16-7.2-16-16V64zm406.6 86.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L320 210.7l-57.4-57.4c-12.5-12.5-32.8-12.5-45.3 0l-112 112c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L240 221.3l57.4 57.4c12.5 12.5 32.8 12.5 45.3 0l128-128z">
                 </path>
               </svg>
-              </span>Wages by Sector (monthly UZS, est. 2024 — sectoral breakdown modelled from National Stats avg + ILO ratios)
+              </span>Wages by Sector (monthly UZS, 2024 ets.)
             </div>
             <div style="margin-bottom:13px">
               <div style="display:flex;justify-content:space-between;align-items:baseline;font-size:12px;color:#999;margin-bottom:5px;gap:4px">
@@ -2122,15 +2109,17 @@
                 </div>
               </div>
             </div>
-            <p style="font-size:11px;color:#999;margin-top:10px;line-height:1.6">
+            <p id="subnote" style="font-size:11px;color:#999;margin-top:10px;margin-bottom:0;line-height:1.6">
+              est. 2024 — sectoral breakdown modelled from National Stats avg + ILO ratios.
+            </p>
+            <p id="subnote" style="font-size:11px;color:#999;margin-top:10px;margin-bottom:0;line-height:1.6">
               Wages have tripled in USD terms since 2016 — one of the fastest wage growth rates globally. The 4.3× gap between mining (~$940/month) and agriculture (~$220/month) explains rural-urban migration pressure. With 37.9M people and a young population, job creation is the government's most pressing economic challenge.
             </p>
           </div>
         </div>
         <div class="col-12 col-md-6">
-          <!-- Panel: Employment by Sector -->
-          <div style="background:#111;border:1px solid #1e1e1e;padding:24px 20px;height:100%">
-            <div style="font-family:Fraunces,serif;font-weight:700;font-size:13px;color:#fff;margin-bottom:16px;padding-bottom:11px;border-bottom:1px solid #1e1e1e;display:flex;align-items:center;gap:8px">
+          <div id="panel" style="background:#111;border:1px solid #1e1e1e;padding:20px 20px;height:100%">
+            <div id="title" style="font-family:Fraunces,serif;font-weight:700;font-size:13px;color:#fff;margin-bottom:16px;padding-bottom:11px;border-bottom:1px solid #1e1e1e;display:flex;align-items:center;gap:8px">
               <span style="color:#fff;flex-shrink:0">
               <svg fill="currentColor" height="14" viewbox="0 0 512 512" width="14" xmlns="http://www.w3.org/2000/svg">
                 <path d="M184 48H328c4.4 0 8 3.6 8 8V96H176V56c0-4.4 3.6-8 8-8zm-56 8V96H64C28.7 96 0 124.7 0 160v96H192 320 512V160c0-35.3-28.7-64-64-64H384V56c0-30.9-25.1-56-56-56H184c-30.9 0-56 25.1-56 56zM512 288H320v32c0 17.7-14.3 32-32 32H224c-17.7 0-32-14.3-32-32V288H0V416c0 35.3 28.7 64 64 64H448c35.3 0 64-28.7 64-64V288z">
@@ -2200,7 +2189,7 @@
             </div>
             <div style="height:1px;background:#1e1e1e;margin:16px 0">
             </div>
-            <table style="width:100%;border-collapse:collapse;table-layout:fixed">
+            <table id="paneltbl" style="width:100%;border-collapse:collapse;table-layout:fixed">
               <tbody>
                 <tr style="border-bottom:1px solid #1e1e1e">
                   <td style="padding:9px 4px;font-size:12.5px;color:#999;width:58%;overflow-wrap:break-word">
@@ -2220,24 +2209,23 @@
                 </tr>
               </tbody>
             </table>
-            <p style="font-size:11px;color:#999;margin-top:10px;line-height:1.6">
+            <p id="subnote" style="font-size:11px;color:#999;margin-top:10px;margin-bottom:0;line-height:1.6">
               Agriculture at 26% is declining as manufacturing expands — a healthy structural shift. The government's "1 million programmers" AI initiative and free economic zones are creating new digital employment. 2M migrant workers abroad represent ~14% of the ILO-estimated domestic labour force — significant but far less remittance-dependent than Tajikistan (45%). Remittances of $18.9B in 2025 (+27% YoY) now equal ~14% of GDP.
             </p>
           </div>
         </div>
       </div>
-      <!-- *************************************************** -->
-      <!-- EDUCATION & HUMAN DEVELOPMENT                       -->
-      <!-- *************************************************** -->
-      <div style="display:flex;align-items:center;gap:10px;margin-bottom:28px;padding-top:24px">
-        <span style="color:#fff;font-size:16px;flex-shrink:0">
-        <svg fill="currentColor" height="14" viewbox="0 0 640 512" width="14" xmlns="http://www.w3.org/2000/svg">
-          <path d="M320 32c-8.1 0-16.1 1.4-23.7 4.1L25 155.5c-12.1 4.7-20 16.1-20 29.1s7.9 24.4 20 29.1l272.3 119.3c7.6 2.7 15.6 4.1 23.7 4.1s16.1-1.4 23.7-4.1L571.4 241c16.6-6.3 16.6-29.7 0-36L349.7 36.1c-7.6-2.7-15.6-4.1-23.7-4.1zM128 254.7V358c0 20.5 13.7 38.5 33.2 44.2l112.1 32c10.5 3 21.5 4.5 32.7 4.5s22.2-1.5 32.7-4.5l112.1-32c19.5-5.7 33.2-23.7 33.2-44.2V254.7L346.7 308c-8.3 3-17.3 4.5-26.7 4.5s-18.4-1.5-26.7-4.5L128 254.7z">
-          </path>
-        </svg>
-        </span><span style="font-size:13px;letter-spacing:0.18em;text-transform:uppercase;color:#fff;font-weight:500">Education &amp; Human Development</span>
+      <div class="row my-3" id="section">
+        <div class="col-12 d-flex align-items-center gap-2">
+          <span style="color:#fff;font-size:16px;flex-shrink:0">
+          <svg fill="currentColor" height="14" viewbox="0 0 640 512" width="14" xmlns="http://www.w3.org/2000/svg">
+            <path d="M320 32c-8.1 0-16.1 1.4-23.7 4.1L25 155.5c-12.1 4.7-20 16.1-20 29.1s7.9 24.4 20 29.1l272.3 119.3c7.6 2.7 15.6 4.1 23.7 4.1s16.1-1.4 23.7-4.1L571.4 241c16.6-6.3 16.6-29.7 0-36L349.7 36.1c-7.6-2.7-15.6-4.1-23.7-4.1zM128 254.7V358c0 20.5 13.7 38.5 33.2 44.2l112.1 32c10.5 3 21.5 4.5 32.7 4.5s22.2-1.5 32.7-4.5l112.1-32c19.5-5.7 33.2-23.7 33.2-44.2V254.7L346.7 308c-8.3 3-17.3 4.5-26.7 4.5s-18.4-1.5-26.7-4.5L128 254.7z">
+            </path>
+          </svg>
+          </span><span style="font-size:13px;letter-spacing:0.18em;text-transform:uppercase;color:#fff;font-weight:500">Education &amp; Human Development</span>
+        </div>
       </div>
-      <div class="row g-1 mb-3">
+      <div class="row g-1 mb-3" id="item">
         <div class="col-6 col-md-4 d-flex">
           <!-- KPI Card: Literacy Rate -->
           <div class="kpi" style="background:#111;border:1px solid #1e1e1e;padding:18px 15px 15px;position:relative;overflow:hidden;animation-delay:0.05s;width:100%;flex:1">
@@ -2335,11 +2323,10 @@
           </div>
         </div>
       </div>
-      <div class="row gy-3 mb-3">
+      <div class="row gy-3 mb-3" id="item">
         <div class="col-12 col-md-6">
-          <!-- Panel: Education Metrics -->
-          <div style="background:#111;border:1px solid #1e1e1e;padding:24px 20px;height:100%">
-            <div style="font-family:Fraunces,serif;font-weight:700;font-size:13px;color:#fff;margin-bottom:16px;padding-bottom:11px;border-bottom:1px solid #1e1e1e;display:flex;align-items:center;gap:8px">
+          <div id="panel" style="background:#111;border:1px solid #1e1e1e;padding:20px 20px;height:100%">
+            <div id="title" style="font-family:Fraunces,serif;font-weight:700;font-size:13px;color:#fff;margin-bottom:16px;padding-bottom:11px;border-bottom:1px solid #1e1e1e;display:flex;align-items:center;gap:8px">
               <span style="color:#fff;flex-shrink:0">
               <svg fill="currentColor" height="14" viewbox="0 0 640 512" width="14" xmlns="http://www.w3.org/2000/svg">
                 <path d="M320 32c-8.1 0-16.1 1.4-23.7 4.1L25 155.5c-12.1 4.7-20 16.1-20 29.1s7.9 24.4 20 29.1l272.3 119.3c7.6 2.7 15.6 4.1 23.7 4.1s16.1-1.4 23.7-4.1L571.4 241c16.6-6.3 16.6-29.7 0-36L349.7 36.1c-7.6-2.7-15.6-4.1-23.7-4.1zM128 254.7V358c0 20.5 13.7 38.5 33.2 44.2l112.1 32c10.5 3 21.5 4.5 32.7 4.5s22.2-1.5 32.7-4.5l112.1-32c19.5-5.7 33.2-23.7 33.2-44.2V254.7L346.7 308c-8.3 3-17.3 4.5-26.7 4.5s-18.4-1.5-26.7-4.5L128 254.7z">
@@ -2392,15 +2379,14 @@
                 </div>
               </div>
             </div>
-            <p style="font-size:11px;color:#999;margin-top:10px;line-height:1.6">
+            <p id="subnote" style="font-size:11px;color:#999;margin-top:10px;margin-bottom:0;line-height:1.6">
               Tertiary enrolment at 45.8% has more than tripled since 2016 — Karimov-era universities were heavily restricted. The 20+ international branch campuses (including Inha University Korea, Webster University USA, Turin Polytechnic) is the most ambitious higher education reform in post-Soviet Central Asia. The "1 million programmers" AI initiative targets a digital workforce.
             </p>
           </div>
         </div>
         <div class="col-12 col-md-6">
-          <!-- Panel: Key Education Facts -->
-          <div style="background:#111;border:1px solid #1e1e1e;padding:24px 20px;height:100%">
-            <div style="font-family:Fraunces,serif;font-weight:700;font-size:13px;color:#fff;margin-bottom:16px;padding-bottom:11px;border-bottom:1px solid #1e1e1e;display:flex;align-items:center;gap:8px">
+          <div id="panel" style="background:#111;border:1px solid #1e1e1e;padding:20px 20px;height:100%">
+            <div id="title" style="font-family:Fraunces,serif;font-weight:700;font-size:13px;color:#fff;margin-bottom:16px;padding-bottom:11px;border-bottom:1px solid #1e1e1e;display:flex;align-items:center;gap:8px">
               <span style="color:#fff;flex-shrink:0">
               <svg fill="currentColor" height="14" viewbox="0 0 512 512" width="14" xmlns="http://www.w3.org/2000/svg">
                 <path d="M240.1 4.2c9.8-5.6 21.9-5.6 31.8 0l208 120c9.2 5.3 14.1 15.6 12.2 26.1s-10.4 18.5-21 18.5h-24.9L448 464H480c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H64L66.7 168.8H41.7c-10.6 0-19.2-7.9-21-18.5s3-20.8 12.2-26.1l208-120z">
@@ -2408,7 +2394,7 @@
               </svg>
               </span>Key Education Facts
             </div>
-            <table style="width:100%;border-collapse:collapse;table-layout:fixed">
+            <table id="paneltbl" style="width:100%;border-collapse:collapse;table-layout:fixed">
               <tbody>
                 <tr style="border-bottom:1px solid #1e1e1e">
                   <td style="padding:9px 4px;font-size:12.5px;color:#999;width:58%;overflow-wrap:break-word">
@@ -2460,24 +2446,23 @@
                 </tr>
               </tbody>
             </table>
-            <p style="font-size:11px;color:#999;margin-top:10px;line-height:1.6">
+            <p id="subnote" style="font-size:11px;color:#999;margin-top:10px;margin-bottom:0;line-height:1.6">
               International branch campuses are Uzbekistan's most distinctive education reform — no other lower-middle-income country has attracted this many prestigious foreign institutions. New Uzbekistan University (2022) is modelled on Western research universities and taught entirely in English — a signal of the country's ambition to compete globally for talent and investment.
             </p>
           </div>
         </div>
       </div>
-      <!-- *************************************************** -->
-      <!-- POLITICAL LANDSCAPE                                 -->
-      <!-- *************************************************** -->
-      <div style="display:flex;align-items:center;gap:10px;margin-bottom:28px;padding-top:24px">
-        <span style="color:#fff;font-size:16px;flex-shrink:0">
-        <svg fill="currentColor" height="14" viewbox="0 0 512 512" width="14" xmlns="http://www.w3.org/2000/svg">
-          <path d="M240.1 4.2c9.8-5.6 21.9-5.6 31.8 0l208 120c9.2 5.3 14.1 15.6 12.2 26.1s-10.4 18.5-21 18.5h-24.9L448 464H480c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H64L66.7 168.8H41.7c-10.6 0-19.2-7.9-21-18.5s3-20.8 12.2-26.1l208-120z">
-          </path>
-        </svg>
-        </span><span style="font-size:13px;letter-spacing:0.18em;text-transform:uppercase;color:#fff;font-weight:500">Political Landscape</span>
+      <div class="row my-3" id="section">
+        <div class="col-12 d-flex align-items-center gap-2">
+          <span style="color:#fff;font-size:16px;flex-shrink:0">
+          <svg fill="currentColor" height="14" viewbox="0 0 512 512" width="14" xmlns="http://www.w3.org/2000/svg">
+            <path d="M240.1 4.2c9.8-5.6 21.9-5.6 31.8 0l208 120c9.2 5.3 14.1 15.6 12.2 26.1s-10.4 18.5-21 18.5h-24.9L448 464H480c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H64L66.7 168.8H41.7c-10.6 0-19.2-7.9-21-18.5s3-20.8 12.2-26.1l208-120z">
+            </path>
+          </svg>
+          </span><span style="font-size:13px;letter-spacing:0.18em;text-transform:uppercase;color:#fff;font-weight:500">Political Landscape</span>
+        </div>
       </div>
-      <div class="row g-1 mb-3">
+      <div class="row g-1 mb-3" id="item">
         <div class="col-6 col-md-4 d-flex">
           <!-- KPI Card: System -->
           <div class="kpi" style="background:#111;border:1px solid #1e1e1e;padding:18px 15px 15px;position:relative;overflow:hidden;animation-delay:0.05s;width:100%;flex:1">
@@ -2575,11 +2560,10 @@
           </div>
         </div>
       </div>
-      <div class="row gy-3 mb-3">
+      <div class="row gy-3 mb-3" id="item">
         <div class="col-12 col-md-6">
-          <!-- Panel: 2023 Presidential Election -->
-          <div style="background:#111;border:1px solid #1e1e1e;padding:24px 20px;height:100%">
-            <div style="font-family:Fraunces,serif;font-weight:700;font-size:13px;color:#fff;margin-bottom:16px;padding-bottom:11px;border-bottom:1px solid #1e1e1e;display:flex;align-items:center;gap:8px">
+          <div id="panel" style="background:#111;border:1px solid #1e1e1e;padding:20px 20px;height:100%">
+            <div id="title" style="font-family:Fraunces,serif;font-weight:700;font-size:13px;color:#fff;margin-bottom:16px;padding-bottom:11px;border-bottom:1px solid #1e1e1e;display:flex;align-items:center;gap:8px">
               <span style="color:#fff;flex-shrink:0">
               <svg fill="currentColor" height="14" viewbox="0 0 512 512" width="14" xmlns="http://www.w3.org/2000/svg">
                 <path d="M240.1 4.2c9.8-5.6 21.9-5.6 31.8 0l208 120c9.2 5.3 14.1 15.6 12.2 26.1s-10.4 18.5-21 18.5h-24.9L448 464H480c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H64L66.7 168.8H41.7c-10.6 0-19.2-7.9-21-18.5s3-20.8 12.2-26.1l208-120z">
@@ -2605,15 +2589,14 @@
                 </div>
               </div>
             </div>
-            <p style="font-size:11px;color:#999;margin-top:10px;line-height:1.6">
+            <p id="subnote" style="font-size:11px;color:#999;margin-top:10px;margin-bottom:0;line-height:1.6">
               Voter turnout ~80% (official). Constitutional reform of 2023 reset term count — allowing Mirziyoyev to serve until 2037. Four other candidates participated but were widely seen as cosmetic opposition. Press freedom rank 140/180 (RSF 2024) — better than Tajikistan but limited genuine media freedom. However, Karimov-era political prisoners have been released, internet is uncensored, and civil society has opened markedly.
             </p>
           </div>
         </div>
         <div class="col-12 col-md-6">
-          <!-- Panel: Political Timeline -->
-          <div style="background:#111;border:1px solid #1e1e1e;padding:24px 20px;height:100%">
-            <div style="font-family:Fraunces,serif;font-weight:700;font-size:13px;color:#fff;margin-bottom:16px;padding-bottom:11px;border-bottom:1px solid #1e1e1e;display:flex;align-items:center;gap:8px">
+          <div id="panel" style="background:#111;border:1px solid #1e1e1e;padding:20px 20px;height:100%">
+            <div id="title" style="font-family:Fraunces,serif;font-weight:700;font-size:13px;color:#fff;margin-bottom:16px;padding-bottom:11px;border-bottom:1px solid #1e1e1e;display:flex;align-items:center;gap:8px">
               <span style="color:#fff;flex-shrink:0">
               <svg fill="currentColor" height="14" viewbox="0 0 512 512" width="14" xmlns="http://www.w3.org/2000/svg">
                 <path d="M64 64c0-17.7-14.3-32-32-32S0 46.3 0 64V400c0 44.2 35.8 80 80 80H480c17.7 0 32-14.3 32-32s-14.3-32-32-32H80c-8.8 0-16-7.2-16-16V64zm406.6 86.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L320 210.7l-57.4-57.4c-12.5-12.5-32.8-12.5-45.3 0l-112 112c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L240 221.3l57.4 57.4c12.5 12.5 32.8 12.5 45.3 0l128-128z">
@@ -2625,7 +2608,7 @@
               <div style="font-size:10px;letter-spacing:0.11em;color:#3DAA5C;text-transform:uppercase;margin-bottom:2px">
                 1991
               </div>
-              <div style="font-size:12.5px;color:#888;line-height:1.6">
+              <div it="subnote" style="font-size:12.5px;color:#888;line-height:1.6">
                 Independence declared Sep 1. Islam Karimov becomes first president, ruling until his death in 2016.
               </div>
             </div>
@@ -2633,7 +2616,7 @@
               <div style="font-size:10px;letter-spacing:0.11em;color:#3DAA5C;text-transform:uppercase;margin-bottom:2px">
                 2005
               </div>
-              <div style="font-size:12.5px;color:#888;line-height:1.6">
+              <div it="subnote" style="font-size:12.5px;color:#888;line-height:1.6">
                 Andijan massacre: security forces kill 200–1,500 protesters (est. varies). Uzbekistan expelled from US base.
               </div>
             </div>
@@ -2641,7 +2624,7 @@
               <div style="font-size:10px;letter-spacing:0.11em;color:#3DAA5C;text-transform:uppercase;margin-bottom:2px">
                 2016
               </div>
-              <div style="font-size:12.5px;color:#888;line-height:1.6">
+              <div it="subnote" style="font-size:12.5px;color:#888;line-height:1.6">
                 Karimov dies. Shavkat Mirziyoyev, PM, becomes president. Immediate opening of economy and society begins.
               </div>
             </div>
@@ -2649,7 +2632,7 @@
               <div style="font-size:10px;letter-spacing:0.11em;color:#3DAA5C;text-transform:uppercase;margin-bottom:2px">
                 2017
               </div>
-              <div style="font-size:12.5px;color:#888;line-height:1.6">
+              <div it="subnote" style="font-size:12.5px;color:#888;line-height:1.6">
                 Currency liberalised (free float). Borders opened with neighbours. Political prisoners released. Tourism opened.
               </div>
             </div>
@@ -2657,7 +2640,7 @@
               <div style="font-size:10px;letter-spacing:0.11em;color:#3DAA5C;text-transform:uppercase;margin-bottom:2px">
                 2022
               </div>
-              <div style="font-size:12.5px;color:#888;line-height:1.6">
+              <div it="subnote" style="font-size:12.5px;color:#888;line-height:1.6">
                 Record FDI, growth, and poverty reduction. Karakalpakstan unrest: protests over autonomy killed 18; suppressed.
               </div>
             </div>
@@ -2665,21 +2648,20 @@
               <div style="font-size:10px;letter-spacing:0.11em;color:#3DAA5C;text-transform:uppercase;margin-bottom:2px">
                 2023
               </div>
-              <div style="font-size:12.5px;color:#888;line-height:1.6">
+              <div it="subnote" style="font-size:12.5px;color:#888;line-height:1.6">
                 Constitutional reform; Mirziyoyev re-elected with 87%; "Uzbekistan 2030" strategy launched; WTO accession push.
               </div>
             </div>
-            <p style="font-size:11px;color:#999;margin-top:10px;line-height:1.6">
+            <p id="subnote" style="font-size:11px;color:#999;margin-top:10px;margin-bottom:0;line-height:1.6">
               The contrast between Karimov (1991–2016) and Mirziyoyev is one of the most dramatic policy reversals in post-Soviet history. Karimov presided over one of the world's most repressive regimes (boiling dissidents alive was reported); Mirziyoyev has opened the economy, released political prisoners, and welcomed foreign investment — though the state remains authoritarian.
             </p>
           </div>
         </div>
       </div>
-      <div class="row gy-3 mb-3">
+      <div class="row gy-3 mb-3" id="item">
         <div class="col-12">
-          <!-- Panel: 125 Years of Governance — Interactive Era Timeline (1900–2025) -->
-          <div style="background:#111;border:1px solid #1e1e1e;padding:24px 20px;height:100%">
-            <div style="font-family:Fraunces,serif;font-weight:700;font-size:13px;color:#fff;margin-bottom:16px;padding-bottom:11px;border-bottom:1px solid #1e1e1e;display:flex;align-items:center;gap:8px">
+          <div id="panel" style="background:#111;border:1px solid #1e1e1e;padding:20px 20px;height:100%">
+            <div id="title" style="font-family:Fraunces,serif;font-weight:700;font-size:13px;color:#fff;margin-bottom:16px;padding-bottom:11px;border-bottom:1px solid #1e1e1e;display:flex;align-items:center;gap:8px">
               <span style="color:#fff;flex-shrink:0">
               <svg fill="currentColor" height="14" viewbox="0 0 512 512" width="14" xmlns="http://www.w3.org/2000/svg">
                 <path d="M64 64c0-17.7-14.3-32-32-32S0 46.3 0 64V400c0 44.2 35.8 80 80 80H480c17.7 0 32-14.3 32-32s-14.3-32-32-32H80c-8.8 0-16-7.2-16-16V64zm406.6 86.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L320 210.7l-57.4-57.4c-12.5-12.5-32.8-12.5-45.3 0l-112 112c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L240 221.3l57.4 57.4c12.5 12.5 32.8 12.5 45.3 0l128-128z">
@@ -2687,69 +2669,51 @@
               </svg>
               </span>125 Years of Governance — Interactive Era Timeline (1900–2025)
             </div>
-            <div style="display:flex;height:40px;border-radius:4px;overflow:hidden;gap:1px">
-              <div class="era-seg" data-era="0" style="width:13.600000000000001%;background:#8B5E3C;cursor:pointer;transition:background 0.2s;flex-shrink:0" title="Russian Empire (1900–1917)">
+            <div style="display:flex;height:40px;border-radius:4px;overflow:hidden">
+              <div class="era-seg" data-era="0" style="width:13.600000000000001%;background:#8B5E3C;cursor:pointer;transition:background 0.2s;flex-shrink:0;border-right:1px solid #000" title="Russian Empire (1900–1917)">
               </div>
-              <div class="era-seg" data-era="1" style="width:5.6000000000000005%;background:#C8102E;cursor:pointer;transition:background 0.2s;flex-shrink:0" title="Revolutionary Period (1917–1924)">
+              <div class="era-seg" data-era="1" style="width:5.6000000000000005%;background:#C8102E;cursor:pointer;transition:background 0.2s;flex-shrink:0;border-right:1px solid #000" title="Revolutionary Period (1917–1924)">
               </div>
-              <div class="era-seg" data-era="2" style="width:23.200000000000003%;background:#C8102E;cursor:pointer;transition:background 0.2s;flex-shrink:0" title="Early Soviet (1924–1953)">
+              <div class="era-seg" data-era="2" style="width:23.200000000000003%;background:#C8102E;cursor:pointer;transition:background 0.2s;flex-shrink:0;border-right:1px solid #000" title="Early Soviet (1924–1953)">
               </div>
-              <div class="era-seg" data-era="3" style="width:25.6%;background:#E8192C;cursor:pointer;transition:background 0.2s;flex-shrink:0" title="Soviet Maturity (1953–1985)">
+              <div class="era-seg" data-era="3" style="width:25.6%;background:#E8192C;cursor:pointer;transition:background 0.2s;flex-shrink:0;border-right:1px solid #000" title="Soviet Maturity (1953–1985)">
               </div>
-              <div class="era-seg" data-era="4" style="width:4.8%;background:#F0B830;cursor:pointer;transition:background 0.2s;flex-shrink:0" title="Glasnost &amp; Perestroika (1985–1991)">
+              <div class="era-seg" data-era="4" style="width:4.8%;background:#F0B830;cursor:pointer;transition:background 0.2s;flex-shrink:0;border-right:1px solid #000" title="Glasnost &amp; Perestroika (1985–1991)">
               </div>
-              <div class="era-seg" data-era="5" style="width:7.199999999999999%;background:#1EB4E5;cursor:pointer;transition:background 0.2s;flex-shrink:0" title="Independence (1991–2000)">
+              <div class="era-seg" data-era="5" style="width:7.199999999999999%;background:#1EB4E5;cursor:pointer;transition:background 0.2s;flex-shrink:0;border-right:1px solid #000" title="Independence (1991–2000)">
               </div>
-              <div class="era-seg" data-era="6" style="width:12.8%;background:#555;cursor:pointer;transition:background 0.2s;flex-shrink:0" title="Karimov Authoritarianism (2000–2016)">
+              <div class="era-seg" data-era="6" style="width:12.8%;background:#555;cursor:pointer;transition:background 0.2s;flex-shrink:0;border-right:1px solid #000" title="Karimov Authoritarianism (2000–2016)">
               </div>
-              <div class="era-seg" data-era="7" style="width:7.199999999999999%;background:#1EB4E5;cursor:pointer;transition:background 0.2s;flex-shrink:0" title="Reform Era (2016–2025)">
+              <div class="era-seg" data-era="7" style="width:7.199999999999999%;background:#1EB4E5;cursor:pointer;transition:background 0.2s;flex-shrink:0;border-right:1px solid #000" title="Reform Era (2016–2025)">
               </div>
             </div>
             <div style="position:relative;height:28px;margin-top:5px">
-              <div style="position:absolute;left:0%;top:0;transform:translateX(-50%)">
-                <div style="font-size:9px;color:#999;white-space:nowrap;transform:rotate(-90deg);transform-origin:center 50%;margin-top:10px">
-                  1900
-                </div>
+              <div style="position:absolute;left:0%;top:0;transform:scaleX(-1) scaleY(-1);font-size:9px;color:#999;white-space:nowrap;writing-mode:vertical-lr">
+                1900
               </div>
-              <div style="position:absolute;left:13.600000000000001%;top:0;transform:translateX(-50%)">
-                <div style="font-size:9px;color:#999;white-space:nowrap;transform:rotate(-90deg);transform-origin:center 50%;margin-top:10px">
-                  1917
-                </div>
+              <div style="position:absolute;left:13.600000000000001%;top:0;transform:translateX(-50%) scaleX(-1) scaleY(-1);font-size:9px;color:#999;white-space:nowrap;writing-mode:vertical-lr">
+                1917
               </div>
-              <div style="position:absolute;left:19.2%;top:0;transform:translateX(-50%)">
-                <div style="font-size:9px;color:#999;white-space:nowrap;transform:rotate(-90deg);transform-origin:center 50%;margin-top:10px">
-                  1924
-                </div>
+              <div style="position:absolute;left:19.2%;top:0;transform:translateX(-50%) scaleX(-1) scaleY(-1);font-size:9px;color:#999;white-space:nowrap;writing-mode:vertical-lr">
+                1924
               </div>
-              <div style="position:absolute;left:42.4%;top:0;transform:translateX(-50%)">
-                <div style="font-size:9px;color:#999;white-space:nowrap;transform:rotate(-90deg);transform-origin:center 50%;margin-top:10px">
-                  1953
-                </div>
+              <div style="position:absolute;left:42.4%;top:0;transform:translateX(-50%) scaleX(-1) scaleY(-1);font-size:9px;color:#999;white-space:nowrap;writing-mode:vertical-lr">
+                1953
               </div>
-              <div style="position:absolute;left:68%;top:0;transform:translateX(-50%)">
-                <div style="font-size:9px;color:#999;white-space:nowrap;transform:rotate(-90deg);transform-origin:center 50%;margin-top:10px">
-                  1985
-                </div>
+              <div style="position:absolute;left:68%;top:0;transform:translateX(-50%) scaleX(-1) scaleY(-1);font-size:9px;color:#999;white-space:nowrap;writing-mode:vertical-lr">
+                1985
               </div>
-              <div style="position:absolute;left:72.8%;top:0;transform:translateX(-50%)">
-                <div style="font-size:9px;color:#999;white-space:nowrap;transform:rotate(-90deg);transform-origin:center 50%;margin-top:10px">
-                  1991
-                </div>
+              <div style="position:absolute;left:72.8%;top:0;transform:translateX(-50%) scaleX(-1) scaleY(-1);font-size:9px;color:#999;white-space:nowrap;writing-mode:vertical-lr">
+                1991
               </div>
-              <div style="position:absolute;left:80%;top:0;transform:translateX(-50%)">
-                <div style="font-size:9px;color:#999;white-space:nowrap;transform:rotate(-90deg);transform-origin:center 50%;margin-top:10px">
-                  2000
-                </div>
+              <div style="position:absolute;left:80%;top:0;transform:translateX(-50%) scaleX(-1) scaleY(-1);font-size:9px;color:#999;white-space:nowrap;writing-mode:vertical-lr">
+                2000
               </div>
-              <div style="position:absolute;left:92.80000000000001%;top:0;transform:translateX(-50%)">
-                <div style="font-size:9px;color:#999;white-space:nowrap;transform:rotate(-90deg);transform-origin:center 50%;margin-top:10px">
-                  2016
-                </div>
+              <div style="position:absolute;left:92.80000000000001%;top:0;transform:translateX(-50%) scaleX(-1) scaleY(-1);font-size:9px;color:#999;white-space:nowrap;writing-mode:vertical-lr">
+                2016
               </div>
-              <div style="position:absolute;right:0;top:0">
-                <div style="font-size:9px;color:#999;white-space:nowrap;transform:rotate(-90deg);transform-origin:center 50%;margin-top:10px">
-                  2025
-                </div>
+              <div style="position:absolute;right:0;top:0;font-size:9px;color:#999;white-space:nowrap;writing-mode:vertical-lr;transform:scaleX(-1) scaleY(-1)">
+                2025
               </div>
             </div>
             <div id="era-placeholder" style="background:#000;border:1px solid #1e1e1e;padding:8px 16px;border-radius:2px;margin-top:12px;font-size:11px;color:#999;text-align:center">
@@ -3153,24 +3117,23 @@
                 <span class="era-leg-lbl era-leg-lbl-7" style="font-size:10px;color:#999;letter-spacing:0.05em">Mirziyoyev Reforms</span>
               </div>
             </div>
-            <p style="font-size:11px;color:#999;margin-top:14px;line-height:1.6">
+            <p id="subnote" style="font-size:11px;color:#999;margin-top:14px;margin-bottom:0;line-height:1.6">
               The contrast between Karimov (1991–2016) and Mirziyoyev is one of the most dramatic policy reversals in post-Soviet history. Karimov presided over one of the world's most repressive regimes; Mirziyoyev has opened the economy, released political prisoners, and welcomed foreign investment — though the state remains authoritarian.
             </p>
           </div>
         </div>
       </div>
-      <!-- *************************************************** -->
-      <!-- TOURISM                                             -->
-      <!-- *************************************************** -->
-      <div style="display:flex;align-items:center;gap:10px;margin-bottom:28px;padding-top:24px">
-        <span style="color:#fff;font-size:16px;flex-shrink:0">
-        <svg fill="currentColor" height="14" viewbox="0 0 512 512" width="14" xmlns="http://www.w3.org/2000/svg">
-          <path d="M184 48H328c4.4 0 8 3.6 8 8V96H176V56c0-4.4 3.6-8 8-8zm-56 8V96H64C28.7 96 0 124.7 0 160v96H192 320 512V160c0-35.3-28.7-64-64-64H384V56c0-30.9-25.1-56-56-56H184c-30.9 0-56 25.1-56 56zM512 288H320v32c0 17.7-14.3 32-32 32H224c-17.7 0-32-14.3-32-32V288H0V416c0 35.3 28.7 64 64 64H448c35.3 0 64-28.7 64-64V288z">
-          </path>
-        </svg>
-        </span><span style="font-size:13px;letter-spacing:0.18em;text-transform:uppercase;color:#fff;font-weight:500">Tourism</span>
+      <div class="row my-3" id="section">
+        <div class="col-12 d-flex align-items-center gap-2">
+          <span style="color:#fff;font-size:16px;flex-shrink:0">
+          <svg fill="currentColor" height="14" viewbox="0 0 512 512" width="14" xmlns="http://www.w3.org/2000/svg">
+            <path d="M184 48H328c4.4 0 8 3.6 8 8V96H176V56c0-4.4 3.6-8 8-8zm-56 8V96H64C28.7 96 0 124.7 0 160v96H192 320 512V160c0-35.3-28.7-64-64-64H384V56c0-30.9-25.1-56-56-56H184c-30.9 0-56 25.1-56 56zM512 288H320v32c0 17.7-14.3 32-32 32H224c-17.7 0-32-14.3-32-32V288H0V416c0 35.3 28.7 64 64 64H448c35.3 0 64-28.7 64-64V288z">
+            </path>
+          </svg>
+          </span><span style="font-size:13px;letter-spacing:0.18em;text-transform:uppercase;color:#fff;font-weight:500">Tourism</span>
+        </div>
       </div>
-      <div class="row g-1 mb-3">
+      <div class="row g-1 mb-3" id="item">
         <div class="col-6 col-md-4 d-flex">
           <!-- KPI Card: International Visitors (2024) -->
           <div class="kpi" style="background:#111;border:1px solid #1e1e1e;padding:18px 15px 15px;position:relative;overflow:hidden;animation-delay:0.05s;width:100%;flex:1">
@@ -3268,17 +3231,16 @@
           </div>
         </div>
       </div>
-      <div class="row gy-3 mb-3">
+      <div class="row gy-3 mb-3" id="item">
         <div class="col-12 col-md-6">
-          <!-- Panel: Top Visitor Origins (2024 est. — origin % derived from border crossings; no passport-level breakdown published) -->
-          <div style="background:#111;border:1px solid #1e1e1e;padding:24px 20px;height:100%">
-            <div style="font-family:Fraunces,serif;font-weight:700;font-size:13px;color:#fff;margin-bottom:16px;padding-bottom:11px;border-bottom:1px solid #1e1e1e;display:flex;align-items:center;gap:8px">
+          <div id="panel" style="background:#111;border:1px solid #1e1e1e;padding:20px 20px;height:100%">
+            <div id="title" style="font-family:Fraunces,serif;font-weight:700;font-size:13px;color:#fff;margin-bottom:16px;padding-bottom:11px;border-bottom:1px solid #1e1e1e;display:flex;align-items:center;gap:8px">
               <span style="color:#fff;flex-shrink:0">
               <svg fill="currentColor" height="14" viewbox="0 0 640 512" width="14" xmlns="http://www.w3.org/2000/svg">
                 <path d="M72 88a56 56 0 1 1 112 0A56 56 0 1 1 72 88zM64 245.7C54 256.9 48 271.8 48 288s6 31.1 16 42.3V245.7zm144.4-49.3C178.7 222.7 160 261.2 160 304c0 34.3 12 65.8 32 90.5V416c0 17.7-14.3 32-32 32H96c-17.7 0-32-14.3-32-32V389.2C26.2 371.2 0 332.7 0 288c0-61.9 50.1-112 112-112c29.3 0 56 11.3 75.9 29.7zM320 32a64 64 0 1 1 0 128A64 64 0 1 1 320 32zM448 304c0 44.7-26.2 83.2-64 101.2V448c0 17.7-14.3 32-32 32H288c-17.7 0-32-14.3-32-32V405.2c-37.8-18-64-56.5-64-101.2c0-61.9 50.1-112 112-112h32c61.9 0 112 50.1 112 112z">
                 </path>
               </svg>
-              </span>Top Visitor Origins (2024 est. — origin % derived from border crossings; no passport-level breakdown published)
+              </span>Top Visitor Origins (2024 est.)
             </div>
             <div style="display:flex;align-items:center;gap:10px;padding:9px 0">
               <span style="font-size:18px;flex-shrink:0">🇰🇬</span><span style="font-size:12.5px;color:#fff;flex-shrink:0">Kyrgyzstan</span><span style="font-size:11px;color:#999;flex:1">cross-border; largest source market 2024</span><span style="font-family:Fraunces,serif;font-weight:700;font-size:13px;color:#fff;flex-shrink:0">~26%</span>
@@ -3298,15 +3260,17 @@
             <div style="display:flex;align-items:center;gap:10px;padding:9px 0">
               <span style="font-size:18px;flex-shrink:0">🇩🇪</span><span style="font-size:12.5px;color:#fff;flex-shrink:0">Europe &amp; US</span><span style="font-size:11px;color:#999;flex:1">heritage tourism; Registan, Bukhara</span><span style="font-family:Fraunces,serif;font-weight:700;font-size:13px;color:#fff;flex-shrink:0">~4%</span>
             </div>
-            <p style="font-size:11px;color:#999;margin-top:10px;line-height:1.6">
+            <p id="subnote" style="font-size:11px;color:#999;margin-top:10px;margin-bottom:0;line-height:1.6">
+              2024 est. — origin % derived from border crossings; no passport-level breakdown published.
+            </p>
+            <p id="subnote" style="font-size:11px;color:#999;margin-top:10px;margin-bottom:0;line-height:1.6">
               Tourism has been Uzbekistan's most dramatic reform success story — visitors grew from 2.7M (2018) to 8.2M (2024) — a near-3× increase in 6 years. The Silk Road trio of Samarkand, Bukhara, and Khiva is a world-class heritage destination finally opened to the world. Most visitors are regional neighbours (Kyrgyzstan, Tajikistan, Kazakhstan); Chinese tourism grew 63% in 2024 and is the fastest-growing long-haul market.
             </p>
           </div>
         </div>
         <div class="col-12 col-md-6">
-          <!-- Panel: Tourism Highlights -->
-          <div style="background:#111;border:1px solid #1e1e1e;padding:24px 20px;height:100%">
-            <div style="font-family:Fraunces,serif;font-weight:700;font-size:13px;color:#fff;margin-bottom:16px;padding-bottom:11px;border-bottom:1px solid #1e1e1e;display:flex;align-items:center;gap:8px">
+          <div id="panel" style="background:#111;border:1px solid #1e1e1e;padding:20px 20px;height:100%">
+            <div id="title" style="font-family:Fraunces,serif;font-weight:700;font-size:13px;color:#fff;margin-bottom:16px;padding-bottom:11px;border-bottom:1px solid #1e1e1e;display:flex;align-items:center;gap:8px">
               <span style="color:#fff;flex-shrink:0">
               <svg fill="currentColor" height="14" viewbox="0 0 512 512" width="14" xmlns="http://www.w3.org/2000/svg">
                 <path d="M240.1 4.2c9.8-5.6 21.9-5.6 31.8 0l208 120c9.2 5.3 14.1 15.6 12.2 26.1s-10.4 18.5-21 18.5h-24.9L448 464H480c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H64L66.7 168.8H41.7c-10.6 0-19.2-7.9-21-18.5s3-20.8 12.2-26.1l208-120z">
@@ -3314,7 +3278,7 @@
               </svg>
               </span>Tourism Highlights
             </div>
-            <table style="width:100%;border-collapse:collapse;table-layout:fixed">
+            <table id="paneltbl" style="width:100%;border-collapse:collapse;table-layout:fixed">
               <tbody>
                 <tr style="border-bottom:1px solid #1e1e1e">
                   <td style="padding:9px 4px;font-size:12.5px;color:#999;width:58%;overflow-wrap:break-word">
@@ -3374,7 +3338,7 @@
                 </tr>
               </tbody>
             </table>
-            <p style="font-size:11px;color:#999;margin-top:10px;line-height:1.6">
+            <p id="subnote" style="font-size:11px;color:#999;margin-top:10px;margin-bottom:0;line-height:1.6">
               Uzbekistan has arguably the richest concentration of Islamic architectural heritage anywhere in the world — Samarkand's Registan rivals the Taj Mahal in grandeur. The Aral Sea ship graveyard at Moynaq has become a haunting but significant eco-tourism site — a monument to the world's worst man-made ecological disaster. With 4 UNESCO sites and ~62 visa-free countries (Passport Index 2024), the runway for growth is enormous.
             </p>
             <div style="margin-top:14px">
@@ -3487,18 +3451,17 @@
           </div>
         </div>
       </div>
-      <!-- *************************************************** -->
-      <!-- VITAL STATISTICS                                    -->
-      <!-- *************************************************** -->
-      <div style="display:flex;align-items:center;gap:10px;margin-bottom:28px;padding-top:24px">
-        <span style="color:#fff;font-size:16px;flex-shrink:0">
-        <svg fill="currentColor" height="14" viewbox="0 0 640 512" width="14" xmlns="http://www.w3.org/2000/svg">
-          <path d="M72 88a56 56 0 1 1 112 0A56 56 0 1 1 72 88zM64 245.7C54 256.9 48 271.8 48 288s6 31.1 16 42.3V245.7zm144.4-49.3C178.7 222.7 160 261.2 160 304c0 34.3 12 65.8 32 90.5V416c0 17.7-14.3 32-32 32H96c-17.7 0-32-14.3-32-32V389.2C26.2 371.2 0 332.7 0 288c0-61.9 50.1-112 112-112c29.3 0 56 11.3 75.9 29.7zM320 32a64 64 0 1 1 0 128A64 64 0 1 1 320 32zM448 304c0 44.7-26.2 83.2-64 101.2V448c0 17.7-14.3 32-32 32H288c-17.7 0-32-14.3-32-32V405.2c-37.8-18-64-56.5-64-101.2c0-61.9 50.1-112 112-112h32c61.9 0 112 50.1 112 112z">
-          </path>
-        </svg>
-        </span><span style="font-size:13px;letter-spacing:0.18em;text-transform:uppercase;color:#fff;font-weight:500">Vital Statistics</span>
+      <div class="row my-3" id="section">
+        <div class="col-12 d-flex align-items-center gap-2">
+          <span style="color:#fff;font-size:16px;flex-shrink:0">
+          <svg fill="currentColor" height="14" viewbox="0 0 640 512" width="14" xmlns="http://www.w3.org/2000/svg">
+            <path d="M72 88a56 56 0 1 1 112 0A56 56 0 1 1 72 88zM64 245.7C54 256.9 48 271.8 48 288s6 31.1 16 42.3V245.7zm144.4-49.3C178.7 222.7 160 261.2 160 304c0 34.3 12 65.8 32 90.5V416c0 17.7-14.3 32-32 32H96c-17.7 0-32-14.3-32-32V389.2C26.2 371.2 0 332.7 0 288c0-61.9 50.1-112 112-112c29.3 0 56 11.3 75.9 29.7zM320 32a64 64 0 1 1 0 128A64 64 0 1 1 320 32zM448 304c0 44.7-26.2 83.2-64 101.2V448c0 17.7-14.3 32-32 32H288c-17.7 0-32-14.3-32-32V405.2c-37.8-18-64-56.5-64-101.2c0-61.9 50.1-112 112-112h32c61.9 0 112 50.1 112 112z">
+            </path>
+          </svg>
+          </span><span style="font-size:13px;letter-spacing:0.18em;text-transform:uppercase;color:#fff;font-weight:500">Vital Statistics</span>
+        </div>
       </div>
-      <div class="row g-1 mb-3">
+      <div class="row g-1 mb-3" id="item">
         <div class="col-6 col-md-4 d-flex">
           <!-- KPI Card: Births (2024) -->
           <div class="kpi" style="background:#111;border:1px solid #1e1e1e;padding:18px 15px 15px;position:relative;overflow:hidden;animation-delay:0.05s;width:100%;flex:1">
@@ -3596,11 +3559,10 @@
           </div>
         </div>
       </div>
-      <div class="row gy-3 mb-3">
+      <div class="row gy-3 mb-3" id="item">
         <div class="col-12 col-md-6">
-          <!-- Panel: Causes of Death (Statistics Agency UZ, 2023) -->
-          <div style="background:#111;border:1px solid #1e1e1e;padding:24px 20px;height:100%">
-            <div style="font-family:Fraunces,serif;font-weight:700;font-size:13px;color:#fff;margin-bottom:16px;padding-bottom:11px;border-bottom:1px solid #1e1e1e;display:flex;align-items:center;gap:8px">
+          <div id="panel" style="background:#111;border:1px solid #1e1e1e;padding:20px 20px;height:100%">
+            <div id="title" style="font-family:Fraunces,serif;font-weight:700;font-size:13px;color:#fff;margin-bottom:16px;padding-bottom:11px;border-bottom:1px solid #1e1e1e;display:flex;align-items:center;gap:8px">
               <span style="color:#fff;flex-shrink:0">
               <svg fill="currentColor" height="14" viewbox="0 0 512 512" width="14" xmlns="http://www.w3.org/2000/svg">
                 <path d="M64 64c0-17.7-14.3-32-32-32S0 46.3 0 64V400c0 44.2 35.8 80 80 80H480c17.7 0 32-14.3 32-32s-14.3-32-32-32H80c-8.8 0-16-7.2-16-16V64zm406.6 86.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L320 210.7l-57.4-57.4c-12.5-12.5-32.8-12.5-45.3 0l-112 112c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L240 221.3l57.4 57.4c12.5 12.5 32.8 12.5 45.3 0l128-128z">
@@ -3671,15 +3633,14 @@
                 </div>
               </div>
             </div>
-            <p style="font-size:11px;color:#999;margin-top:10px;line-height:1.6">
+            <p id="subnote" style="font-size:11px;color:#999;margin-top:10px;margin-bottom:0;line-height:1.6">
               Circulatory disease at 61.1% is far above the global average (32%), driven by high hypertension prevalence, high-salt diets, and historically limited preventive care. Source: Statistics Agency of Uzbekistan, Jan 2024 (172,800 deaths registered in 2023). Infant mortality falling from 38 to ~18/1,000 since 2000 is one of Uzbekistan's most significant health achievements — better than Tajikistan (32) but still above Kazakhstan (8).
             </p>
           </div>
         </div>
         <div class="col-12 col-md-6">
-          <!-- Panel: Marriage & Vital Trends -->
-          <div style="background:#111;border:1px solid #1e1e1e;padding:24px 20px;height:100%">
-            <div style="font-family:Fraunces,serif;font-weight:700;font-size:13px;color:#fff;margin-bottom:16px;padding-bottom:11px;border-bottom:1px solid #1e1e1e;display:flex;align-items:center;gap:8px">
+          <div id="panel" style="background:#111;border:1px solid #1e1e1e;padding:20px 20px;height:100%">
+            <div id="title" style="font-family:Fraunces,serif;font-weight:700;font-size:13px;color:#fff;margin-bottom:16px;padding-bottom:11px;border-bottom:1px solid #1e1e1e;display:flex;align-items:center;gap:8px">
               <span style="color:#fff;flex-shrink:0">
               <svg fill="currentColor" height="14" viewbox="0 0 512 512" width="14" xmlns="http://www.w3.org/2000/svg">
                 <path d="M240.1 4.2c9.8-5.6 21.9-5.6 31.8 0l208 120c9.2 5.3 14.1 15.6 12.2 26.1s-10.4 18.5-21 18.5h-24.9L448 464H480c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H64L66.7 168.8H41.7c-10.6 0-19.2-7.9-21-18.5s3-20.8 12.2-26.1l208-120z">
@@ -3687,7 +3648,7 @@
               </svg>
               </span>Marriage &amp; Vital Trends
             </div>
-            <table style="width:100%;border-collapse:collapse;table-layout:fixed">
+            <table id="paneltbl" style="width:100%;border-collapse:collapse;table-layout:fixed">
               <tbody>
                 <tr style="border-bottom:1px solid #1e1e1e">
                   <td style="padding:9px 4px;font-size:12.5px;color:#999;width:58%;overflow-wrap:break-word">
@@ -3739,24 +3700,23 @@
                 </tr>
               </tbody>
             </table>
-            <p style="font-size:11px;color:#999;margin-top:10px;line-height:1.6">
+            <p id="subnote" style="font-size:11px;color:#999;margin-top:10px;margin-bottom:0;line-height:1.6">
               Maternal mortality at ~29/100,000 is improving but still 2× Kazakhstan. Uzbekistan was the first Central Asian country to formally abolish forced labour in cotton harvesting (2021) — a significant human rights milestone, addressing a practice that affected millions of students and public workers annually.
             </p>
           </div>
         </div>
       </div>
-      <!-- *************************************************** -->
-      <!-- ECONOMIC DEPTH & FISCAL POSITION                    -->
-      <!-- *************************************************** -->
-      <div style="display:flex;align-items:center;gap:10px;margin-bottom:28px;padding-top:24px">
-        <span style="color:#fff;font-size:16px;flex-shrink:0">
-        <svg fill="currentColor" height="14" viewbox="0 0 512 512" width="14" xmlns="http://www.w3.org/2000/svg">
-          <path d="M64 64c0-17.7-14.3-32-32-32S0 46.3 0 64V400c0 44.2 35.8 80 80 80H480c17.7 0 32-14.3 32-32s-14.3-32-32-32H80c-8.8 0-16-7.2-16-16V64zm406.6 86.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L320 210.7l-57.4-57.4c-12.5-12.5-32.8-12.5-45.3 0l-112 112c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L240 221.3l57.4 57.4c12.5 12.5 32.8 12.5 45.3 0l128-128z">
-          </path>
-        </svg>
-        </span><span style="font-size:13px;letter-spacing:0.18em;text-transform:uppercase;color:#fff;font-weight:500">Economic Depth &amp; Fiscal Position</span>
+      <div class="row my-3" id="section">
+        <div class="col-12 d-flex align-items-center gap-2">
+          <span style="color:#fff;font-size:16px;flex-shrink:0">
+          <svg fill="currentColor" height="14" viewbox="0 0 512 512" width="14" xmlns="http://www.w3.org/2000/svg">
+            <path d="M64 64c0-17.7-14.3-32-32-32S0 46.3 0 64V400c0 44.2 35.8 80 80 80H480c17.7 0 32-14.3 32-32s-14.3-32-32-32H80c-8.8 0-16-7.2-16-16V64zm406.6 86.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L320 210.7l-57.4-57.4c-12.5-12.5-32.8-12.5-45.3 0l-112 112c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L240 221.3l57.4 57.4c12.5 12.5 32.8 12.5 45.3 0l128-128z">
+            </path>
+          </svg>
+          </span><span style="font-size:13px;letter-spacing:0.18em;text-transform:uppercase;color:#fff;font-weight:500">Economic Depth &amp; Fiscal Position</span>
+        </div>
       </div>
-      <div class="row g-1 mb-3">
+      <div class="row g-1 mb-3" id="item">
         <div class="col-6 col-md-4 d-flex">
           <!-- KPI Card: Foreign Reserves (end-2025) -->
           <div class="kpi" style="background:#111;border:1px solid #1e1e1e;padding:18px 15px 15px;position:relative;overflow:hidden;animation-delay:0.05s;width:100%;flex:1">
@@ -3854,11 +3814,10 @@
           </div>
         </div>
       </div>
-      <div class="row gy-3 mb-3">
+      <div class="row gy-3 mb-3" id="item">
         <div class="col-12 col-md-6">
-          <!-- Panel: Top Export Destinations (2024) -->
-          <div style="background:#111;border:1px solid #1e1e1e;padding:24px 20px;height:100%">
-            <div style="font-family:Fraunces,serif;font-weight:700;font-size:13px;color:#fff;margin-bottom:16px;padding-bottom:11px;border-bottom:1px solid #1e1e1e;display:flex;align-items:center;gap:8px">
+          <div id="panel" style="background:#111;border:1px solid #1e1e1e;padding:20px 20px;height:100%">
+            <div id="title" style="font-family:Fraunces,serif;font-weight:700;font-size:13px;color:#fff;margin-bottom:16px;padding-bottom:11px;border-bottom:1px solid #1e1e1e;display:flex;align-items:center;gap:8px">
               <span style="color:#fff;flex-shrink:0">
               <svg fill="currentColor" height="14" viewbox="0 0 512 512" width="14" xmlns="http://www.w3.org/2000/svg">
                 <path d="M184 48H328c4.4 0 8 3.6 8 8V96H176V56c0-4.4 3.6-8 8-8zm-56 8V96H64C28.7 96 0 124.7 0 160v96H192 320 512V160c0-35.3-28.7-64-64-64H384V56c0-30.9-25.1-56-56-56H184c-30.9 0-56 25.1-56 56zM512 288H320v32c0 17.7-14.3 32-32 32H224c-17.7 0-32-14.3-32-32V288H0V416c0 35.3 28.7 64 64 64H448c35.3 0 64-28.7 64-64V288z">
@@ -3884,15 +3843,14 @@
             <div style="display:flex;align-items:center;gap:10px;padding:9px 0">
               <span style="font-size:18px;flex-shrink:0">🇦🇫</span><span style="font-size:12.5px;color:#fff;flex-shrink:0">Afghanistan</span><span style="font-size:11px;color:#999;flex:1">electricity &amp; goods exports</span><span style="font-family:Fraunces,serif;font-weight:700;font-size:13px;color:#fff;flex-shrink:0">~4%</span>
             </div>
-            <p style="font-size:11px;color:#999;margin-top:10px;line-height:1.6">
+            <p id="subnote" style="font-size:11px;color:#999;margin-top:10px;margin-bottom:0;line-height:1.6">
               Switzerland (27%) and UK (16%) together account for 43% of exports — almost entirely because gold is refined in Switzerland and traded in London. This concentration means Uzbekistan's export figures are highly sensitive to gold prices. Afghanistan at 4% is notable — Uzbekistan exports electricity and consumer goods, giving it economic leverage over a fragile neighbour.
             </p>
           </div>
         </div>
         <div class="col-12 col-md-6">
-          <!-- Panel: Key Fiscal Indicators -->
-          <div style="background:#111;border:1px solid #1e1e1e;padding:24px 20px;height:100%">
-            <div style="font-family:Fraunces,serif;font-weight:700;font-size:13px;color:#fff;margin-bottom:16px;padding-bottom:11px;border-bottom:1px solid #1e1e1e;display:flex;align-items:center;gap:8px">
+          <div id="panel" style="background:#111;border:1px solid #1e1e1e;padding:20px 20px;height:100%">
+            <div id="title" style="font-family:Fraunces,serif;font-weight:700;font-size:13px;color:#fff;margin-bottom:16px;padding-bottom:11px;border-bottom:1px solid #1e1e1e;display:flex;align-items:center;gap:8px">
               <span style="color:#fff;flex-shrink:0">
               <svg fill="currentColor" height="14" viewbox="0 0 512 512" width="14" xmlns="http://www.w3.org/2000/svg">
                 <path d="M64 64c0-17.7-14.3-32-32-32S0 46.3 0 64V400c0 44.2 35.8 80 80 80H480c17.7 0 32-14.3 32-32s-14.3-32-32-32H80c-8.8 0-16-7.2-16-16V64zm406.6 86.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L320 210.7l-57.4-57.4c-12.5-12.5-32.8-12.5-45.3 0l-112 112c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L240 221.3l57.4 57.4c12.5 12.5 32.8 12.5 45.3 0l128-128z">
@@ -3900,7 +3858,7 @@
               </svg>
               </span>Key Fiscal Indicators
             </div>
-            <table style="width:100%;border-collapse:collapse;table-layout:fixed">
+            <table id="paneltbl" style="width:100%;border-collapse:collapse;table-layout:fixed">
               <tbody>
                 <tr style="border-bottom:1px solid #1e1e1e">
                   <td style="padding:9px 4px;font-size:12.5px;color:#999;width:58%;overflow-wrap:break-word">
@@ -3960,7 +3918,7 @@
                 </tr>
               </tbody>
             </table>
-            <p style="font-size:11px;color:#999;margin-top:10px;line-height:1.6">
+            <p id="subnote" style="font-size:11px;color:#999;margin-top:10px;margin-bottom:0;line-height:1.6">
               Investment at 31.9% of GDP is exceptionally high — it is the engine of Uzbekistan's growth story. This is being funded by broad foreign investment (~$35–40B total), multilateral lending (IDB, ADB, World Bank), and the sovereign wealth fund. WTO accession would be the most significant trade reform since independence — opening markets and requiring legal modernisation.
             </p>
             <div style="margin-top:14px">
@@ -4057,18 +4015,17 @@
           </div>
         </div>
       </div>
-      <!-- *************************************************** -->
-      <!-- ENERGY & RESOURCES                                  -->
-      <!-- *************************************************** -->
-      <div style="display:flex;align-items:center;gap:10px;margin-bottom:28px;padding-top:24px">
-        <span style="color:#fff;font-size:16px;flex-shrink:0">
-        <svg fill="currentColor" height="14" viewbox="0 0 512 512" width="14" xmlns="http://www.w3.org/2000/svg">
-          <path d="M256 32L32 480h448L256 32zm0 77l163 291H93L256 109z">
-          </path>
-        </svg>
-        </span><span style="font-size:13px;letter-spacing:0.18em;text-transform:uppercase;color:#fff;font-weight:500">Energy &amp; Resources</span>
+      <div class="row my-3" id="section">
+        <div class="col-12 d-flex align-items-center gap-2">
+          <span style="color:#fff;font-size:16px;flex-shrink:0">
+          <svg fill="currentColor" height="14" viewbox="0 0 512 512" width="14" xmlns="http://www.w3.org/2000/svg">
+            <path d="M256 32L32 480h448L256 32zm0 77l163 291H93L256 109z">
+            </path>
+          </svg>
+          </span><span style="font-size:13px;letter-spacing:0.18em;text-transform:uppercase;color:#fff;font-weight:500">Energy &amp; Resources</span>
+        </div>
       </div>
-      <div class="row g-1 mb-3">
+      <div class="row g-1 mb-3" id="item">
         <div class="col-6 col-md-4 d-flex">
           <!-- KPI Card: Electricity Generation -->
           <div class="kpi" style="background:#111;border:1px solid #1e1e1e;padding:18px 15px 15px;position:relative;overflow:hidden;animation-delay:0.05s;width:100%;flex:1">
@@ -4166,17 +4123,16 @@
           </div>
         </div>
       </div>
-      <div class="row gy-3 mb-3">
+      <div class="row gy-3 mb-3" id="item">
         <div class="col-12 col-md-6">
-          <!-- Panel: Electricity Generation Mix (2024 est. — IEA/UZ Stats; fuel-type split modelled, not metered per source) -->
-          <div style="background:#111;border:1px solid #1e1e1e;padding:24px 20px;height:100%">
-            <div style="font-family:Fraunces,serif;font-weight:700;font-size:13px;color:#fff;margin-bottom:16px;padding-bottom:11px;border-bottom:1px solid #1e1e1e;display:flex;align-items:center;gap:8px">
+          <div id="panel" style="background:#111;border:1px solid #1e1e1e;padding:20px 20px;height:100%">
+            <div id="title" style="font-family:Fraunces,serif;font-weight:700;font-size:13px;color:#fff;margin-bottom:16px;padding-bottom:11px;border-bottom:1px solid #1e1e1e;display:flex;align-items:center;gap:8px">
               <span style="color:#fff;flex-shrink:0">
               <svg fill="currentColor" height="14" viewbox="0 0 512 512" width="14" xmlns="http://www.w3.org/2000/svg">
                 <path d="M64 64c0-17.7-14.3-32-32-32S0 46.3 0 64V400c0 44.2 35.8 80 80 80H480c17.7 0 32-14.3 32-32s-14.3-32-32-32H80c-8.8 0-16-7.2-16-16V64zm406.6 86.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L320 210.7l-57.4-57.4c-12.5-12.5-32.8-12.5-45.3 0l-112 112c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L240 221.3l57.4 57.4c12.5 12.5 32.8 12.5 45.3 0l128-128z">
                 </path>
               </svg>
-              </span>Electricity Generation Mix (2024 est. — IEA/UZ Stats; fuel-type split modelled, not metered per source)
+              </span>Electricity Generation Mix (2024 est.)
             </div>
             <div style="display:flex;align-items:center;gap:20px;flex-wrap:wrap">
               <div style="position:relative;flex-shrink:0">
@@ -4224,15 +4180,17 @@
                 </div>
               </div>
             </div>
-            <p style="font-size:11px;color:#999;margin-top:12px;line-height:1.6">
+            <p id="subnote" style="font-size:11px;color:#999;margin-top:10px;margin-bottom:0;line-height:1.6">
+              2024 est. — IEA/UZ Stats; fuel-type split modelled, not metered per source
+            </p>
+            <p id="subnote" style="font-size:11px;color:#999;margin-top:12px;margin-bottom:0;line-height:1.6">
               ~76% gas-fired is relatively clean compared to Kazakhstan's coal-heavy grid. Coal at ~11% is higher than previously reported (corrected 2024 data). However, natural gas production is declining (~7%/year) — making the $9.5B renewable push urgent. Uzbekistan has signed deals for 20GW of solar and wind by 2030. The Rosatom nuclear plant would provide baseload power independence.
             </p>
           </div>
         </div>
         <div class="col-12 col-md-6">
-          <!-- Panel: Energy & Resources Facts -->
-          <div style="background:#111;border:1px solid #1e1e1e;padding:24px 20px;height:100%">
-            <div style="font-family:Fraunces,serif;font-weight:700;font-size:13px;color:#fff;margin-bottom:16px;padding-bottom:11px;border-bottom:1px solid #1e1e1e;display:flex;align-items:center;gap:8px">
+          <div id="panel" style="background:#111;border:1px solid #1e1e1e;padding:20px 20px;height:100%">
+            <div id="title" style="font-family:Fraunces,serif;font-weight:700;font-size:13px;color:#fff;margin-bottom:16px;padding-bottom:11px;border-bottom:1px solid #1e1e1e;display:flex;align-items:center;gap:8px">
               <span style="color:#fff;flex-shrink:0">
               <svg fill="currentColor" height="14" viewbox="0 0 512 512" width="14" xmlns="http://www.w3.org/2000/svg">
                 <path d="M240.1 4.2c9.8-5.6 21.9-5.6 31.8 0l208 120c9.2 5.3 14.1 15.6 12.2 26.1s-10.4 18.5-21 18.5h-24.9L448 464H480c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H64L66.7 168.8H41.7c-10.6 0-19.2-7.9-21-18.5s3-20.8 12.2-26.1l208-120z">
@@ -4240,7 +4198,7 @@
               </svg>
               </span>Energy &amp; Resources Facts
             </div>
-            <table style="width:100%;border-collapse:collapse;table-layout:fixed">
+            <table id="paneltbl" style="width:100%;border-collapse:collapse;table-layout:fixed">
               <tbody>
                 <tr style="border-bottom:1px solid #1e1e1e">
                   <td style="padding:9px 4px;font-size:12.5px;color:#999;width:58%;overflow-wrap:break-word">
@@ -4292,24 +4250,23 @@
                 </tr>
               </tbody>
             </table>
-            <p style="font-size:11px;color:#999;margin-top:10px;line-height:1.6">
+            <p id="subnote" style="font-size:11px;color:#999;margin-top:10px;margin-bottom:0;line-height:1.6">
               Uzbekistan is a critical minerals powerhouse: gold, uranium, copper, zinc, natural gas. Muruntau's 70-tonne annual output makes it the single most economically important asset in Central Asia. Uranium production, while smaller than Kazakhstan's, positions Uzbekistan well in the nuclear energy renaissance. Declining gas production makes the renewable transition existentially important.
             </p>
           </div>
         </div>
       </div>
-      <!-- *************************************************** -->
-      <!-- INFRASTRUCTURE & DIGITAL CONNECTIVITY               -->
-      <!-- *************************************************** -->
-      <div style="display:flex;align-items:center;gap:10px;margin-bottom:28px;padding-top:24px">
-        <span style="color:#fff;font-size:16px;flex-shrink:0">
-        <svg fill="currentColor" height="14" viewbox="0 0 576 512" width="14" xmlns="http://www.w3.org/2000/svg">
-          <path d="M384 476.1L192 421.2V35.9L384 90.8v385.3zm32-1.2V88.4l127.1-42.4c5.7-1.9 11.9.3 15.3 5.3 1.7 2.5 2.6 5.5 2.6 8.5V440c0 6.1-3.9 11.5-9.7 13.4L416 474.9zM15.7 56.4L160 10.7V98.6l-128 43.4V69c0-6.1 3.9-11.5 9.7-13.4zM192 421.2L32 474.9V138.7l160-54.2v336.7z">
-          </path>
-        </svg>
-        </span><span style="font-size:13px;letter-spacing:0.18em;text-transform:uppercase;color:#fff;font-weight:500">Infrastructure &amp; Digital Connectivity</span>
+      <div class="row my-3" id="section">
+        <div class="col-12 d-flex align-items-center gap-2">
+          <span style="color:#fff;font-size:16px;flex-shrink:0">
+          <svg fill="currentColor" height="14" viewbox="0 0 576 512" width="14" xmlns="http://www.w3.org/2000/svg">
+            <path d="M384 476.1L192 421.2V35.9L384 90.8v385.3zm32-1.2V88.4l127.1-42.4c5.7-1.9 11.9.3 15.3 5.3 1.7 2.5 2.6 5.5 2.6 8.5V440c0 6.1-3.9 11.5-9.7 13.4L416 474.9zM15.7 56.4L160 10.7V98.6l-128 43.4V69c0-6.1 3.9-11.5 9.7-13.4zM192 421.2L32 474.9V138.7l160-54.2v336.7z">
+            </path>
+          </svg>
+          </span><span style="font-size:13px;letter-spacing:0.18em;text-transform:uppercase;color:#fff;font-weight:500">Infrastructure &amp; Digital Connectivity</span>
+        </div>
       </div>
-      <div class="row g-1 mb-3">
+      <div class="row g-1 mb-3" id="item">
         <div class="col-6 col-md-4 d-flex">
           <!-- KPI Card: Internet Penetration -->
           <div class="kpi" style="background:#111;border:1px solid #1e1e1e;padding:18px 15px 15px;position:relative;overflow:hidden;animation-delay:0.05s;width:100%;flex:1">
@@ -4407,11 +4364,10 @@
           </div>
         </div>
       </div>
-      <div class="row gy-3 mb-3">
+      <div class="row gy-3 mb-3" id="item">
         <div class="col-12 col-md-6">
-          <!-- Panel: Key Infrastructure Projects -->
-          <div style="background:#111;border:1px solid #1e1e1e;padding:24px 20px;height:100%">
-            <div style="font-family:Fraunces,serif;font-weight:700;font-size:13px;color:#fff;margin-bottom:16px;padding-bottom:11px;border-bottom:1px solid #1e1e1e;display:flex;align-items:center;gap:8px">
+          <div id="panel" style="background:#111;border:1px solid #1e1e1e;padding:20px 20px;height:100%">
+            <div id="title" style="font-family:Fraunces,serif;font-weight:700;font-size:13px;color:#fff;margin-bottom:16px;padding-bottom:11px;border-bottom:1px solid #1e1e1e;display:flex;align-items:center;gap:8px">
               <span style="color:#fff;flex-shrink:0">
               <svg fill="currentColor" height="14" viewbox="0 0 576 512" width="14" xmlns="http://www.w3.org/2000/svg">
                 <path d="M384 476.1L192 421.2V35.9L384 90.8v385.3zm32-1.2V88.4l127.1-42.4c5.7-1.9 11.9.3 15.3 5.3 1.7 2.5 2.6 5.5 2.6 8.5V440c0 6.1-3.9 11.5-9.7 13.4L416 474.9zM15.7 56.4L160 10.7V98.6l-128 43.4V69c0-6.1 3.9-11.5 9.7-13.4zM192 421.2L32 474.9V138.7l160-54.2v336.7z">
@@ -4419,7 +4375,7 @@
               </svg>
               </span>Key Infrastructure Projects
             </div>
-            <table style="width:100%;border-collapse:collapse;table-layout:fixed">
+            <table id="paneltbl" style="width:100%;border-collapse:collapse;table-layout:fixed">
               <tbody>
                 <tr style="border-bottom:1px solid #1e1e1e">
                   <td style="padding:9px 4px;font-size:12.5px;color:#999;width:58%;overflow-wrap:break-word">
@@ -4471,15 +4427,14 @@
                 </tr>
               </tbody>
             </table>
-            <p style="font-size:11px;color:#999;margin-top:10px;line-height:1.6">
+            <p id="subnote" style="font-size:11px;color:#999;margin-top:10px;margin-bottom:0;line-height:1.6">
               The China-Kyrgyzstan-Uzbekistan Railway is the most transformative infrastructure project in Central Asia — it will create a direct rail link from China to Uzbekistan that bypasses Russia entirely. Combined with the Trans-Afghan Railway potential, Uzbekistan could become the genuine hub of a new Silk Road corridor linking East Asia to the Indian Ocean.
             </p>
           </div>
         </div>
         <div class="col-12 col-md-6">
-          <!-- Panel: Digital Indicators -->
-          <div style="background:#111;border:1px solid #1e1e1e;padding:24px 20px;height:100%">
-            <div style="font-family:Fraunces,serif;font-weight:700;font-size:13px;color:#fff;margin-bottom:16px;padding-bottom:11px;border-bottom:1px solid #1e1e1e;display:flex;align-items:center;gap:8px">
+          <div id="panel" style="background:#111;border:1px solid #1e1e1e;padding:20px 20px;height:100%">
+            <div id="title" style="font-family:Fraunces,serif;font-weight:700;font-size:13px;color:#fff;margin-bottom:16px;padding-bottom:11px;border-bottom:1px solid #1e1e1e;display:flex;align-items:center;gap:8px">
               <span style="color:#fff;flex-shrink:0">
               <svg fill="currentColor" height="14" viewbox="0 0 512 512" width="14" xmlns="http://www.w3.org/2000/svg">
                 <path d="M64 64c0-17.7-14.3-32-32-32S0 46.3 0 64V400c0 44.2 35.8 80 80 80H480c17.7 0 32-14.3 32-32s-14.3-32-32-32H80c-8.8 0-16-7.2-16-16V64zm406.6 86.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L320 210.7l-57.4-57.4c-12.5-12.5-32.8-12.5-45.3 0l-112 112c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L240 221.3l57.4 57.4c12.5 12.5 32.8 12.5 45.3 0l128-128z">
@@ -4532,24 +4487,23 @@
                 </div>
               </div>
             </div>
-            <p style="font-size:11px;color:#999;margin-top:10px;line-height:1.6">
+            <p id="subnote" style="font-size:11px;color:#999;margin-top:10px;margin-bottom:0;line-height:1.6">
               Uzbekistan's internet is uncensored — a dramatic change from the Karimov era. 84% penetration is growing fast and social media (Instagram, Telegram) are widely used. The "1 million programmers" initiative and Uzbekistan's IT Park (1,900+ resident companies; 0% income tax) suggest a digital economy is genuinely taking root.
             </p>
           </div>
         </div>
       </div>
-      <!-- *************************************************** -->
-      <!-- HEALTH SYSTEM                                       -->
-      <!-- *************************************************** -->
-      <div style="display:flex;align-items:center;gap:10px;margin-bottom:28px;padding-top:24px">
-        <span style="color:#fff;font-size:16px;flex-shrink:0">
-        <svg fill="currentColor" height="14" viewbox="0 0 640 512" width="14" xmlns="http://www.w3.org/2000/svg">
-          <path d="M72 88a56 56 0 1 1 112 0A56 56 0 1 1 72 88zM64 245.7C54 256.9 48 271.8 48 288s6 31.1 16 42.3V245.7zm144.4-49.3C178.7 222.7 160 261.2 160 304c0 34.3 12 65.8 32 90.5V416c0 17.7-14.3 32-32 32H96c-17.7 0-32-14.3-32-32V389.2C26.2 371.2 0 332.7 0 288c0-61.9 50.1-112 112-112c29.3 0 56 11.3 75.9 29.7zM320 32a64 64 0 1 1 0 128A64 64 0 1 1 320 32zM448 304c0 44.7-26.2 83.2-64 101.2V448c0 17.7-14.3 32-32 32H288c-17.7 0-32-14.3-32-32V405.2c-37.8-18-64-56.5-64-101.2c0-61.9 50.1-112 112-112h32c61.9 0 112 50.1 112 112z">
-          </path>
-        </svg>
-        </span><span style="font-size:13px;letter-spacing:0.18em;text-transform:uppercase;color:#fff;font-weight:500">Health System</span>
+      <div class="row my-3" id="section">
+        <div class="col-12 d-flex align-items-center gap-2">
+          <span style="color:#fff;font-size:16px;flex-shrink:0">
+          <svg fill="currentColor" height="14" viewbox="0 0 640 512" width="14" xmlns="http://www.w3.org/2000/svg">
+            <path d="M72 88a56 56 0 1 1 112 0A56 56 0 1 1 72 88zM64 245.7C54 256.9 48 271.8 48 288s6 31.1 16 42.3V245.7zm144.4-49.3C178.7 222.7 160 261.2 160 304c0 34.3 12 65.8 32 90.5V416c0 17.7-14.3 32-32 32H96c-17.7 0-32-14.3-32-32V389.2C26.2 371.2 0 332.7 0 288c0-61.9 50.1-112 112-112c29.3 0 56 11.3 75.9 29.7zM320 32a64 64 0 1 1 0 128A64 64 0 1 1 320 32zM448 304c0 44.7-26.2 83.2-64 101.2V448c0 17.7-14.3 32-32 32H288c-17.7 0-32-14.3-32-32V405.2c-37.8-18-64-56.5-64-101.2c0-61.9 50.1-112 112-112h32c61.9 0 112 50.1 112 112z">
+            </path>
+          </svg>
+          </span><span style="font-size:13px;letter-spacing:0.18em;text-transform:uppercase;color:#fff;font-weight:500">Health System</span>
+        </div>
       </div>
-      <div class="row g-1 mb-3">
+      <div class="row g-1 mb-3" id="item">
         <div class="col-6 col-md-4 d-flex">
           <!-- KPI Card: Health Spending (% GDP) -->
           <div class="kpi" style="background:#111;border:1px solid #1e1e1e;padding:18px 15px 15px;position:relative;overflow:hidden;animation-delay:0.05s;width:100%;flex:1">
@@ -4647,11 +4601,10 @@
           </div>
         </div>
       </div>
-      <div class="row gy-3 mb-3">
+      <div class="row gy-3 mb-3" id="item">
         <div class="col-12 col-md-6">
-          <!-- Panel: Health System Facts -->
-          <div style="background:#111;border:1px solid #1e1e1e;padding:24px 20px;height:100%">
-            <div style="font-family:Fraunces,serif;font-weight:700;font-size:13px;color:#fff;margin-bottom:16px;padding-bottom:11px;border-bottom:1px solid #1e1e1e;display:flex;align-items:center;gap:8px">
+          <div id="panel" style="background:#111;border:1px solid #1e1e1e;padding:20px 20px;height:100%">
+            <div id="title" style="font-family:Fraunces,serif;font-weight:700;font-size:13px;color:#fff;margin-bottom:16px;padding-bottom:11px;border-bottom:1px solid #1e1e1e;display:flex;align-items:center;gap:8px">
               <span style="color:#fff;flex-shrink:0">
               <svg fill="currentColor" height="14" viewbox="0 0 640 512" width="14" xmlns="http://www.w3.org/2000/svg">
                 <path d="M72 88a56 56 0 1 1 112 0A56 56 0 1 1 72 88zM64 245.7C54 256.9 48 271.8 48 288s6 31.1 16 42.3V245.7zm144.4-49.3C178.7 222.7 160 261.2 160 304c0 34.3 12 65.8 32 90.5V416c0 17.7-14.3 32-32 32H96c-17.7 0-32-14.3-32-32V389.2C26.2 371.2 0 332.7 0 288c0-61.9 50.1-112 112-112c29.3 0 56 11.3 75.9 29.7zM320 32a64 64 0 1 1 0 128A64 64 0 1 1 320 32zM448 304c0 44.7-26.2 83.2-64 101.2V448c0 17.7-14.3 32-32 32H288c-17.7 0-32-14.3-32-32V405.2c-37.8-18-64-56.5-64-101.2c0-61.9 50.1-112 112-112h32c61.9 0 112 50.1 112 112z">
@@ -4659,7 +4612,7 @@
               </svg>
               </span>Health System Facts
             </div>
-            <table style="width:100%;border-collapse:collapse;table-layout:fixed">
+            <table id="paneltbl" style="width:100%;border-collapse:collapse;table-layout:fixed">
               <tbody>
                 <tr style="border-bottom:1px solid #1e1e1e">
                   <td style="padding:9px 4px;font-size:12.5px;color:#999;width:58%;overflow-wrap:break-word">
@@ -4711,15 +4664,14 @@
                 </tr>
               </tbody>
             </table>
-            <p style="font-size:11px;color:#999;margin-top:10px;line-height:1.6">
+            <p id="subnote" style="font-size:11px;color:#999;margin-top:10px;margin-bottom:0;line-height:1.6">
               Karakalpakstan (Aral Sea region) has the worst health outcomes in Uzbekistan — the toxic salt dust from the exposed Aralkum Desert causes severe respiratory disease, cancer, and maternal health crises. This is a direct consequence of the Aral Sea disaster. Abolishing forced cotton labour in 2021 removed a major human rights stain and improved rural health outcomes.
             </p>
           </div>
         </div>
         <div class="col-12 col-md-6">
-          <!-- Panel: Disease & Health Burden -->
-          <div style="background:#111;border:1px solid #1e1e1e;padding:24px 20px;height:100%">
-            <div style="font-family:Fraunces,serif;font-weight:700;font-size:13px;color:#fff;margin-bottom:16px;padding-bottom:11px;border-bottom:1px solid #1e1e1e;display:flex;align-items:center;gap:8px">
+          <div id="panel" style="background:#111;border:1px solid #1e1e1e;padding:20px 20px;height:100%">
+            <div id="title" style="font-family:Fraunces,serif;font-weight:700;font-size:13px;color:#fff;margin-bottom:16px;padding-bottom:11px;border-bottom:1px solid #1e1e1e;display:flex;align-items:center;gap:8px">
               <span style="color:#fff;flex-shrink:0">
               <svg fill="currentColor" height="14" viewbox="0 0 512 512" width="14" xmlns="http://www.w3.org/2000/svg">
                 <path d="M64 64c0-17.7-14.3-32-32-32S0 46.3 0 64V400c0 44.2 35.8 80 80 80H480c17.7 0 32-14.3 32-32s-14.3-32-32-32H80c-8.8 0-16-7.2-16-16V64zm406.6 86.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L320 210.7l-57.4-57.4c-12.5-12.5-32.8-12.5-45.3 0l-112 112c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L240 221.3l57.4 57.4c12.5 12.5 32.8 12.5 45.3 0l128-128z">
@@ -4772,24 +4724,23 @@
                 </div>
               </div>
             </div>
-            <p style="font-size:11px;color:#999;margin-top:10px;line-height:1.6">
+            <p id="subnote" style="font-size:11px;color:#999;margin-top:10px;margin-bottom:0;line-height:1.6">
               TB at 83/100K (2022 WHO) is among the highest in the region — above the Central Asian average. Drug-resistant TB is a particular concern. The Aral Sea dust crisis affecting ~2M Karakalpak people is a chronic, unfixable public health disaster — the sea cannot be restored and the exposed seabed will blow dust for generations.
             </p>
           </div>
         </div>
       </div>
-      <!-- *************************************************** -->
-      <!-- SOCIAL INDICATORS & INEQUALITY                      -->
-      <!-- *************************************************** -->
-      <div style="display:flex;align-items:center;gap:10px;margin-bottom:28px;padding-top:24px">
-        <span style="color:#fff;font-size:16px;flex-shrink:0">
-        <svg fill="currentColor" height="14" viewbox="0 0 640 512" width="14" xmlns="http://www.w3.org/2000/svg">
-          <path d="M72 88a56 56 0 1 1 112 0A56 56 0 1 1 72 88zM64 245.7C54 256.9 48 271.8 48 288s6 31.1 16 42.3V245.7zm144.4-49.3C178.7 222.7 160 261.2 160 304c0 34.3 12 65.8 32 90.5V416c0 17.7-14.3 32-32 32H96c-17.7 0-32-14.3-32-32V389.2C26.2 371.2 0 332.7 0 288c0-61.9 50.1-112 112-112c29.3 0 56 11.3 75.9 29.7zM320 32a64 64 0 1 1 0 128A64 64 0 1 1 320 32zM448 304c0 44.7-26.2 83.2-64 101.2V448c0 17.7-14.3 32-32 32H288c-17.7 0-32-14.3-32-32V405.2c-37.8-18-64-56.5-64-101.2c0-61.9 50.1-112 112-112h32c61.9 0 112 50.1 112 112z">
-          </path>
-        </svg>
-        </span><span style="font-size:13px;letter-spacing:0.18em;text-transform:uppercase;color:#fff;font-weight:500">Social Indicators &amp; Inequality</span>
+      <div class="row my-3" id="section">
+        <div class="col-12 d-flex align-items-center gap-2">
+          <span style="color:#fff;font-size:16px;flex-shrink:0">
+          <svg fill="currentColor" height="14" viewbox="0 0 640 512" width="14" xmlns="http://www.w3.org/2000/svg">
+            <path d="M72 88a56 56 0 1 1 112 0A56 56 0 1 1 72 88zM64 245.7C54 256.9 48 271.8 48 288s6 31.1 16 42.3V245.7zm144.4-49.3C178.7 222.7 160 261.2 160 304c0 34.3 12 65.8 32 90.5V416c0 17.7-14.3 32-32 32H96c-17.7 0-32-14.3-32-32V389.2C26.2 371.2 0 332.7 0 288c0-61.9 50.1-112 112-112c29.3 0 56 11.3 75.9 29.7zM320 32a64 64 0 1 1 0 128A64 64 0 1 1 320 32zM448 304c0 44.7-26.2 83.2-64 101.2V448c0 17.7-14.3 32-32 32H288c-17.7 0-32-14.3-32-32V405.2c-37.8-18-64-56.5-64-101.2c0-61.9 50.1-112 112-112h32c61.9 0 112 50.1 112 112z">
+            </path>
+          </svg>
+          </span><span style="font-size:13px;letter-spacing:0.18em;text-transform:uppercase;color:#fff;font-weight:500">Social Indicators &amp; Inequality</span>
+        </div>
       </div>
-      <div class="row g-1 mb-3">
+      <div class="row g-1 mb-3" id="item">
         <div class="col-6 col-md-4 d-flex">
           <!-- KPI Card: Poverty rate ($3.65/day, 2025) -->
           <div class="kpi" style="background:#111;border:1px solid #1e1e1e;padding:18px 15px 15px;position:relative;overflow:hidden;animation-delay:0.05s;width:100%;flex:1">
@@ -4887,11 +4838,10 @@
           </div>
         </div>
       </div>
-      <div class="row gy-3 mb-3">
+      <div class="row gy-3 mb-3" id="item">
         <div class="col-12 col-md-6">
-          <!-- Panel: Access & Basic Services -->
-          <div style="background:#111;border:1px solid #1e1e1e;padding:24px 20px;height:100%">
-            <div style="font-family:Fraunces,serif;font-weight:700;font-size:13px;color:#fff;margin-bottom:16px;padding-bottom:11px;border-bottom:1px solid #1e1e1e;display:flex;align-items:center;gap:8px">
+          <div id="panel" style="background:#111;border:1px solid #1e1e1e;padding:20px 20px;height:100%">
+            <div id="title" style="font-family:Fraunces,serif;font-weight:700;font-size:13px;color:#fff;margin-bottom:16px;padding-bottom:11px;border-bottom:1px solid #1e1e1e;display:flex;align-items:center;gap:8px">
               <span style="color:#fff;flex-shrink:0">
               <svg fill="currentColor" height="14" viewbox="0 0 512 512" width="14" xmlns="http://www.w3.org/2000/svg">
                 <path d="M64 64c0-17.7-14.3-32-32-32S0 46.3 0 64V400c0 44.2 35.8 80 80 80H480c17.7 0 32-14.3 32-32s-14.3-32-32-32H80c-8.8 0-16-7.2-16-16V64zm406.6 86.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L320 210.7l-57.4-57.4c-12.5-12.5-32.8-12.5-45.3 0l-112 112c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L240 221.3l57.4 57.4c12.5 12.5 32.8 12.5 45.3 0l128-128z">
@@ -4944,15 +4894,14 @@
                 </div>
               </div>
             </div>
-            <p style="font-size:11px;color:#999;margin-top:10px;line-height:1.6">
+            <p id="subnote" style="font-size:11px;color:#999;margin-top:10px;margin-bottom:0;line-height:1.6">
               Rural sanitation at 68% is a key infrastructure gap — directly linked to child health outcomes. The mahalla (neighbourhood committee) system is uniquely Uzbek — it provides community welfare, social pressure for compliance, and local governance simultaneously. It was used effectively during COVID-19 for food distribution and monitoring.
             </p>
           </div>
         </div>
         <div class="col-12 col-md-6">
-          <!-- Panel: Social Cohesion & Gender -->
-          <div style="background:#111;border:1px solid #1e1e1e;padding:24px 20px;height:100%">
-            <div style="font-family:Fraunces,serif;font-weight:700;font-size:13px;color:#fff;margin-bottom:16px;padding-bottom:11px;border-bottom:1px solid #1e1e1e;display:flex;align-items:center;gap:8px">
+          <div id="panel" style="background:#111;border:1px solid #1e1e1e;padding:20px 20px;height:100%">
+            <div id="title" style="font-family:Fraunces,serif;font-weight:700;font-size:13px;color:#fff;margin-bottom:16px;padding-bottom:11px;border-bottom:1px solid #1e1e1e;display:flex;align-items:center;gap:8px">
               <span style="color:#fff;flex-shrink:0">
               <svg fill="currentColor" height="14" viewbox="0 0 640 512" width="14" xmlns="http://www.w3.org/2000/svg">
                 <path d="M72 88a56 56 0 1 1 112 0A56 56 0 1 1 72 88zM64 245.7C54 256.9 48 271.8 48 288s6 31.1 16 42.3V245.7zm144.4-49.3C178.7 222.7 160 261.2 160 304c0 34.3 12 65.8 32 90.5V416c0 17.7-14.3 32-32 32H96c-17.7 0-32-14.3-32-32V389.2C26.2 371.2 0 332.7 0 288c0-61.9 50.1-112 112-112c29.3 0 56 11.3 75.9 29.7zM320 32a64 64 0 1 1 0 128A64 64 0 1 1 320 32zM448 304c0 44.7-26.2 83.2-64 101.2V448c0 17.7-14.3 32-32 32H288c-17.7 0-32-14.3-32-32V405.2c-37.8-18-64-56.5-64-101.2c0-61.9 50.1-112 112-112h32c61.9 0 112 50.1 112 112z">
@@ -4960,7 +4909,7 @@
               </svg>
               </span>Social Cohesion &amp; Gender
             </div>
-            <table style="width:100%;border-collapse:collapse;table-layout:fixed">
+            <table id="paneltbl" style="width:100%;border-collapse:collapse;table-layout:fixed">
               <tbody>
                 <tr style="border-bottom:1px solid #1e1e1e">
                   <td style="padding:9px 4px;font-size:12.5px;color:#999;width:58%;overflow-wrap:break-word">
@@ -5012,24 +4961,23 @@
                 </tr>
               </tbody>
             </table>
-            <p style="font-size:11px;color:#999;margin-top:10px;line-height:1.6">
+            <p id="subnote" style="font-size:11px;color:#999;margin-top:10px;margin-bottom:0;line-height:1.6">
               Women in parliament at 38% is the highest in Central Asia — reflecting genuine quota-backed progress. The abolition of forced cotton labour was a landmark; for decades, millions of teachers, students, and public servants were mobilised each autumn for cotton harvesting — a Soviet-era practice that persisted long after independence. Its end in 2021 was transformative for rural women in particular.
             </p>
           </div>
         </div>
       </div>
-      <!-- *************************************************** -->
-      <!-- ENVIRONMENT & CLIMATE                               -->
-      <!-- *************************************************** -->
-      <div style="display:flex;align-items:center;gap:10px;margin-bottom:28px;padding-top:24px">
-        <span style="color:#fff;font-size:16px;flex-shrink:0">
-        <svg fill="currentColor" height="14" viewbox="0 0 576 512" width="14" xmlns="http://www.w3.org/2000/svg">
-          <path d="M269.5 69.9c11.1-7.9 25.9-7.9 37 0C329 85.4 356.5 96 384 96c26.9 0 55.4-10.1 80.4-25.1 16-9.7 36.4-8.1 50.7 4.2s18.2 31.6 11.2 48.6C520.1 140 516 159 516 178c0 49.7 20 87.5 38.2 106.9l.4.4c17 18 22.4 44.5 13.4 67.8S536.6 391 511.4 391H64c-25.2 0-47.6-15.3-56.6-38.5s-3.6-49.8 13.4-67.8l.4-.4C39 265.5 59 227.7 59 178c0-18.4-3.4-36.3-9.9-52.4-7-17-2.9-36.3 11.2-48.6S105 62.9 121 72.9C146 87.9 173.1 96 200 96c27.5 0 55-10.6 77.5-26.1z">
-          </path>
-        </svg>
-        </span><span style="font-size:13px;letter-spacing:0.18em;text-transform:uppercase;color:#fff;font-weight:500">Environment &amp; Climate</span>
+      <div class="row my-3" id="section">
+        <div class="col-12 d-flex align-items-center gap-2">
+          <span style="color:#fff;font-size:16px;flex-shrink:0">
+          <svg fill="currentColor" height="14" viewbox="0 0 576 512" width="14" xmlns="http://www.w3.org/2000/svg">
+            <path d="M269.5 69.9c11.1-7.9 25.9-7.9 37 0C329 85.4 356.5 96 384 96c26.9 0 55.4-10.1 80.4-25.1 16-9.7 36.4-8.1 50.7 4.2s18.2 31.6 11.2 48.6C520.1 140 516 159 516 178c0 49.7 20 87.5 38.2 106.9l.4.4c17 18 22.4 44.5 13.4 67.8S536.6 391 511.4 391H64c-25.2 0-47.6-15.3-56.6-38.5s-3.6-49.8 13.4-67.8l.4-.4C39 265.5 59 227.7 59 178c0-18.4-3.4-36.3-9.9-52.4-7-17-2.9-36.3 11.2-48.6S105 62.9 121 72.9C146 87.9 173.1 96 200 96c27.5 0 55-10.6 77.5-26.1z">
+            </path>
+          </svg>
+          </span><span style="font-size:13px;letter-spacing:0.18em;text-transform:uppercase;color:#fff;font-weight:500">Environment &amp; Climate</span>
+        </div>
       </div>
-      <div class="row g-1 mb-3">
+      <div class="row g-1 mb-3" id="item">
         <div class="col-6 col-md-4 d-flex">
           <!-- KPI Card: CO₂ per capita (2022) -->
           <div class="kpi" style="background:#111;border:1px solid #1e1e1e;padding:18px 15px 15px;position:relative;overflow:hidden;animation-delay:0.05s;width:100%;flex:1">
@@ -5127,11 +5075,10 @@
           </div>
         </div>
       </div>
-      <div class="row gy-3 mb-3">
+      <div class="row gy-3 mb-3" id="item">
         <div class="col-12 col-md-6">
-          <!-- Panel: Environmental Facts -->
-          <div style="background:#111;border:1px solid #1e1e1e;padding:24px 20px;height:100%">
-            <div style="font-family:Fraunces,serif;font-weight:700;font-size:13px;color:#fff;margin-bottom:16px;padding-bottom:11px;border-bottom:1px solid #1e1e1e;display:flex;align-items:center;gap:8px">
+          <div id="panel" style="background:#111;border:1px solid #1e1e1e;padding:20px 20px;height:100%">
+            <div id="title" style="font-family:Fraunces,serif;font-weight:700;font-size:13px;color:#fff;margin-bottom:16px;padding-bottom:11px;border-bottom:1px solid #1e1e1e;display:flex;align-items:center;gap:8px">
               <span style="color:#fff;flex-shrink:0">
               <svg fill="currentColor" height="14" viewbox="0 0 576 512" width="14" xmlns="http://www.w3.org/2000/svg">
                 <path d="M269.5 69.9c11.1-7.9 25.9-7.9 37 0C329 85.4 356.5 96 384 96c26.9 0 55.4-10.1 80.4-25.1 16-9.7 36.4-8.1 50.7 4.2s18.2 31.6 11.2 48.6C520.1 140 516 159 516 178c0 49.7 20 87.5 38.2 106.9l.4.4c17 18 22.4 44.5 13.4 67.8S536.6 391 511.4 391H64c-25.2 0-47.6-15.3-56.6-38.5s-3.6-49.8 13.4-67.8l.4-.4C39 265.5 59 227.7 59 178c0-18.4-3.4-36.3-9.9-52.4-7-17-2.9-36.3 11.2-48.6S105 62.9 121 72.9C146 87.9 173.1 96 200 96c27.5 0 55-10.6 77.5-26.1z">
@@ -5139,7 +5086,7 @@
               </svg>
               </span>Environmental Facts
             </div>
-            <table style="width:100%;border-collapse:collapse;table-layout:fixed">
+            <table id="paneltbl" style="width:100%;border-collapse:collapse;table-layout:fixed">
               <tbody>
                 <tr style="border-bottom:1px solid #1e1e1e">
                   <td style="padding:9px 4px;font-size:12.5px;color:#999;width:58%;overflow-wrap:break-word">
@@ -5191,15 +5138,14 @@
                 </tr>
               </tbody>
             </table>
-            <p style="font-size:11px;color:#999;margin-top:10px;line-height:1.6">
+            <p id="subnote" style="font-size:11px;color:#999;margin-top:10px;margin-bottom:0;line-height:1.6">
               Uzbekistan has taken a global leadership role on the Aral Sea crisis — Mirziyoyev has addressed the UN General Assembly on it multiple times. The saksaul afforestation programme (planting drought-resistant trees on the exposed seabed) is the most practical mitigation measure available — it reduces dust emissions while creating a new ecosystem.
             </p>
           </div>
         </div>
         <div class="col-12 col-md-6">
-          <!-- Panel: Water Stress & Pollution -->
-          <div style="background:#111;border:1px solid #1e1e1e;padding:24px 20px;height:100%">
-            <div style="font-family:Fraunces,serif;font-weight:700;font-size:13px;color:#fff;margin-bottom:16px;padding-bottom:11px;border-bottom:1px solid #1e1e1e;display:flex;align-items:center;gap:8px">
+          <div id="panel" style="background:#111;border:1px solid #1e1e1e;padding:20px 20px;height:100%">
+            <div id="title" style="font-family:Fraunces,serif;font-weight:700;font-size:13px;color:#fff;margin-bottom:16px;padding-bottom:11px;border-bottom:1px solid #1e1e1e;display:flex;align-items:center;gap:8px">
               <span style="color:#fff;flex-shrink:0">
               <svg fill="currentColor" height="14" viewbox="0 0 512 512" width="14" xmlns="http://www.w3.org/2000/svg">
                 <path d="M64 64c0-17.7-14.3-32-32-32S0 46.3 0 64V400c0 44.2 35.8 80 80 80H480c17.7 0 32-14.3 32-32s-14.3-32-32-32H80c-8.8 0-16-7.2-16-16V64zm406.6 86.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L320 210.7l-57.4-57.4c-12.5-12.5-32.8-12.5-45.3 0l-112 112c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L240 221.3l57.4 57.4c12.5 12.5 32.8 12.5 45.3 0l128-128z">
@@ -5243,24 +5189,23 @@
                 </div>
               </div>
             </div>
-            <p style="font-size:11px;color:#999;margin-top:10px;line-height:1.6">
+            <p id="subnote" style="font-size:11px;color:#999;margin-top:10px;margin-bottom:0;line-height:1.6">
               Water is Uzbekistan's most existential environmental challenge. Soviet-era irrigation canals waste 60% of the water they carry — efficiency improvements could free enormous volumes without new supply. Climate change is reducing the glacial meltwater from Tajikistan and Kyrgyzstan that feeds the rivers, making the crisis worse each decade.
             </p>
           </div>
         </div>
       </div>
-      <!-- *************************************************** -->
-      <!-- BUSINESS & INVESTMENT CLIMATE                       -->
-      <!-- *************************************************** -->
-      <div style="display:flex;align-items:center;gap:10px;margin-bottom:28px;padding-top:24px">
-        <span style="color:#fff;font-size:16px;flex-shrink:0">
-        <svg fill="currentColor" height="14" viewbox="0 0 512 512" width="14" xmlns="http://www.w3.org/2000/svg">
-          <path d="M184 48H328c4.4 0 8 3.6 8 8V96H176V56c0-4.4 3.6-8 8-8zm-56 8V96H64C28.7 96 0 124.7 0 160v96H192 320 512V160c0-35.3-28.7-64-64-64H384V56c0-30.9-25.1-56-56-56H184c-30.9 0-56 25.1-56 56zM512 288H320v32c0 17.7-14.3 32-32 32H224c-17.7 0-32-14.3-32-32V288H0V416c0 35.3 28.7 64 64 64H448c35.3 0 64-28.7 64-64V288z">
-          </path>
-        </svg>
-        </span><span style="font-size:13px;letter-spacing:0.18em;text-transform:uppercase;color:#fff;font-weight:500">Business &amp; Investment Climate</span>
+      <div class="row my-3" id="section">
+        <div class="col-12 d-flex align-items-center gap-2">
+          <span style="color:#fff;font-size:16px;flex-shrink:0">
+          <svg fill="currentColor" height="14" viewbox="0 0 512 512" width="14" xmlns="http://www.w3.org/2000/svg">
+            <path d="M184 48H328c4.4 0 8 3.6 8 8V96H176V56c0-4.4 3.6-8 8-8zm-56 8V96H64C28.7 96 0 124.7 0 160v96H192 320 512V160c0-35.3-28.7-64-64-64H384V56c0-30.9-25.1-56-56-56H184c-30.9 0-56 25.1-56 56zM512 288H320v32c0 17.7-14.3 32-32 32H224c-17.7 0-32-14.3-32-32V288H0V416c0 35.3 28.7 64 64 64H448c35.3 0 64-28.7 64-64V288z">
+            </path>
+          </svg>
+          </span><span style="font-size:13px;letter-spacing:0.18em;text-transform:uppercase;color:#fff;font-weight:500">Business &amp; Investment Climate</span>
+        </div>
       </div>
-      <div class="row g-1 mb-3">
+      <div class="row g-1 mb-3" id="item">
         <div class="col-6 col-md-4 d-flex">
           <!-- KPI Card: Corporate tax rate -->
           <div class="kpi" style="background:#111;border:1px solid #1e1e1e;padding:18px 15px 15px;position:relative;overflow:hidden;animation-delay:0.05s;width:100%;flex:1">
@@ -5358,11 +5303,10 @@
           </div>
         </div>
       </div>
-      <div class="row gy-3 mb-3">
+      <div class="row gy-3 mb-3" id="item">
         <div class="col-12 col-md-6">
-          <!-- Panel: Investment Climate Summary -->
-          <div style="background:#111;border:1px solid #1e1e1e;padding:24px 20px;height:100%">
-            <div style="font-family:Fraunces,serif;font-weight:700;font-size:13px;color:#fff;margin-bottom:16px;padding-bottom:11px;border-bottom:1px solid #1e1e1e;display:flex;align-items:center;gap:8px">
+          <div id="panel" style="background:#111;border:1px solid #1e1e1e;padding:20px 20px;height:100%">
+            <div id="title" style="font-family:Fraunces,serif;font-weight:700;font-size:13px;color:#fff;margin-bottom:16px;padding-bottom:11px;border-bottom:1px solid #1e1e1e;display:flex;align-items:center;gap:8px">
               <span style="color:#fff;flex-shrink:0">
               <svg fill="currentColor" height="14" viewbox="0 0 512 512" width="14" xmlns="http://www.w3.org/2000/svg">
                 <path d="M184 48H328c4.4 0 8 3.6 8 8V96H176V56c0-4.4 3.6-8 8-8zm-56 8V96H64C28.7 96 0 124.7 0 160v96H192 320 512V160c0-35.3-28.7-64-64-64H384V56c0-30.9-25.1-56-56-56H184c-30.9 0-56 25.1-56 56zM512 288H320v32c0 17.7-14.3 32-32 32H224c-17.7 0-32-14.3-32-32V288H0V416c0 35.3 28.7 64 64 64H448c35.3 0 64-28.7 64-64V288z">
@@ -5370,7 +5314,7 @@
               </svg>
               </span>Investment Climate Summary
             </div>
-            <table style="width:100%;border-collapse:collapse;table-layout:fixed">
+            <table id="paneltbl" style="width:100%;border-collapse:collapse;table-layout:fixed">
               <tbody>
                 <tr style="border-bottom:1px solid #1e1e1e">
                   <td style="padding:9px 4px;font-size:12.5px;color:#999;width:58%;overflow-wrap:break-word">
@@ -5422,15 +5366,14 @@
                 </tr>
               </tbody>
             </table>
-            <p style="font-size:11px;color:#999;margin-top:10px;line-height:1.6">
+            <p id="subnote" style="font-size:11px;color:#999;margin-top:10px;margin-bottom:0;line-height:1.6">
               Uzbekistan's reform trajectory since 2016 is the most dramatic business climate improvement in post-Soviet history — Ease of Doing Business improved from rank 166 to 69 in 7 years. Currency liberalisation in 2017 was the single most impactful reform, immediately unlocking FDI. The remaining challenges are judiciary independence and anti-corruption enforcement.
             </p>
           </div>
         </div>
         <div class="col-12 col-md-6">
-          <!-- Panel: Key Risks & Opportunities -->
-          <div style="background:#111;border:1px solid #1e1e1e;padding:24px 20px;height:100%">
-            <div style="font-family:Fraunces,serif;font-weight:700;font-size:13px;color:#fff;margin-bottom:16px;padding-bottom:11px;border-bottom:1px solid #1e1e1e;display:flex;align-items:center;gap:8px">
+          <div id="panel" style="background:#111;border:1px solid #1e1e1e;padding:20px 20px;height:100%">
+            <div id="title" style="font-family:Fraunces,serif;font-weight:700;font-size:13px;color:#fff;margin-bottom:16px;padding-bottom:11px;border-bottom:1px solid #1e1e1e;display:flex;align-items:center;gap:8px">
               <span style="color:#fff;flex-shrink:0">
               <svg fill="currentColor" height="14" viewbox="0 0 512 512" width="14" xmlns="http://www.w3.org/2000/svg">
                 <path d="M64 64c0-17.7-14.3-32-32-32S0 46.3 0 64V400c0 44.2 35.8 80 80 80H480c17.7 0 32-14.3 32-32s-14.3-32-32-32H80c-8.8 0-16-7.2-16-16V64zm406.6 86.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L320 210.7l-57.4-57.4c-12.5-12.5-32.8-12.5-45.3 0l-112 112c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L240 221.3l57.4 57.4c12.5 12.5 32.8 12.5 45.3 0l128-128z">
@@ -5492,24 +5435,23 @@
                 </div>
               </div>
             </div>
-            <p style="font-size:11px;color:#999;margin-top:10px;line-height:1.6">
+            <p id="subnote" style="font-size:11px;color:#999;margin-top:10px;margin-bottom:0;line-height:1.6">
               Uzbekistan's opportunity set is exceptional: the largest population in Central Asia, world-class heritage tourism, critical minerals, and the new Silk Road pivot. Water scarcity is the overriding long-term risk — without fundamental irrigation reform and upstream glacier preservation, economic growth may hit a physical water ceiling by the 2040s.
             </p>
           </div>
         </div>
       </div>
-      <!-- *************************************************** -->
-      <!-- CRIME & SECURITY                                    -->
-      <!-- *************************************************** -->
-      <div style="display:flex;align-items:center;gap:10px;margin-bottom:28px;padding-top:24px">
-        <span style="color:#fff;font-size:16px;flex-shrink:0">
-        <svg fill="currentColor" height="14" viewbox="0 0 512 512" width="14" xmlns="http://www.w3.org/2000/svg">
-          <path d="M240.1 4.2c9.8-5.6 21.9-5.6 31.8 0l208 120c9.2 5.3 14.1 15.6 12.2 26.1s-10.4 18.5-21 18.5h-24.9L448 464H480c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H64L66.7 168.8H41.7c-10.6 0-19.2-7.9-21-18.5s3-20.8 12.2-26.1l208-120z">
-          </path>
-        </svg>
-        </span><span style="font-size:13px;letter-spacing:0.18em;text-transform:uppercase;color:#fff;font-weight:500">Crime &amp; Security</span>
+      <div class="row my-3" id="section">
+        <div class="col-12 d-flex align-items-center gap-2">
+          <span style="color:#fff;font-size:16px;flex-shrink:0">
+          <svg fill="currentColor" height="14" viewbox="0 0 512 512" width="14" xmlns="http://www.w3.org/2000/svg">
+            <path d="M240.1 4.2c9.8-5.6 21.9-5.6 31.8 0l208 120c9.2 5.3 14.1 15.6 12.2 26.1s-10.4 18.5-21 18.5h-24.9L448 464H480c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H64L66.7 168.8H41.7c-10.6 0-19.2-7.9-21-18.5s3-20.8 12.2-26.1l208-120z">
+            </path>
+          </svg>
+          </span><span style="font-size:13px;letter-spacing:0.18em;text-transform:uppercase;color:#fff;font-weight:500">Crime &amp; Security</span>
+        </div>
       </div>
-      <div class="row g-1 mb-3">
+      <div class="row g-1 mb-3" id="item">
         <div class="col-6 col-md-4 d-flex">
           <!-- KPI Card: Global Peace Index (2024) -->
           <div class="kpi" style="background:#111;border:1px solid #1e1e1e;padding:18px 15px 15px;position:relative;overflow:hidden;animation-delay:0.05s;width:100%;flex:1">
@@ -5607,11 +5549,10 @@
           </div>
         </div>
       </div>
-      <div class="row gy-3 mb-3">
+      <div class="row gy-3 mb-3" id="item">
         <div class="col-12 col-md-6">
-          <!-- Panel: Crime & Security Indicators -->
-          <div style="background:#111;border:1px solid #1e1e1e;padding:24px 20px;height:100%">
-            <div style="font-family:Fraunces,serif;font-weight:700;font-size:13px;color:#fff;margin-bottom:16px;padding-bottom:11px;border-bottom:1px solid #1e1e1e;display:flex;align-items:center;gap:8px">
+          <div id="panel" style="background:#111;border:1px solid #1e1e1e;padding:20px 20px;height:100%">
+            <div id="title" style="font-family:Fraunces,serif;font-weight:700;font-size:13px;color:#fff;margin-bottom:16px;padding-bottom:11px;border-bottom:1px solid #1e1e1e;display:flex;align-items:center;gap:8px">
               <span style="color:#fff;flex-shrink:0">
               <svg fill="currentColor" height="14" viewbox="0 0 512 512" width="14" xmlns="http://www.w3.org/2000/svg">
                 <path d="M240.1 4.2c9.8-5.6 21.9-5.6 31.8 0l208 120c9.2 5.3 14.1 15.6 12.2 26.1s-10.4 18.5-21 18.5h-24.9L448 464H480c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H64L66.7 168.8H41.7c-10.6 0-19.2-7.9-21-18.5s3-20.8 12.2-26.1l208-120z">
@@ -5619,7 +5560,7 @@
               </svg>
               </span>Crime &amp; Security Indicators
             </div>
-            <table style="width:100%;border-collapse:collapse;table-layout:fixed">
+            <table id="paneltbl" style="width:100%;border-collapse:collapse;table-layout:fixed">
               <tbody>
                 <tr style="border-bottom:1px solid #1e1e1e">
                   <td style="padding:9px 4px;font-size:12.5px;color:#999;width:58%;overflow-wrap:break-word">
@@ -5671,15 +5612,14 @@
                 </tr>
               </tbody>
             </table>
-            <p style="font-size:11px;color:#999;margin-top:10px;line-height:1.6">
+            <p id="subnote" style="font-size:11px;color:#999;margin-top:10px;margin-bottom:0;line-height:1.6">
               The opening of Uzbek-Kyrgyz and Uzbek-Tajik borders since 2017 has transformed security dynamics in the Fergana Valley — the region went from armed clashes over water and land to functional cross-border trade. Uzbekistan's management of the Afghan border (137km) is considered effective — the country has avoided significant spillover from Afghanistan's Taliban takeover. The Afghanistan border is 144 km (Wikipedia) — shortest of Uzbekistan's five external borders, running along the Amu Darya.
             </p>
           </div>
         </div>
         <div class="col-12 col-md-6">
-          <!-- Panel: Security Context -->
-          <div style="background:#111;border:1px solid #1e1e1e;padding:24px 20px;height:100%">
-            <div style="font-family:Fraunces,serif;font-weight:700;font-size:13px;color:#fff;margin-bottom:16px;padding-bottom:11px;border-bottom:1px solid #1e1e1e;display:flex;align-items:center;gap:8px">
+          <div id="panel" style="background:#111;border:1px solid #1e1e1e;padding:20px 20px;height:100%">
+            <div id="title" style="font-family:Fraunces,serif;font-weight:700;font-size:13px;color:#fff;margin-bottom:16px;padding-bottom:11px;border-bottom:1px solid #1e1e1e;display:flex;align-items:center;gap:8px">
               <span style="color:#fff;flex-shrink:0">
               <svg fill="currentColor" height="14" viewbox="0 0 512 512" width="14" xmlns="http://www.w3.org/2000/svg">
                 <path d="M64 64c0-17.7-14.3-32-32-32S0 46.3 0 64V400c0 44.2 35.8 80 80 80H480c17.7 0 32-14.3 32-32s-14.3-32-32-32H80c-8.8 0-16-7.2-16-16V64zm406.6 86.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L320 210.7l-57.4-57.4c-12.5-12.5-32.8-12.5-45.3 0l-112 112c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L240 221.3l57.4 57.4c12.5 12.5 32.8 12.5 45.3 0l128-128z">
@@ -5723,18 +5663,18 @@
                 </div>
               </div>
             </div>
-            <p style="font-size:11px;color:#999;margin-top:10px;line-height:1.6">
+            <p id="subnote" style="font-size:11px;color:#999;margin-top:10px;margin-bottom:0;line-height:1.6">
               Uzbekistan's security environment has improved dramatically since 2016 but remains authoritarian. CPI at 32/100 (TI 2024) places Uzbekistan rank 121/180. Press freedom at rank 148/180 (RSF 2024) is poor but better than Tajikistan (162) or Turkmenistan (178). Freedom House total score of 12/100 (Not Free) reflects ongoing authoritarian governance. The Mirziyoyev reform story is real but incomplete — the judiciary remains unfree and civil society tightly managed.
             </p>
           </div>
         </div>
       </div>
-      <div style="padding:8px 0 0;margin-top:8px">
+      <div id="footer" style="padding:8px 0 0;margin-top:8px">
         <p style="font-size:10.5px;color:#555;line-height:1.7">
           Sources: Statistics Agency of Uzbekistan · World Bank 2025 · IMF WEO April 2026 · UNDP HDR 2025 · Transparency International CPI 2024 · WHO · RSF Press Freedom 2024 · World Justice Project 2024 · Freedom House 2024 · ILO · CBU · climate-data.org · IEA · WNA · IPU · UNICEF · Data verified June 2026.
         </p>
-        <p style="font-size:9.5px;color:#444;margin-top:6px;line-height:1.6">
-          Generated 5 June 2026 · Claude Sonnet 4.5 (Anthropic) · iAlmirPro
+        <p style="font-size:9.5px;color:#444;margin-top:6px;line-height:1.6;text-align:center">
+          Generated 6 June 2026 · Claude Sonnet 4.5 (Anthropic) · iAlmirPro
         </p>
       </div>
     </div>
