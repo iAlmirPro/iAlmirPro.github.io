@@ -204,8 +204,8 @@ Usage: `<SectionHeader icon={Icons.mountain} label="Geography & Landscape" />`
 ### `<KpiCard>`
 
 ```jsx
-const KpiCard = ({ label, value, sub, accent = C.kg, delay = 0 }) => {
-  const valColor = accent === C.kg ? C.kgL : accent === C.yel ? C.yelL : accent === C.red ? C.redL : accent === C.blu ? C.bluL : C.txt;
+const KpiCard = ({ label, value, sub, accent = C.[primary], delay = 0 }) => {
+  const valColor = accent === C.[primary] ? C.[primaryL] : accent === C.yel ? C.yelL : accent === C.red ? C.redL : accent === C.blu ? C.bluL : C.txt;
   return (
     <div className="kpi" style={{
       background:C.card, border:`1px solid ${C.border}`, padding:'18px 15px 15px',
@@ -227,7 +227,7 @@ const KpiCard = ({ label, value, sub, accent = C.kg, delay = 0 }) => {
 Usage:
 ```jsx
 <div className="col-6 col-md-4 d-flex">
-  <KpiCard label="GDP Nominal" value="$17.5B" sub="World Bank 2024" accent={C.kg} delay={0.05} />
+  <KpiCard label="GDP Nominal" value="$17.5B" sub="World Bank 2024" accent={C.[primary]} delay={0.05} />
 </div>
 ```
 
@@ -274,8 +274,8 @@ const Panel = ({ title, icon, children }) => (
 **Visitor / Export Origins Row** (used in §8 Tourism and §10 Export destinations):
 ```jsx
 {[
-  { flag:'🇷🇺', country:'Russia',     val:'largest source market',       pct:'~38%' },
-  { flag:'🇰🇿', country:'Kazakhstan', val:'frequent short-stay visitors', pct:'~22%' },
+  { flag:'🏳️', country:'[Country A]', val:'largest source market',       pct:'~38%' },
+  { flag:'🏳️', country:'[Country B]', val:'frequent short-stay visitors', pct:'~22%' },
 ].map(({ flag, country, val, pct }) => (
   <div key={country} style={{ display:'flex', alignItems:'center', gap:10, padding:'9px 0' }}>
     <span style={{ fontSize:18, flexShrink:0 }}>{flag}</span>
@@ -293,7 +293,7 @@ Layout: `flag (18px) | country name | description (flex:1, C.sub) | percentage (
   { yr:'1991', tx:'Independence declared...' },
   { yr:'2005', tx:'Revolution...' },
 ].map(({ yr, tx }) => (
-  <div key={yr} style={{ paddingLeft:16, borderLeft:`1px solid ${C.kg}`, marginBottom:14 }}>
+  <div key={yr} style={{ paddingLeft:16, borderLeft:`1px solid ${C.[primary]}`, marginBottom:14 }}>
     <div style={{ fontSize:10, letterSpacing:'0.11em', color:C.yel, textTransform:'uppercase', marginBottom:2 }}>{yr}</div>
     <div style={{ fontSize:12.5, color:'#888', lineHeight:1.6 }}>{tx}</div>
   </div>
