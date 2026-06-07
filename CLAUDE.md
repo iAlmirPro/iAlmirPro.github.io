@@ -36,6 +36,11 @@ python3 dashboards/jsx_to_html.py dashboards/[country]-dashboard.jsx
 
 npm packages for the renderer are auto-installed on first run into `~/.jsx_to_html_cache/`.
 
+**Live preview before compiling:**
+```bash
+cd jsxpreviewer && bash jsxpreview.sh   # starts local server; edit input.jsx to preview live
+```
+
 **After generating any JSX file, run this syntax check — must return zero results:**
 ```bash
 grep -n 'value:"\|sub:"\|accent:"\|label:"' dashboards/[file].jsx
@@ -75,3 +80,14 @@ The single source of truth for all dashboard design is **`dashboards/dashboard-d
 
 ### JSX syntax
 JSX props use `=`, not `:`. `<KpiCard value="$17.5B" />` not `<KpiCard value:"$17.5B" />`.
+
+## Dashboard reference files
+
+Always read these before building or updating their respective sections:
+
+- `dashboards/at-a-glance-instructions.md` — At-a-Glance section structure, tile anatomy, icons, map tile
+- `dashboards/country-map-instructions.md` — D3 choropleth map component: projection, colours, label positioning
+
+## Username rename
+
+If the GitHub username changes, see `README.md` for the full checklist of what GitHub handles automatically vs. what must be updated manually (local remotes, hardcoded links, external services).
