@@ -18,7 +18,7 @@
   </head>
   <body style="margin:0;background:#000">
     <div class="dash">
-      <div id="top" style="padding:20px 0 0;display:grid;grid-template-columns:1fr auto;align-items:end;gap:32px;margin-bottom:8px">
+      <div id="top" style="padding:20px 0 0;display:grid;grid-template-columns:1fr minmax(0,96px);align-items:end;gap:16px;margin-bottom:8px">
         <div>
           <div style="font-size:10px;letter-spacing:0.28em;text-transform:uppercase;color:#1EB4E5;margin-bottom:14px">
             Country Dashboard 2025
@@ -3706,110 +3706,100 @@
           </div>
         </div>
       </div>
-      <div class="row my-3" id="section">
-        <div class="col-12 d-flex align-items-center gap-2">
-          <span style="color:#fff;font-size:16px;flex-shrink:0">
-          <svg fill="currentColor" height="14" viewbox="0 0 512 512" width="14" xmlns="http://www.w3.org/2000/svg">
-            <path d="M64 64c0-17.7-14.3-32-32-32S0 46.3 0 64V400c0 44.2 35.8 80 80 80H480c17.7 0 32-14.3 32-32s-14.3-32-32-32H80c-8.8 0-16-7.2-16-16V64zm406.6 86.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L320 210.7l-57.4-57.4c-12.5-12.5-32.8-12.5-45.3 0l-112 112c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L240 221.3l57.4 57.4c12.5 12.5 32.8 12.5 45.3 0l128-128z">
-            </path>
-          </svg>
-          </span><span style="font-size:13px;letter-spacing:0.18em;text-transform:uppercase;color:#fff;font-weight:500">Economic Depth &amp; Fiscal Position</span>
-        </div>
-      </div>
       <div class="row g-1 mb-3" id="item">
         <div class="col-6 col-md-4 d-flex">
-          <!-- KPI Card: Foreign Reserves (end-2025) -->
+          <!-- KPI Card: Health Spending (% GDP) -->
           <div class="kpi" style="background:#111;border:1px solid #1e1e1e;padding:18px 15px 15px;position:relative;overflow:hidden;animation-delay:0.05s;width:100%;flex:1">
-            <div style="position:absolute;bottom:0;left:0;right:0;height:2px;background:#1EB4E5">
-            </div>
-            <div style="font-size:10px;letter-spacing:0.11em;text-transform:uppercase;color:#999;margin-bottom:6px">
-              Foreign Reserves (end-2025)
-            </div>
-            <div style="font-family:Fraunces,serif;font-weight:900;font-size:18px;line-height:1;margin-bottom:4px;color:#55ccf5;word-break:break-word">
-              ~$66B
-            </div>
-            <div style="font-size:11px;color:#999;line-height:1.4">
-              Record $66.3B as of Jan 1 2026; includes gold; +61% YoY (CBU)
-            </div>
-          </div>
-        </div>
-        <div class="col-6 col-md-4 d-flex">
-          <!-- KPI Card: Govt Debt / GDP (2025) -->
-          <div class="kpi" style="background:#111;border:1px solid #1e1e1e;padding:18px 15px 15px;position:relative;overflow:hidden;animation-delay:0.1s;width:100%;flex:1">
-            <div style="position:absolute;bottom:0;left:0;right:0;height:2px;background:#444">
-            </div>
-            <div style="font-size:10px;letter-spacing:0.11em;text-transform:uppercase;color:#999;margin-bottom:6px">
-              Govt Debt / GDP (2025)
-            </div>
-            <div style="font-family:Fraunces,serif;font-weight:900;font-size:18px;line-height:1;margin-bottom:4px;color:#fff;word-break:break-word">
-              ~33%
-            </div>
-            <div style="font-size:11px;color:#999;line-height:1.4">
-              IMF 2025 Article IV: 32.6% end-2024; mostly concessional IFI lending
-            </div>
-          </div>
-        </div>
-        <div class="col-6 col-md-4 d-flex">
-          <!-- KPI Card: Foreign Investment (2025) -->
-          <div class="kpi" style="background:#111;border:1px solid #1e1e1e;padding:18px 15px 15px;position:relative;overflow:hidden;animation-delay:0.15s;width:100%;flex:1">
             <div style="position:absolute;bottom:0;left:0;right:0;height:2px;background:#3DAA5C">
             </div>
             <div style="font-size:10px;letter-spacing:0.11em;text-transform:uppercase;color:#999;margin-bottom:6px">
-              Foreign Investment (2025)
+              Health Spending (% GDP)
             </div>
             <div style="font-family:Fraunces,serif;font-weight:900;font-size:18px;line-height:1;margin-bottom:4px;color:#5dc97c;word-break:break-word">
-              ~$35–40B
+              ~7.7%
             </div>
             <div style="font-size:11px;color:#999;line-height:1.4">
-              Total incl. loans &amp; portfolio; BoP FDI ~$2.8B (2024); Central Asia leader
+              WB 2021: 7.74%; public share growing; universal health system reform underway
             </div>
           </div>
         </div>
         <div class="col-6 col-md-4 d-flex">
-          <!-- KPI Card: Exports (2025) -->
+          <!-- KPI Card: Out-of-pocket spending -->
+          <div class="kpi" style="background:#111;border:1px solid #1e1e1e;padding:18px 15px 15px;position:relative;overflow:hidden;animation-delay:0.1s;width:100%;flex:1">
+            <div style="position:absolute;bottom:0;left:0;right:0;height:2px;background:#1EB4E5">
+            </div>
+            <div style="font-size:10px;letter-spacing:0.11em;text-transform:uppercase;color:#999;margin-bottom:6px">
+              Out-of-pocket spending
+            </div>
+            <div style="font-family:Fraunces,serif;font-weight:900;font-size:18px;line-height:1;margin-bottom:4px;color:#55ccf5;word-break:break-word">
+              ~53%
+            </div>
+            <div style="font-size:11px;color:#999;line-height:1.4">
+              Share of total health expenditure (WB 2020); one of highest in region
+            </div>
+          </div>
+        </div>
+        <div class="col-6 col-md-4 d-flex">
+          <!-- KPI Card: TB incidence (2022) -->
+          <div class="kpi" style="background:#111;border:1px solid #1e1e1e;padding:18px 15px 15px;position:relative;overflow:hidden;animation-delay:0.15s;width:100%;flex:1">
+            <div style="position:absolute;bottom:0;left:0;right:0;height:2px;background:#444">
+            </div>
+            <div style="font-size:10px;letter-spacing:0.11em;text-transform:uppercase;color:#999;margin-bottom:6px">
+              TB incidence (2022)
+            </div>
+            <div style="font-family:Fraunces,serif;font-weight:900;font-size:18px;line-height:1;margin-bottom:4px;color:#fff;word-break:break-word">
+              ~83 / 100K
+            </div>
+            <div style="font-size:11px;color:#999;line-height:1.4">
+              WHO 2022; high; drug-resistant TB concern; one of highest in region
+            </div>
+          </div>
+        </div>
+        <div class="col-6 col-md-4 d-flex">
+          <!-- KPI Card: Life expectancy -->
           <div class="kpi" style="background:#111;border:1px solid #1e1e1e;padding:18px 15px 15px;position:relative;overflow:hidden;animation-delay:0.2s;width:100%;flex:1">
             <div style="position:absolute;bottom:0;left:0;right:0;height:2px;background:#444">
             </div>
             <div style="font-size:10px;letter-spacing:0.11em;text-transform:uppercase;color:#999;margin-bottom:6px">
-              Exports (2025)
+              Life expectancy
             </div>
             <div style="font-family:Fraunces,serif;font-weight:900;font-size:18px;line-height:1;margin-bottom:4px;color:#fff;word-break:break-word">
-              ~$33.8B
+              ~75 yrs
             </div>
             <div style="font-size:11px;color:#999;line-height:1.4">
-              +23% YoY; gold, gas, copper, uranium, textiles, food
+              One of highest in region; improving under Mirziyoyev reforms
             </div>
           </div>
         </div>
         <div class="col-6 col-md-4 d-flex">
-          <!-- KPI Card: Imports (2025) -->
+          <!-- KPI Card: Doctors per 1,000 -->
           <div class="kpi" style="background:#111;border:1px solid #1e1e1e;padding:18px 15px 15px;position:relative;overflow:hidden;animation-delay:0.25s;width:100%;flex:1">
             <div style="position:absolute;bottom:0;left:0;right:0;height:2px;background:#444">
             </div>
             <div style="font-size:10px;letter-spacing:0.11em;text-transform:uppercase;color:#999;margin-bottom:6px">
-              Imports (2025)
+              Doctors per 1,000
             </div>
             <div style="font-family:Fraunces,serif;font-weight:900;font-size:18px;line-height:1;margin-bottom:4px;color:#fff;word-break:break-word">
-              ~$47.4B
+              ~2.87
             </div>
             <div style="font-size:11px;color:#999;line-height:1.4">
-              Machinery, equipment, chemicals; trade deficit funded by FDI
+              2023 National Stats; below Soviet peak; brain drain concern
             </div>
           </div>
         </div>
         <div class="col-6 col-md-4 d-flex">
-          <!-- KPI Card: Current Account (2025) -->
+          <!-- KPI Card: Tashkent PM2.5 (2024) -->
           <div class="kpi" style="background:#111;border:1px solid #1e1e1e;padding:18px 15px 15px;position:relative;overflow:hidden;animation-delay:0.3s;width:100%;flex:1">
             <div style="position:absolute;bottom:0;left:0;right:0;height:2px;background:#444">
             </div>
             <div style="font-size:10px;letter-spacing:0.11em;text-transform:uppercase;color:#999;margin-bottom:6px">
-              Current Account (2025)
+              Tashkent PM2.5 (2024)
             </div>
             <div style="font-family:Fraunces,serif;font-weight:900;font-size:18px;line-height:1;margin-bottom:4px;color:#fff;word-break:break-word">
-              ~−3.3% GDP
+              ~32 µg/m³
             </div>
             <div style="font-size:11px;color:#999;line-height:1.4">
-              World Bank; narrowing; investment-driven import surge
+              IQAir 2024; ~6× WHO guideline of 5 µg/m³
             </div>
           </div>
         </div>
@@ -3819,32 +3809,66 @@
           <div id="panel" style="background:#111;border:1px solid #1e1e1e;padding:20px 20px;height:100%">
             <div id="title" style="font-family:Fraunces,serif;font-weight:700;font-size:13px;color:#fff;margin-bottom:16px;padding-bottom:11px;border-bottom:1px solid #1e1e1e;display:flex;align-items:center;gap:8px">
               <span style="color:#fff;flex-shrink:0">
-              <svg fill="currentColor" height="14" viewbox="0 0 512 512" width="14" xmlns="http://www.w3.org/2000/svg">
-                <path d="M184 48H328c4.4 0 8 3.6 8 8V96H176V56c0-4.4 3.6-8 8-8zm-56 8V96H64C28.7 96 0 124.7 0 160v96H192 320 512V160c0-35.3-28.7-64-64-64H384V56c0-30.9-25.1-56-56-56H184c-30.9 0-56 25.1-56 56zM512 288H320v32c0 17.7-14.3 32-32 32H224c-17.7 0-32-14.3-32-32V288H0V416c0 35.3 28.7 64 64 64H448c35.3 0 64-28.7 64-64V288z">
+              <svg fill="currentColor" height="14" viewbox="0 0 640 512" width="14" xmlns="http://www.w3.org/2000/svg">
+                <path d="M72 88a56 56 0 1 1 112 0A56 56 0 1 1 72 88zM64 245.7C54 256.9 48 271.8 48 288s6 31.1 16 42.3V245.7zm144.4-49.3C178.7 222.7 160 261.2 160 304c0 34.3 12 65.8 32 90.5V416c0 17.7-14.3 32-32 32H96c-17.7 0-32-14.3-32-32V389.2C26.2 371.2 0 332.7 0 288c0-61.9 50.1-112 112-112c29.3 0 56 11.3 75.9 29.7zM320 32a64 64 0 1 1 0 128A64 64 0 1 1 320 32zM448 304c0 44.7-26.2 83.2-64 101.2V448c0 17.7-14.3 32-32 32H288c-17.7 0-32-14.3-32-32V405.2c-37.8-18-64-56.5-64-101.2c0-61.9 50.1-112 112-112h32c61.9 0 112 50.1 112 112z">
                 </path>
               </svg>
-              </span>Top Export Destinations (2024)
+              </span>Health System Facts
             </div>
-            <div style="display:flex;align-items:center;gap:10px;padding:9px 0">
-              <span style="font-size:18px;flex-shrink:0">🇨🇭</span><span style="font-size:12.5px;color:#fff;flex-shrink:0">Switzerland</span><span style="font-size:11px;color:#999;flex:1">gold refining corridor (Muruntau)</span><span style="font-family:Fraunces,serif;font-weight:700;font-size:13px;color:#fff;flex-shrink:0">~27%</span>
-            </div>
-            <div style="display:flex;align-items:center;gap:10px;padding:9px 0">
-              <span style="font-size:18px;flex-shrink:0">🇬🇧</span><span style="font-size:12.5px;color:#fff;flex-shrink:0">UK</span><span style="font-size:11px;color:#999;flex:1">gold &amp; commodities</span><span style="font-family:Fraunces,serif;font-weight:700;font-size:13px;color:#fff;flex-shrink:0">~16%</span>
-            </div>
-            <div style="display:flex;align-items:center;gap:10px;padding:9px 0">
-              <span style="font-size:18px;flex-shrink:0">🇷🇺</span><span style="font-size:12.5px;color:#fff;flex-shrink:0">Russia</span><span style="font-size:11px;color:#999;flex:1">manufactured goods &amp; food</span><span style="font-family:Fraunces,serif;font-weight:700;font-size:13px;color:#fff;flex-shrink:0">~13%</span>
-            </div>
-            <div style="display:flex;align-items:center;gap:10px;padding:9px 0">
-              <span style="font-size:18px;flex-shrink:0">🇨🇳</span><span style="font-size:12.5px;color:#fff;flex-shrink:0">China</span><span style="font-size:11px;color:#999;flex:1">raw materials; Belt &amp; Road</span><span style="font-family:Fraunces,serif;font-weight:700;font-size:13px;color:#fff;flex-shrink:0">~9%</span>
-            </div>
-            <div style="display:flex;align-items:center;gap:10px;padding:9px 0">
-              <span style="font-size:18px;flex-shrink:0">🇰🇿</span><span style="font-size:12.5px;color:#fff;flex-shrink:0">Kazakhstan</span><span style="font-size:11px;color:#999;flex:1">transit &amp; bilateral trade</span><span style="font-family:Fraunces,serif;font-weight:700;font-size:13px;color:#fff;flex-shrink:0">~6%</span>
-            </div>
-            <div style="display:flex;align-items:center;gap:10px;padding:9px 0">
-              <span style="font-size:18px;flex-shrink:0">🇦🇫</span><span style="font-size:12.5px;color:#fff;flex-shrink:0">Afghanistan</span><span style="font-size:11px;color:#999;flex:1">electricity &amp; goods exports</span><span style="font-family:Fraunces,serif;font-weight:700;font-size:13px;color:#fff;flex-shrink:0">~4%</span>
-            </div>
+            <table id="paneltbl" style="width:100%;border-collapse:collapse;table-layout:fixed">
+              <tbody>
+                <tr style="border-bottom:1px solid #1e1e1e">
+                  <td style="padding:9px 4px;font-size:12.5px;color:#999;width:58%;overflow-wrap:break-word">
+                    Compulsory health insurance
+                  </td>
+                  <td style="padding:9px 4px;font-size:14px;color:#fff;font-weight:500;text-align:right;font-family:Fraunces,serif;overflow-wrap:break-word">
+                    In development; phased introduction 2025+
+                  </td>
+                </tr>
+                <tr style="border-bottom:1px solid #1e1e1e">
+                  <td style="padding:9px 4px;font-size:12.5px;color:#999;width:58%;overflow-wrap:break-word">
+                    Hospital beds per 1,000
+                  </td>
+                  <td style="padding:9px 4px;font-size:14px;color:#fff;font-weight:500;text-align:right;font-family:Fraunces,serif;overflow-wrap:break-word">
+                    ~4.9 — above regional average; quality concern
+                  </td>
+                </tr>
+                <tr style="border-bottom:1px solid #1e1e1e">
+                  <td style="padding:9px 4px;font-size:12.5px;color:#999;width:58%;overflow-wrap:break-word">
+                    Forced labour in cotton (abolished)
+                  </td>
+                  <td style="padding:9px 4px;font-size:14px;color:#fff;font-weight:500;text-align:right;font-family:Fraunces,serif;overflow-wrap:break-word">
+                    2021 — ILO confirmed; major reform
+                  </td>
+                </tr>
+                <tr style="border-bottom:1px solid #1e1e1e">
+                  <td style="padding:9px 4px;font-size:12.5px;color:#999;width:58%;overflow-wrap:break-word">
+                    Child nutrition — stunting
+                  </td>
+                  <td style="padding:9px 4px;font-size:14px;color:#fff;font-weight:500;text-align:right;font-family:Fraunces,serif;overflow-wrap:break-word">
+                    6.7% (under-5, 2024); improving significantly
+                  </td>
+                </tr>
+                <tr style="border-bottom:1px solid #1e1e1e">
+                  <td style="padding:9px 4px;font-size:12.5px;color:#999;width:58%;overflow-wrap:break-word">
+                    Karakalpakstan health outcomes
+                  </td>
+                  <td style="padding:9px 4px;font-size:14px;color:#fff;font-weight:500;text-align:right;font-family:Fraunces,serif;overflow-wrap:break-word">
+                    Worst in country; Aral Sea dust health crisis
+                  </td>
+                </tr>
+                <tr style="border-bottom:none">
+                  <td style="padding:9px 4px;font-size:12.5px;color:#999;width:58%;overflow-wrap:break-word">
+                    Tashkent air quality
+                  </td>
+                  <td style="padding:9px 4px;font-size:14px;color:#fff;font-weight:500;text-align:right;font-family:Fraunces,serif;overflow-wrap:break-word">
+                    PM2.5 ~32 µg/m³ annual avg 2024 (IQAir); ~6× WHO guideline
+                  </td>
+                </tr>
+              </tbody>
+            </table>
             <p id="subnote" style="font-size:11px;color:#999;margin-top:10px;margin-bottom:0;line-height:1.6">
-              Switzerland (27%) and UK (16%) together account for 43% of exports — almost entirely because gold is refined in Switzerland and traded in London. This concentration means Uzbekistan's export figures are highly sensitive to gold prices. Afghanistan at 4% is notable — Uzbekistan exports electricity and consumer goods, giving it economic leverage over a fragile neighbour.
+              Karakalpakstan (Aral Sea region) has the worst health outcomes in Uzbekistan — the toxic salt dust from the exposed Aralkum Desert causes severe respiratory disease, cancer, and maternal health crises. This is a direct consequence of the Aral Sea disaster. Abolishing forced cotton labour in 2021 removed a major human rights stain and improved rural health outcomes.
             </p>
           </div>
         </div>
@@ -3856,162 +3880,56 @@
                 <path d="M64 64c0-17.7-14.3-32-32-32S0 46.3 0 64V400c0 44.2 35.8 80 80 80H480c17.7 0 32-14.3 32-32s-14.3-32-32-32H80c-8.8 0-16-7.2-16-16V64zm406.6 86.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L320 210.7l-57.4-57.4c-12.5-12.5-32.8-12.5-45.3 0l-112 112c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L240 221.3l57.4 57.4c12.5 12.5 32.8 12.5 45.3 0l128-128z">
                 </path>
               </svg>
-              </span>Key Fiscal Indicators
+              </span>Disease &amp; Health Burden
             </div>
-            <table id="paneltbl" style="width:100%;border-collapse:collapse;table-layout:fixed">
-              <tbody>
-                <tr style="border-bottom:1px solid #1e1e1e">
-                  <td style="padding:9px 4px;font-size:12.5px;color:#999;width:58%;overflow-wrap:break-word">
-                    Govt debt / GDP (2025)
-                  </td>
-                  <td style="padding:9px 4px;font-size:14px;color:#fff;font-weight:500;text-align:right;font-family:Fraunces,serif;overflow-wrap:break-word">
-                    ~33% — moderate; IMF end-2024: 32.6%; IFI concessional majority
-                  </td>
-                </tr>
-                <tr style="border-bottom:1px solid #1e1e1e">
-                  <td style="padding:9px 4px;font-size:12.5px;color:#999;width:58%;overflow-wrap:break-word">
-                    Foreign reserves (end-2025)
-                  </td>
-                  <td style="padding:9px 4px;font-size:14px;color:#fff;font-weight:500;text-align:right;font-family:Fraunces,serif;overflow-wrap:break-word">
-                    ~$66.3B — record; gold-heavy (CBU)
-                  </td>
-                </tr>
-                <tr style="border-bottom:1px solid #1e1e1e">
-                  <td style="padding:9px 4px;font-size:12.5px;color:#999;width:58%;overflow-wrap:break-word">
-                    GDP growth target 2030
-                  </td>
-                  <td style="padding:9px 4px;font-size:14px;color:#fff;font-weight:500;text-align:right;font-family:Fraunces,serif;overflow-wrap:break-word">
-                    $220–230B nominal GDP
-                  </td>
-                </tr>
-                <tr style="border-bottom:1px solid #1e1e1e">
-                  <td style="padding:9px 4px;font-size:12.5px;color:#999;width:58%;overflow-wrap:break-word">
-                    Investment / GDP ratio (2025)
-                  </td>
-                  <td style="padding:9px 4px;font-size:14px;color:#fff;font-weight:500;text-align:right;font-family:Fraunces,serif;overflow-wrap:break-word">
-                    ~35% — very high; construction boom (CEIC)
-                  </td>
-                </tr>
-                <tr style="border-bottom:1px solid #1e1e1e">
-                  <td style="padding:9px 4px;font-size:12.5px;color:#999;width:58%;overflow-wrap:break-word">
-                    WTO accession target
-                  </td>
-                  <td style="padding:9px 4px;font-size:14px;color:#fff;font-weight:500;text-align:right;font-family:Fraunces,serif;overflow-wrap:break-word">
-                    2026 (in negotiation)
-                  </td>
-                </tr>
-                <tr style="border-bottom:1px solid #1e1e1e">
-                  <td style="padding:9px 4px;font-size:12.5px;color:#999;width:58%;overflow-wrap:break-word">
-                    Free economic zones (FEZs)
-                  </td>
-                  <td style="padding:9px 4px;font-size:14px;color:#fff;font-weight:500;text-align:right;font-family:Fraunces,serif;overflow-wrap:break-word">
-                    ~20 FEZs; 500+ resident companies
-                  </td>
-                </tr>
-                <tr style="border-bottom:none">
-                  <td style="padding:9px 4px;font-size:12.5px;color:#999;width:58%;overflow-wrap:break-word">
-                    GDP growth Jan–Sep 2025 (official)
-                  </td>
-                  <td style="padding:9px 4px;font-size:14px;color:#fff;font-weight:500;text-align:right;font-family:Fraunces,serif;overflow-wrap:break-word">
-                    +7.7% — record pace
-                  </td>
-                </tr>
-              </tbody>
-            </table>
+            <div style="margin-bottom:13px">
+              <div style="display:flex;justify-content:space-between;align-items:baseline;font-size:12px;color:#999;margin-bottom:5px;gap:4px">
+                <span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex:1">Hypertension prevalence (est.; unverified — most recent WHO STEPS survey is 2019; 2024 data not publicly available)</span><span style="color:#fff;font-weight:500;flex-shrink:0;white-space:nowrap">~32%</span>
+              </div>
+              <div style="height:6px;background:#222;border-radius:3px;overflow:hidden">
+                <div style="height:100%;width:100%;background:#1EB4E5;border-radius:3px">
+                </div>
+              </div>
+            </div>
+            <div style="margin-bottom:13px">
+              <div style="display:flex;justify-content:space-between;align-items:baseline;font-size:12px;color:#999;margin-bottom:5px;gap:4px">
+                <span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex:1">TB incidence per 100K (2022)</span><span style="color:#fff;font-weight:500;flex-shrink:0;white-space:nowrap">~83</span>
+              </div>
+              <div style="height:6px;background:#222;border-radius:3px;overflow:hidden">
+                <div style="height:100%;width:100%;background:#3DAA5C;border-radius:3px">
+                </div>
+              </div>
+            </div>
+            <div style="margin-bottom:13px">
+              <div style="display:flex;justify-content:space-between;align-items:baseline;font-size:12px;color:#999;margin-bottom:5px;gap:4px">
+                <span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex:1">OOP health spending share</span><span style="color:#fff;font-weight:500;flex-shrink:0;white-space:nowrap">~53%</span>
+              </div>
+              <div style="height:6px;background:#222;border-radius:3px;overflow:hidden">
+                <div style="height:100%;width:66%;background:#2E86DE;border-radius:3px">
+                </div>
+              </div>
+            </div>
+            <div style="margin-bottom:13px">
+              <div style="display:flex;justify-content:space-between;align-items:baseline;font-size:12px;color:#999;margin-bottom:5px;gap:4px">
+                <span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex:1">Tashkent PM2.5 (WHO guideline=5)</span><span style="color:#fff;font-weight:500;flex-shrink:0;white-space:nowrap">~32 µg/m³</span>
+              </div>
+              <div style="height:6px;background:#222;border-radius:3px;overflow:hidden">
+                <div style="height:100%;width:80%;background:#444;border-radius:3px">
+                </div>
+              </div>
+            </div>
+            <div style="margin-bottom:13px">
+              <div style="display:flex;justify-content:space-between;align-items:baseline;font-size:12px;color:#999;margin-bottom:5px;gap:4px">
+                <span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex:1">Aral Sea toxic dust affected pop.</span><span style="color:#fff;font-weight:500;flex-shrink:0;white-space:nowrap">~2M in Karakalpakstan</span>
+              </div>
+              <div style="height:6px;background:#222;border-radius:3px;overflow:hidden">
+                <div style="height:100%;width:45%;background:#444;border-radius:3px">
+                </div>
+              </div>
+            </div>
             <p id="subnote" style="font-size:11px;color:#999;margin-top:10px;margin-bottom:0;line-height:1.6">
-              Investment at 31.9% of GDP is exceptionally high — it is the engine of Uzbekistan's growth story. This is being funded by broad foreign investment (~$35–40B total), multilateral lending (IDB, ADB, World Bank), and the sovereign wealth fund. WTO accession would be the most significant trade reform since independence — opening markets and requiring legal modernisation.
+              TB at 83/100K (2022 WHO) is among the highest in the region — above the Central Asian average. Drug-resistant TB is a particular concern. The Aral Sea dust crisis affecting ~2M Karakalpak people is a chronic, unfixable public health disaster — the sea cannot be restored and the exposed seabed will blow dust for generations.
             </p>
-            <div style="margin-top:14px">
-              <div style="font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:#999;margin-bottom:6px">
-                Trade balance 2015–2024 ($B)
-              </div>
-              <div style="position:relative;height:22px;border-radius:4px;overflow:hidden;background:linear-gradient(to right, rgb(176,115,121) 0%, rgb(178,113,119) 11.11111111111111%, rgb(180,109,116) 22.22222222222222%, rgb(189,94,103) 33.33333333333333%, rgb(195,85,95) 44.44444444444444%, rgb(195,85,95) 55.55555555555556%, rgb(213,56,71) 66.66666666666666%, rgb(224,38,55) 77.77777777777779%, rgb(232,25,44) 88.88888888888889%, rgb(224,38,55) 100%)">
-                <div style="position:absolute;top:10%;bottom:10%;left:88.88888888888889%;width:1px;background:rgb(104,11,20);transform:translateX(-50%);border-radius:1px">
-                </div>
-              </div>
-              <div style="display:flex;margin-top:4px">
-                <div style="text-align:center;flex:1">
-                  <div style="font-size:8px;color:#999;font-weight:300;line-height:1">
-                    2015
-                  </div>
-                  <div style="font-size:8px;color:#999;line-height:1.4">
-                    -4.5B
-                  </div>
-                </div>
-                <div style="text-align:center;flex:1">
-                  <div style="font-size:8px;color:#999;font-weight:300;line-height:1">
-                    2016
-                  </div>
-                  <div style="font-size:8px;color:#999;line-height:1.4">
-                    -4.8B
-                  </div>
-                </div>
-                <div style="text-align:center;flex:1">
-                  <div style="font-size:8px;color:#999;font-weight:300;line-height:1">
-                    2017
-                  </div>
-                  <div style="font-size:8px;color:#999;line-height:1.4">
-                    -5.2B
-                  </div>
-                </div>
-                <div style="text-align:center;flex:1">
-                  <div style="font-size:8px;color:#999;font-weight:300;line-height:1">
-                    2018
-                  </div>
-                  <div style="font-size:8px;color:#999;line-height:1.4">
-                    -7B
-                  </div>
-                </div>
-                <div style="text-align:center;flex:1">
-                  <div style="font-size:8px;color:#999;font-weight:300;line-height:1">
-                    2019
-                  </div>
-                  <div style="font-size:8px;color:#999;line-height:1.4">
-                    -8.1B
-                  </div>
-                </div>
-                <div style="text-align:center;flex:1">
-                  <div style="font-size:8px;color:#999;font-weight:300;line-height:1">
-                    2020
-                  </div>
-                  <div style="font-size:8px;color:#999;line-height:1.4">
-                    -8.1B
-                  </div>
-                </div>
-                <div style="text-align:center;flex:1">
-                  <div style="font-size:8px;color:#999;font-weight:300;line-height:1">
-                    2021
-                  </div>
-                  <div style="font-size:8px;color:#999;line-height:1.4">
-                    -11.5B
-                  </div>
-                </div>
-                <div style="text-align:center;flex:1">
-                  <div style="font-size:8px;color:#999;font-weight:300;line-height:1">
-                    2022
-                  </div>
-                  <div style="font-size:8px;color:#999;line-height:1.4">
-                    -13.7B
-                  </div>
-                </div>
-                <div style="text-align:center;flex:1">
-                  <div style="font-size:8px;color:#fff;font-weight:600;line-height:1">
-                    2023
-                  </div>
-                  <div style="font-size:8px;color:#fff;line-height:1.4">
-                    -15.2B
-                  </div>
-                </div>
-                <div style="text-align:center;flex:1">
-                  <div style="font-size:8px;color:#999;font-weight:300;line-height:1">
-                    2024
-                  </div>
-                  <div style="font-size:8px;color:#999;line-height:1.4">
-                    -13.6B
-                  </div>
-                </div>
-              </div>
-            </div>
           </div>
         </div>
       </div>
@@ -4500,243 +4418,6 @@
             <path d="M72 88a56 56 0 1 1 112 0A56 56 0 1 1 72 88zM64 245.7C54 256.9 48 271.8 48 288s6 31.1 16 42.3V245.7zm144.4-49.3C178.7 222.7 160 261.2 160 304c0 34.3 12 65.8 32 90.5V416c0 17.7-14.3 32-32 32H96c-17.7 0-32-14.3-32-32V389.2C26.2 371.2 0 332.7 0 288c0-61.9 50.1-112 112-112c29.3 0 56 11.3 75.9 29.7zM320 32a64 64 0 1 1 0 128A64 64 0 1 1 320 32zM448 304c0 44.7-26.2 83.2-64 101.2V448c0 17.7-14.3 32-32 32H288c-17.7 0-32-14.3-32-32V405.2c-37.8-18-64-56.5-64-101.2c0-61.9 50.1-112 112-112h32c61.9 0 112 50.1 112 112z">
             </path>
           </svg>
-          </span><span style="font-size:13px;letter-spacing:0.18em;text-transform:uppercase;color:#fff;font-weight:500">Health System</span>
-        </div>
-      </div>
-      <div class="row g-1 mb-3" id="item">
-        <div class="col-6 col-md-4 d-flex">
-          <!-- KPI Card: Health Spending (% GDP) -->
-          <div class="kpi" style="background:#111;border:1px solid #1e1e1e;padding:18px 15px 15px;position:relative;overflow:hidden;animation-delay:0.05s;width:100%;flex:1">
-            <div style="position:absolute;bottom:0;left:0;right:0;height:2px;background:#3DAA5C">
-            </div>
-            <div style="font-size:10px;letter-spacing:0.11em;text-transform:uppercase;color:#999;margin-bottom:6px">
-              Health Spending (% GDP)
-            </div>
-            <div style="font-family:Fraunces,serif;font-weight:900;font-size:18px;line-height:1;margin-bottom:4px;color:#5dc97c;word-break:break-word">
-              ~7.7%
-            </div>
-            <div style="font-size:11px;color:#999;line-height:1.4">
-              WB 2021: 7.74%; public share growing; universal health system reform underway
-            </div>
-          </div>
-        </div>
-        <div class="col-6 col-md-4 d-flex">
-          <!-- KPI Card: Out-of-pocket spending -->
-          <div class="kpi" style="background:#111;border:1px solid #1e1e1e;padding:18px 15px 15px;position:relative;overflow:hidden;animation-delay:0.1s;width:100%;flex:1">
-            <div style="position:absolute;bottom:0;left:0;right:0;height:2px;background:#1EB4E5">
-            </div>
-            <div style="font-size:10px;letter-spacing:0.11em;text-transform:uppercase;color:#999;margin-bottom:6px">
-              Out-of-pocket spending
-            </div>
-            <div style="font-family:Fraunces,serif;font-weight:900;font-size:18px;line-height:1;margin-bottom:4px;color:#55ccf5;word-break:break-word">
-              ~53%
-            </div>
-            <div style="font-size:11px;color:#999;line-height:1.4">
-              Share of total health expenditure (WB 2020); one of highest in region
-            </div>
-          </div>
-        </div>
-        <div class="col-6 col-md-4 d-flex">
-          <!-- KPI Card: Infant mortality (2024) -->
-          <div class="kpi" style="background:#111;border:1px solid #1e1e1e;padding:18px 15px 15px;position:relative;overflow:hidden;animation-delay:0.15s;width:100%;flex:1">
-            <div style="position:absolute;bottom:0;left:0;right:0;height:2px;background:#444">
-            </div>
-            <div style="font-size:10px;letter-spacing:0.11em;text-transform:uppercase;color:#999;margin-bottom:6px">
-              Infant mortality (2024)
-            </div>
-            <div style="font-family:Fraunces,serif;font-weight:900;font-size:18px;line-height:1;margin-bottom:4px;color:#fff;word-break:break-word">
-              ~18 / 1,000
-            </div>
-            <div style="font-size:11px;color:#999;line-height:1.4">
-              WB/UNICEF 2024; down from 38/1,000 in 2000; still above EU
-            </div>
-          </div>
-        </div>
-        <div class="col-6 col-md-4 d-flex">
-          <!-- KPI Card: TB incidence (2022) -->
-          <div class="kpi" style="background:#111;border:1px solid #1e1e1e;padding:18px 15px 15px;position:relative;overflow:hidden;animation-delay:0.2s;width:100%;flex:1">
-            <div style="position:absolute;bottom:0;left:0;right:0;height:2px;background:#444">
-            </div>
-            <div style="font-size:10px;letter-spacing:0.11em;text-transform:uppercase;color:#999;margin-bottom:6px">
-              TB incidence (2022)
-            </div>
-            <div style="font-family:Fraunces,serif;font-weight:900;font-size:18px;line-height:1;margin-bottom:4px;color:#fff;word-break:break-word">
-              ~83 / 100K
-            </div>
-            <div style="font-size:11px;color:#999;line-height:1.4">
-              WHO 2022; high; drug-resistant TB concern; one of highest in region
-            </div>
-          </div>
-        </div>
-        <div class="col-6 col-md-4 d-flex">
-          <!-- KPI Card: Life expectancy -->
-          <div class="kpi" style="background:#111;border:1px solid #1e1e1e;padding:18px 15px 15px;position:relative;overflow:hidden;animation-delay:0.25s;width:100%;flex:1">
-            <div style="position:absolute;bottom:0;left:0;right:0;height:2px;background:#444">
-            </div>
-            <div style="font-size:10px;letter-spacing:0.11em;text-transform:uppercase;color:#999;margin-bottom:6px">
-              Life expectancy
-            </div>
-            <div style="font-family:Fraunces,serif;font-weight:900;font-size:18px;line-height:1;margin-bottom:4px;color:#fff;word-break:break-word">
-              ~75 yrs
-            </div>
-            <div style="font-size:11px;color:#999;line-height:1.4">
-              One of highest in region; improving under Mirziyoyev reforms
-            </div>
-          </div>
-        </div>
-        <div class="col-6 col-md-4 d-flex">
-          <!-- KPI Card: Doctors per 1,000 -->
-          <div class="kpi" style="background:#111;border:1px solid #1e1e1e;padding:18px 15px 15px;position:relative;overflow:hidden;animation-delay:0.3s;width:100%;flex:1">
-            <div style="position:absolute;bottom:0;left:0;right:0;height:2px;background:#444">
-            </div>
-            <div style="font-size:10px;letter-spacing:0.11em;text-transform:uppercase;color:#999;margin-bottom:6px">
-              Doctors per 1,000
-            </div>
-            <div style="font-family:Fraunces,serif;font-weight:900;font-size:18px;line-height:1;margin-bottom:4px;color:#fff;word-break:break-word">
-              ~2.87
-            </div>
-            <div style="font-size:11px;color:#999;line-height:1.4">
-              2023 National Stats; below Soviet peak; brain drain concern
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="row gy-3 mb-3" id="item">
-        <div class="col-12 col-md-6">
-          <div id="panel" style="background:#111;border:1px solid #1e1e1e;padding:20px 20px;height:100%">
-            <div id="title" style="font-family:Fraunces,serif;font-weight:700;font-size:13px;color:#fff;margin-bottom:16px;padding-bottom:11px;border-bottom:1px solid #1e1e1e;display:flex;align-items:center;gap:8px">
-              <span style="color:#fff;flex-shrink:0">
-              <svg fill="currentColor" height="14" viewbox="0 0 640 512" width="14" xmlns="http://www.w3.org/2000/svg">
-                <path d="M72 88a56 56 0 1 1 112 0A56 56 0 1 1 72 88zM64 245.7C54 256.9 48 271.8 48 288s6 31.1 16 42.3V245.7zm144.4-49.3C178.7 222.7 160 261.2 160 304c0 34.3 12 65.8 32 90.5V416c0 17.7-14.3 32-32 32H96c-17.7 0-32-14.3-32-32V389.2C26.2 371.2 0 332.7 0 288c0-61.9 50.1-112 112-112c29.3 0 56 11.3 75.9 29.7zM320 32a64 64 0 1 1 0 128A64 64 0 1 1 320 32zM448 304c0 44.7-26.2 83.2-64 101.2V448c0 17.7-14.3 32-32 32H288c-17.7 0-32-14.3-32-32V405.2c-37.8-18-64-56.5-64-101.2c0-61.9 50.1-112 112-112h32c61.9 0 112 50.1 112 112z">
-                </path>
-              </svg>
-              </span>Health System Facts
-            </div>
-            <table id="paneltbl" style="width:100%;border-collapse:collapse;table-layout:fixed">
-              <tbody>
-                <tr style="border-bottom:1px solid #1e1e1e">
-                  <td style="padding:9px 4px;font-size:12.5px;color:#999;width:58%;overflow-wrap:break-word">
-                    Compulsory health insurance
-                  </td>
-                  <td style="padding:9px 4px;font-size:14px;color:#fff;font-weight:500;text-align:right;font-family:Fraunces,serif;overflow-wrap:break-word">
-                    In development; phased introduction 2025+
-                  </td>
-                </tr>
-                <tr style="border-bottom:1px solid #1e1e1e">
-                  <td style="padding:9px 4px;font-size:12.5px;color:#999;width:58%;overflow-wrap:break-word">
-                    Hospital beds per 1,000
-                  </td>
-                  <td style="padding:9px 4px;font-size:14px;color:#fff;font-weight:500;text-align:right;font-family:Fraunces,serif;overflow-wrap:break-word">
-                    ~4.9 — above regional average; quality concern
-                  </td>
-                </tr>
-                <tr style="border-bottom:1px solid #1e1e1e">
-                  <td style="padding:9px 4px;font-size:12.5px;color:#999;width:58%;overflow-wrap:break-word">
-                    Forced labour in cotton (abolished)
-                  </td>
-                  <td style="padding:9px 4px;font-size:14px;color:#fff;font-weight:500;text-align:right;font-family:Fraunces,serif;overflow-wrap:break-word">
-                    2021 — ILO confirmed; major reform
-                  </td>
-                </tr>
-                <tr style="border-bottom:1px solid #1e1e1e">
-                  <td style="padding:9px 4px;font-size:12.5px;color:#999;width:58%;overflow-wrap:break-word">
-                    Child nutrition — stunting
-                  </td>
-                  <td style="padding:9px 4px;font-size:14px;color:#fff;font-weight:500;text-align:right;font-family:Fraunces,serif;overflow-wrap:break-word">
-                    6.7% (under-5, 2024); improving significantly
-                  </td>
-                </tr>
-                <tr style="border-bottom:1px solid #1e1e1e">
-                  <td style="padding:9px 4px;font-size:12.5px;color:#999;width:58%;overflow-wrap:break-word">
-                    Karakalpakstan health outcomes
-                  </td>
-                  <td style="padding:9px 4px;font-size:14px;color:#fff;font-weight:500;text-align:right;font-family:Fraunces,serif;overflow-wrap:break-word">
-                    Worst in country; Aral Sea dust health crisis
-                  </td>
-                </tr>
-                <tr style="border-bottom:none">
-                  <td style="padding:9px 4px;font-size:12.5px;color:#999;width:58%;overflow-wrap:break-word">
-                    Tashkent air quality
-                  </td>
-                  <td style="padding:9px 4px;font-size:14px;color:#fff;font-weight:500;text-align:right;font-family:Fraunces,serif;overflow-wrap:break-word">
-                    PM2.5 ~32 µg/m³ annual avg 2024 (IQAir); ~6× WHO guideline
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-            <p id="subnote" style="font-size:11px;color:#999;margin-top:10px;margin-bottom:0;line-height:1.6">
-              Karakalpakstan (Aral Sea region) has the worst health outcomes in Uzbekistan — the toxic salt dust from the exposed Aralkum Desert causes severe respiratory disease, cancer, and maternal health crises. This is a direct consequence of the Aral Sea disaster. Abolishing forced cotton labour in 2021 removed a major human rights stain and improved rural health outcomes.
-            </p>
-          </div>
-        </div>
-        <div class="col-12 col-md-6">
-          <div id="panel" style="background:#111;border:1px solid #1e1e1e;padding:20px 20px;height:100%">
-            <div id="title" style="font-family:Fraunces,serif;font-weight:700;font-size:13px;color:#fff;margin-bottom:16px;padding-bottom:11px;border-bottom:1px solid #1e1e1e;display:flex;align-items:center;gap:8px">
-              <span style="color:#fff;flex-shrink:0">
-              <svg fill="currentColor" height="14" viewbox="0 0 512 512" width="14" xmlns="http://www.w3.org/2000/svg">
-                <path d="M64 64c0-17.7-14.3-32-32-32S0 46.3 0 64V400c0 44.2 35.8 80 80 80H480c17.7 0 32-14.3 32-32s-14.3-32-32-32H80c-8.8 0-16-7.2-16-16V64zm406.6 86.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L320 210.7l-57.4-57.4c-12.5-12.5-32.8-12.5-45.3 0l-112 112c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L240 221.3l57.4 57.4c12.5 12.5 32.8 12.5 45.3 0l128-128z">
-                </path>
-              </svg>
-              </span>Disease &amp; Health Burden
-            </div>
-            <div style="margin-bottom:13px">
-              <div style="display:flex;justify-content:space-between;align-items:baseline;font-size:12px;color:#999;margin-bottom:5px;gap:4px">
-                <span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex:1">Hypertension prevalence (est.; unverified — most recent WHO STEPS survey is 2019; 2024 data not publicly available)</span><span style="color:#fff;font-weight:500;flex-shrink:0;white-space:nowrap">~32%</span>
-              </div>
-              <div style="height:6px;background:#222;border-radius:3px;overflow:hidden">
-                <div style="height:100%;width:100%;background:#1EB4E5;border-radius:3px">
-                </div>
-              </div>
-            </div>
-            <div style="margin-bottom:13px">
-              <div style="display:flex;justify-content:space-between;align-items:baseline;font-size:12px;color:#999;margin-bottom:5px;gap:4px">
-                <span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex:1">TB incidence per 100K (2022)</span><span style="color:#fff;font-weight:500;flex-shrink:0;white-space:nowrap">~83</span>
-              </div>
-              <div style="height:6px;background:#222;border-radius:3px;overflow:hidden">
-                <div style="height:100%;width:100%;background:#3DAA5C;border-radius:3px">
-                </div>
-              </div>
-            </div>
-            <div style="margin-bottom:13px">
-              <div style="display:flex;justify-content:space-between;align-items:baseline;font-size:12px;color:#999;margin-bottom:5px;gap:4px">
-                <span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex:1">OOP health spending share</span><span style="color:#fff;font-weight:500;flex-shrink:0;white-space:nowrap">~53%</span>
-              </div>
-              <div style="height:6px;background:#222;border-radius:3px;overflow:hidden">
-                <div style="height:100%;width:66%;background:#2E86DE;border-radius:3px">
-                </div>
-              </div>
-            </div>
-            <div style="margin-bottom:13px">
-              <div style="display:flex;justify-content:space-between;align-items:baseline;font-size:12px;color:#999;margin-bottom:5px;gap:4px">
-                <span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex:1">Tashkent PM2.5 (WHO guideline=5)</span><span style="color:#fff;font-weight:500;flex-shrink:0;white-space:nowrap">~32 µg/m³</span>
-              </div>
-              <div style="height:6px;background:#222;border-radius:3px;overflow:hidden">
-                <div style="height:100%;width:80%;background:#444;border-radius:3px">
-                </div>
-              </div>
-            </div>
-            <div style="margin-bottom:13px">
-              <div style="display:flex;justify-content:space-between;align-items:baseline;font-size:12px;color:#999;margin-bottom:5px;gap:4px">
-                <span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex:1">Aral Sea toxic dust affected pop.</span><span style="color:#fff;font-weight:500;flex-shrink:0;white-space:nowrap">~2M in Karakalpakstan</span>
-              </div>
-              <div style="height:6px;background:#222;border-radius:3px;overflow:hidden">
-                <div style="height:100%;width:45%;background:#444;border-radius:3px">
-                </div>
-              </div>
-            </div>
-            <p id="subnote" style="font-size:11px;color:#999;margin-top:10px;margin-bottom:0;line-height:1.6">
-              TB at 83/100K (2022 WHO) is among the highest in the region — above the Central Asian average. Drug-resistant TB is a particular concern. The Aral Sea dust crisis affecting ~2M Karakalpak people is a chronic, unfixable public health disaster — the sea cannot be restored and the exposed seabed will blow dust for generations.
-            </p>
-          </div>
-        </div>
-      </div>
-      <div class="row my-3" id="section">
-        <div class="col-12 d-flex align-items-center gap-2">
-          <span style="color:#fff;font-size:16px;flex-shrink:0">
-          <svg fill="currentColor" height="14" viewbox="0 0 640 512" width="14" xmlns="http://www.w3.org/2000/svg">
-            <path d="M72 88a56 56 0 1 1 112 0A56 56 0 1 1 72 88zM64 245.7C54 256.9 48 271.8 48 288s6 31.1 16 42.3V245.7zm144.4-49.3C178.7 222.7 160 261.2 160 304c0 34.3 12 65.8 32 90.5V416c0 17.7-14.3 32-32 32H96c-17.7 0-32-14.3-32-32V389.2C26.2 371.2 0 332.7 0 288c0-61.9 50.1-112 112-112c29.3 0 56 11.3 75.9 29.7zM320 32a64 64 0 1 1 0 128A64 64 0 1 1 320 32zM448 304c0 44.7-26.2 83.2-64 101.2V448c0 17.7-14.3 32-32 32H288c-17.7 0-32-14.3-32-32V405.2c-37.8-18-64-56.5-64-101.2c0-61.9 50.1-112 112-112h32c61.9 0 112 50.1 112 112z">
-            </path>
-          </svg>
           </span><span style="font-size:13px;letter-spacing:0.18em;text-transform:uppercase;color:#fff;font-weight:500">Social Indicators &amp; Inequality</span>
         </div>
       </div>
@@ -4974,7 +4655,7 @@
             <path d="M269.5 69.9c11.1-7.9 25.9-7.9 37 0C329 85.4 356.5 96 384 96c26.9 0 55.4-10.1 80.4-25.1 16-9.7 36.4-8.1 50.7 4.2s18.2 31.6 11.2 48.6C520.1 140 516 159 516 178c0 49.7 20 87.5 38.2 106.9l.4.4c17 18 22.4 44.5 13.4 67.8S536.6 391 511.4 391H64c-25.2 0-47.6-15.3-56.6-38.5s-3.6-49.8 13.4-67.8l.4-.4C39 265.5 59 227.7 59 178c0-18.4-3.4-36.3-9.9-52.4-7-17-2.9-36.3 11.2-48.6S105 62.9 121 72.9C146 87.9 173.1 96 200 96c27.5 0 55-10.6 77.5-26.1z">
             </path>
           </svg>
-          </span><span style="font-size:13px;letter-spacing:0.18em;text-transform:uppercase;color:#fff;font-weight:500">Environment &amp; Climate</span>
+          </span><span style="font-size:13px;letter-spacing:0.18em;text-transform:uppercase;color:#fff;font-weight:500">Environment</span>
         </div>
       </div>
       <div class="row g-1 mb-3" id="item">
@@ -5202,7 +4883,7 @@
             <path d="M184 48H328c4.4 0 8 3.6 8 8V96H176V56c0-4.4 3.6-8 8-8zm-56 8V96H64C28.7 96 0 124.7 0 160v96H192 320 512V160c0-35.3-28.7-64-64-64H384V56c0-30.9-25.1-56-56-56H184c-30.9 0-56 25.1-56 56zM512 288H320v32c0 17.7-14.3 32-32 32H224c-17.7 0-32-14.3-32-32V288H0V416c0 35.3 28.7 64 64 64H448c35.3 0 64-28.7 64-64V288z">
             </path>
           </svg>
-          </span><span style="font-size:13px;letter-spacing:0.18em;text-transform:uppercase;color:#fff;font-weight:500">Business &amp; Investment Climate</span>
+          </span><span style="font-size:13px;letter-spacing:0.18em;text-transform:uppercase;color:#fff;font-weight:500">Business &amp; Investment</span>
         </div>
       </div>
       <div class="row g-1 mb-3" id="item">
@@ -5441,6 +5122,305 @@
           </div>
         </div>
       </div>
+      <div class="row g-1 mb-3" id="item">
+        <div class="col-6 col-md-4 d-flex">
+          <!-- KPI Card: Foreign Reserves (end-2025) -->
+          <div class="kpi" style="background:#111;border:1px solid #1e1e1e;padding:18px 15px 15px;position:relative;overflow:hidden;animation-delay:0.05s;width:100%;flex:1">
+            <div style="position:absolute;bottom:0;left:0;right:0;height:2px;background:#1EB4E5">
+            </div>
+            <div style="font-size:10px;letter-spacing:0.11em;text-transform:uppercase;color:#999;margin-bottom:6px">
+              Foreign Reserves (end-2025)
+            </div>
+            <div style="font-family:Fraunces,serif;font-weight:900;font-size:18px;line-height:1;margin-bottom:4px;color:#55ccf5;word-break:break-word">
+              ~$66B
+            </div>
+            <div style="font-size:11px;color:#999;line-height:1.4">
+              Record $66.3B as of Jan 1 2026; includes gold; +61% YoY (CBU)
+            </div>
+          </div>
+        </div>
+        <div class="col-6 col-md-4 d-flex">
+          <!-- KPI Card: Govt Debt / GDP (2025) -->
+          <div class="kpi" style="background:#111;border:1px solid #1e1e1e;padding:18px 15px 15px;position:relative;overflow:hidden;animation-delay:0.1s;width:100%;flex:1">
+            <div style="position:absolute;bottom:0;left:0;right:0;height:2px;background:#444">
+            </div>
+            <div style="font-size:10px;letter-spacing:0.11em;text-transform:uppercase;color:#999;margin-bottom:6px">
+              Govt Debt / GDP (2025)
+            </div>
+            <div style="font-family:Fraunces,serif;font-weight:900;font-size:18px;line-height:1;margin-bottom:4px;color:#fff;word-break:break-word">
+              ~33%
+            </div>
+            <div style="font-size:11px;color:#999;line-height:1.4">
+              IMF 2025 Article IV: 32.6% end-2024; mostly concessional IFI lending
+            </div>
+          </div>
+        </div>
+        <div class="col-6 col-md-4 d-flex">
+          <!-- KPI Card: Foreign Investment (2025) -->
+          <div class="kpi" style="background:#111;border:1px solid #1e1e1e;padding:18px 15px 15px;position:relative;overflow:hidden;animation-delay:0.15s;width:100%;flex:1">
+            <div style="position:absolute;bottom:0;left:0;right:0;height:2px;background:#3DAA5C">
+            </div>
+            <div style="font-size:10px;letter-spacing:0.11em;text-transform:uppercase;color:#999;margin-bottom:6px">
+              Foreign Investment (2025)
+            </div>
+            <div style="font-family:Fraunces,serif;font-weight:900;font-size:18px;line-height:1;margin-bottom:4px;color:#5dc97c;word-break:break-word">
+              ~$35–40B
+            </div>
+            <div style="font-size:11px;color:#999;line-height:1.4">
+              Total incl. loans &amp; portfolio; BoP FDI ~$2.8B (2024); Central Asia leader
+            </div>
+          </div>
+        </div>
+        <div class="col-6 col-md-4 d-flex">
+          <!-- KPI Card: Exports (2025) -->
+          <div class="kpi" style="background:#111;border:1px solid #1e1e1e;padding:18px 15px 15px;position:relative;overflow:hidden;animation-delay:0.2s;width:100%;flex:1">
+            <div style="position:absolute;bottom:0;left:0;right:0;height:2px;background:#444">
+            </div>
+            <div style="font-size:10px;letter-spacing:0.11em;text-transform:uppercase;color:#999;margin-bottom:6px">
+              Exports (2025)
+            </div>
+            <div style="font-family:Fraunces,serif;font-weight:900;font-size:18px;line-height:1;margin-bottom:4px;color:#fff;word-break:break-word">
+              ~$33.8B
+            </div>
+            <div style="font-size:11px;color:#999;line-height:1.4">
+              +23% YoY; gold, gas, copper, uranium, textiles, food
+            </div>
+          </div>
+        </div>
+        <div class="col-6 col-md-4 d-flex">
+          <!-- KPI Card: Imports (2025) -->
+          <div class="kpi" style="background:#111;border:1px solid #1e1e1e;padding:18px 15px 15px;position:relative;overflow:hidden;animation-delay:0.25s;width:100%;flex:1">
+            <div style="position:absolute;bottom:0;left:0;right:0;height:2px;background:#444">
+            </div>
+            <div style="font-size:10px;letter-spacing:0.11em;text-transform:uppercase;color:#999;margin-bottom:6px">
+              Imports (2025)
+            </div>
+            <div style="font-family:Fraunces,serif;font-weight:900;font-size:18px;line-height:1;margin-bottom:4px;color:#fff;word-break:break-word">
+              ~$47.4B
+            </div>
+            <div style="font-size:11px;color:#999;line-height:1.4">
+              Machinery, equipment, chemicals; trade deficit funded by FDI
+            </div>
+          </div>
+        </div>
+        <div class="col-6 col-md-4 d-flex">
+          <!-- KPI Card: Current Account (2025) -->
+          <div class="kpi" style="background:#111;border:1px solid #1e1e1e;padding:18px 15px 15px;position:relative;overflow:hidden;animation-delay:0.3s;width:100%;flex:1">
+            <div style="position:absolute;bottom:0;left:0;right:0;height:2px;background:#444">
+            </div>
+            <div style="font-size:10px;letter-spacing:0.11em;text-transform:uppercase;color:#999;margin-bottom:6px">
+              Current Account (2025)
+            </div>
+            <div style="font-family:Fraunces,serif;font-weight:900;font-size:18px;line-height:1;margin-bottom:4px;color:#fff;word-break:break-word">
+              ~−3.3% GDP
+            </div>
+            <div style="font-size:11px;color:#999;line-height:1.4">
+              World Bank; narrowing; investment-driven import surge
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row gy-3 mb-3" id="item">
+        <div class="col-12 col-md-6">
+          <div id="panel" style="background:#111;border:1px solid #1e1e1e;padding:20px 20px;height:100%">
+            <div id="title" style="font-family:Fraunces,serif;font-weight:700;font-size:13px;color:#fff;margin-bottom:16px;padding-bottom:11px;border-bottom:1px solid #1e1e1e;display:flex;align-items:center;gap:8px">
+              <span style="color:#fff;flex-shrink:0">
+              <svg fill="currentColor" height="14" viewbox="0 0 512 512" width="14" xmlns="http://www.w3.org/2000/svg">
+                <path d="M184 48H328c4.4 0 8 3.6 8 8V96H176V56c0-4.4 3.6-8 8-8zm-56 8V96H64C28.7 96 0 124.7 0 160v96H192 320 512V160c0-35.3-28.7-64-64-64H384V56c0-30.9-25.1-56-56-56H184c-30.9 0-56 25.1-56 56zM512 288H320v32c0 17.7-14.3 32-32 32H224c-17.7 0-32-14.3-32-32V288H0V416c0 35.3 28.7 64 64 64H448c35.3 0 64-28.7 64-64V288z">
+                </path>
+              </svg>
+              </span>Top Export Destinations (2024)
+            </div>
+            <div style="display:flex;align-items:center;gap:10px;padding:9px 0">
+              <span style="font-size:18px;flex-shrink:0">🇨🇭</span><span style="font-size:12.5px;color:#fff;flex-shrink:0">Switzerland</span><span style="font-size:11px;color:#999;flex:1">gold refining corridor (Muruntau)</span><span style="font-family:Fraunces,serif;font-weight:700;font-size:13px;color:#fff;flex-shrink:0">~27%</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:10px;padding:9px 0">
+              <span style="font-size:18px;flex-shrink:0">🇬🇧</span><span style="font-size:12.5px;color:#fff;flex-shrink:0">UK</span><span style="font-size:11px;color:#999;flex:1">gold &amp; commodities</span><span style="font-family:Fraunces,serif;font-weight:700;font-size:13px;color:#fff;flex-shrink:0">~16%</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:10px;padding:9px 0">
+              <span style="font-size:18px;flex-shrink:0">🇷🇺</span><span style="font-size:12.5px;color:#fff;flex-shrink:0">Russia</span><span style="font-size:11px;color:#999;flex:1">manufactured goods &amp; food</span><span style="font-family:Fraunces,serif;font-weight:700;font-size:13px;color:#fff;flex-shrink:0">~13%</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:10px;padding:9px 0">
+              <span style="font-size:18px;flex-shrink:0">🇨🇳</span><span style="font-size:12.5px;color:#fff;flex-shrink:0">China</span><span style="font-size:11px;color:#999;flex:1">raw materials; Belt &amp; Road</span><span style="font-family:Fraunces,serif;font-weight:700;font-size:13px;color:#fff;flex-shrink:0">~9%</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:10px;padding:9px 0">
+              <span style="font-size:18px;flex-shrink:0">🇰🇿</span><span style="font-size:12.5px;color:#fff;flex-shrink:0">Kazakhstan</span><span style="font-size:11px;color:#999;flex:1">transit &amp; bilateral trade</span><span style="font-family:Fraunces,serif;font-weight:700;font-size:13px;color:#fff;flex-shrink:0">~6%</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:10px;padding:9px 0">
+              <span style="font-size:18px;flex-shrink:0">🇦🇫</span><span style="font-size:12.5px;color:#fff;flex-shrink:0">Afghanistan</span><span style="font-size:11px;color:#999;flex:1">electricity &amp; goods exports</span><span style="font-family:Fraunces,serif;font-weight:700;font-size:13px;color:#fff;flex-shrink:0">~4%</span>
+            </div>
+            <p id="subnote" style="font-size:11px;color:#999;margin-top:10px;margin-bottom:0;line-height:1.6">
+              Switzerland (27%) and UK (16%) together account for 43% of exports — almost entirely because gold is refined in Switzerland and traded in London. This concentration means Uzbekistan's export figures are highly sensitive to gold prices. Afghanistan at 4% is notable — Uzbekistan exports electricity and consumer goods, giving it economic leverage over a fragile neighbour.
+            </p>
+          </div>
+        </div>
+        <div class="col-12 col-md-6">
+          <div id="panel" style="background:#111;border:1px solid #1e1e1e;padding:20px 20px;height:100%">
+            <div id="title" style="font-family:Fraunces,serif;font-weight:700;font-size:13px;color:#fff;margin-bottom:16px;padding-bottom:11px;border-bottom:1px solid #1e1e1e;display:flex;align-items:center;gap:8px">
+              <span style="color:#fff;flex-shrink:0">
+              <svg fill="currentColor" height="14" viewbox="0 0 512 512" width="14" xmlns="http://www.w3.org/2000/svg">
+                <path d="M64 64c0-17.7-14.3-32-32-32S0 46.3 0 64V400c0 44.2 35.8 80 80 80H480c17.7 0 32-14.3 32-32s-14.3-32-32-32H80c-8.8 0-16-7.2-16-16V64zm406.6 86.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L320 210.7l-57.4-57.4c-12.5-12.5-32.8-12.5-45.3 0l-112 112c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L240 221.3l57.4 57.4c12.5 12.5 32.8 12.5 45.3 0l128-128z">
+                </path>
+              </svg>
+              </span>Key Fiscal Indicators
+            </div>
+            <table id="paneltbl" style="width:100%;border-collapse:collapse;table-layout:fixed">
+              <tbody>
+                <tr style="border-bottom:1px solid #1e1e1e">
+                  <td style="padding:9px 4px;font-size:12.5px;color:#999;width:58%;overflow-wrap:break-word">
+                    Govt debt / GDP (2025)
+                  </td>
+                  <td style="padding:9px 4px;font-size:14px;color:#fff;font-weight:500;text-align:right;font-family:Fraunces,serif;overflow-wrap:break-word">
+                    ~33% — moderate; IMF end-2024: 32.6%; IFI concessional majority
+                  </td>
+                </tr>
+                <tr style="border-bottom:1px solid #1e1e1e">
+                  <td style="padding:9px 4px;font-size:12.5px;color:#999;width:58%;overflow-wrap:break-word">
+                    Foreign reserves (end-2025)
+                  </td>
+                  <td style="padding:9px 4px;font-size:14px;color:#fff;font-weight:500;text-align:right;font-family:Fraunces,serif;overflow-wrap:break-word">
+                    ~$66.3B — record; gold-heavy (CBU)
+                  </td>
+                </tr>
+                <tr style="border-bottom:1px solid #1e1e1e">
+                  <td style="padding:9px 4px;font-size:12.5px;color:#999;width:58%;overflow-wrap:break-word">
+                    GDP growth target 2030
+                  </td>
+                  <td style="padding:9px 4px;font-size:14px;color:#fff;font-weight:500;text-align:right;font-family:Fraunces,serif;overflow-wrap:break-word">
+                    $220–230B nominal GDP
+                  </td>
+                </tr>
+                <tr style="border-bottom:1px solid #1e1e1e">
+                  <td style="padding:9px 4px;font-size:12.5px;color:#999;width:58%;overflow-wrap:break-word">
+                    Investment / GDP ratio (2025)
+                  </td>
+                  <td style="padding:9px 4px;font-size:14px;color:#fff;font-weight:500;text-align:right;font-family:Fraunces,serif;overflow-wrap:break-word">
+                    ~35% — very high; construction boom (CEIC)
+                  </td>
+                </tr>
+                <tr style="border-bottom:1px solid #1e1e1e">
+                  <td style="padding:9px 4px;font-size:12.5px;color:#999;width:58%;overflow-wrap:break-word">
+                    WTO accession target
+                  </td>
+                  <td style="padding:9px 4px;font-size:14px;color:#fff;font-weight:500;text-align:right;font-family:Fraunces,serif;overflow-wrap:break-word">
+                    2026 (in negotiation)
+                  </td>
+                </tr>
+                <tr style="border-bottom:1px solid #1e1e1e">
+                  <td style="padding:9px 4px;font-size:12.5px;color:#999;width:58%;overflow-wrap:break-word">
+                    Free economic zones (FEZs)
+                  </td>
+                  <td style="padding:9px 4px;font-size:14px;color:#fff;font-weight:500;text-align:right;font-family:Fraunces,serif;overflow-wrap:break-word">
+                    ~20 FEZs; 500+ resident companies
+                  </td>
+                </tr>
+                <tr style="border-bottom:none">
+                  <td style="padding:9px 4px;font-size:12.5px;color:#999;width:58%;overflow-wrap:break-word">
+                    GDP growth Jan–Sep 2025 (official)
+                  </td>
+                  <td style="padding:9px 4px;font-size:14px;color:#fff;font-weight:500;text-align:right;font-family:Fraunces,serif;overflow-wrap:break-word">
+                    +7.7% — record pace
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <p id="subnote" style="font-size:11px;color:#999;margin-top:10px;margin-bottom:0;line-height:1.6">
+              Investment at 31.9% of GDP is exceptionally high — it is the engine of Uzbekistan's growth story. This is being funded by broad foreign investment (~$35–40B total), multilateral lending (IDB, ADB, World Bank), and the sovereign wealth fund. WTO accession would be the most significant trade reform since independence — opening markets and requiring legal modernisation.
+            </p>
+            <div style="margin-top:14px">
+              <div style="font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:#999;margin-bottom:6px">
+                Trade balance 2015–2024 ($B)
+              </div>
+              <div style="position:relative;height:22px;border-radius:4px;overflow:hidden;background:linear-gradient(to right, rgb(176,115,121) 0%, rgb(178,113,119) 11.11111111111111%, rgb(180,109,116) 22.22222222222222%, rgb(189,94,103) 33.33333333333333%, rgb(195,85,95) 44.44444444444444%, rgb(195,85,95) 55.55555555555556%, rgb(213,56,71) 66.66666666666666%, rgb(224,38,55) 77.77777777777779%, rgb(232,25,44) 88.88888888888889%, rgb(224,38,55) 100%)">
+                <div style="position:absolute;top:10%;bottom:10%;left:88.88888888888889%;width:1px;background:rgb(104,11,20);transform:translateX(-50%);border-radius:1px">
+                </div>
+              </div>
+              <div style="display:flex;margin-top:4px">
+                <div style="text-align:center;flex:1">
+                  <div style="font-size:8px;color:#999;font-weight:300;line-height:1">
+                    2015
+                  </div>
+                  <div style="font-size:8px;color:#999;line-height:1.4">
+                    -4.5B
+                  </div>
+                </div>
+                <div style="text-align:center;flex:1">
+                  <div style="font-size:8px;color:#999;font-weight:300;line-height:1">
+                    2016
+                  </div>
+                  <div style="font-size:8px;color:#999;line-height:1.4">
+                    -4.8B
+                  </div>
+                </div>
+                <div style="text-align:center;flex:1">
+                  <div style="font-size:8px;color:#999;font-weight:300;line-height:1">
+                    2017
+                  </div>
+                  <div style="font-size:8px;color:#999;line-height:1.4">
+                    -5.2B
+                  </div>
+                </div>
+                <div style="text-align:center;flex:1">
+                  <div style="font-size:8px;color:#999;font-weight:300;line-height:1">
+                    2018
+                  </div>
+                  <div style="font-size:8px;color:#999;line-height:1.4">
+                    -7B
+                  </div>
+                </div>
+                <div style="text-align:center;flex:1">
+                  <div style="font-size:8px;color:#999;font-weight:300;line-height:1">
+                    2019
+                  </div>
+                  <div style="font-size:8px;color:#999;line-height:1.4">
+                    -8.1B
+                  </div>
+                </div>
+                <div style="text-align:center;flex:1">
+                  <div style="font-size:8px;color:#999;font-weight:300;line-height:1">
+                    2020
+                  </div>
+                  <div style="font-size:8px;color:#999;line-height:1.4">
+                    -8.1B
+                  </div>
+                </div>
+                <div style="text-align:center;flex:1">
+                  <div style="font-size:8px;color:#999;font-weight:300;line-height:1">
+                    2021
+                  </div>
+                  <div style="font-size:8px;color:#999;line-height:1.4">
+                    -11.5B
+                  </div>
+                </div>
+                <div style="text-align:center;flex:1">
+                  <div style="font-size:8px;color:#999;font-weight:300;line-height:1">
+                    2022
+                  </div>
+                  <div style="font-size:8px;color:#999;line-height:1.4">
+                    -13.7B
+                  </div>
+                </div>
+                <div style="text-align:center;flex:1">
+                  <div style="font-size:8px;color:#fff;font-weight:600;line-height:1">
+                    2023
+                  </div>
+                  <div style="font-size:8px;color:#fff;line-height:1.4">
+                    -15.2B
+                  </div>
+                </div>
+                <div style="text-align:center;flex:1">
+                  <div style="font-size:8px;color:#999;font-weight:300;line-height:1">
+                    2024
+                  </div>
+                  <div style="font-size:8px;color:#999;line-height:1.4">
+                    -13.6B
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
       <div class="row my-3" id="section">
         <div class="col-12 d-flex align-items-center gap-2">
           <span style="color:#fff;font-size:16px;flex-shrink:0">
@@ -5674,7 +5654,7 @@
           Sources: Statistics Agency of Uzbekistan · World Bank 2025 · IMF WEO April 2026 · UNDP HDR 2025 · Transparency International CPI 2024 · WHO · RSF Press Freedom 2024 · World Justice Project 2024 · Freedom House 2024 · ILO · CBU · climate-data.org · IEA · WNA · IPU · UNICEF · Data verified June 2026.
         </p>
         <p style="font-size:9.5px;color:#444;margin-top:6px;line-height:1.6;text-align:center">
-          Generated 6 June 2026 · Claude Sonnet 4.5 (Anthropic) · iAlmirPro
+          Generated 7 June 2026 · Claude Sonnet 4.6 (Anthropic) · iAlmirPro
         </p>
       </div>
     </div>

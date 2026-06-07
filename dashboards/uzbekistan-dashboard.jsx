@@ -180,71 +180,6 @@ const GradientBar = ({ title, values, colorStops, unit = '', height = 22, xLabel
   );
 };
 
-/* ── Age Structure Bar (population pyramid as two stacked gradient bars) ── */
-const AgeBar = ({ title, male, female, medianM, medianF }) => {
-  const maleColor = '#2E86DE';
-  const femaleColor = '#E8192C';
-  const decadeLabels = [0,10,20,30,40,50,60,70,80];
-  const maxVal = Math.max(...male, ...female);
-  const barH = 26;
-  const chunkColor = (v, hex) => {
-    const alpha = (v / maxVal);
-    const r = parseInt(hex.slice(1,3),16);
-    const g = parseInt(hex.slice(3,5),16);
-    const b = parseInt(hex.slice(5,7),16);
-    return `rgb(${Math.round(153+(r-153)*alpha)},${Math.round(153+(g-153)*alpha)},${Math.round(153+(b-153)*alpha)})`;
-  };
-  const medMPct = Math.min((medianM / 80) * 100, 100);
-  const medFPct = Math.min((medianF / 80) * 100, 100);
-  const darkM = '#0e6d8c';
-  const darkF = '#a01020';
-  const renderBar = (arr, color, radius) => (
-    <div style={{ height:barH, borderRadius:radius, overflow:'hidden', display:'flex' }}>
-      {arr.map((v, i) => (
-        <div key={i} style={{
-          flex:1, background:chunkColor(v, color),
-          display:'flex', alignItems:'center', justifyContent:'center',
-          fontSize:7, color:'rgba(255,255,255,0.85)', fontWeight:600, lineHeight:1
-        }}>
-          {v.toFixed(1)}
-        </div>
-      ))}
-    </div>
-  );
-  return (
-    <div style={{ marginTop:14 }}>
-      {title && <div style={{ fontSize:10, letterSpacing:'0.1em', textTransform:'uppercase', color:C.sub, marginBottom:6 }}>{title}</div>}
-      <div style={{ position:'relative' }}>
-        {renderBar(male, maleColor, '4px 4px 0 0')}
-        <div style={{ height:2, background:C.bg }} />
-        {renderBar(female, femaleColor, '0 0 4px 4px')}
-        <div style={{ position:'absolute', top:2, height:barH-4, left:`${medMPct}%`,
-          width:1, background:darkM, transform:'translateX(-50%)', borderRadius:1, pointerEvents:'none' }} />
-        <div style={{ position:'absolute', top:barH+4, height:barH-4, left:`${medFPct}%`,
-          width:1, background:darkF, transform:'translateX(-50%)', borderRadius:1, pointerEvents:'none' }} />
-      </div>
-      {/* X-axis decade labels */}
-      <div style={{ position:'relative', height:18, marginTop:3 }}>
-        {decadeLabels.filter(age => age !== 0 && age !== 80).map(age => (
-          <div key={age} style={{ position:'absolute', left:`${(age/80)*100}%`, transform:'translateX(-50%)', textAlign:'center' }}>
-            <div style={{ fontSize:8, color:C.sub, lineHeight:1 }}>{age}y</div>
-          </div>
-        ))}
-      </div>
-      {/* Legend — centered */}
-      <div style={{ display:'flex', alignItems:'center', justifyContent:'center', gap:14, marginTop:3, fontSize:9, color:C.sub, flexWrap:'wrap' }}>
-        <span style={{ display:'flex', alignItems:'center', gap:4 }}>
-          <span style={{ display:'inline-block', width:10, height:4, background:maleColor, borderRadius:1 }} />
-          Male (median <strong style={{ color:maleColor }}>{medianM} yrs<span style={{ color:C.sub, fontWeight:300 }}>)</span></strong>
-        </span>
-        <span style={{ display:'flex', alignItems:'center', gap:4 }}>
-          <span style={{ display:'inline-block', width:10, height:4, background:femaleColor, borderRadius:1 }} />
-          Female (median <strong style={{ color:femaleColor }}>{medianF} yrs<span style={{ color:C.sub, fontWeight:300 }}>)</span></strong>
-        </span>
-      </div>
-    </div>
-  );
-};
 const tempColor = p => {
   if (p < 25) return `rgb(${Math.round(40+p*0.8)},${Math.round(60+p*0.4)},${Math.round(180-p*0.8)})`;
   if (p < 50) { const t=(p-25)/25; return `rgb(${Math.round(60+t*130)},${Math.round(80+t*80)},${Math.round(160-t*100)})`; }
@@ -331,7 +266,7 @@ export default function Uzbekistan() {
       <div className="dash">
 
         {/* TOP */}
-        <div id="top" style={{ padding:'20px 0 0', display:'grid', gridTemplateColumns:'1fr auto', alignItems:'end', gap:32, marginBottom:8 }}>
+        <div id="top" style={{ padding:'20px 0 0', display:'grid', gridTemplateColumns:'1fr minmax(0,96px)', alignItems:'end', gap:16, marginBottom:8 }}>
           <div>
             <div style={{ fontSize:10, letterSpacing:'0.28em', textTransform:'uppercase', color:C.uz, marginBottom:14 }}>Country Dashboard 2025</div>
             <h1 style={{ fontFamily:'Fraunces,serif', fontWeight:900, fontSize:'clamp(44px,9vw,96px)', lineHeight:0.9, letterSpacing:'-0.02em', marginBottom:16 }}>
@@ -770,7 +705,7 @@ export default function Uzbekistan() {
           </div>
         </div>
 
-        {/* 7. POLITICAL LANDSCAPE */}
+        {/* 7. POLITICAL */}
         <SectionHeader icon={Icons.landmark} label="Political Landscape" />
         <div id="item" className="row g-1 mb-3">
           <div className="col-6 col-md-4 d-flex"><KpiCard label="System" value="Presidential" sub="Authoritarian but reforming; Mirziyoyev's opening far exceeds Karimov" accent={C.uz} delay={0.05} /></div>
@@ -971,9 +906,226 @@ export default function Uzbekistan() {
             </Panel>
           </div>
         </div>
+        <div id="item" className="row g-1 mb-3">
+          <div className="col-6 col-md-4 d-flex"><KpiCard label="Health Spending (% GDP)" value="~7.7%" sub="WB 2021: 7.74%; public share growing; universal health system reform underway" accent={C.grn} delay={0.05} /></div>
+          <div className="col-6 col-md-4 d-flex"><KpiCard label="Out-of-pocket spending" value="~53%" sub="Share of total health expenditure (WB 2020); one of highest in region" accent={C.uz} delay={0.10} /></div>
+          <div className="col-6 col-md-4 d-flex"><KpiCard label="TB incidence (2022)" value="~83 / 100K" sub="WHO 2022; high; drug-resistant TB concern; one of highest in region" accent={C.dim} delay={0.15} /></div>
+          <div className="col-6 col-md-4 d-flex"><KpiCard label="Life expectancy" value="~75 yrs" sub="One of highest in region; improving under Mirziyoyev reforms" accent={C.dim} delay={0.20} /></div>
+          <div className="col-6 col-md-4 d-flex"><KpiCard label="Doctors per 1,000" value="~2.87" sub="2023 National Stats; below Soviet peak; brain drain concern" accent={C.dim} delay={0.25} /></div>
+          <div className="col-6 col-md-4 d-flex"><KpiCard label="Tashkent PM2.5 (2024)" value="~32 µg/m³" sub="IQAir 2024; ~6× WHO guideline of 5 µg/m³" accent={C.dim} delay={0.30} /></div>
+        </div>
+        <div id="item" className="row gy-3 mb-3">
+          <div className="col-12 col-md-6">
+            <Panel title="Health System Facts" icon={Icons.people}>
+              <Tbl rows={[
+                ['Compulsory health insurance', 'In development; phased introduction 2025+'],
+                ['Hospital beds per 1,000', '~4.9 — above regional average; quality concern'],
+                ['Forced labour in cotton (abolished)', '2021 — ILO confirmed; major reform'],
+                ['Child nutrition — stunting', '6.7% (under-5, 2024); improving significantly'],
+                ['Karakalpakstan health outcomes', 'Worst in country; Aral Sea dust health crisis'],
+                ['Tashkent air quality', 'PM2.5 ~32 µg/m³ annual avg 2024 (IQAir); ~6× WHO guideline'],
+              ]} />
+              <p id="subnote" style={{ fontSize:11, color:C.sub, marginTop:10, marginBottom:0, lineHeight:1.6 }}>Karakalpakstan (Aral Sea region) has the worst health outcomes in Uzbekistan — the toxic salt dust from the exposed Aralkum Desert causes severe respiratory disease, cancer, and maternal health crises. This is a direct consequence of the Aral Sea disaster. Abolishing forced cotton labour in 2021 removed a major human rights stain and improved rural health outcomes.</p>
+            </Panel>
+          </div>
+          <div className="col-12 col-md-6">
+            <Panel title="Disease & Health Burden" icon={Icons.chart}>
+              <BarRow label="Hypertension prevalence (est.; unverified — most recent WHO STEPS survey is 2019; 2024 data not publicly available)" value="~32%" pct={100} color={C.uz} />
+              <BarRow label="TB incidence per 100K (2022)" value="~83" pct={100} color={C.grn} />
+              <BarRow label="OOP health spending share" value="~53%" pct={66} color={C.blu} />
+              <BarRow label="Tashkent PM2.5 (WHO guideline=5)" value="~32 µg/m³" pct={80} color={C.dim} />
+              <BarRow label="Aral Sea toxic dust affected pop." value="~2M in Karakalpakstan" pct={45} color={C.dim} />
+              <p id="subnote" style={{ fontSize:11, color:C.sub, marginTop:10, marginBottom:0, lineHeight:1.6 }}>TB at 83/100K (2022 WHO) is among the highest in the region — above the Central Asian average. Drug-resistant TB is a particular concern. The Aral Sea dust crisis affecting ~2M Karakalpak people is a chronic, unfixable public health disaster — the sea cannot be restored and the exposed seabed will blow dust for generations.</p>
+            </Panel>
+          </div>
+        </div>
 
-        {/* 10. ECONOMIC DEPTH */}
-        <SectionHeader icon={Icons.chart} label="Economic Depth & Fiscal Position" />
+        {/* 10. ENERGY */}
+        <SectionHeader icon={Icons.mountain} label="Energy & Resources" />
+        <div id="item" className="row g-1 mb-3">
+          <div className="col-6 col-md-4 d-flex"><KpiCard label="Electricity Generation" value="81.5 TWh/yr" sub="2024 actual (IEA/UZ Stats); +4.7% YoY; gas-dominant; renewables growing" accent={C.uz} delay={0.05} /></div>
+          <div className="col-6 col-md-4 d-flex"><KpiCard label="Natural gas reserves" value="~1.9 trillion m³" sub="Proven reserves end-2024 (Institute of Energy); production declining" accent={C.dim} delay={0.10} /></div>
+          <div className="col-6 col-md-4 d-flex"><KpiCard label="Gold production (Muruntau)" value="~70 tonnes/yr" sub="World's largest open-pit mine; Kyzylkum Desert" accent={C.grn} delay={0.15} /></div>
+          <div className="col-6 col-md-4 d-flex"><KpiCard label="Renewable investment (2025)" value="$9.5B — 42 projects" sub="Solar, wind, hydro; Forum 'Powering the Future' Dec 2025" accent={C.dim} delay={0.20} /></div>
+          <div className="col-6 col-md-4 d-flex"><KpiCard label="Solar potential" value="World-class" sub="300+ sunny days; flat desert terrain; ideal for utility-scale solar" accent={C.dim} delay={0.25} /></div>
+          <div className="col-6 col-md-4 d-flex"><KpiCard label="Nuclear power (planned)" value="~2.1 GW" sub="2× VVER-1000 + 2× RITM-200N SMR; Rosatom; site near Tuzkan Lake; first unit ~2029 (World Nuclear News)" accent={C.dim} delay={0.30} /></div>
+        </div>
+        <div id="item" className="row gy-3 mb-3">
+          <div className="col-12 col-md-6">
+            <Panel title="Electricity Generation Mix (2024 est.)" icon={Icons.chart}>
+              <Donut
+                label="81.5 TWh"
+                sublabel="generated 2024"
+                segments={[
+                  { label:'Natural gas (dominant)',    value:'~76%', pct:76, color:C.uz  },
+                  { label:'Coal',                      value:'~11%', pct:11, color:'#666'},
+                  { label:'Hydro (rivers & reservoirs)', value:'~9%', pct:9, color:C.blu },
+                  { label:'Solar & wind (growing)',    value:'~4%',  pct:4,  color:C.grn },
+                ]}
+              />
+              <p id="subnote" style={{ fontSize:11, color:C.sub, marginTop:10, marginBottom:0, lineHeight:1.6 }}>2024 est. — IEA/UZ Stats; fuel-type split modelled, not metered per source</p>
+              <p id="subnote" style={{ fontSize:11, color:C.sub, marginTop:12, marginBottom:0, lineHeight:1.6 }}>~76% gas-fired is relatively clean compared to Kazakhstan's coal-heavy grid. Coal at ~11% is higher than previously reported (corrected 2024 data). However, natural gas production is declining (~7%/year) — making the $9.5B renewable push urgent. Uzbekistan has signed deals for 20GW of solar and wind by 2030. The Rosatom nuclear plant would provide baseload power independence.</p>
+            </Panel>
+          </div>
+          <div className="col-12 col-md-6">
+            <Panel title="Energy & Resources Facts" icon={Icons.landmark}>
+              <Tbl rows={[
+                ['Natural gas production', '~44.6 billion m³/year (2024; declining from 59 bcm in 2019)'],
+                ['Oil production', '~55,000 bbl/day (minor)'],
+                ['Uranium production (2024)', '~4,000 tonnes/year — world 5th (WNA 2024)'],
+                ['Copper (Almalyk mine)', 'Major producer; expanding capacity'],
+                ['Coal reserves', 'Modest; ~3.3 billion tonnes'],
+                ['Muruntau gold mine annual output', '~70 tonnes — world\'s largest open-pit'],
+              ]} />
+              <p id="subnote" style={{ fontSize:11, color:C.sub, marginTop:10, marginBottom:0, lineHeight:1.6 }}>Uzbekistan is a critical minerals powerhouse: gold, uranium, copper, zinc, natural gas. Muruntau's 70-tonne annual output makes it the single most economically important asset in Central Asia. Uranium production, while smaller than Kazakhstan's, positions Uzbekistan well in the nuclear energy renaissance. Declining gas production makes the renewable transition existentially important.</p>
+            </Panel>
+          </div>
+        </div>
+
+        {/* 11. INFRASTRUCTURE */}
+        <SectionHeader icon={Icons.map} label="Infrastructure & Digital Connectivity" />
+        <div id="item" className="row g-1 mb-3">
+          <div className="col-6 col-md-4 d-flex"><KpiCard label="Internet Penetration" value="~84%" sub="DataReportal Jan 2024: 83.3%; ITU 2023 households: 89%; mobile-first" accent={C.grn} delay={0.05} /></div>
+          <div className="col-6 col-md-4 d-flex"><KpiCard label="Mobile Subscribers" value="~36M" sub="~81% penetration (WB 2025); Ucell, Beeline, Uzmobile major operators" accent={C.dim} delay={0.10} /></div>
+          <div className="col-6 col-md-4 d-flex"><KpiCard label="Road Network" value="~86,000 km" sub="~75,000 km paved (87%); major expansion underway" accent={C.dim} delay={0.15} /></div>
+          <div className="col-6 col-md-4 d-flex"><KpiCard label="Railway Network" value="~4,643 km" sub="Electrified; high-speed Afrosiyob (Tashkent–Samarkand–Bukhara)" accent={C.dim} delay={0.20} /></div>
+          <div className="col-6 col-md-4 d-flex"><KpiCard label="High-speed rail" value="Afrosiyob" sub="250 km/h max; Tashkent–Bukhara in ~3h 20m; Spanish Talgo technology" accent={C.dim} delay={0.25} /></div>
+          <div className="col-6 col-md-4 d-flex"><KpiCard label="5G Status" value="Deployed" sub="Uztelecom & others launched 2022–2024; 3,500+ base stations nationwide" accent={C.dim} delay={0.30} /></div>
+        </div>
+        <div id="item" className="row gy-3 mb-3">
+          <div className="col-12 col-md-6">
+            <Panel title="Key Infrastructure Projects" icon={Icons.map}>
+              <Tbl rows={[
+                ['China–Kyrgyzstan–Uzbekistan Railway', 'Under construction; China-UZ connectivity'],
+                ['Trans-Afghan Railway (planned)', 'Would reach Indian Ocean via Afghanistan-Iran'],
+                ['Tashkent Metro expansion', 'New lines; reaching outer districts'],
+                ['Navoi Free Economic Zone (logistics)', 'Central Asia\'s largest FEZ; manufacturing hub'],
+                ['Rogun Dam electricity import (TJ)', 'CASA-1000 will supply Uzbekistan too'],
+                ['Digital Uzbekistan 2030 programme', 'E-government, AI, broadband, fintech'],
+              ]} />
+              <p id="subnote" style={{ fontSize:11, color:C.sub, marginTop:10, marginBottom:0, lineHeight:1.6 }}>The China-Kyrgyzstan-Uzbekistan Railway is the most transformative infrastructure project in Central Asia — it will create a direct rail link from China to Uzbekistan that bypasses Russia entirely. Combined with the Trans-Afghan Railway potential, Uzbekistan could become the genuine hub of a new Silk Road corridor linking East Asia to the Indian Ocean.</p>
+            </Panel>
+          </div>
+          <div className="col-12 col-md-6">
+            <Panel title="Digital Indicators" icon={Icons.chart}>
+              <BarRow label="Internet penetration" value="~84%" pct={84} color={C.uz} />
+              <BarRow label="Mobile penetration" value="~81%" pct={81} color={C.grn} />
+              <BarRow label="E-government service uptake" value="~65%" pct={65} color={C.blu} />
+              <BarRow label="Social media penetration" value="~60%" pct={60} color={C.dim} />
+              <BarRow label="Fixed broadband" value="~20%" pct={20} color={C.dim} />
+              <p id="subnote" style={{ fontSize:11, color:C.sub, marginTop:10, marginBottom:0, lineHeight:1.6 }}>Uzbekistan's internet is uncensored — a dramatic change from the Karimov era. 84% penetration is growing fast and social media (Instagram, Telegram) are widely used. The "1 million programmers" initiative and Uzbekistan's IT Park (1,900+ resident companies; 0% income tax) suggest a digital economy is genuinely taking root.</p>
+            </Panel>
+          </div>
+        </div>
+
+        {/* 12. GENDER & SOCIETY */}
+        <SectionHeader icon={Icons.people} label="Social Indicators & Inequality" />
+        <div id="item" className="row g-1 mb-3">
+          <div className="col-6 col-md-4 d-flex"><KpiCard label="Poverty rate ($3.65/day, 2025)" value="~5.1%" sub="Statistics Agency; down from ~27% in 2016 — Mirziyoyev-era reform" accent={C.uz} delay={0.05} /></div>
+          <div className="col-6 col-md-4 d-flex"><KpiCard label="Gini Coefficient" value="34.5" sub="World Bank 2023; moderate inequality; rising inequality a risk as economy grows" accent={C.dim} delay={0.10} /></div>
+          <div className="col-6 col-md-4 d-flex"><KpiCard label="Rural-urban income gap" value="~1.6×" sub="Urban incomes ~60% higher; rural employment main challenge — est.; unverified" accent={C.dim} delay={0.15} /></div>
+          <div className="col-6 col-md-4 d-flex"><KpiCard label="Gender Inequality Index" value="0.274 (rank 83)" sub="UNDP HDR 2024; better than Tajikistan; improving rapidly" accent={C.grn} delay={0.20} /></div>
+          <div className="col-6 col-md-4 d-flex"><KpiCard label="Women in parliament" value="~38%" sub="57/150 seats after Oct 2024 elections (IPU); highest in CA" accent={C.blu} delay={0.25} /></div>
+          <div className="col-6 col-md-4 d-flex"><KpiCard label="Mahalla system" value="~10,000 units" sub="9,756 self-governing bodies incl. 8,115 mahallas (official); govt cites 10,000+ (ISRS 2024)" accent={C.dim} delay={0.30} /></div>
+        </div>
+        <div id="item" className="row gy-3 mb-3">
+          <div className="col-12 col-md-6">
+            <Panel title="Access & Basic Services" icon={Icons.chart}>
+              <BarRow label="Access to clean water (urban)" value="~89%" pct={89} color={C.uz} />
+              <BarRow label="Access to clean water (rural)" value="~71%" pct={71} color={C.grn} />
+              <BarRow label="Access to basic sanitation, urban (JMP/World Bank 2020)" value="~100%" pct={100} color={C.dim} />
+              <BarRow label="Access to basic sanitation, national avg (est.; unverified)" value="~73%" pct={73} color={C.dim} />
+              <BarRow label="Electricity access (national)" value="~100%" pct={100} color={C.blu} />
+              <p id="subnote" style={{ fontSize:11, color:C.sub, marginTop:10, marginBottom:0, lineHeight:1.6 }}>Rural sanitation at 68% is a key infrastructure gap — directly linked to child health outcomes. The mahalla (neighbourhood committee) system is uniquely Uzbek — it provides community welfare, social pressure for compliance, and local governance simultaneously. It was used effectively during COVID-19 for food distribution and monitoring.</p>
+            </Panel>
+          </div>
+          <div className="col-12 col-md-6">
+            <Panel title="Social Cohesion & Gender" icon={Icons.people}>
+              <Tbl rows={[
+                ['Gini (World Bank 2023)', '34.5 — moderate'],
+                ['Women in parliament (2024)', '~38% (57/150 seats) — highest in Central Asia (IPU)'],
+                ['Gender Inequality Index (UNDP 2024)', '0.274 — rank 83/191'],
+                ['Women in labour force', '~47% — improving'],
+                ['Forced cotton labour (abolished)', '2021; confirmed by ILO'],
+                ['Karakalpak autonomy status', 'Autonomous Republic; 2022 unrest suppressed'],
+              ]} />
+              <p id="subnote" style={{ fontSize:11, color:C.sub, marginTop:10, marginBottom:0, lineHeight:1.6 }}>Women in parliament at 38% is the highest in Central Asia — reflecting genuine quota-backed progress. The abolition of forced cotton labour was a landmark; for decades, millions of teachers, students, and public servants were mobilised each autumn for cotton harvesting — a Soviet-era practice that persisted long after independence. Its end in 2021 was transformative for rural women in particular.</p>
+            </Panel>
+          </div>
+        </div>
+
+        {/* 13. ENVIRONMENT */}
+        <SectionHeader icon={Icons.water} label="Environment" />
+        <div id="item" className="row g-1 mb-3">
+          <div className="col-6 col-md-4 d-flex"><KpiCard label="CO₂ per capita (2022)" value="~3.8 t" sub="Below world avg (~4.7t); gas-heavy grid cleaner than coal" accent={C.grn} delay={0.05} /></div>
+          <div className="col-6 col-md-4 d-flex"><KpiCard label="Aral Sea volume lost" value="~91%" sub="Was world's 4th largest lake; irreversible catastrophe" accent={C.uz} delay={0.10} /></div>
+          <div className="col-6 col-md-4 d-flex"><KpiCard label="Renewable energy target 2030" value="40% of mix" sub="Up from ~4% in 2024; $9.5B in 42 projects committed 2025" accent={C.dim} delay={0.15} /></div>
+          <div className="col-6 col-md-4 d-flex"><KpiCard label="Water stress level" value="Extreme" sub="Both Amu Darya & Syr Darya heavily over-abstracted for irrigation" accent={C.blu} delay={0.20} /></div>
+          <div className="col-6 col-md-4 d-flex"><KpiCard label="Aralkum toxic dust" value="~57,000 km² exposed" sub="Former seabed now desert; salt & pesticide dust; 2M people affected" accent={C.dim} delay={0.25} /></div>
+          <div className="col-6 col-md-4 d-flex"><KpiCard label="Solar irradiation (GHI)" value="1,400–1,800 kWh/m²" sub="IEA Solar Roadmap for Uzbekistan; 4.52 kWh/m²/day median; ideal for utility-scale solar" accent={C.dim} delay={0.30} /></div>
+        </div>
+        <div id="item" className="row gy-3 mb-3">
+          <div className="col-12 col-md-6">
+            <Panel title="Environmental Facts" icon={Icons.water}>
+              <Tbl rows={[
+                ['CO₂ per capita vs world avg', '~3.8t vs ~4.7t — moderate'],
+                ['Aral Sea (Uzbek side)', 'South Aral Sea — completely desiccated'],
+                ['UN Special Programme for Aral Sea', 'IFAS fund; Uzbekistan chairs rotating'],
+                ['Saksaul tree planting', 'Largest afforestation in Central Asia'],
+                ['NDC target (2030)', 'Reduce GHG intensity 35% vs 2010'],
+                ['Protected areas', '~5.8% of territory (WB 2022); target 12% by 2028'],
+              ]} />
+              <p id="subnote" style={{ fontSize:11, color:C.sub, marginTop:10, marginBottom:0, lineHeight:1.6 }}>Uzbekistan has taken a global leadership role on the Aral Sea crisis — Mirziyoyev has addressed the UN General Assembly on it multiple times. The saksaul afforestation programme (planting drought-resistant trees on the exposed seabed) is the most practical mitigation measure available — it reduces dust emissions while creating a new ecosystem.</p>
+            </Panel>
+          </div>
+          <div className="col-12 col-md-6">
+            <Panel title="Water Stress & Pollution" icon={Icons.chart}>
+              <BarRow label="Amu Darya water use vs flow" value="Over-abstracted" pct={95} color={C.uz} />
+              <BarRow label="Irrigation efficiency (Soviet canals)" value="~40% (very poor)" pct={40} color={C.grn} />
+              <BarRow label="Tashkent PM2.5 vs WHO (5 µg/m³)" value="~32 µg/m³ (6× over)" pct={80} color={C.blu} />
+              <BarRow label="Aralkum dust events per year" value="~30 major events" pct={60} color={C.dim} />
+              <p id="subnote" style={{ fontSize:11, color:C.sub, marginTop:10, marginBottom:0, lineHeight:1.6 }}>Water is Uzbekistan's most existential environmental challenge. Soviet-era irrigation canals waste 60% of the water they carry — efficiency improvements could free enormous volumes without new supply. Climate change is reducing the glacial meltwater from Tajikistan and Kyrgyzstan that feeds the rivers, making the crisis worse each decade.</p>
+            </Panel>
+          </div>
+        </div>
+
+        {/* 14. BUSINESS */}
+        <SectionHeader icon={Icons.briefcase} label="Business & Investment" />
+        <div id="item" className="row g-1 mb-3">
+          <div className="col-6 col-md-4 d-flex"><KpiCard label="Corporate tax rate" value="15%" sub="Standard rate (reduced from 20% in 2023); FEZ residents lower" accent={C.grn} delay={0.05} /></div>
+          <div className="col-6 col-md-4 d-flex"><KpiCard label="Foreign Investment (2025)" value="~$35–40B" sub="Total incl. loans & portfolio; BoP FDI ~$2.8B (2024); record inflows; Central Asia leader" accent={C.dim} delay={0.10} /></div>
+          <div className="col-6 col-md-4 d-flex"><KpiCard label="Ease of Doing Business" value="~Rank 69/190" sub="World Bank 2019; massive improvement from rank 166 in 2012" accent={C.dim} delay={0.15} /></div>
+          <div className="col-6 col-md-4 d-flex"><KpiCard label="VAT rate" value="12%" sub="Reduced from 20% in 2019; significant tax reform package" accent={C.dim} delay={0.20} /></div>
+          <div className="col-6 col-md-4 d-flex"><KpiCard label="Corruption Index (TI 2024)" value="32/100" sub="Rank 121/180; improving from 21/100 in 2016 under Karimov (TI CPI 2024)" accent={C.uz} delay={0.25} /></div>
+          <div className="col-6 col-md-4 d-flex"><KpiCard label="WTO accession" value="Target 2026" sub="Observer since 1994; 30+ year process nearing completion" accent={C.dim} delay={0.30} /></div>
+        </div>
+        <div id="item" className="row gy-3 mb-3">
+          <div className="col-12 col-md-6">
+            <Panel title="Investment Climate Summary" icon={Icons.briefcase}>
+              <Tbl rows={[
+                ["Fitch credit rating", 'BB / Positive (upgraded from BB- in 2024)'],
+                ['CPI score (TI 2024)', '32/100 — rank 121/180; improving from 21/100 in 2016'],
+                ['Free Economic Zones', '~20 FEZs; Navoi (aviation), Urgut, IT Parks'],
+                ['IT Park Uzbekistan', '1,900+ resident companies; 0% income tax; fast-growing'],
+                ['Currency liberalisation (2017)', 'Free float ended black market; FDI unlocked'],
+                ['WTO observer since', '1994 — accession now actively negotiated'],
+              ]} />
+              <p id="subnote" style={{ fontSize:11, color:C.sub, marginTop:10, marginBottom:0, lineHeight:1.6 }}>Uzbekistan's reform trajectory since 2016 is the most dramatic business climate improvement in post-Soviet history — Ease of Doing Business improved from rank 166 to 69 in 7 years. Currency liberalisation in 2017 was the single most impactful reform, immediately unlocking FDI. The remaining challenges are judiciary independence and anti-corruption enforcement.</p>
+            </Panel>
+          </div>
+          <div className="col-12 col-md-6">
+            <Panel title="Key Risks & Opportunities" icon={Icons.chart}>
+              <BarRow label="Silk Road tourism opportunity" value="World-class" pct={95} color={C.uz} />
+              <BarRow label="China-KG-UZ railway opportunity" value="Transformational" pct={90} color={C.grn} />
+              <BarRow label="Renewable energy export potential" value="Very high" pct={85} color={C.dim} />
+              <BarRow label="Russia geopolitical risk" value="Moderate (less exposed than KZ)" pct={50} color={C.blu} />
+              <BarRow label="Water scarcity long-term risk" value="Critical" pct={90} color={C.dim} />
+              <BarRow label="Reform reversal / governance risk" value="Moderate" pct={45} color={C.dim} />
+              <p id="subnote" style={{ fontSize:11, color:C.sub, marginTop:10, marginBottom:0, lineHeight:1.6 }}>Uzbekistan's opportunity set is exceptional: the largest population in Central Asia, world-class heritage tourism, critical minerals, and the new Silk Road pivot. Water scarcity is the overriding long-term risk — without fundamental irrigation reform and upstream glacier preservation, economic growth may hit a physical water ceiling by the 2040s.</p>
+            </Panel>
+          </div>
+        </div>
+
         <div id="item" className="row g-1 mb-3">
           <div className="col-6 col-md-4 d-flex"><KpiCard label="Foreign Reserves (end-2025)" value="~$66B" sub="Record $66.3B as of Jan 1 2026; includes gold; +61% YoY (CBU)" accent={C.uz} delay={0.05} /></div>
           <div className="col-6 col-md-4 d-flex"><KpiCard label="Govt Debt / GDP (2025)" value="~33%" sub="IMF 2025 Article IV: 32.6% end-2024; mostly concessional IFI lending" accent={C.dim} delay={0.10} /></div>
@@ -1020,229 +1172,7 @@ export default function Uzbekistan() {
           </div>
         </div>
 
-        {/* 11. ENERGY */}
-        <SectionHeader icon={Icons.mountain} label="Energy & Resources" />
-        <div id="item" className="row g-1 mb-3">
-          <div className="col-6 col-md-4 d-flex"><KpiCard label="Electricity Generation" value="81.5 TWh/yr" sub="2024 actual (IEA/UZ Stats); +4.7% YoY; gas-dominant; renewables growing" accent={C.uz} delay={0.05} /></div>
-          <div className="col-6 col-md-4 d-flex"><KpiCard label="Natural gas reserves" value="~1.9 trillion m³" sub="Proven reserves end-2024 (Institute of Energy); production declining" accent={C.dim} delay={0.10} /></div>
-          <div className="col-6 col-md-4 d-flex"><KpiCard label="Gold production (Muruntau)" value="~70 tonnes/yr" sub="World's largest open-pit mine; Kyzylkum Desert" accent={C.grn} delay={0.15} /></div>
-          <div className="col-6 col-md-4 d-flex"><KpiCard label="Renewable investment (2025)" value="$9.5B — 42 projects" sub="Solar, wind, hydro; Forum 'Powering the Future' Dec 2025" accent={C.dim} delay={0.20} /></div>
-          <div className="col-6 col-md-4 d-flex"><KpiCard label="Solar potential" value="World-class" sub="300+ sunny days; flat desert terrain; ideal for utility-scale solar" accent={C.dim} delay={0.25} /></div>
-          <div className="col-6 col-md-4 d-flex"><KpiCard label="Nuclear power (planned)" value="~2.1 GW" sub="2× VVER-1000 + 2× RITM-200N SMR; Rosatom; site near Tuzkan Lake; first unit ~2029 (World Nuclear News)" accent={C.dim} delay={0.30} /></div>
-        </div>
-        <div id="item" className="row gy-3 mb-3">
-          <div className="col-12 col-md-6">
-            <Panel title="Electricity Generation Mix (2024 est.)" icon={Icons.chart}>
-              <Donut
-                label="81.5 TWh"
-                sublabel="generated 2024"
-                segments={[
-                  { label:'Natural gas (dominant)',    value:'~76%', pct:76, color:C.uz  },
-                  { label:'Coal',                      value:'~11%', pct:11, color:'#666'},
-                  { label:'Hydro (rivers & reservoirs)', value:'~9%', pct:9, color:C.blu },
-                  { label:'Solar & wind (growing)',    value:'~4%',  pct:4,  color:C.grn },
-                ]}
-              />
-              <p id="subnote" style={{ fontSize:11, color:C.sub, marginTop:10, marginBottom:0, lineHeight:1.6 }}>2024 est. — IEA/UZ Stats; fuel-type split modelled, not metered per source</p>
-              <p id="subnote" style={{ fontSize:11, color:C.sub, marginTop:12, marginBottom:0, lineHeight:1.6 }}>~76% gas-fired is relatively clean compared to Kazakhstan's coal-heavy grid. Coal at ~11% is higher than previously reported (corrected 2024 data). However, natural gas production is declining (~7%/year) — making the $9.5B renewable push urgent. Uzbekistan has signed deals for 20GW of solar and wind by 2030. The Rosatom nuclear plant would provide baseload power independence.</p>
-            </Panel>
-          </div>
-          <div className="col-12 col-md-6">
-            <Panel title="Energy & Resources Facts" icon={Icons.landmark}>
-              <Tbl rows={[
-                ['Natural gas production', '~44.6 billion m³/year (2024; declining from 59 bcm in 2019)'],
-                ['Oil production', '~55,000 bbl/day (minor)'],
-                ['Uranium production (2024)', '~4,000 tonnes/year — world 5th (WNA 2024)'],
-                ['Copper (Almalyk mine)', 'Major producer; expanding capacity'],
-                ['Coal reserves', 'Modest; ~3.3 billion tonnes'],
-                ['Muruntau gold mine annual output', '~70 tonnes — world\'s largest open-pit'],
-              ]} />
-              <p id="subnote" style={{ fontSize:11, color:C.sub, marginTop:10, marginBottom:0, lineHeight:1.6 }}>Uzbekistan is a critical minerals powerhouse: gold, uranium, copper, zinc, natural gas. Muruntau's 70-tonne annual output makes it the single most economically important asset in Central Asia. Uranium production, while smaller than Kazakhstan's, positions Uzbekistan well in the nuclear energy renaissance. Declining gas production makes the renewable transition existentially important.</p>
-            </Panel>
-          </div>
-        </div>
-
-        {/* 12. INFRASTRUCTURE */}
-        <SectionHeader icon={Icons.map} label="Infrastructure & Digital Connectivity" />
-        <div id="item" className="row g-1 mb-3">
-          <div className="col-6 col-md-4 d-flex"><KpiCard label="Internet Penetration" value="~84%" sub="DataReportal Jan 2024: 83.3%; ITU 2023 households: 89%; mobile-first" accent={C.grn} delay={0.05} /></div>
-          <div className="col-6 col-md-4 d-flex"><KpiCard label="Mobile Subscribers" value="~36M" sub="~81% penetration (WB 2025); Ucell, Beeline, Uzmobile major operators" accent={C.dim} delay={0.10} /></div>
-          <div className="col-6 col-md-4 d-flex"><KpiCard label="Road Network" value="~86,000 km" sub="~75,000 km paved (87%); major expansion underway" accent={C.dim} delay={0.15} /></div>
-          <div className="col-6 col-md-4 d-flex"><KpiCard label="Railway Network" value="~4,643 km" sub="Electrified; high-speed Afrosiyob (Tashkent–Samarkand–Bukhara)" accent={C.dim} delay={0.20} /></div>
-          <div className="col-6 col-md-4 d-flex"><KpiCard label="High-speed rail" value="Afrosiyob" sub="250 km/h max; Tashkent–Bukhara in ~3h 20m; Spanish Talgo technology" accent={C.dim} delay={0.25} /></div>
-          <div className="col-6 col-md-4 d-flex"><KpiCard label="5G Status" value="Deployed" sub="Uztelecom & others launched 2022–2024; 3,500+ base stations nationwide" accent={C.dim} delay={0.30} /></div>
-        </div>
-        <div id="item" className="row gy-3 mb-3">
-          <div className="col-12 col-md-6">
-            <Panel title="Key Infrastructure Projects" icon={Icons.map}>
-              <Tbl rows={[
-                ['China–Kyrgyzstan–Uzbekistan Railway', 'Under construction; China-UZ connectivity'],
-                ['Trans-Afghan Railway (planned)', 'Would reach Indian Ocean via Afghanistan-Iran'],
-                ['Tashkent Metro expansion', 'New lines; reaching outer districts'],
-                ['Navoi Free Economic Zone (logistics)', 'Central Asia\'s largest FEZ; manufacturing hub'],
-                ['Rogun Dam electricity import (TJ)', 'CASA-1000 will supply Uzbekistan too'],
-                ['Digital Uzbekistan 2030 programme', 'E-government, AI, broadband, fintech'],
-              ]} />
-              <p id="subnote" style={{ fontSize:11, color:C.sub, marginTop:10, marginBottom:0, lineHeight:1.6 }}>The China-Kyrgyzstan-Uzbekistan Railway is the most transformative infrastructure project in Central Asia — it will create a direct rail link from China to Uzbekistan that bypasses Russia entirely. Combined with the Trans-Afghan Railway potential, Uzbekistan could become the genuine hub of a new Silk Road corridor linking East Asia to the Indian Ocean.</p>
-            </Panel>
-          </div>
-          <div className="col-12 col-md-6">
-            <Panel title="Digital Indicators" icon={Icons.chart}>
-              <BarRow label="Internet penetration" value="~84%" pct={84} color={C.uz} />
-              <BarRow label="Mobile penetration" value="~81%" pct={81} color={C.grn} />
-              <BarRow label="E-government service uptake" value="~65%" pct={65} color={C.blu} />
-              <BarRow label="Social media penetration" value="~60%" pct={60} color={C.dim} />
-              <BarRow label="Fixed broadband" value="~20%" pct={20} color={C.dim} />
-              <p id="subnote" style={{ fontSize:11, color:C.sub, marginTop:10, marginBottom:0, lineHeight:1.6 }}>Uzbekistan's internet is uncensored — a dramatic change from the Karimov era. 84% penetration is growing fast and social media (Instagram, Telegram) are widely used. The "1 million programmers" initiative and Uzbekistan's IT Park (1,900+ resident companies; 0% income tax) suggest a digital economy is genuinely taking root.</p>
-            </Panel>
-          </div>
-        </div>
-
-        {/* 13. HEALTH */}
-        <SectionHeader icon={Icons.people} label="Health System" />
-        <div id="item" className="row g-1 mb-3">
-          <div className="col-6 col-md-4 d-flex"><KpiCard label="Health Spending (% GDP)" value="~7.7%" sub="WB 2021: 7.74%; public share growing; universal health system reform underway" accent={C.grn} delay={0.05} /></div>
-          <div className="col-6 col-md-4 d-flex"><KpiCard label="Out-of-pocket spending" value="~53%" sub="Share of total health expenditure (WB 2020); one of highest in region" accent={C.uz} delay={0.10} /></div>
-          <div className="col-6 col-md-4 d-flex"><KpiCard label="Infant mortality (2024)" value="~18 / 1,000" sub="WB/UNICEF 2024; down from 38/1,000 in 2000; still above EU" accent={C.dim} delay={0.15} /></div>
-          <div className="col-6 col-md-4 d-flex"><KpiCard label="TB incidence (2022)" value="~83 / 100K" sub="WHO 2022; high; drug-resistant TB concern; one of highest in region" accent={C.dim} delay={0.20} /></div>
-          <div className="col-6 col-md-4 d-flex"><KpiCard label="Life expectancy" value="~75 yrs" sub="One of highest in region; improving under Mirziyoyev reforms" accent={C.dim} delay={0.25} /></div>
-          <div className="col-6 col-md-4 d-flex"><KpiCard label="Doctors per 1,000" value="~2.87" sub="2023 National Stats; below Soviet peak; brain drain concern" accent={C.dim} delay={0.30} /></div>
-        </div>
-        <div id="item" className="row gy-3 mb-3">
-          <div className="col-12 col-md-6">
-            <Panel title="Health System Facts" icon={Icons.people}>
-              <Tbl rows={[
-                ['Compulsory health insurance', 'In development; phased introduction 2025+'],
-                ['Hospital beds per 1,000', '~4.9 — above regional average; quality concern'],
-                ['Forced labour in cotton (abolished)', '2021 — ILO confirmed; major reform'],
-                ['Child nutrition — stunting', '6.7% (under-5, 2024); improving significantly'],
-                ['Karakalpakstan health outcomes', 'Worst in country; Aral Sea dust health crisis'],
-                ['Tashkent air quality', 'PM2.5 ~32 µg/m³ annual avg 2024 (IQAir); ~6× WHO guideline'],
-              ]} />
-              <p id="subnote" style={{ fontSize:11, color:C.sub, marginTop:10, marginBottom:0, lineHeight:1.6 }}>Karakalpakstan (Aral Sea region) has the worst health outcomes in Uzbekistan — the toxic salt dust from the exposed Aralkum Desert causes severe respiratory disease, cancer, and maternal health crises. This is a direct consequence of the Aral Sea disaster. Abolishing forced cotton labour in 2021 removed a major human rights stain and improved rural health outcomes.</p>
-            </Panel>
-          </div>
-          <div className="col-12 col-md-6">
-            <Panel title="Disease & Health Burden" icon={Icons.chart}>
-              <BarRow label="Hypertension prevalence (est.; unverified — most recent WHO STEPS survey is 2019; 2024 data not publicly available)" value="~32%" pct={100} color={C.uz} />
-              <BarRow label="TB incidence per 100K (2022)" value="~83" pct={100} color={C.grn} />
-              <BarRow label="OOP health spending share" value="~53%" pct={66} color={C.blu} />
-              <BarRow label="Tashkent PM2.5 (WHO guideline=5)" value="~32 µg/m³" pct={80} color={C.dim} />
-              <BarRow label="Aral Sea toxic dust affected pop." value="~2M in Karakalpakstan" pct={45} color={C.dim} />
-              <p id="subnote" style={{ fontSize:11, color:C.sub, marginTop:10, marginBottom:0, lineHeight:1.6 }}>TB at 83/100K (2022 WHO) is among the highest in the region — above the Central Asian average. Drug-resistant TB is a particular concern. The Aral Sea dust crisis affecting ~2M Karakalpak people is a chronic, unfixable public health disaster — the sea cannot be restored and the exposed seabed will blow dust for generations.</p>
-            </Panel>
-          </div>
-        </div>
-
-        {/* 14. SOCIAL */}
-        <SectionHeader icon={Icons.people} label="Social Indicators & Inequality" />
-        <div id="item" className="row g-1 mb-3">
-          <div className="col-6 col-md-4 d-flex"><KpiCard label="Poverty rate ($3.65/day, 2025)" value="~5.1%" sub="Statistics Agency; down from ~27% in 2016 — Mirziyoyev-era reform" accent={C.uz} delay={0.05} /></div>
-          <div className="col-6 col-md-4 d-flex"><KpiCard label="Gini Coefficient" value="34.5" sub="World Bank 2023; moderate inequality; rising inequality a risk as economy grows" accent={C.dim} delay={0.10} /></div>
-          <div className="col-6 col-md-4 d-flex"><KpiCard label="Rural-urban income gap" value="~1.6×" sub="Urban incomes ~60% higher; rural employment main challenge — est.; unverified" accent={C.dim} delay={0.15} /></div>
-          <div className="col-6 col-md-4 d-flex"><KpiCard label="Gender Inequality Index" value="0.274 (rank 83)" sub="UNDP HDR 2024; better than Tajikistan; improving rapidly" accent={C.grn} delay={0.20} /></div>
-          <div className="col-6 col-md-4 d-flex"><KpiCard label="Women in parliament" value="~38%" sub="57/150 seats after Oct 2024 elections (IPU); highest in CA" accent={C.blu} delay={0.25} /></div>
-          <div className="col-6 col-md-4 d-flex"><KpiCard label="Mahalla system" value="~10,000 units" sub="9,756 self-governing bodies incl. 8,115 mahallas (official); govt cites 10,000+ (ISRS 2024)" accent={C.dim} delay={0.30} /></div>
-        </div>
-        <div id="item" className="row gy-3 mb-3">
-          <div className="col-12 col-md-6">
-            <Panel title="Access & Basic Services" icon={Icons.chart}>
-              <BarRow label="Access to clean water (urban)" value="~89%" pct={89} color={C.uz} />
-              <BarRow label="Access to clean water (rural)" value="~71%" pct={71} color={C.grn} />
-              <BarRow label="Access to basic sanitation, urban (JMP/World Bank 2020)" value="~100%" pct={100} color={C.dim} />
-              <BarRow label="Access to basic sanitation, national avg (est.; unverified)" value="~73%" pct={73} color={C.dim} />
-              <BarRow label="Electricity access (national)" value="~100%" pct={100} color={C.blu} />
-              <p id="subnote" style={{ fontSize:11, color:C.sub, marginTop:10, marginBottom:0, lineHeight:1.6 }}>Rural sanitation at 68% is a key infrastructure gap — directly linked to child health outcomes. The mahalla (neighbourhood committee) system is uniquely Uzbek — it provides community welfare, social pressure for compliance, and local governance simultaneously. It was used effectively during COVID-19 for food distribution and monitoring.</p>
-            </Panel>
-          </div>
-          <div className="col-12 col-md-6">
-            <Panel title="Social Cohesion & Gender" icon={Icons.people}>
-              <Tbl rows={[
-                ['Gini (World Bank 2023)', '34.5 — moderate'],
-                ['Women in parliament (2024)', '~38% (57/150 seats) — highest in Central Asia (IPU)'],
-                ['Gender Inequality Index (UNDP 2024)', '0.274 — rank 83/191'],
-                ['Women in labour force', '~47% — improving'],
-                ['Forced cotton labour (abolished)', '2021; confirmed by ILO'],
-                ['Karakalpak autonomy status', 'Autonomous Republic; 2022 unrest suppressed'],
-              ]} />
-              <p id="subnote" style={{ fontSize:11, color:C.sub, marginTop:10, marginBottom:0, lineHeight:1.6 }}>Women in parliament at 38% is the highest in Central Asia — reflecting genuine quota-backed progress. The abolition of forced cotton labour was a landmark; for decades, millions of teachers, students, and public servants were mobilised each autumn for cotton harvesting — a Soviet-era practice that persisted long after independence. Its end in 2021 was transformative for rural women in particular.</p>
-            </Panel>
-          </div>
-        </div>
-
-        {/* 15. ENVIRONMENT */}
-        <SectionHeader icon={Icons.water} label="Environment & Climate" />
-        <div id="item" className="row g-1 mb-3">
-          <div className="col-6 col-md-4 d-flex"><KpiCard label="CO₂ per capita (2022)" value="~3.8 t" sub="Below world avg (~4.7t); gas-heavy grid cleaner than coal" accent={C.grn} delay={0.05} /></div>
-          <div className="col-6 col-md-4 d-flex"><KpiCard label="Aral Sea volume lost" value="~91%" sub="Was world's 4th largest lake; irreversible catastrophe" accent={C.uz} delay={0.10} /></div>
-          <div className="col-6 col-md-4 d-flex"><KpiCard label="Renewable energy target 2030" value="40% of mix" sub="Up from ~4% in 2024; $9.5B in 42 projects committed 2025" accent={C.dim} delay={0.15} /></div>
-          <div className="col-6 col-md-4 d-flex"><KpiCard label="Water stress level" value="Extreme" sub="Both Amu Darya & Syr Darya heavily over-abstracted for irrigation" accent={C.blu} delay={0.20} /></div>
-          <div className="col-6 col-md-4 d-flex"><KpiCard label="Aralkum toxic dust" value="~57,000 km² exposed" sub="Former seabed now desert; salt & pesticide dust; 2M people affected" accent={C.dim} delay={0.25} /></div>
-          <div className="col-6 col-md-4 d-flex"><KpiCard label="Solar irradiation (GHI)" value="1,400–1,800 kWh/m²" sub="IEA Solar Roadmap for Uzbekistan; 4.52 kWh/m²/day median; ideal for utility-scale solar" accent={C.dim} delay={0.30} /></div>
-        </div>
-        <div id="item" className="row gy-3 mb-3">
-          <div className="col-12 col-md-6">
-            <Panel title="Environmental Facts" icon={Icons.water}>
-              <Tbl rows={[
-                ['CO₂ per capita vs world avg', '~3.8t vs ~4.7t — moderate'],
-                ['Aral Sea (Uzbek side)', 'South Aral Sea — completely desiccated'],
-                ['UN Special Programme for Aral Sea', 'IFAS fund; Uzbekistan chairs rotating'],
-                ['Saksaul tree planting', 'Largest afforestation in Central Asia'],
-                ['NDC target (2030)', 'Reduce GHG intensity 35% vs 2010'],
-                ['Protected areas', '~5.8% of territory (WB 2022); target 12% by 2028'],
-              ]} />
-              <p id="subnote" style={{ fontSize:11, color:C.sub, marginTop:10, marginBottom:0, lineHeight:1.6 }}>Uzbekistan has taken a global leadership role on the Aral Sea crisis — Mirziyoyev has addressed the UN General Assembly on it multiple times. The saksaul afforestation programme (planting drought-resistant trees on the exposed seabed) is the most practical mitigation measure available — it reduces dust emissions while creating a new ecosystem.</p>
-            </Panel>
-          </div>
-          <div className="col-12 col-md-6">
-            <Panel title="Water Stress & Pollution" icon={Icons.chart}>
-              <BarRow label="Amu Darya water use vs flow" value="Over-abstracted" pct={95} color={C.uz} />
-              <BarRow label="Irrigation efficiency (Soviet canals)" value="~40% (very poor)" pct={40} color={C.grn} />
-              <BarRow label="Tashkent PM2.5 vs WHO (5 µg/m³)" value="~32 µg/m³ (6× over)" pct={80} color={C.blu} />
-              <BarRow label="Aralkum dust events per year" value="~30 major events" pct={60} color={C.dim} />
-              <p id="subnote" style={{ fontSize:11, color:C.sub, marginTop:10, marginBottom:0, lineHeight:1.6 }}>Water is Uzbekistan's most existential environmental challenge. Soviet-era irrigation canals waste 60% of the water they carry — efficiency improvements could free enormous volumes without new supply. Climate change is reducing the glacial meltwater from Tajikistan and Kyrgyzstan that feeds the rivers, making the crisis worse each decade.</p>
-            </Panel>
-          </div>
-        </div>
-
-        {/* 16. BUSINESS */}
-        <SectionHeader icon={Icons.briefcase} label="Business & Investment Climate" />
-        <div id="item" className="row g-1 mb-3">
-          <div className="col-6 col-md-4 d-flex"><KpiCard label="Corporate tax rate" value="15%" sub="Standard rate (reduced from 20% in 2023); FEZ residents lower" accent={C.grn} delay={0.05} /></div>
-          <div className="col-6 col-md-4 d-flex"><KpiCard label="Foreign Investment (2025)" value="~$35–40B" sub="Total incl. loans & portfolio; BoP FDI ~$2.8B (2024); record inflows; Central Asia leader" accent={C.dim} delay={0.10} /></div>
-          <div className="col-6 col-md-4 d-flex"><KpiCard label="Ease of Doing Business" value="~Rank 69/190" sub="World Bank 2019; massive improvement from rank 166 in 2012" accent={C.dim} delay={0.15} /></div>
-          <div className="col-6 col-md-4 d-flex"><KpiCard label="VAT rate" value="12%" sub="Reduced from 20% in 2019; significant tax reform package" accent={C.dim} delay={0.20} /></div>
-          <div className="col-6 col-md-4 d-flex"><KpiCard label="Corruption Index (TI 2024)" value="32/100" sub="Rank 121/180; improving from 21/100 in 2016 under Karimov (TI CPI 2024)" accent={C.uz} delay={0.25} /></div>
-          <div className="col-6 col-md-4 d-flex"><KpiCard label="WTO accession" value="Target 2026" sub="Observer since 1994; 30+ year process nearing completion" accent={C.dim} delay={0.30} /></div>
-        </div>
-        <div id="item" className="row gy-3 mb-3">
-          <div className="col-12 col-md-6">
-            <Panel title="Investment Climate Summary" icon={Icons.briefcase}>
-              <Tbl rows={[
-                ["Fitch credit rating", 'BB / Positive (upgraded from BB- in 2024)'],
-                ['CPI score (TI 2024)', '32/100 — rank 121/180; improving from 21/100 in 2016'],
-                ['Free Economic Zones', '~20 FEZs; Navoi (aviation), Urgut, IT Parks'],
-                ['IT Park Uzbekistan', '1,900+ resident companies; 0% income tax; fast-growing'],
-                ['Currency liberalisation (2017)', 'Free float ended black market; FDI unlocked'],
-                ['WTO observer since', '1994 — accession now actively negotiated'],
-              ]} />
-              <p id="subnote" style={{ fontSize:11, color:C.sub, marginTop:10, marginBottom:0, lineHeight:1.6 }}>Uzbekistan's reform trajectory since 2016 is the most dramatic business climate improvement in post-Soviet history — Ease of Doing Business improved from rank 166 to 69 in 7 years. Currency liberalisation in 2017 was the single most impactful reform, immediately unlocking FDI. The remaining challenges are judiciary independence and anti-corruption enforcement.</p>
-            </Panel>
-          </div>
-          <div className="col-12 col-md-6">
-            <Panel title="Key Risks & Opportunities" icon={Icons.chart}>
-              <BarRow label="Silk Road tourism opportunity" value="World-class" pct={95} color={C.uz} />
-              <BarRow label="China-KG-UZ railway opportunity" value="Transformational" pct={90} color={C.grn} />
-              <BarRow label="Renewable energy export potential" value="Very high" pct={85} color={C.dim} />
-              <BarRow label="Russia geopolitical risk" value="Moderate (less exposed than KZ)" pct={50} color={C.blu} />
-              <BarRow label="Water scarcity long-term risk" value="Critical" pct={90} color={C.dim} />
-              <BarRow label="Reform reversal / governance risk" value="Moderate" pct={45} color={C.dim} />
-              <p id="subnote" style={{ fontSize:11, color:C.sub, marginTop:10, marginBottom:0, lineHeight:1.6 }}>Uzbekistan's opportunity set is exceptional: the largest population in Central Asia, world-class heritage tourism, critical minerals, and the new Silk Road pivot. Water scarcity is the overriding long-term risk — without fundamental irrigation reform and upstream glacier preservation, economic growth may hit a physical water ceiling by the 2040s.</p>
-            </Panel>
-          </div>
-        </div>
-
-        {/* 17. CRIME & SECURITY */}
+        {/* 15. CRIME & SECURITY */}
         <SectionHeader icon={Icons.landmark} label="Crime & Security" />
         <div id="item" className="row g-1 mb-3">
           <div className="col-6 col-md-4 d-flex"><KpiCard label="Global Peace Index (2024)" value="Rank 67" sub="IEP GPI 2024; among biggest improvers; improving under Mirziyoyev" accent={C.grn} delay={0.05} /></div>
@@ -1282,7 +1212,7 @@ export default function Uzbekistan() {
             Sources: Statistics Agency of Uzbekistan · World Bank 2025 · IMF WEO April 2026 · UNDP HDR 2025 · Transparency International CPI 2024 · WHO · RSF Press Freedom 2024 · World Justice Project 2024 · Freedom House 2024 · ILO · CBU · climate-data.org · IEA · WNA · IPU · UNICEF · Data verified June 2026.
           </p>
           <p style={{ fontSize:9.5, color:'#444', marginTop:6, lineHeight:1.6, textAlign:'center' }}>
-            Generated June 2026 · Claude Sonnet 4.5 (Anthropic) · iAlmirPro
+            Generated June 2026 · Claude Sonnet 4.6 (Anthropic) · iAlmirPro
           </p>
         </div>
 

@@ -32,13 +32,12 @@
 5. **Replace all data section by section — applying the MANDATORY GATED PROCESS (Gate 1→5) for every section without exception. Do not proceed to the next section until the current section has cleared all five gates. After each section clears Gate 5, immediately save/update the artifact so the result is visible. See Data Verification Standard.**
 6. Run duplicate check: no label/key should appear in both a visual component and a table row — if duplicated, remove the table row; the visual takes priority
 7. Run color audit: max 2 colored KpiCards per section, balanced across dashboard
-8. Add `GradientBar` and `AgeBar` components (see Visualization Components section)
+8. Add `GradientBar` component (see Visualization Components section)
 9. Insert the three standard `GradientBar` visualizations into §2 Climate and §8 Tourism panels
-10. Insert `AgeBar` into §3 Population Growth panel
-11. Insert Trade Balance `GradientBar` into §10 Key Fiscal Indicators panel
-12. Run inconsistency check (see Inconsistency Check Protocol)
-13. Run syntax check: `grep -n 'value:"\|sub:"\|accent:"\|label:"'` — must return zero results
-14. Present final `.jsx` for download — **only after all sections have cleared Gate 5**
+10. Insert Trade Balance `GradientBar` into §14 Business & Investment Climate — Key Fiscal Indicators panel
+11. Run inconsistency check (see Inconsistency Check Protocol)
+12. Run syntax check: `grep -n 'value:"\|sub:"\|accent:"\|label:"'` — must return zero results
+13. Present final `.jsx` for download — **only after all sections have cleared Gate 5**
 
 ---
 
@@ -271,7 +270,7 @@ const Panel = ({ title, icon, children }) => (
 <div style={{ height:1, background:C.border, margin:'16px 0' }} />
 ```
 
-**Visitor / Export Origins Row** (used in §8 Tourism and §10 Export destinations):
+**Visitor / Export Origins Row** (used in §8 Tourism and §14 Business — Export destinations):
 ```jsx
 {[
   { flag:'🏳️', country:'[Country A]', val:'largest source market',       pct:'~38%' },
@@ -315,9 +314,9 @@ const Icons = {
   cloudSun,    // §2 Climate
   sun,         // Daylight hours panel
   rain,        // Rainfall panel
-  people,      // §3 Population, §9 Vital Statistics, §13 Health, §14 Social, tourism origins
-  chart,       // §4 Economy, §10 Fiscal, §9 Causes of Death, GDP statistics
-  briefcase,   // §5 Employment, §8 Tourism, §16 Business
+  people,      // §3 Population, §9 Vital Statistics & Health, §12 Social, tourism origins
+  chart,       // §4 Economy, §14 Business/Fiscal, §9 Causes of Death, GDP statistics
+  briefcase,   // §5 Employment, §8 Tourism, §14 Business
   graduation,  // §6 Education
   landmark,    // §7 Political, cities, heritage, facts tables
 }
@@ -378,7 +377,6 @@ const GradientBar = ({ title, values, colorStops, unit = '', height = 22, xLabel
 | `xLabels` | months | Custom x-axis labels array |
 | `unit` | `''` | Unit appended to values below bar |
 | `fmt` | null | Custom value formatter e.g. `v => v > 0 ? \`+${v}B\` : \`${v}B\`` |
-| `invertPeak` | false | Peak marker on minimum value instead of maximum |
 | `absScale` | false | Color intensity based on distance from zero (for trade balance) |
 | `height` | 22 | Bar height in px |
 
@@ -423,111 +421,9 @@ const rainColor = p => `rgb(${Math.round(153-107*p/100)},${Math.round(153-19*p/1
 | §2 Climate | Rainfall by Region | Temperature (monthly avg °C) | `tempColor` |
 | §2 Climate | Rainfall by Region | Rainfall (monthly mm) | `rainColor` |
 | §8 Tourism | Tourism Highlights | Tourism intensity (relative, Jan–Dec) | country primary |
-| §10 Fiscal | Key Fiscal Indicators | Trade balance 2015–2024 ($B) | trade colorStops + `absScale={true}` |
+| §14 Business | Key Fiscal Indicators | Trade balance 2015–2024 ($B) | trade colorStops + `absScale={true}` |
 
 All three climate/tourism bars placed at the **bottom of their panel**, after the interpretive note.
-
----
-
-### `<AgeBar>`
-
-Stacked dual-bar visualization for population age structure. Male on top (blue), female below (red). 16 discrete 5-year cohort chunks with % labels inside each chunk. Two median age marker lines.
-
-```jsx
-const AgeBar = ({ title, male, female, medianM, medianF }) => {
-  const maleColor = '#2E86DE';
-  const femaleColor = '#E8192C';
-  const decadeLabels = [0,10,20,30,40,50,60,70,80];
-  const maxVal = Math.max(...male, ...female);
-  const barH = 26;
-  const chunkColor = (v, hex) => {
-    const alpha = (v / maxVal);
-    const r = parseInt(hex.slice(1,3),16);
-    const g = parseInt(hex.slice(3,5),16);
-    const b = parseInt(hex.slice(5,7),16);
-    return `rgb(${Math.round(153+(r-153)*alpha)},${Math.round(153+(g-153)*alpha)},${Math.round(153+(b-153)*alpha)})`;
-  };
-  // Formula: 153 + (peak_channel - 153) * alpha  →  #999 at zero, full color at max
-  const medMPct = Math.min((medianM / 80) * 100, 100);
-  const medFPct = Math.min((medianF / 80) * 100, 100);
-  const darkM = /* per-country darkened blue — e.g. '#1a5fa0' */;
-  const darkF = '#a01020';
-  const renderBar = (arr, color, radius) => (
-    <div style={{ height:barH, borderRadius:radius, overflow:'hidden', display:'flex' }}>
-      {arr.map((v, i) => (
-        <div key={i} style={{
-          flex:1, background:chunkColor(v, color),
-          display:'flex', alignItems:'center', justifyContent:'center',
-          fontSize:7, color:'rgba(255,255,255,0.85)', fontWeight:600, lineHeight:1
-        }}>
-          {v.toFixed(1)}
-        </div>
-      ))}
-    </div>
-  );
-  return (
-    <div style={{ marginTop:14 }}>
-      {title && <div style={{ fontSize:10, letterSpacing:'0.1em', textTransform:'uppercase', color:C.sub, marginBottom:6 }}>{title}</div>}
-      <div style={{ position:'relative' }}>
-        {renderBar(male, maleColor, '4px 4px 0 0')}
-        <div style={{ height:2, background:C.bg }} />
-        {renderBar(female, femaleColor, '0 0 4px 4px')}
-        <div style={{ position:'absolute', top:2, height:barH-4, left:`${medMPct}%`,
-          width:1, background:darkM, transform:'translateX(-50%)', borderRadius:1, pointerEvents:'none' }} />
-        <div style={{ position:'absolute', top:barH+4, height:barH-4, left:`${medFPct}%`,
-          width:1, background:darkF, transform:'translateX(-50%)', borderRadius:1, pointerEvents:'none' }} />
-      </div>
-      <div style={{ position:'relative', height:18, marginTop:3 }}>
-        {decadeLabels.filter(age => age !== 0 && age !== 80).map(age => (
-          <div key={age} style={{ position:'absolute', left:`${(age/80)*100}%`, transform:'translateX(-50%)', textAlign:'center' }}>
-            <div style={{ fontSize:8, color:C.sub, lineHeight:1 }}>{age}y</div>
-          </div>
-        ))}
-      </div>
-      <div style={{ display:'flex', alignItems:'center', justifyContent:'center', gap:14, marginTop:3, fontSize:9, color:C.sub, flexWrap:'wrap' }}>
-        <span style={{ display:'flex', alignItems:'center', gap:4 }}>
-          <span style={{ display:'inline-block', width:10, height:4, background:maleColor, borderRadius:1 }} />
-          Male (median <strong style={{ color:maleColor }}>{medianM} yrs<span style={{ color:C.sub, fontWeight:300 }}>)</span></strong>
-        </span>
-        <span style={{ display:'flex', alignItems:'center', gap:4 }}>
-          <span style={{ display:'inline-block', width:10, height:4, background:femaleColor, borderRadius:1 }} />
-          Female (median <strong style={{ color:femaleColor }}>{medianF} yrs<span style={{ color:C.sub, fontWeight:300 }}>)</span></strong>
-        </span>
-      </div>
-    </div>
-  );
-};
-```
-
-**Chunk color formula:** `153 + (peak_channel - 153) * alpha` — zero cohort = `#999` (C.sub), max cohort = full `maleColor`/`femaleColor`. Consistent with GradientBar #999 baseline.
-
-**Male color:** Always `#2E86DE` — fixed across all dashboards to avoid conflict with female (`#E8192C`).
-
-**Per-country `darkM`** (median line, darkened blue):
-
-| Country | `darkM` |
-|---|---|
-| Kyrgyzstan | `#1a5fa0` |
-| Kazakhstan | `#006d7e` |
-| Tajikistan | `#145a24` |
-| Uzbekistan | `#0e6d8c` |
-| Turkmenistan | `#1a5fa0` |
-
-**Median lines:** `width:1`, `height:barH-4` (22px), 1px wide, `borderRadius:1`
-- Male: `top:2` (inside male bar)
-- Female: `top:barH+4` = `top:30` (inside female bar)
-
-**Bar height:** `barH = 26px` per bar; 2px gap between bars
-
-**Chunk labels:** `fontSize:7`, `color:'rgba(255,255,255,0.85)'`, `fontWeight:600` — white text inside each chunk showing `v.toFixed(1)`
-
-**X-axis:** Labels `10y`, `20y`, `30y`, `40y`, `50y`, `60y`, `70y` — 0 and 80 hidden
-
-**Legend:** Centered (`justifyContent:'center'`). `)` rendered as `<span style={{ color:C.sub, fontWeight:300 }}>)</span>` inside `<strong>` to prevent JSX whitespace gap.
-
-**Data:** 16 cohorts (0–4 through 75–79+), values as **% of total population** (not % of each sex). Male and female arrays each sum to ~50%. Source: UN WPP 2024 / national census.
-
-**Placement:** Bottom of **Population Growth** panel in §3, after interpretive note.
 
 ---
 
@@ -656,6 +552,7 @@ const ERA_TOTAL = [last_year] - [first_year]; // e.g. 2025 - 1900 = 125
 - **`ERA_TOTAL`** must equal `last_year - first_year` — it drives the proportional widths.
 - **All panels hidden by default** (`display:'none'`) — JS reveals the active one.
 - **`data-era={i}`** on both `.era-seg` and `.era-leg` divs — the script uses these to map clicks to panel IDs.
+- **⚠️ Never add country suffixes to class names.** `jsx_to_html.py` injects a script that always queries `.era-seg`, `.era-leg`, `.era-leg-lbl`, `#era-placeholder`, and `#era-panel-N` exactly. Using e.g. `.era-seg-tm` or `#era-placeholder-tm` breaks the injected click handler silently — the HTML renders but clicks do nothing.
 - **Place in its own row** (`row gy-3 mb-3`) — never nest inside the row containing other §7 panels, or JSX tag balance breaks.
 - **Do not delete the Political Timeline panel** — the EraTimeline is an addition below it, not a replacement.
 
@@ -684,7 +581,7 @@ Each section follows this pattern:
     <Panel title="..." icon={Icons.chart}>
       <BarRow ... />
       <p id="subnote" style={{ fontSize:11, color:C.sub, marginTop:10, marginBottom:0, lineHeight:1.6 }}>Note.</p>
-      {/* GradientBar or AgeBar inserted here if applicable */}
+      {/* GradientBar inserted here if applicable */}
     </Panel>
   </div>
 </div>
@@ -692,42 +589,58 @@ Each section follows this pattern:
 
 ---
 
-## All 17 Dashboard Sections
+## All 15 Dashboard Sections
 
-### Core sections (1–9, all country dashboards)
+### When a country suppresses data for a section
+
+**Never skip a section because data is suppressed.** All 15 sections must be present in every dashboard. If a country's government does not publish data for a section:
+
+1. **Render the section with its `SectionHeader`** — visible in the page, not a comment.
+2. **Add a suppression note** as the first element — a styled div, not a JSX comment:
+```jsx
+<div id="item" className="row gy-3 mb-3">
+  <div className="col-12">
+    <div style={{ background:C.card, border:`1px solid ${C.border}`, borderLeft:`3px solid ${C.dim}`, padding:'16px 20px' }}>
+      <div style={{ fontSize:11, letterSpacing:'0.08em', textTransform:'uppercase', color:C.dim, marginBottom:8 }}>Data suppressed by government</div>
+      <p style={{ fontSize:13, color:C.txt, lineHeight:1.7, marginBottom:0 }}>
+        [Country] does not publish [section topic] data. [One sentence on why / what is suppressed.]
+      </p>
+    </div>
+  </div>
+</div>
+```
+3. **Append whatever international data IS available** below the note — WHO modelled estimates, World Bank figures, satellite data, NGO reports. Annotate each value `est.; unverified — [source/reason]` per the Data Verification Standard.
+4. **Never invent data** to fill a suppressed section. If no international estimate exists for a value, omit it entirely rather than guessing.
+
+> **Reference implementation:** §9 Vital Statistics in `turkmenistan-dashboard-v11.jsx` — suppression note followed by available WHO/World Bank health data.
+
+---
 
 | # | Label | Icon | KPI cards | Panels | Visualizations |
 |---|---|---|---|---|---|
 | 1 | Geography & Landscape | mountain | 9 | Terrain zones (bars) · Water bodies (table) · Region cards (4×RegCard) | — |
 | 2 | Climate: Weather, Daylight & Rainfall | cloudSun | 9 | Daylight hours (DlRow×12) · Rainfall by region (bars) | **GradientBar: temperature + rainfall** at bottom of Rainfall panel |
-| 3 | Population & Demographics | people | 6 | Population growth (bars) · Largest cities (bars) · Ethnic composition (donut) · Religion & language (table) | **AgeBar** at bottom of Population Growth panel |
-| 4 | Economy & Finance | chart | 6 | GDP by sector (donut + export bars) · Key economic indicators (table) · Real estate cards | — |
+| 3 | Population & Demographics | people | 6 | Population growth (bars) · Largest cities (bars) · Ethnic composition (donut) · Religion & language (table) | — |
+| 4 | Economy & Finance | chart | 6 | GDP by sector (donut + export bars) · Key economic indicators (table) | — |
 | 5 | Employment & Wages | briefcase | 6 | Wages by sector (bars) · Employment by sector (donut + table) | — |
 | 6 | Education & Human Development | graduation | 6 | Education metrics (bars) · Key education facts (table) | — |
 | 7 | Political Landscape | landmark | 6 | Election results (bars) · Political timeline (inline) · Era timeline (interactive bar) | **EraTimeline** in its own row below the other panels |
-| 8 | Tourism | briefcase | 6 | Visitor origins (flag+%+desc rows) · Tourism highlights (table) | **GradientBar: tourism intensity** at bottom of Tourism Highlights panel |
-| 9 | Vital Statistics | people | 6 | Causes of death (bars — NOT donut) · Marriage & vital trends (table) | — |
-
-### Extended sections (10–17)
-
-| # | Label | Icon | KPI cards | Panels | Visualizations |
-|---|---|---|---|---|---|
-| 10 | Economic Depth & Fiscal Position | chart | 9 | Export destinations (flag+% rows) · Key fiscal indicators (table) | **GradientBar: trade balance 2015–2024** at bottom of Key Fiscal Indicators panel |
-| 11 | Energy & Resources | mountain | 6 | Electricity mix (donut) · Energy & resources facts (table) | — |
-| 12 | Infrastructure & Digital Connectivity | map | 6 | Key infrastructure projects (table) · Digital indicators (bars) | — |
-| 13 | Health System | people | 6 | Health system facts (table) · Disease & health burden (bars) | — |
-| 14 | Social Indicators & Inequality | people | 6 | Social cohesion & gender (table) · Access & basic services (bars) | — |
-| 15 | Environment & Climate | water | 6 | Environmental facts (table) · Air quality & pollution sources (bars) | — |
-| 16 | Business & Investment Climate | briefcase | 6 | Investment climate summary (table) · Key risks & opportunities (bars) | — |
-| 17 | Crime & Security | landmark | 6 | Crime & security indicators (table) · Security context (bars) | — |
+| 8 | Tourism | briefcase | 6 | Visitor origins (flag+%+desc rows) · Tourism highlights (table) | **GradientBar: tourism intensity** at bottom of Tourism Highlights panel · both require published data — omit if country suppresses visitor statistics |
+| 9 | Vital Statistics & Health | people | 6+ | Causes of death (bars) · Marriage & vital trends (table) · Health system facts (table) · Disease & health burden (bars) | — |
+| 10 | Energy & Resources | mountain | 6 | Electricity mix (donut) · Energy & resources facts (table) | — |
+| 11 | Infrastructure & Digital Connectivity | map | 6 | Key infrastructure projects (table) · Digital indicators (bars) | — |
+| 12 | Social Indicators & Inequality | people | 6 | Social cohesion & gender (table) · Access & basic services (bars) | — |
+| 13 | Environment & Climate | water | 6 | Environmental facts (table) · Air quality & pollution sources (bars) | — |
+| 14 | Business & Investment Climate | briefcase | 6+ | Investment climate summary (table) · Key risks & opportunities (bars) · Export destinations (flag+% rows) · Key fiscal indicators (table) | **GradientBar: trade balance 2015–2024** at bottom of Key Fiscal Indicators panel |
+| 15 | Crime & Security | landmark | 6 | Crime & security indicators (table) · Security context (bars) | — |
 
 ---
 
 ## Hero Section
 
 ```jsx
-<div id="top" style={{ padding:'20px 0 0', display:'grid', gridTemplateColumns:'1fr auto',
-  alignItems:'end', gap:32, marginBottom:8 }}>
+<div id="top" style={{ padding:'20px 0 0', display:'grid', gridTemplateColumns:'1fr minmax(0,96px)',
+  alignItems:'end', gap:16, marginBottom:8 }}>
   <div>
     <div style={{ fontSize:10, letterSpacing:'0.28em', textTransform:'uppercase',
       color:C.[primary], marginBottom:14 }}>Country Dashboard 2025</div>
@@ -816,13 +729,13 @@ There is no third state. "Probably correct", "will check later", and "low priori
 
 ### MANDATORY GATED PROCESS — one section at a time, no skipping gates
 
-Every section (§1 Geography, §2 Climate, §3 Population … §17 Crime) must pass through all five gates **in order** before the JSX for that section is written. Do not start the next section until the current one has cleared all five gates.
+Every section (§1 Geography, §2 Climate, §3 Population … §15 Crime) must pass through all five gates **in order** before the JSX for that section is written. Do not start the next section until the current one has cleared all five gates.
 
 ---
 
 #### GATE 1 — READ
 **STOP. Read the full section plan before doing anything else.**
-- Identify every data point this section will contain: every KpiCard value, every BarRow value, every Tbl row, every GradientBar array, every Donut segment %, every AgeBar cohort, every figure inside `<p>` narrative text.
+- Identify every data point this section will contain: every KpiCard value, every BarRow value, every Tbl row, every GradientBar array, every Donut segment %, every figure inside `<p>` narrative text.
 - Write out the full list. Do not proceed until the list is complete.
 
 > ✅ Gate 1 cleared when: full data point list for this section exists.
@@ -928,8 +841,6 @@ Append `— est.; unverified — [reason]` directly in the field where the value
 
 <Panel title="Wages by Sector (est. — sectoral breakdown modelled from national avg + ILO ratios; no official data published)">
 
-<AgeBar title="Population age structure — est.; individual 5-yr cohort values unverified — UN WPP fetched but cohort split modelled" ... />
-
 // ❌ WRONG — bare annotation, no reason
 <BarRow label="Hypertension prevalence (est.)" value="~32%" pct={100} />
 ['Migrant workers abroad (est.)', '~2,000,000'],
@@ -1017,12 +928,12 @@ Every value that appears in more than one place must be **identical** (or clearl
 | GDP per Capita | §4 Economy KpiCard (same year) |
 | GDP Growth | §4 Economy KpiCard (same year) |
 | Population | §3 KpiCard · §3 Donut label · §3 population BarRows · any `<p>` text mentioning the figure |
-| Life Expectancy (total / men / women) | §3 KpiCard · §13 Health KpiCard |
+| Life Expectancy (total / men / women) | §3 KpiCard · §9 Health KpiCard |
 | Inflation | §4 KpiCard |
 | Unemployment | §5 KpiCard |
 | Literacy | §6 KpiCard |
 | HDI | §6 KpiCard |
-| Peace Index | §17 KpiCard · §17 Tbl |
+| Peace Index | §15 KpiCard · §15 Tbl |
 | Area | §1 Geography KpiCard |
 | Religion % | §3 Tbl |
 
@@ -1030,16 +941,16 @@ Also check these cross-section pairs independently of At-a-Glance:
 
 | Value | Appears in |
 |---|---|
-| Infant mortality | §9 KpiCard · §13 KpiCard |
-| Foreign reserves | §4 Tbl · §10 KpiCard · §10 Tbl |
-| Foreign investment | §4 Tbl · §10 KpiCard · §16 KpiCard |
+| Infant mortality | §9 KpiCard · §9 Health KpiCard |
+| Foreign reserves | §4 Tbl · §14 KpiCard · §14 Tbl |
+| Foreign investment | §4 Tbl · §14 KpiCard · §14 Tbl |
 | Remittances | §4 Tbl · §5 KpiCard sub · §5 Donut Tbl · §5 paragraph |
 | Gini coefficient | §4 Tbl · §14 KpiCard · §14 Tbl |
 | Women in parliament | §14 KpiCard · §14 Tbl |
 | Poverty rate | §4 Tbl · §14 KpiCard |
 | Gold production | §4 Tbl · §11 KpiCard · §11 Tbl |
-| Corruption CPI | §16 KpiCard · §16 Tbl · §17 BarRow |
-| PM2.5 | §13 Tbl · §13 BarRow · §15 BarRow |
+| Corruption CPI | §14 KpiCard · §14 Tbl · §15 BarRow |
+| PM2.5 | §9 Tbl · §9 BarRow · §13 BarRow |
 
 ### How to run the check
 
