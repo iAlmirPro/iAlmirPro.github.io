@@ -75,6 +75,26 @@
       .country-name { font-size:12.5px; color:#fff; flex-shrink:0; }
       .country-val { font-size:11px; color:#999; flex:1; }
       .country-pct { font-family:'Fraunces',serif; font-weight:700; font-size:13px; color:#fff; flex-shrink:0; }
+      .era-bar { display:flex; height:40px; border-radius:4px; overflow:hidden; }
+      .era-seg { cursor:pointer; transition:background 0.2s; flex-shrink:0; border-right:1px solid #000; }
+      .era-labels { position:relative; height:28px; margin-top:5px; }
+      .era-year-label { position:absolute; top:0; font-size:9px; color:#999; white-space:nowrap; writing-mode:vertical-lr; }
+      .era-2025 { position:absolute; right:0; top:0; font-size:9px; color:#999; white-space:nowrap; writing-mode:vertical-lr; transform:scaleX(-1) scaleY(-1); }
+      #era-placeholder { background:#000; border:1px solid #1e1e1e; padding:8px 16px; border-radius:2px; margin-top:12px; font-size:11px; color:#999; text-align:center; }
+      .era-panel { background:#000; border:1px solid #1e1e1e; padding:16px 18px; border-radius:2px; margin-top:12px; }
+      .era-panel-header { display:flex; justify-content:space-between; align-items:baseline; margin-bottom:8px; flex-wrap:wrap; gap:6px; }
+      .era-year-range { font-size:10px; letter-spacing:0.15em; text-transform:uppercase; margin-bottom:3px; }
+      .era-panel-label { font-family:'Fraunces',serif; font-weight:700; font-size:17px; color:#fff; }
+      .era-duration { font-family:'Fraunces',serif; font-weight:900; font-size:24px; opacity:0.4; }
+      .era-desc { font-size:12px; color:#999; line-height:1.7; margin-bottom:12px; }
+      .era-events { display:flex; flex-direction:column; gap:5px; }
+      .era-event { display:flex; align-items:flex-start; gap:8px; }
+      .era-bullet { width:4px; height:4px; border-radius:50%; margin-top:5px; flex-shrink:0; }
+      .era-event-text { font-size:11.5px; color:#fff; line-height:1.5; }
+      .era-legend { display:flex; flex-wrap:wrap; gap:10px; margin-top:14px; }
+      .era-leg { display:flex; align-items:center; gap:5px; cursor:pointer; }
+      .era-swatch { width:8px; height:8px; border-radius:2px; flex-shrink:0; }
+      .era-leg-lbl { font-size:10px; color:#999; letter-spacing:0.05em; }
     </style>
   </head>
   <body style="margin:0;background:#000">
@@ -1129,9 +1149,6 @@
                 </div>
               </div>
             </div>
-            <p class="subnote">
-              Almost zero rainfall in summer (3–8mm/month Jun–Sep) means agriculture is entirely dependent on irrigation from the Amu Darya and Syr Darya — the same rivers that once filled the Aral Sea. Water stress is Uzbekistan's most critical long-term environmental and economic challenge.
-            </p>
             <div style="margin-top:14px">
               <div style="font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:#999;margin-bottom:6px">
                 Monthly avg temperature — Tashkent (°C)
@@ -1346,6 +1363,9 @@
                 </div>
               </div>
             </div>
+            <p class="subnote">
+              Almost zero rainfall in summer (3–8mm/month Jun–Sep) means agriculture is entirely dependent on irrigation from the Amu Darya and Syr Darya — the same rivers that once filled the Aral Sea. Water stress is Uzbekistan's most critical long-term environmental and economic challenge.
+            </p>
           </div>
         </div>
       </div>
@@ -2727,452 +2747,452 @@
               </svg>
               </span>125 Years of Governance — Interactive Era Timeline (1900–2025)
             </div>
-            <div style="display:flex;height:40px;border-radius:4px;overflow:hidden">
-              <div class="era-seg" data-era="0" style="width:13.600000000000001%;background:#8B5E3C;cursor:pointer;transition:background 0.2s;flex-shrink:0;border-right:1px solid #000" title="Russian Empire (1900–1917)">
+            <div class="era-bar">
+              <div class="era-seg" data-era="0" style="width:13.600000000000001%;background:#8B5E3C" title="Russian Empire (1900–1917)">
               </div>
-              <div class="era-seg" data-era="1" style="width:5.6000000000000005%;background:#C8102E;cursor:pointer;transition:background 0.2s;flex-shrink:0;border-right:1px solid #000" title="Revolutionary Period (1917–1924)">
+              <div class="era-seg" data-era="1" style="width:5.6000000000000005%;background:#C8102E" title="Revolutionary Period (1917–1924)">
               </div>
-              <div class="era-seg" data-era="2" style="width:23.200000000000003%;background:#C8102E;cursor:pointer;transition:background 0.2s;flex-shrink:0;border-right:1px solid #000" title="Early Soviet (1924–1953)">
+              <div class="era-seg" data-era="2" style="width:23.200000000000003%;background:#C8102E" title="Early Soviet (1924–1953)">
               </div>
-              <div class="era-seg" data-era="3" style="width:25.6%;background:#E8192C;cursor:pointer;transition:background 0.2s;flex-shrink:0;border-right:1px solid #000" title="Soviet Maturity (1953–1985)">
+              <div class="era-seg" data-era="3" style="width:25.6%;background:#E8192C" title="Soviet Maturity (1953–1985)">
               </div>
-              <div class="era-seg" data-era="4" style="width:4.8%;background:#F0B830;cursor:pointer;transition:background 0.2s;flex-shrink:0;border-right:1px solid #000" title="Glasnost &amp; Perestroika (1985–1991)">
+              <div class="era-seg" data-era="4" style="width:4.8%;background:#F0B830" title="Glasnost &amp; Perestroika (1985–1991)">
               </div>
-              <div class="era-seg" data-era="5" style="width:7.199999999999999%;background:#1EB4E5;cursor:pointer;transition:background 0.2s;flex-shrink:0;border-right:1px solid #000" title="Independence (1991–2000)">
+              <div class="era-seg" data-era="5" style="width:7.199999999999999%;background:#1EB4E5" title="Independence (1991–2000)">
               </div>
-              <div class="era-seg" data-era="6" style="width:12.8%;background:#555;cursor:pointer;transition:background 0.2s;flex-shrink:0;border-right:1px solid #000" title="Karimov Authoritarianism (2000–2016)">
+              <div class="era-seg" data-era="6" style="width:12.8%;background:#555" title="Karimov Authoritarianism (2000–2016)">
               </div>
-              <div class="era-seg" data-era="7" style="width:7.199999999999999%;background:#1EB4E5;cursor:pointer;transition:background 0.2s;flex-shrink:0;border-right:1px solid #000" title="Reform Era (2016–2025)">
+              <div class="era-seg" data-era="7" style="width:7.199999999999999%;background:#1EB4E5" title="Reform Era (2016–2025)">
               </div>
             </div>
-            <div style="position:relative;height:28px;margin-top:5px">
-              <div style="position:absolute;left:0%;top:0;transform:scaleX(-1) scaleY(-1);font-size:9px;color:#999;white-space:nowrap;writing-mode:vertical-lr">
+            <div class="era-labels">
+              <div class="era-year-label" style="left:0%;transform:scaleX(-1) scaleY(-1)">
                 1900
               </div>
-              <div style="position:absolute;left:13.600000000000001%;top:0;transform:translateX(-50%) scaleX(-1) scaleY(-1);font-size:9px;color:#999;white-space:nowrap;writing-mode:vertical-lr">
+              <div class="era-year-label" style="left:13.600000000000001%;transform:translateX(-50%) scaleX(-1) scaleY(-1)">
                 1917
               </div>
-              <div style="position:absolute;left:19.2%;top:0;transform:translateX(-50%) scaleX(-1) scaleY(-1);font-size:9px;color:#999;white-space:nowrap;writing-mode:vertical-lr">
+              <div class="era-year-label" style="left:19.2%;transform:translateX(-50%) scaleX(-1) scaleY(-1)">
                 1924
               </div>
-              <div style="position:absolute;left:42.4%;top:0;transform:translateX(-50%) scaleX(-1) scaleY(-1);font-size:9px;color:#999;white-space:nowrap;writing-mode:vertical-lr">
+              <div class="era-year-label" style="left:42.4%;transform:translateX(-50%) scaleX(-1) scaleY(-1)">
                 1953
               </div>
-              <div style="position:absolute;left:68%;top:0;transform:translateX(-50%) scaleX(-1) scaleY(-1);font-size:9px;color:#999;white-space:nowrap;writing-mode:vertical-lr">
+              <div class="era-year-label" style="left:68%;transform:translateX(-50%) scaleX(-1) scaleY(-1)">
                 1985
               </div>
-              <div style="position:absolute;left:72.8%;top:0;transform:translateX(-50%) scaleX(-1) scaleY(-1);font-size:9px;color:#999;white-space:nowrap;writing-mode:vertical-lr">
+              <div class="era-year-label" style="left:72.8%;transform:translateX(-50%) scaleX(-1) scaleY(-1)">
                 1991
               </div>
-              <div style="position:absolute;left:80%;top:0;transform:translateX(-50%) scaleX(-1) scaleY(-1);font-size:9px;color:#999;white-space:nowrap;writing-mode:vertical-lr">
+              <div class="era-year-label" style="left:80%;transform:translateX(-50%) scaleX(-1) scaleY(-1)">
                 2000
               </div>
-              <div style="position:absolute;left:92.80000000000001%;top:0;transform:translateX(-50%) scaleX(-1) scaleY(-1);font-size:9px;color:#999;white-space:nowrap;writing-mode:vertical-lr">
+              <div class="era-year-label" style="left:92.80000000000001%;transform:translateX(-50%) scaleX(-1) scaleY(-1)">
                 2016
               </div>
-              <div style="position:absolute;right:0;top:0;font-size:9px;color:#999;white-space:nowrap;writing-mode:vertical-lr;transform:scaleX(-1) scaleY(-1)">
+              <div class="era-2025">
                 2025
               </div>
             </div>
-            <div id="era-placeholder" style="background:#000;border:1px solid #1e1e1e;padding:8px 16px;border-radius:2px;margin-top:12px;font-size:11px;color:#999;text-align:center">
+            <div id="era-placeholder">
               Click any era above to see details and key events.
             </div>
-            <div id="era-panel-0" style="display:none;background:#000;border:1px solid #1e1e1e;border-left:3px solid #8B5E3C;padding:16px 18px;border-radius:2px;margin-top:12px">
-              <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:8px;flex-wrap:wrap;gap:6px">
+            <div class="era-panel" id="era-panel-0" style="display:none;border-left:3px solid #8B5E3C">
+              <div class="era-panel-header">
                 <div>
-                  <div style="font-size:10px;letter-spacing:0.15em;text-transform:uppercase;color:#b07d52;margin-bottom:3px">
+                  <div class="era-year-range" style="color:#b07d52">
                     1900 – 1917
                   </div>
-                  <div style="font-family:Fraunces,serif;font-weight:700;font-size:17px;color:#fff">
+                  <div class="era-panel-label">
                     Russian Empire
                   </div>
                 </div>
-                <div style="font-family:Fraunces,serif;font-weight:900;font-size:24px;color:#8B5E3C;opacity:0.4">
+                <div class="era-duration" style="color:#8B5E3C">
                   17y
                 </div>
               </div>
-              <p style="font-size:12px;color:#999;line-height:1.7;margin-bottom:12px">
+              <p class="era-desc">
                 Uzbekistan (Russian Turkestan) under Tsarist colonial rule. Tashkent the administrative centre. Jadidist reform movement emerges.
               </p>
-              <div style="display:flex;flex-direction:column;gap:5px">
-                <div style="display:flex;align-items:flex-start;gap:8px">
-                  <div style="width:4px;height:4px;border-radius:50%;background:#b07d52;margin-top:5px;flex-shrink:0">
+              <div class="era-events">
+                <div class="era-event">
+                  <div class="era-bullet" style="background:#b07d52">
                   </div>
-                  <div style="font-size:11.5px;color:#fff;line-height:1.5">
+                  <div class="era-event-text">
                     1905 — Jadidist reform movement grows
                   </div>
                 </div>
-                <div style="display:flex;align-items:flex-start;gap:8px">
-                  <div style="width:4px;height:4px;border-radius:50%;background:#b07d52;margin-top:5px;flex-shrink:0">
+                <div class="era-event">
+                  <div class="era-bullet" style="background:#b07d52">
                   </div>
-                  <div style="font-size:11.5px;color:#fff;line-height:1.5">
+                  <div class="era-event-text">
                     1916 — Anti-conscription uprising suppressed
                   </div>
                 </div>
               </div>
             </div>
-            <div id="era-panel-1" style="display:none;background:#000;border:1px solid #1e1e1e;border-left:3px solid #C8102E;padding:16px 18px;border-radius:2px;margin-top:12px">
-              <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:8px;flex-wrap:wrap;gap:6px">
+            <div class="era-panel" id="era-panel-1" style="display:none;border-left:3px solid #C8102E">
+              <div class="era-panel-header">
                 <div>
-                  <div style="font-size:10px;letter-spacing:0.15em;text-transform:uppercase;color:#f03050;margin-bottom:3px">
+                  <div class="era-year-range" style="color:#f03050">
                     1917 – 1924
                   </div>
-                  <div style="font-family:Fraunces,serif;font-weight:700;font-size:17px;color:#fff">
+                  <div class="era-panel-label">
                     Revolutionary Period
                   </div>
                 </div>
-                <div style="font-family:Fraunces,serif;font-weight:900;font-size:24px;color:#C8102E;opacity:0.4">
+                <div class="era-duration" style="color:#C8102E">
                   7y
                 </div>
               </div>
-              <p style="font-size:12px;color:#999;line-height:1.7;margin-bottom:12px">
+              <p class="era-desc">
                 Bolshevik takeover. Basmachi resistance movement fights Soviet rule across Central Asia. Short-lived Kokand Autonomy crushed.
               </p>
-              <div style="display:flex;flex-direction:column;gap:5px">
-                <div style="display:flex;align-items:flex-start;gap:8px">
-                  <div style="width:4px;height:4px;border-radius:50%;background:#f03050;margin-top:5px;flex-shrink:0">
+              <div class="era-events">
+                <div class="era-event">
+                  <div class="era-bullet" style="background:#f03050">
                   </div>
-                  <div style="font-size:11.5px;color:#fff;line-height:1.5">
+                  <div class="era-event-text">
                     1917 — Kokand Autonomy declared
                   </div>
                 </div>
-                <div style="display:flex;align-items:flex-start;gap:8px">
-                  <div style="width:4px;height:4px;border-radius:50%;background:#f03050;margin-top:5px;flex-shrink:0">
+                <div class="era-event">
+                  <div class="era-bullet" style="background:#f03050">
                   </div>
-                  <div style="font-size:11.5px;color:#fff;line-height:1.5">
+                  <div class="era-event-text">
                     1918 — Kokand Autonomy crushed by Red Army
                   </div>
                 </div>
-                <div style="display:flex;align-items:flex-start;gap:8px">
-                  <div style="width:4px;height:4px;border-radius:50%;background:#f03050;margin-top:5px;flex-shrink:0">
+                <div class="era-event">
+                  <div class="era-bullet" style="background:#f03050">
                   </div>
-                  <div style="font-size:11.5px;color:#fff;line-height:1.5">
+                  <div class="era-event-text">
                     1920 — Red Army secures Uzbekistan
                   </div>
                 </div>
-                <div style="display:flex;align-items:flex-start;gap:8px">
-                  <div style="width:4px;height:4px;border-radius:50%;background:#f03050;margin-top:5px;flex-shrink:0">
+                <div class="era-event">
+                  <div class="era-bullet" style="background:#f03050">
                   </div>
-                  <div style="font-size:11.5px;color:#fff;line-height:1.5">
+                  <div class="era-event-text">
                     1921 — Basmachi Rebellion peaks
                   </div>
                 </div>
               </div>
             </div>
-            <div id="era-panel-2" style="display:none;background:#000;border:1px solid #1e1e1e;border-left:3px solid #C8102E;padding:16px 18px;border-radius:2px;margin-top:12px">
-              <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:8px;flex-wrap:wrap;gap:6px">
+            <div class="era-panel" id="era-panel-2" style="display:none;border-left:3px solid #C8102E">
+              <div class="era-panel-header">
                 <div>
-                  <div style="font-size:10px;letter-spacing:0.15em;text-transform:uppercase;color:#f03050;margin-bottom:3px">
+                  <div class="era-year-range" style="color:#f03050">
                     1924 – 1953
                   </div>
-                  <div style="font-family:Fraunces,serif;font-weight:700;font-size:17px;color:#fff">
+                  <div class="era-panel-label">
                     Early Soviet
                   </div>
                 </div>
-                <div style="font-family:Fraunces,serif;font-weight:900;font-size:24px;color:#C8102E;opacity:0.4">
+                <div class="era-duration" style="color:#C8102E">
                   29y
                 </div>
               </div>
-              <p style="font-size:12px;color:#999;line-height:1.7;margin-bottom:12px">
+              <p class="era-desc">
                 Uzbek SSR established 1924. Forced collectivisation, cotton monoculture imposed. Stalinist purges devastate local leadership. WWII: 1.4M Uzbeks serve in Red Army.
               </p>
-              <div style="display:flex;flex-direction:column;gap:5px">
-                <div style="display:flex;align-items:flex-start;gap:8px">
-                  <div style="width:4px;height:4px;border-radius:50%;background:#f03050;margin-top:5px;flex-shrink:0">
+              <div class="era-events">
+                <div class="era-event">
+                  <div class="era-bullet" style="background:#f03050">
                   </div>
-                  <div style="font-size:11.5px;color:#fff;line-height:1.5">
+                  <div class="era-event-text">
                     1924 — Uzbek SSR created
                   </div>
                 </div>
-                <div style="display:flex;align-items:flex-start;gap:8px">
-                  <div style="width:4px;height:4px;border-radius:50%;background:#f03050;margin-top:5px;flex-shrink:0">
+                <div class="era-event">
+                  <div class="era-bullet" style="background:#f03050">
                   </div>
-                  <div style="font-size:11.5px;color:#fff;line-height:1.5">
+                  <div class="era-event-text">
                     1930s — Forced collectivisation &amp; cotton monoculture
                   </div>
                 </div>
-                <div style="display:flex;align-items:flex-start;gap:8px">
-                  <div style="width:4px;height:4px;border-radius:50%;background:#f03050;margin-top:5px;flex-shrink:0">
+                <div class="era-event">
+                  <div class="era-bullet" style="background:#f03050">
                   </div>
-                  <div style="font-size:11.5px;color:#fff;line-height:1.5">
+                  <div class="era-event-text">
                     1937–38 — Stalinist purges; local leadership decimated
                   </div>
                 </div>
-                <div style="display:flex;align-items:flex-start;gap:8px">
-                  <div style="width:4px;height:4px;border-radius:50%;background:#f03050;margin-top:5px;flex-shrink:0">
+                <div class="era-event">
+                  <div class="era-bullet" style="background:#f03050">
                   </div>
-                  <div style="font-size:11.5px;color:#fff;line-height:1.5">
+                  <div class="era-event-text">
                     1941–45 — WWII: Tashkent becomes evacuation hub
                   </div>
                 </div>
               </div>
             </div>
-            <div id="era-panel-3" style="display:none;background:#000;border:1px solid #1e1e1e;border-left:3px solid #E8192C;padding:16px 18px;border-radius:2px;margin-top:12px">
-              <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:8px;flex-wrap:wrap;gap:6px">
+            <div class="era-panel" id="era-panel-3" style="display:none;border-left:3px solid #E8192C">
+              <div class="era-panel-header">
                 <div>
-                  <div style="font-size:10px;letter-spacing:0.15em;text-transform:uppercase;color:#ff3347;margin-bottom:3px">
+                  <div class="era-year-range" style="color:#ff3347">
                     1953 – 1985
                   </div>
-                  <div style="font-family:Fraunces,serif;font-weight:700;font-size:17px;color:#fff">
+                  <div class="era-panel-label">
                     Soviet Maturity
                   </div>
                 </div>
-                <div style="font-family:Fraunces,serif;font-weight:900;font-size:24px;color:#E8192C;opacity:0.4">
+                <div class="era-duration" style="color:#E8192C">
                   32y
                 </div>
               </div>
-              <p style="font-size:12px;color:#999;line-height:1.7;margin-bottom:12px">
+              <p class="era-desc">
                 Relative stability. Cotton economy dominates — Aral Sea begins shrinking. Corruption institutionalised (Cotton Affair). Tashkent metro opens 1977.
               </p>
-              <div style="display:flex;flex-direction:column;gap:5px">
-                <div style="display:flex;align-items:flex-start;gap:8px">
-                  <div style="width:4px;height:4px;border-radius:50%;background:#ff3347;margin-top:5px;flex-shrink:0">
+              <div class="era-events">
+                <div class="era-event">
+                  <div class="era-bullet" style="background:#ff3347">
                   </div>
-                  <div style="font-size:11.5px;color:#fff;line-height:1.5">
+                  <div class="era-event-text">
                     1966 — Tashkent earthquake; rebuilt with Soviet aid
                   </div>
                 </div>
-                <div style="display:flex;align-items:flex-start;gap:8px">
-                  <div style="width:4px;height:4px;border-radius:50%;background:#ff3347;margin-top:5px;flex-shrink:0">
+                <div class="era-event">
+                  <div class="era-bullet" style="background:#ff3347">
                   </div>
-                  <div style="font-size:11.5px;color:#fff;line-height:1.5">
+                  <div class="era-event-text">
                     1977 — First metro in Central Asia opens
                   </div>
                 </div>
-                <div style="display:flex;align-items:flex-start;gap:8px">
-                  <div style="width:4px;height:4px;border-radius:50%;background:#ff3347;margin-top:5px;flex-shrink:0">
+                <div class="era-event">
+                  <div class="era-bullet" style="background:#ff3347">
                   </div>
-                  <div style="font-size:11.5px;color:#fff;line-height:1.5">
+                  <div class="era-event-text">
                     1970s–80s — Cotton Affair corruption scandal exposed
                   </div>
                 </div>
               </div>
             </div>
-            <div id="era-panel-4" style="display:none;background:#000;border:1px solid #1e1e1e;border-left:3px solid #F0B830;padding:16px 18px;border-radius:2px;margin-top:12px">
-              <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:8px;flex-wrap:wrap;gap:6px">
+            <div class="era-panel" id="era-panel-4" style="display:none;border-left:3px solid #F0B830">
+              <div class="era-panel-header">
                 <div>
-                  <div style="font-size:10px;letter-spacing:0.15em;text-transform:uppercase;color:#ffd060;margin-bottom:3px">
+                  <div class="era-year-range" style="color:#ffd060">
                     1985 – 1991
                   </div>
-                  <div style="font-family:Fraunces,serif;font-weight:700;font-size:17px;color:#fff">
+                  <div class="era-panel-label">
                     Glasnost &amp; Perestroika
                   </div>
                 </div>
-                <div style="font-family:Fraunces,serif;font-weight:900;font-size:24px;color:#F0B830;opacity:0.4">
+                <div class="era-duration" style="color:#F0B830">
                   6y
                 </div>
               </div>
-              <p style="font-size:12px;color:#999;line-height:1.7;margin-bottom:12px">
+              <p class="era-desc">
                 Gorbachev reforms allow limited openness. Uzbek national consciousness rises. 1989 Fergana Valley ethnic violence. Karimov becomes First Secretary.
               </p>
-              <div style="display:flex;flex-direction:column;gap:5px">
-                <div style="display:flex;align-items:flex-start;gap:8px">
-                  <div style="width:4px;height:4px;border-radius:50%;background:#ffd060;margin-top:5px;flex-shrink:0">
+              <div class="era-events">
+                <div class="era-event">
+                  <div class="era-bullet" style="background:#ffd060">
                   </div>
-                  <div style="font-size:11.5px;color:#fff;line-height:1.5">
+                  <div class="era-event-text">
                     1989 — Fergana Valley ethnic violence
                   </div>
                 </div>
-                <div style="display:flex;align-items:flex-start;gap:8px">
-                  <div style="width:4px;height:4px;border-radius:50%;background:#ffd060;margin-top:5px;flex-shrink:0">
+                <div class="era-event">
+                  <div class="era-bullet" style="background:#ffd060">
                   </div>
-                  <div style="font-size:11.5px;color:#fff;line-height:1.5">
+                  <div class="era-event-text">
                     1989 — Islam Karimov becomes First Secretary
                   </div>
                 </div>
-                <div style="display:flex;align-items:flex-start;gap:8px">
-                  <div style="width:4px;height:4px;border-radius:50%;background:#ffd060;margin-top:5px;flex-shrink:0">
+                <div class="era-event">
+                  <div class="era-bullet" style="background:#ffd060">
                   </div>
-                  <div style="font-size:11.5px;color:#fff;line-height:1.5">
+                  <div class="era-event-text">
                     1990 — Sovereignty declared
                   </div>
                 </div>
               </div>
             </div>
-            <div id="era-panel-5" style="display:none;background:#000;border:1px solid #1e1e1e;border-left:3px solid #1EB4E5;padding:16px 18px;border-radius:2px;margin-top:12px">
-              <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:8px;flex-wrap:wrap;gap:6px">
+            <div class="era-panel" id="era-panel-5" style="display:none;border-left:3px solid #1EB4E5">
+              <div class="era-panel-header">
                 <div>
-                  <div style="font-size:10px;letter-spacing:0.15em;text-transform:uppercase;color:#55ccf5;margin-bottom:3px">
+                  <div class="era-year-range" style="color:#55ccf5">
                     1991 – 2000
                   </div>
-                  <div style="font-family:Fraunces,serif;font-weight:700;font-size:17px;color:#fff">
+                  <div class="era-panel-label">
                     Independence
                   </div>
                 </div>
-                <div style="font-family:Fraunces,serif;font-weight:900;font-size:24px;color:#1EB4E5;opacity:0.4">
+                <div class="era-duration" style="color:#1EB4E5">
                   9y
                 </div>
               </div>
-              <p style="font-size:12px;color:#999;line-height:1.7;margin-bottom:12px">
+              <p class="era-desc">
                 Independence declared 31 Aug 1991. Karimov wins presidency. Communist party renamed — same leadership. Opposition banned. Nominal multi-party democracy, authoritarian reality.
               </p>
-              <div style="display:flex;flex-direction:column;gap:5px">
-                <div style="display:flex;align-items:flex-start;gap:8px">
-                  <div style="width:4px;height:4px;border-radius:50%;background:#55ccf5;margin-top:5px;flex-shrink:0">
+              <div class="era-events">
+                <div class="era-event">
+                  <div class="era-bullet" style="background:#55ccf5">
                   </div>
-                  <div style="font-size:11.5px;color:#fff;line-height:1.5">
+                  <div class="era-event-text">
                     1991 — Independence declared (31 Aug)
                   </div>
                 </div>
-                <div style="display:flex;align-items:flex-start;gap:8px">
-                  <div style="width:4px;height:4px;border-radius:50%;background:#55ccf5;margin-top:5px;flex-shrink:0">
+                <div class="era-event">
+                  <div class="era-bullet" style="background:#55ccf5">
                   </div>
-                  <div style="font-size:11.5px;color:#fff;line-height:1.5">
+                  <div class="era-event-text">
                     1992 — New Constitution adopted
                   </div>
                 </div>
-                <div style="display:flex;align-items:flex-start;gap:8px">
-                  <div style="width:4px;height:4px;border-radius:50%;background:#55ccf5;margin-top:5px;flex-shrink:0">
+                <div class="era-event">
+                  <div class="era-bullet" style="background:#55ccf5">
                   </div>
-                  <div style="font-size:11.5px;color:#fff;line-height:1.5">
+                  <div class="era-event-text">
                     1992 — UN membership
                   </div>
                 </div>
-                <div style="display:flex;align-items:flex-start;gap:8px">
-                  <div style="width:4px;height:4px;border-radius:50%;background:#55ccf5;margin-top:5px;flex-shrink:0">
+                <div class="era-event">
+                  <div class="era-bullet" style="background:#55ccf5">
                   </div>
-                  <div style="font-size:11.5px;color:#fff;line-height:1.5">
+                  <div class="era-event-text">
                     1999 — Tashkent bombings; crackdown intensifies
                   </div>
                 </div>
               </div>
             </div>
-            <div id="era-panel-6" style="display:none;background:#000;border:1px solid #1e1e1e;border-left:3px solid #555;padding:16px 18px;border-radius:2px;margin-top:12px">
-              <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:8px;flex-wrap:wrap;gap:6px">
+            <div class="era-panel" id="era-panel-6" style="display:none;border-left:3px solid #555">
+              <div class="era-panel-header">
                 <div>
-                  <div style="font-size:10px;letter-spacing:0.15em;text-transform:uppercase;color:#777;margin-bottom:3px">
+                  <div class="era-year-range" style="color:#777">
                     2000 – 2016
                   </div>
-                  <div style="font-family:Fraunces,serif;font-weight:700;font-size:17px;color:#fff">
+                  <div class="era-panel-label">
                     Karimov Authoritarianism
                   </div>
                 </div>
-                <div style="font-family:Fraunces,serif;font-weight:900;font-size:24px;color:#555;opacity:0.4">
+                <div class="era-duration" style="color:#555">
                   16y
                 </div>
               </div>
-              <p style="font-size:12px;color:#999;line-height:1.7;margin-bottom:12px">
+              <p class="era-desc">
                 Tightly controlled authoritarian state. Press fully censored. 2005 Andijan massacre: 187–1,500 killed (est. varies). Regional isolation. Gas &amp; cotton drive economy.
               </p>
-              <div style="display:flex;flex-direction:column;gap:5px">
-                <div style="display:flex;align-items:flex-start;gap:8px">
-                  <div style="width:4px;height:4px;border-radius:50%;background:#777;margin-top:5px;flex-shrink:0">
+              <div class="era-events">
+                <div class="era-event">
+                  <div class="era-bullet" style="background:#777">
                   </div>
-                  <div style="font-size:11.5px;color:#fff;line-height:1.5">
+                  <div class="era-event-text">
                     2005 — Andijan massacre (200–1,500 killed, est. varies)
                   </div>
                 </div>
-                <div style="display:flex;align-items:flex-start;gap:8px">
-                  <div style="width:4px;height:4px;border-radius:50%;background:#777;margin-top:5px;flex-shrink:0">
+                <div class="era-event">
+                  <div class="era-bullet" style="background:#777">
                   </div>
-                  <div style="font-size:11.5px;color:#fff;line-height:1.5">
+                  <div class="era-event-text">
                     2008 — US expelled from Karshi-Khanabad base
                   </div>
                 </div>
-                <div style="display:flex;align-items:flex-start;gap:8px">
-                  <div style="width:4px;height:4px;border-radius:50%;background:#777;margin-top:5px;flex-shrink:0">
+                <div class="era-event">
+                  <div class="era-bullet" style="background:#777">
                   </div>
-                  <div style="font-size:11.5px;color:#fff;line-height:1.5">
+                  <div class="era-event-text">
                     2012 — EU lifts sanctions
                   </div>
                 </div>
               </div>
             </div>
-            <div id="era-panel-7" style="display:none;background:#000;border:1px solid #1e1e1e;border-left:3px solid #1EB4E5;padding:16px 18px;border-radius:2px;margin-top:12px">
-              <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:8px;flex-wrap:wrap;gap:6px">
+            <div class="era-panel" id="era-panel-7" style="display:none;border-left:3px solid #1EB4E5">
+              <div class="era-panel-header">
                 <div>
-                  <div style="font-size:10px;letter-spacing:0.15em;text-transform:uppercase;color:#55ccf5;margin-bottom:3px">
+                  <div class="era-year-range" style="color:#55ccf5">
                     2016 – 2025
                   </div>
-                  <div style="font-family:Fraunces,serif;font-weight:700;font-size:17px;color:#fff">
+                  <div class="era-panel-label">
                     Reform Era
                   </div>
                 </div>
-                <div style="font-family:Fraunces,serif;font-weight:900;font-size:24px;color:#1EB4E5;opacity:0.4">
+                <div class="era-duration" style="color:#1EB4E5">
                   9y
                 </div>
               </div>
-              <p style="font-size:12px;color:#999;line-height:1.7;margin-bottom:12px">
+              <p class="era-desc">
                 Karimov dies 2016. Shavkat Mirziyoyev takes power. Significant economic opening: currency liberalised, foreign investment invited, regional diplomacy restored, political prisoners released.
               </p>
-              <div style="display:flex;flex-direction:column;gap:5px">
-                <div style="display:flex;align-items:flex-start;gap:8px">
-                  <div style="width:4px;height:4px;border-radius:50%;background:#55ccf5;margin-top:5px;flex-shrink:0">
+              <div class="era-events">
+                <div class="era-event">
+                  <div class="era-bullet" style="background:#55ccf5">
                   </div>
-                  <div style="font-size:11.5px;color:#fff;line-height:1.5">
+                  <div class="era-event-text">
                     2016 — Karimov dies; Mirziyoyev elected
                   </div>
                 </div>
-                <div style="display:flex;align-items:flex-start;gap:8px">
-                  <div style="width:4px;height:4px;border-radius:50%;background:#55ccf5;margin-top:5px;flex-shrink:0">
+                <div class="era-event">
+                  <div class="era-bullet" style="background:#55ccf5">
                   </div>
-                  <div style="font-size:11.5px;color:#fff;line-height:1.5">
+                  <div class="era-event-text">
                     2017 — Currency liberalised (free float)
                   </div>
                 </div>
-                <div style="display:flex;align-items:flex-start;gap:8px">
-                  <div style="width:4px;height:4px;border-radius:50%;background:#55ccf5;margin-top:5px;flex-shrink:0">
+                <div class="era-event">
+                  <div class="era-bullet" style="background:#55ccf5">
                   </div>
-                  <div style="font-size:11.5px;color:#fff;line-height:1.5">
+                  <div class="era-event-text">
                     2021 — Forced cotton labour abolished (ILO confirmed)
                   </div>
                 </div>
-                <div style="display:flex;align-items:flex-start;gap:8px">
-                  <div style="width:4px;height:4px;border-radius:50%;background:#55ccf5;margin-top:5px;flex-shrink:0">
+                <div class="era-event">
+                  <div class="era-bullet" style="background:#55ccf5">
                   </div>
-                  <div style="font-size:11.5px;color:#fff;line-height:1.5">
+                  <div class="era-event-text">
                     2022 — Karakalpakstan unrest suppressed
                   </div>
                 </div>
-                <div style="display:flex;align-items:flex-start;gap:8px">
-                  <div style="width:4px;height:4px;border-radius:50%;background:#55ccf5;margin-top:5px;flex-shrink:0">
+                <div class="era-event">
+                  <div class="era-bullet" style="background:#55ccf5">
                   </div>
-                  <div style="font-size:11.5px;color:#fff;line-height:1.5">
+                  <div class="era-event-text">
                     2023 — New constitution; Mirziyoyev re-elected 87%
                   </div>
                 </div>
               </div>
             </div>
-            <div style="display:flex;flex-wrap:wrap;gap:10px;margin-top:14px">
-              <div class="era-leg" data-era="0" style="display:flex;align-items:center;gap:5px;cursor:pointer">
-                <div style="width:8px;height:8px;border-radius:2px;background:#8B5E3C;flex-shrink:0">
+            <div class="era-legend">
+              <div class="era-leg" data-era="0">
+                <div class="era-swatch" style="background:#8B5E3C">
                 </div>
-                <span class="era-leg-lbl era-leg-lbl-0" style="font-size:10px;color:#999;letter-spacing:0.05em">Tsarist Rule</span>
+                <span class="era-leg-lbl era-leg-lbl-0">Tsarist Rule</span>
               </div>
-              <div class="era-leg" data-era="1" style="display:flex;align-items:center;gap:5px;cursor:pointer">
-                <div style="width:8px;height:8px;border-radius:2px;background:#C8102E;flex-shrink:0">
+              <div class="era-leg" data-era="1">
+                <div class="era-swatch" style="background:#C8102E">
                 </div>
-                <span class="era-leg-lbl era-leg-lbl-1" style="font-size:10px;color:#999;letter-spacing:0.05em">Revolution &amp; Resistance</span>
+                <span class="era-leg-lbl era-leg-lbl-1">Revolution &amp; Resistance</span>
               </div>
-              <div class="era-leg" data-era="2" style="display:flex;align-items:center;gap:5px;cursor:pointer">
-                <div style="width:8px;height:8px;border-radius:2px;background:#C8102E;flex-shrink:0">
+              <div class="era-leg" data-era="2">
+                <div class="era-swatch" style="background:#C8102E">
                 </div>
-                <span class="era-leg-lbl era-leg-lbl-2" style="font-size:10px;color:#999;letter-spacing:0.05em">Uzbek SSR Founded</span>
+                <span class="era-leg-lbl era-leg-lbl-2">Uzbek SSR Founded</span>
               </div>
-              <div class="era-leg" data-era="3" style="display:flex;align-items:center;gap:5px;cursor:pointer">
-                <div style="width:8px;height:8px;border-radius:2px;background:#E8192C;flex-shrink:0">
+              <div class="era-leg" data-era="3">
+                <div class="era-swatch" style="background:#E8192C">
                 </div>
-                <span class="era-leg-lbl era-leg-lbl-3" style="font-size:10px;color:#999;letter-spacing:0.05em">Khrushchev–Brezhnev Era</span>
+                <span class="era-leg-lbl era-leg-lbl-3">Khrushchev–Brezhnev Era</span>
               </div>
-              <div class="era-leg" data-era="4" style="display:flex;align-items:center;gap:5px;cursor:pointer">
-                <div style="width:8px;height:8px;border-radius:2px;background:#F0B830;flex-shrink:0">
+              <div class="era-leg" data-era="4">
+                <div class="era-swatch" style="background:#F0B830">
                 </div>
-                <span class="era-leg-lbl era-leg-lbl-4" style="font-size:10px;color:#999;letter-spacing:0.05em">Late Soviet</span>
+                <span class="era-leg-lbl era-leg-lbl-4">Late Soviet</span>
               </div>
-              <div class="era-leg" data-era="5" style="display:flex;align-items:center;gap:5px;cursor:pointer">
-                <div style="width:8px;height:8px;border-radius:2px;background:#1EB4E5;flex-shrink:0">
+              <div class="era-leg" data-era="5">
+                <div class="era-swatch" style="background:#1EB4E5">
                 </div>
-                <span class="era-leg-lbl era-leg-lbl-5" style="font-size:10px;color:#999;letter-spacing:0.05em">Post-Soviet Transition</span>
+                <span class="era-leg-lbl era-leg-lbl-5">Post-Soviet Transition</span>
               </div>
-              <div class="era-leg" data-era="6" style="display:flex;align-items:center;gap:5px;cursor:pointer">
-                <div style="width:8px;height:8px;border-radius:2px;background:#555;flex-shrink:0">
+              <div class="era-leg" data-era="6">
+                <div class="era-swatch" style="background:#555">
                 </div>
-                <span class="era-leg-lbl era-leg-lbl-6" style="font-size:10px;color:#999;letter-spacing:0.05em">Karimov Era</span>
+                <span class="era-leg-lbl era-leg-lbl-6">Karimov Era</span>
               </div>
-              <div class="era-leg" data-era="7" style="display:flex;align-items:center;gap:5px;cursor:pointer">
-                <div style="width:8px;height:8px;border-radius:2px;background:#1EB4E5;flex-shrink:0">
+              <div class="era-leg" data-era="7">
+                <div class="era-swatch" style="background:#1EB4E5">
                 </div>
-                <span class="era-leg-lbl era-leg-lbl-7" style="font-size:10px;color:#999;letter-spacing:0.05em">Mirziyoyev Reforms</span>
+                <span class="era-leg-lbl era-leg-lbl-7">Mirziyoyev Reforms</span>
               </div>
             </div>
             <p class="subnote">
@@ -3395,9 +3415,6 @@
                 </tr>
               </tbody>
             </table>
-            <p class="subnote">
-              Uzbekistan has arguably the richest concentration of Islamic architectural heritage anywhere in the world — Samarkand's Registan rivals the Taj Mahal in grandeur. The Aral Sea ship graveyard at Moynaq has become a haunting but significant eco-tourism site — a monument to the world's worst man-made ecological disaster. With 4 UNESCO sites and ~62 visa-free countries (Passport Index 2024), the runway for growth is enormous.
-            </p>
             <div style="margin-top:14px">
               <div style="font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:#999;margin-bottom:6px">
                 Tourism intensity by month (relative)
@@ -3505,6 +3522,9 @@
                 </div>
               </div>
             </div>
+            <p class="subnote">
+              Uzbekistan has arguably the richest concentration of Islamic architectural heritage anywhere in the world — Samarkand's Registan rivals the Taj Mahal in grandeur. The Aral Sea ship graveyard at Moynaq has become a haunting but significant eco-tourism site — a monument to the world's worst man-made ecological disaster. With 4 UNESCO sites and ~62 visa-free countries (Passport Index 2024), the runway for growth is enormous.
+            </p>
           </div>
         </div>
       </div>
@@ -5380,9 +5400,6 @@
                 </tr>
               </tbody>
             </table>
-            <p class="subnote">
-              Investment at 31.9% of GDP is exceptionally high — it is the engine of Uzbekistan's growth story. This is being funded by broad foreign investment (~$35–40B total), multilateral lending (IDB, ADB, World Bank), and the sovereign wealth fund. WTO accession would be the most significant trade reform since independence — opening markets and requiring legal modernisation.
-            </p>
             <div style="margin-top:14px">
               <div style="font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:#999;margin-bottom:6px">
                 Trade balance 2015–2024 ($B)
@@ -5474,6 +5491,9 @@
                 </div>
               </div>
             </div>
+            <p class="subnote">
+              Investment at 31.9% of GDP is exceptionally high — it is the engine of Uzbekistan's growth story. This is being funded by broad foreign investment (~$35–40B total), multilateral lending (IDB, ADB, World Bank), and the sovereign wealth fund. WTO accession would be the most significant trade reform since independence — opening markets and requiring legal modernisation.
+            </p>
           </div>
         </div>
       </div>

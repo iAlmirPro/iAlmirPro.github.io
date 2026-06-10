@@ -156,6 +156,14 @@ CLIMA_RAIN_REGIONAL.data  = [
   { state:1, label:"Karakalpakstan (Aral basin)",    value:"~80 mm",     pct:13,  color:C.dim },
 ];
 
+const tempColor = p => {
+  if (p < 25) return `rgb(${Math.round(40+p*0.8)},${Math.round(60+p*0.4)},${Math.round(180-p*0.8)})`;
+  if (p < 50) { const t=(p-25)/25; return `rgb(${Math.round(60+t*130)},${Math.round(80+t*80)},${Math.round(160-t*100)})`; }
+  if (p < 75) { const t=(p-50)/25; return `rgb(${Math.round(190+t*50)},${Math.round(160-t*80)},${Math.round(60-t*40)})`; }
+  const t=(p-75)/25; return `rgb(${Math.round(240-t*30)},${Math.round(80-t*60)},${Math.round(20)})`;
+};
+const rainColor = p => `rgb(${Math.round(153-107*p/100)},${Math.round(153-19*p/100)},${Math.round(153+69*p/100)})`;
+
 const CLIMA_RAIN_SEASONAL = [];
 
 CLIMA_RAIN_SEASONAL.sublabel = 'Tashkent seasonal pattern';
@@ -166,6 +174,8 @@ CLIMA_RAIN_SEASONAL.data  = [
   { state:1, label:"Jan–Feb (snow possible)",value:"48–52 mm",pct:57,  color:C.blu },
 ];
 
+CLIMA_RAIN_SEASONAL.gradbar1 = { title:'Monthly avg temperature — Tashkent (°C)', values:[3,5,11,18,23,29,30,28,22,15,8,3], colorStops:tempColor, unit:'°' };
+CLIMA_RAIN_SEASONAL.gradbar2 = { title:'Monthly rainfall — Tashkent (mm)', values:[48,52,70,86,35,8,3,3,8,35,45,52], colorStops:rainColor, unit:'mm' };
 CLIMA_RAIN_SEASONAL.note  = "Almost zero rainfall in summer (3–8mm/month Jun–Sep) means agriculture is entirely dependent on irrigation from the Amu Darya and Syr Darya — the same rivers that once filled the Aral Sea. Water stress is Uzbekistan's most critical long-term environmental and economic challenge.";
 
 /* ── §3 POPULATION ── */
@@ -217,6 +227,8 @@ POP_ETHNIC.data  = [
   { state:1, label:'Other (Kyrgyz, Tatar, Korean, etc.)', value:'6.6%', pct:6.6, color:C.dim },
 ];
 
+POP_ETHNIC.label    = '37.9M';
+POP_ETHNIC.sublabel = 'population';
 POP_ETHNIC.note  = "The Tajik share (4.8%) is likely significantly underreported — Samarkand and Bukhara have historically large Tajik-speaking populations. Many Tajik-speakers registered as Uzbek during Soviet-era censuses. This is a cultural and political sensitivity in Uzbek-Tajik relations.";
 
 const POP_RELIGION = [];
@@ -248,6 +260,8 @@ const ECON_GDP_DONUT = [];
 
 ECON_GDP_DONUT.title = 'GDP by Sector & Major Exports';
 
+ECON_GDP_DONUT.label    = '$145B';
+ECON_GDP_DONUT.sublabel = 'GDP 2025';
 ECON_GDP_DONUT.data  = [
   { state:1, label:'Services (trade, finance, tourism)',  value:'~47%', pct:47, color:C.uz  },
   { state:1, label:'Industry (mining, manufacturing)',    value:'~26%', pct:26, color:C.grn },
@@ -308,6 +322,8 @@ const EMP_SECTORS_DONUT = [];
 
 EMP_SECTORS_DONUT.title = 'Employment by Sector';
 
+EMP_SECTORS_DONUT.label    = '14.6M';
+EMP_SECTORS_DONUT.sublabel = 'labour force';
 EMP_SECTORS_DONUT.data  = [
   { state:1, label:'Agriculture',              value:'~26%', pct:26, color:C.uz  },
   { state:1, label:'Trade & services',         value:'~35%', pct:35, color:C.grn },
@@ -437,6 +453,7 @@ TOUR_HIGHLIGHTS.data  = [
   { state:1, label:'Aral Sea tours (Moynaq)', value:'Ship graveyard; environmental tourism' },
 ];
 
+TOUR_HIGHLIGHTS.gradbar = { title:'Tourism intensity by month (relative)', values:[15,20,45,85,100,80,65,70,90,85,30,15], colorStops:p => `rgb(${Math.round(153+79*p/100)},${Math.round(153-128*p/100)},${Math.round(153-109*p/100)})`, unit:'%' };
 TOUR_HIGHLIGHTS.note  = "Uzbekistan has arguably the richest concentration of Islamic architectural heritage anywhere in the world — Samarkand's Registan rivals the Taj Mahal in grandeur. The Aral Sea ship graveyard at Moynaq has become a haunting but significant eco-tourism site — a monument to the world's worst man-made ecological disaster. With 4 UNESCO sites and ~62 visa-free countries (Passport Index 2024), the runway for growth is enormous.";
 
 /* ── §9 VITAL STATISTICS & HEALTH ── */
@@ -536,6 +553,8 @@ ENERGY_MIX.data  = [
   { state:1, label:'Solar & wind (growing)',      value:'~4%',  pct:4,  color:C.grn },
 ];
 
+ENERGY_MIX.label    = '81.5 TWh';
+ENERGY_MIX.sublabel = 'generated 2024';
 ENERGY_MIX.note  = <>2024 est. — IEA/UZ Stats; fuel-type split modelled, not metered per source.<br/>~76% gas-fired is relatively clean compared to Kazakhstan's coal-heavy grid. Coal at ~11% is higher than previously reported (corrected 2024 data). However, natural gas production is declining (~7%/year) — making the $9.5B renewable push urgent. Uzbekistan has signed deals for 20GW of solar and wind by 2030. The Rosatom nuclear plant would provide baseload power independence.</>;
 
 const ENERGY_FACTS = [];
@@ -741,6 +760,7 @@ FISCAL_INDICATORS.data  = [
   { state:1, label:'GDP growth Jan–Sep 2025 (official)', value:'+7.7% — record pace' },
 ];
 
+FISCAL_INDICATORS.gradbar = { title:'Trade balance 2015–2024 ($B)', values:[-4.5,-4.8,-5.2,-7.0,-8.1,-8.1,-11.5,-13.7,-15.2,-13.6], xLabels:['2015','2016','2017','2018','2019','2020','2021','2022','2023','2024'], colorStops:(p,v) => v >= 0 ? `rgb(${Math.round(153-118*p/100)},${Math.round(153+6*p/100)},${Math.round(153-89*p/100)})` : `rgb(${Math.round(153+79*p/100)},${Math.round(153-128*p/100)},${Math.round(153-109*p/100)})`, fmt:v => v > 0 ? `+${v}B` : `${v}B`, absScale:true };
 FISCAL_INDICATORS.note  = "Investment at 31.9% of GDP is exceptionally high — it is the engine of Uzbekistan's growth story. This is being funded by broad foreign investment (~$35–40B total), multilateral lending (IDB, ADB, World Bank), and the sovereign wealth fund. WTO accession would be the most significant trade reform since independence — opening markets and requiring legal modernisation.";
 
 /* ── §15 CRIME ── */
@@ -849,6 +869,26 @@ const css = `
   .country-name { font-size:12.5px; color:${C.txt}; flex-shrink:0; }
   .country-val { font-size:11px; color:${C.sub}; flex:1; }
   .country-pct { font-family:'Fraunces',serif; font-weight:700; font-size:13px; color:${C.txt}; flex-shrink:0; }
+  .era-bar { display:flex; height:40px; border-radius:4px; overflow:hidden; }
+  .era-seg { cursor:pointer; transition:background 0.2s; flex-shrink:0; border-right:1px solid #000; }
+  .era-labels { position:relative; height:28px; margin-top:5px; }
+  .era-year-label { position:absolute; top:0; font-size:9px; color:${C.sub}; white-space:nowrap; writing-mode:vertical-lr; }
+  .era-2025 { position:absolute; right:0; top:0; font-size:9px; color:${C.sub}; white-space:nowrap; writing-mode:vertical-lr; transform:scaleX(-1) scaleY(-1); }
+  #era-placeholder { background:${C.bg}; border:1px solid ${C.border}; padding:8px 16px; border-radius:2px; margin-top:12px; font-size:11px; color:${C.sub}; text-align:center; }
+  .era-panel { background:${C.bg}; border:1px solid ${C.border}; padding:16px 18px; border-radius:2px; margin-top:12px; }
+  .era-panel-header { display:flex; justify-content:space-between; align-items:baseline; margin-bottom:8px; flex-wrap:wrap; gap:6px; }
+  .era-year-range { font-size:10px; letter-spacing:0.15em; text-transform:uppercase; margin-bottom:3px; }
+  .era-panel-label { font-family:'Fraunces',serif; font-weight:700; font-size:17px; color:${C.txt}; }
+  .era-duration { font-family:'Fraunces',serif; font-weight:900; font-size:24px; opacity:0.4; }
+  .era-desc { font-size:12px; color:${C.sub}; line-height:1.7; margin-bottom:12px; }
+  .era-events { display:flex; flex-direction:column; gap:5px; }
+  .era-event { display:flex; align-items:flex-start; gap:8px; }
+  .era-bullet { width:4px; height:4px; border-radius:50%; margin-top:5px; flex-shrink:0; }
+  .era-event-text { font-size:11.5px; color:${C.txt}; line-height:1.5; }
+  .era-legend { display:flex; flex-wrap:wrap; gap:10px; margin-top:14px; }
+  .era-leg { display:flex; align-items:center; gap:5px; cursor:pointer; }
+  .era-swatch { width:8px; height:8px; border-radius:2px; flex-shrink:0; }
+  .era-leg-lbl { font-size:10px; color:${C.sub}; letter-spacing:0.05em; }
 `;
 
 const Icons = {
@@ -890,12 +930,13 @@ const KpiCard = ({ label, value, sub, accent = C.uz, delay = 0 }) => {
   );
 };
 
-const Panel = ({ title, icon, children }) => (
+const Panel = ({ title, icon, note, children }) => (
   <div id="panel" className="panel">
     <div id="title" className="panel-title">
       <span className="panel-title-icon">{icon}</span>{title}
     </div>
     {children}
+    {note && <Subnote>{note}</Subnote>}
   </div>
 );
 
@@ -981,14 +1022,6 @@ const GradientBar = ({ title, values, colorStops, unit = '', height = 22, xLabel
     </div>
   );
 };
-
-const tempColor = p => {
-  if (p < 25) return `rgb(${Math.round(40+p*0.8)},${Math.round(60+p*0.4)},${Math.round(180-p*0.8)})`;
-  if (p < 50) { const t=(p-25)/25; return `rgb(${Math.round(60+t*130)},${Math.round(80+t*80)},${Math.round(160-t*100)})`; }
-  if (p < 75) { const t=(p-50)/25; return `rgb(${Math.round(190+t*50)},${Math.round(160-t*80)},${Math.round(60-t*40)})`; }
-  const t=(p-75)/25; return `rgb(${Math.round(240-t*30)},${Math.round(80-t*60)},${Math.round(20)})`;
-};
-const rainColor = p => `rgb(${Math.round(153-107*p/100)},${Math.round(153-19*p/100)},${Math.round(153+69*p/100)})`;
 
 const Donut = ({ segments, label, sublabel, size = 160 }) => {
   const r = 54, cx = 80, cy = 80, stroke = 22;
@@ -1200,15 +1233,13 @@ export default function Uzbekistan() {
 
         <div id="item" className="row gy-3 mb-3">
           <div className="col-12 col-md-6">
-            <Panel title={GEO_TERRAIN.title} icon={Icons.map}>
+            <Panel title={GEO_TERRAIN.title} icon={Icons.map} note={GEO_TERRAIN.note}>
               {GEO_TERRAIN.data.map(r => <BarRow key={r.label} label={r.label} value={r.value} pct={r.pct} color={r.color} />)}
-              <Subnote>{GEO_TERRAIN.note}</Subnote>
             </Panel>
           </div>
           <div className="col-12 col-md-6">
-            <Panel title={GEO_WATER.title} icon={Icons.water}>
+            <Panel title={GEO_WATER.title} icon={Icons.water} note={GEO_WATER.note}>
               <Tbl rows={GEO_WATER.data} />
-              <Subnote>{GEO_WATER.note}</Subnote>
             </Panel>
           </div>
         </div>
@@ -1224,21 +1255,19 @@ export default function Uzbekistan() {
         </div>
         <div id="item" className="row gy-3 mb-3">
           <div className="col-12 col-md-6">
-            <Panel title={CLIMA_DAYLIGHT.title} icon={Icons.sun}>
+            <Panel title={CLIMA_DAYLIGHT.title} icon={Icons.sun} note={CLIMA_DAYLIGHT.note}>
               {CLIMA_DAYLIGHT.data.map(r => <DlRow key={r.mo} mo={r.mo} label={r.label} pct={r.pct} color={r.color || C.uz} dark={r.dark} />)}
-              <Subnote>{CLIMA_DAYLIGHT.note}</Subnote>
             </Panel>
           </div>
           <div className="col-12 col-md-6">
-            <Panel title={CLIMA_RAIN_REGIONAL.title} icon={Icons.rain}>
+            <Panel title={CLIMA_RAIN_REGIONAL.title} icon={Icons.rain} note={CLIMA_RAIN_SEASONAL.note}>
               <p className="panel-sublabel">{CLIMA_RAIN_REGIONAL.sublabel}</p>
               {CLIMA_RAIN_REGIONAL.data.map(r => <BarRow key={r.label} label={r.label} value={r.value} pct={r.pct} color={r.color} />)}
               <div className="divider" />
               <p className="panel-sublabel">{CLIMA_RAIN_SEASONAL.sublabel}</p>
               {CLIMA_RAIN_SEASONAL.data.map(r => <BarRow key={r.label} label={r.label} value={r.value} pct={r.pct} color={r.color} />)}
-              <Subnote>{CLIMA_RAIN_SEASONAL.note}</Subnote>
-              <GradientBar title="Monthly avg temperature — Tashkent (°C)" values={[3,5,11,18,23,29,30,28,22,15,8,3]} colorStops={tempColor} unit="°" />
-              <GradientBar title="Monthly rainfall — Tashkent (mm)" values={[48,52,70,86,35,8,3,3,8,35,45,52]} colorStops={rainColor} unit="mm" />
+              <GradientBar {...CLIMA_RAIN_SEASONAL.gradbar1} />
+              <GradientBar {...CLIMA_RAIN_SEASONAL.gradbar2} />
             </Panel>
           </div>
         </div>
@@ -1250,29 +1279,25 @@ export default function Uzbekistan() {
         </div>
         <div id="item" className="row gy-3 mb-3">
           <div className="col-12 col-md-6">
-            <Panel title={POP_GROWTH.title} icon={Icons.chart}>
+            <Panel title={POP_GROWTH.title} icon={Icons.chart} note={POP_GROWTH.note}>
               {POP_GROWTH.data.map(r => <BarRow key={r.label} label={r.label} value={r.value} pct={r.pct} color={r.color} />)}
-              <Subnote>{POP_GROWTH.note}</Subnote>
             </Panel>
           </div>
           <div className="col-12 col-md-6">
-            <Panel title={POP_CITIES.title} icon={Icons.landmark}>
+            <Panel title={POP_CITIES.title} icon={Icons.landmark} note={POP_CITIES.note}>
               {POP_CITIES.data.map(r => <BarRow key={r.label} label={r.label} value={r.value} pct={r.pct} color={r.color} />)}
-              <Subnote>{POP_CITIES.note}</Subnote>
             </Panel>
           </div>
         </div>
         <div id="item" className="row gy-3 mb-3">
           <div className="col-12 col-md-6">
-            <Panel title={POP_ETHNIC.title} icon={Icons.people}>
-              <Donut label="37.9M" sublabel="population" segments={POP_ETHNIC.data} />
-              <Subnote>{POP_ETHNIC.note}</Subnote>
+            <Panel title={POP_ETHNIC.title} icon={Icons.people} note={POP_ETHNIC.note}>
+              <Donut label={POP_ETHNIC.label} sublabel={POP_ETHNIC.sublabel} segments={POP_ETHNIC.data} />
             </Panel>
           </div>
           <div className="col-12 col-md-6">
-            <Panel title={POP_RELIGION.title} icon={Icons.landmark}>
+            <Panel title={POP_RELIGION.title} icon={Icons.landmark} note={POP_RELIGION.note}>
               <Tbl rows={POP_RELIGION.data} />
-              <Subnote>{POP_RELIGION.note}</Subnote>
             </Panel>
           </div>
         </div>
@@ -1284,17 +1309,15 @@ export default function Uzbekistan() {
         </div>
         <div id="item" className="row gy-3 mb-3">
           <div className="col-12 col-md-6">
-            <Panel title={ECON_GDP_DONUT.title} icon={Icons.chart}>
-              <Donut label="$145B" sublabel="GDP 2025" segments={ECON_GDP_DONUT.data} />
+            <Panel title={ECON_GDP_DONUT.title} icon={Icons.chart} note={ECON_EXPORTS_BARS.note}>
+              <Donut label={ECON_GDP_DONUT.label} sublabel={ECON_GDP_DONUT.sublabel} segments={ECON_GDP_DONUT.data} />
               <div className="divider" />
               {ECON_EXPORTS_BARS.data.map(r => <BarRow key={r.label} label={r.label} value={r.value} pct={r.pct} color={r.color} />)}
-              <Subnote>{ECON_EXPORTS_BARS.note}</Subnote>
             </Panel>
           </div>
           <div className="col-12 col-md-6">
-            <Panel title={ECON_INDICATORS.title} icon={Icons.briefcase}>
+            <Panel title={ECON_INDICATORS.title} icon={Icons.briefcase} note={ECON_INDICATORS.note}>
               <Tbl rows={ECON_INDICATORS.data} />
-              <Subnote>{ECON_INDICATORS.note}</Subnote>
             </Panel>
           </div>
         </div>
@@ -1306,17 +1329,15 @@ export default function Uzbekistan() {
         </div>
         <div id="item" className="row gy-3 mb-3">
           <div className="col-12 col-md-6">
-            <Panel title={EMP_WAGES.title} icon={Icons.chart}>
+            <Panel title={EMP_WAGES.title} icon={Icons.chart} note={EMP_WAGES.note}>
               {EMP_WAGES.data.map(r => <BarRow key={r.label} label={r.label} value={r.value} pct={r.pct} color={r.color} />)}
-              <Subnote>{EMP_WAGES.note}</Subnote>
             </Panel>
           </div>
           <div className="col-12 col-md-6">
-            <Panel title={EMP_SECTORS_DONUT.title} icon={Icons.briefcase}>
-              <Donut label="14.6M" sublabel="labour force" segments={EMP_SECTORS_DONUT.data} />
+            <Panel title={EMP_SECTORS_DONUT.title} icon={Icons.briefcase} note={EMP_MIGRATION.note}>
+              <Donut label={EMP_SECTORS_DONUT.label} sublabel={EMP_SECTORS_DONUT.sublabel} segments={EMP_SECTORS_DONUT.data} />
               <div className="divider" />
               <Tbl rows={EMP_MIGRATION.data} />
-              <Subnote>{EMP_MIGRATION.note}</Subnote>
             </Panel>
           </div>
         </div>
@@ -1328,15 +1349,13 @@ export default function Uzbekistan() {
         </div>
         <div id="item" className="row gy-3 mb-3">
           <div className="col-12 col-md-6">
-            <Panel title={EDU_METRICS.title} icon={Icons.graduation}>
+            <Panel title={EDU_METRICS.title} icon={Icons.graduation} note={EDU_METRICS.note}>
               {EDU_METRICS.data.map(r => <BarRow key={r.label} label={r.label} value={r.value} pct={r.pct} color={r.color} />)}
-              <Subnote>{EDU_METRICS.note}</Subnote>
             </Panel>
           </div>
           <div className="col-12 col-md-6">
-            <Panel title={EDU_FACTS.title} icon={Icons.landmark}>
+            <Panel title={EDU_FACTS.title} icon={Icons.landmark} note={EDU_FACTS.note}>
               <Tbl rows={EDU_FACTS.data} />
-              <Subnote>{EDU_FACTS.note}</Subnote>
             </Panel>
           </div>
         </div>
@@ -1348,78 +1367,74 @@ export default function Uzbekistan() {
         </div>
         <div id="item" className="row gy-3 mb-3">
           <div className="col-12 col-md-6">
-            <Panel title={POL_ELECTION.title} icon={Icons.landmark}>
+            <Panel title={POL_ELECTION.title} icon={Icons.landmark} note={POL_ELECTION.note}>
               {POL_ELECTION.data.map(r => <BarRow key={r.label} label={r.label} value={r.value} pct={r.pct} color={r.color} />)}
-              <Subnote>{POL_ELECTION.note}</Subnote>
             </Panel>
           </div>
           <div className="col-12 col-md-6">
-            <Panel title={POL_TIMELINE.title} icon={Icons.chart}>
+            <Panel title={POL_TIMELINE.title} icon={Icons.chart} note={POL_TIMELINE.note}>
               {POL_TIMELINE.data.map(({ yr, tx }) => (
                 <div key={yr} className="timeline-item">
                   <div className="timeline-year">{yr}</div>
                   <div className="subnote">{tx}</div>
                 </div>
               ))}
-              <Subnote>{POL_TIMELINE.note}</Subnote>
             </Panel>
           </div>
         </div>
         <div id="item" className="row gy-3 mb-3">
           <div className="col-12">
-            <Panel title={ERAS.title} icon={Icons.chart}>
+            <Panel title={ERAS.title} icon={Icons.chart} note={ERAS.note}>
 
               {/* Era bar — data-era index used by vanilla JS below */}
-              <div style={{ display:'flex', height:40, borderRadius:4, overflow:'hidden' }}>
+              <div className="era-bar">
                 {ERAS.map((era, i) => (
                   <div key={era.id}
                     data-era={i}
                     className="era-seg"
                     title={`${era.label} (${era.start}–${era.end})`}
-                    style={{ width:`${((era.end - era.start) / ERA_TOTAL) * 100}%`, background:era.color, cursor:'pointer', transition:'background 0.2s', flexShrink:0, borderRight:'1px solid #000' }}
+                    style={{ width:`${((era.end - era.start) / ERA_TOTAL) * 100}%`, background:era.color }}
                   />
                 ))}
               </div>
 
               {/* Year labels — % positions match bar since gap removed */}
-              <div style={{ position:'relative', height:28, marginTop:5 }}>
+              <div className="era-labels">
                 {ERAS.map((era, i) => {
                   const left = ((era.start - 1900) / ERA_TOTAL) * 100;
                   const isFirst = i === 0;
                   return (
-                    <div key={era.id} style={{
-                      position:'absolute', left:`${left}%`, top:0,
-                      transform: isFirst ? 'scaleX(-1) scaleY(-1)' : 'translateX(-50%) scaleX(-1) scaleY(-1)',
-                      fontSize:9, color:C.sub, whiteSpace:'nowrap',
-                      writingMode:'vertical-lr',
-                    }}>{era.start}</div>
+                    <div key={era.id} className="era-year-label"
+                      style={{ left:`${left}%`, transform: isFirst ? 'scaleX(-1) scaleY(-1)' : 'translateX(-50%) scaleX(-1) scaleY(-1)' }}>
+                      {era.start}
+                    </div>
                   );
                 })}
-                <div style={{ position:'absolute', right:0, top:0, fontSize:9, color:C.sub, whiteSpace:'nowrap', writingMode:'vertical-lr', transform:'scaleX(-1) scaleY(-1)' }}>2025</div>
+                <div className="era-2025">2025</div>
               </div>
 
               {/* Placeholder shown when nothing selected */}
-              <div id="era-placeholder" style={{ background:C.bg, border:`1px solid ${C.border}`, padding:'8px 16px', borderRadius:2, marginTop:12, fontSize:11, color:C.sub, textAlign:'center' }}>
+              <div id="era-placeholder">
                 Click any era above to see details and key events.
               </div>
 
               {/* All era detail panels — hidden by default, shown by JS */}
               {ERAS.map((era, i) => (
-                <div key={era.id} id={`era-panel-${i}`}
-                  style={{ display:'none', background:C.bg, border:`1px solid ${C.border}`, borderLeft:`3px solid ${era.color}`, padding:'16px 18px', borderRadius:2, marginTop:12 }}>
-                  <div style={{ display:'flex', justifyContent:'space-between', alignItems:'baseline', marginBottom:8, flexWrap:'wrap', gap:6 }}>
+                <div key={era.id} id={`era-panel-${i}`} className="era-panel"
+                  style={{ display:'none', borderLeft:`3px solid ${era.color}` }}>
+                  <div className="era-panel-header">
                     <div>
-                      <div style={{ fontSize:10, letterSpacing:'0.15em', textTransform:'uppercase', color:era.colorL, marginBottom:3 }}>{era.start} – {era.end}</div>
-                      <div style={{ fontFamily:'Fraunces,serif', fontWeight:700, fontSize:17, color:C.txt }}>{era.label}</div>
+                      <div className="era-year-range" style={{ color:era.colorL }}>{era.start} – {era.end}</div>
+                      <div className="era-panel-label">{era.label}</div>
                     </div>
-                    <div style={{ fontFamily:'Fraunces,serif', fontWeight:900, fontSize:24, color:era.color, opacity:0.4 }}>{era.end - era.start}y</div>
+                    <div className="era-duration" style={{ color:era.color }}>{era.end - era.start}y</div>
                   </div>
-                  <p style={{ fontSize:12, color:C.sub, lineHeight:1.7, marginBottom:12 }}>{era.desc}</p>
-                  <div style={{ display:'flex', flexDirection:'column', gap:5 }}>
+                  <p className="era-desc">{era.desc}</p>
+                  <div className="era-events">
                     {era.events.map((ev, j) => (
-                      <div key={j} style={{ display:'flex', alignItems:'flex-start', gap:8 }}>
-                        <div style={{ width:4, height:4, borderRadius:'50%', background:era.colorL, marginTop:5, flexShrink:0 }} />
-                        <div style={{ fontSize:11.5, color:C.txt, lineHeight:1.5 }}>{ev}</div>
+                      <div key={j} className="era-event">
+                        <div className="era-bullet" style={{ background:era.colorL }} />
+                        <div className="era-event-text">{ev}</div>
                       </div>
                     ))}
                   </div>
@@ -1427,17 +1442,15 @@ export default function Uzbekistan() {
               ))}
 
               {/* Legend */}
-              <div style={{ display:'flex', flexWrap:'wrap', gap:10, marginTop:14 }}>
+              <div className="era-legend">
                 {ERAS.map((era, i) => (
-                  <div key={era.id} data-era={i} className="era-leg"
-                    style={{ display:'flex', alignItems:'center', gap:5, cursor:'pointer' }}>
-                    <div style={{ width:8, height:8, borderRadius:2, background:era.color, flexShrink:0 }} />
-                    <span className={`era-leg-lbl era-leg-lbl-${i}`} style={{ fontSize:10, color:C.sub, letterSpacing:'0.05em' }}>{era.short}</span>
+                  <div key={era.id} data-era={i} className="era-leg">
+                    <div className="era-swatch" style={{ background:era.color }} />
+                    <span className={`era-leg-lbl era-leg-lbl-${i}`}>{era.short}</span>
                   </div>
                 ))}
               </div>
 
-              <Subnote>{ERAS.note}</Subnote>
             </Panel>
           </div>
         </div>
@@ -1449,7 +1462,7 @@ export default function Uzbekistan() {
         </div>
         <div id="item" className="row gy-3 mb-3">
           <div className="col-12 col-md-6">
-            <Panel title={TOUR_ORIGINS.title} icon={Icons.people}>
+            <Panel title={TOUR_ORIGINS.title} icon={Icons.people} note={TOUR_ORIGINS.note}>
               {TOUR_ORIGINS.data.map(({ flag, country, val, pct }) => (
                 <div key={country} className="country-row">
                   <span className="country-flag">{flag}</span>
@@ -1458,14 +1471,12 @@ export default function Uzbekistan() {
                   <span className="country-pct">{pct}</span>
                 </div>
               ))}
-              <Subnote>{TOUR_ORIGINS.note}</Subnote>
             </Panel>
           </div>
           <div className="col-12 col-md-6">
-            <Panel title={TOUR_HIGHLIGHTS.title} icon={Icons.landmark}>
+            <Panel title={TOUR_HIGHLIGHTS.title} icon={Icons.landmark} note={TOUR_HIGHLIGHTS.note}>
               <Tbl rows={TOUR_HIGHLIGHTS.data} />
-              <Subnote>{TOUR_HIGHLIGHTS.note}</Subnote>
-              <GradientBar title="Tourism intensity by month (relative)" values={[15,20,45,85,100,80,65,70,90,85,30,15]} colorStops={p => `rgb(${Math.round(153+79*p/100)},${Math.round(153-128*p/100)},${Math.round(153-109*p/100)})`} unit="%" />
+              <GradientBar {...TOUR_HIGHLIGHTS.gradbar} />
             </Panel>
           </div>
         </div>
@@ -1477,15 +1488,13 @@ export default function Uzbekistan() {
         </div>
         <div id="item" className="row gy-3 mb-3">
           <div className="col-12 col-md-6">
-            <Panel title={VITA_DEATHS.title} icon={Icons.chart}>
+            <Panel title={VITA_DEATHS.title} icon={Icons.chart} note={VITA_DEATHS.note}>
               {VITA_DEATHS.data.map(r => <BarRow key={r.label} label={r.label} value={r.value} pct={r.pct} color={r.color} />)}
-              <Subnote>{VITA_DEATHS.note}</Subnote>
             </Panel>
           </div>
           <div className="col-12 col-md-6">
-            <Panel title={VITA_TRENDS.title} icon={Icons.landmark}>
+            <Panel title={VITA_TRENDS.title} icon={Icons.landmark} note={VITA_TRENDS.note}>
               <Tbl rows={VITA_TRENDS.data} />
-              <Subnote>{VITA_TRENDS.note}</Subnote>
             </Panel>
           </div>
         </div>
@@ -1494,15 +1503,13 @@ export default function Uzbekistan() {
         </div>
         <div id="item" className="row gy-3 mb-3">
           <div className="col-12 col-md-6">
-            <Panel title={HEALTH_FACTS.title} icon={Icons.people}>
+            <Panel title={HEALTH_FACTS.title} icon={Icons.people} note={HEALTH_FACTS.note}>
               <Tbl rows={HEALTH_FACTS.data} />
-              <Subnote>{HEALTH_FACTS.note}</Subnote>
             </Panel>
           </div>
           <div className="col-12 col-md-6">
-            <Panel title={HEALTH_BURDEN.title} icon={Icons.chart}>
+            <Panel title={HEALTH_BURDEN.title} icon={Icons.chart} note={HEALTH_BURDEN.note}>
               {HEALTH_BURDEN.data.map(r => <BarRow key={r.label} label={r.label} value={r.value} pct={r.pct} color={r.color} />)}
-              <Subnote>{HEALTH_BURDEN.note}</Subnote>
             </Panel>
           </div>
         </div>
@@ -1514,15 +1521,13 @@ export default function Uzbekistan() {
         </div>
         <div id="item" className="row gy-3 mb-3">
           <div className="col-12 col-md-6">
-            <Panel title={ENERGY_MIX.title} icon={Icons.chart}>
-              <Donut label="81.5 TWh" sublabel="generated 2024" segments={ENERGY_MIX.data} />
-              <Subnote>{ENERGY_MIX.note}</Subnote>
+            <Panel title={ENERGY_MIX.title} icon={Icons.chart} note={ENERGY_MIX.note}>
+              <Donut label={ENERGY_MIX.label} sublabel={ENERGY_MIX.sublabel} segments={ENERGY_MIX.data} />
             </Panel>
           </div>
           <div className="col-12 col-md-6">
-            <Panel title={ENERGY_FACTS.title} icon={Icons.landmark}>
+            <Panel title={ENERGY_FACTS.title} icon={Icons.landmark} note={ENERGY_FACTS.note}>
               <Tbl rows={ENERGY_FACTS.data} />
-              <Subnote>{ENERGY_FACTS.note}</Subnote>
             </Panel>
           </div>
         </div>
@@ -1534,15 +1539,13 @@ export default function Uzbekistan() {
         </div>
         <div id="item" className="row gy-3 mb-3">
           <div className="col-12 col-md-6">
-            <Panel title={INFRA_PROJECTS.title} icon={Icons.map}>
+            <Panel title={INFRA_PROJECTS.title} icon={Icons.map} note={INFRA_PROJECTS.note}>
               <Tbl rows={INFRA_PROJECTS.data} />
-              <Subnote>{INFRA_PROJECTS.note}</Subnote>
             </Panel>
           </div>
           <div className="col-12 col-md-6">
-            <Panel title={INFRA_DIGITAL.title} icon={Icons.chart}>
+            <Panel title={INFRA_DIGITAL.title} icon={Icons.chart} note={INFRA_DIGITAL.note}>
               {INFRA_DIGITAL.data.map(r => <BarRow key={r.label} label={r.label} value={r.value} pct={r.pct} color={r.color} />)}
-              <Subnote>{INFRA_DIGITAL.note}</Subnote>
             </Panel>
           </div>
         </div>
@@ -1554,15 +1557,13 @@ export default function Uzbekistan() {
         </div>
         <div id="item" className="row gy-3 mb-3">
           <div className="col-12 col-md-6">
-            <Panel title={SOCIAL_SERVICES.title} icon={Icons.chart}>
+            <Panel title={SOCIAL_SERVICES.title} icon={Icons.chart} note={SOCIAL_SERVICES.note}>
               {SOCIAL_SERVICES.data.map(r => <BarRow key={r.label} label={r.label} value={r.value} pct={r.pct} color={r.color} />)}
-              <Subnote>{SOCIAL_SERVICES.note}</Subnote>
             </Panel>
           </div>
           <div className="col-12 col-md-6">
-            <Panel title={SOCIAL_COHESION.title} icon={Icons.people}>
+            <Panel title={SOCIAL_COHESION.title} icon={Icons.people} note={SOCIAL_COHESION.note}>
               <Tbl rows={SOCIAL_COHESION.data} />
-              <Subnote>{SOCIAL_COHESION.note}</Subnote>
             </Panel>
           </div>
         </div>
@@ -1574,15 +1575,13 @@ export default function Uzbekistan() {
         </div>
         <div id="item" className="row gy-3 mb-3">
           <div className="col-12 col-md-6">
-            <Panel title={ENV_FACTS.title} icon={Icons.water}>
+            <Panel title={ENV_FACTS.title} icon={Icons.water} note={ENV_FACTS.note}>
               <Tbl rows={ENV_FACTS.data} />
-              <Subnote>{ENV_FACTS.note}</Subnote>
             </Panel>
           </div>
           <div className="col-12 col-md-6">
-            <Panel title={ENV_WATER.title} icon={Icons.chart}>
+            <Panel title={ENV_WATER.title} icon={Icons.chart} note={ENV_WATER.note}>
               {ENV_WATER.data.map(r => <BarRow key={r.label} label={r.label} value={r.value} pct={r.pct} color={r.color} />)}
-              <Subnote>{ENV_WATER.note}</Subnote>
             </Panel>
           </div>
         </div>
@@ -1594,15 +1593,13 @@ export default function Uzbekistan() {
         </div>
         <div id="item" className="row gy-3 mb-3">
           <div className="col-12 col-md-6">
-            <Panel title={BIZ_CLIMATE.title} icon={Icons.briefcase}>
+            <Panel title={BIZ_CLIMATE.title} icon={Icons.briefcase} note={BIZ_CLIMATE.note}>
               <Tbl rows={BIZ_CLIMATE.data} />
-              <Subnote>{BIZ_CLIMATE.note}</Subnote>
             </Panel>
           </div>
           <div className="col-12 col-md-6">
-            <Panel title={BIZ_RISKS.title} icon={Icons.chart}>
+            <Panel title={BIZ_RISKS.title} icon={Icons.chart} note={BIZ_RISKS.note}>
               {BIZ_RISKS.data.map(r => <BarRow key={r.label} label={r.label} value={r.value} pct={r.pct} color={r.color} />)}
-              <Subnote>{BIZ_RISKS.note}</Subnote>
             </Panel>
           </div>
         </div>
@@ -1612,7 +1609,7 @@ export default function Uzbekistan() {
         </div>
         <div id="item" className="row gy-3 mb-3">
           <div className="col-12 col-md-6">
-            <Panel title={FISCAL_EXPORTS.title} icon={Icons.briefcase}>
+            <Panel title={FISCAL_EXPORTS.title} icon={Icons.briefcase} note={FISCAL_EXPORTS.note}>
               {FISCAL_EXPORTS.data.map(({ flag, country, val, pct }) => (
                 <div key={country} className="country-row">
                   <span className="country-flag">{flag}</span>
@@ -1621,14 +1618,12 @@ export default function Uzbekistan() {
                   <span className="country-pct">{pct}</span>
                 </div>
               ))}
-              <Subnote>{FISCAL_EXPORTS.note}</Subnote>
             </Panel>
           </div>
           <div className="col-12 col-md-6">
-            <Panel title={FISCAL_INDICATORS.title} icon={Icons.chart}>
+            <Panel title={FISCAL_INDICATORS.title} icon={Icons.chart} note={FISCAL_INDICATORS.note}>
               <Tbl rows={FISCAL_INDICATORS.data} />
-              <Subnote>{FISCAL_INDICATORS.note}</Subnote>
-              <GradientBar title="Trade balance 2015–2024 ($B)" values={[-4.5, -4.8, -5.2, -7.0, -8.1, -8.1, -11.5, -13.7, -15.2, -13.6]} xLabels={['2015', '2016', '2017', '2018', '2019', '2020', '2021', '2022', '2023', '2024']} colorStops={(p, v) => v >= 0 ? `rgb(${Math.round(153-118*p/100)},${Math.round(153+6*p/100)},${Math.round(153-89*p/100)})` : `rgb(${Math.round(153+79*p/100)},${Math.round(153-128*p/100)},${Math.round(153-109*p/100)})`} fmt={v => v > 0 ? `+${v}B` : `${v}B`} absScale={true} />
+              <GradientBar {...FISCAL_INDICATORS.gradbar} />
             </Panel>
           </div>
         </div>
@@ -1640,15 +1635,13 @@ export default function Uzbekistan() {
         </div>
         <div id="item" className="row gy-3 mb-3">
           <div className="col-12 col-md-6">
-            <Panel title={CRIME_INDICATORS.title} icon={Icons.landmark}>
+            <Panel title={CRIME_INDICATORS.title} icon={Icons.landmark} note={CRIME_INDICATORS.note}>
               <Tbl rows={CRIME_INDICATORS.data} />
-              <Subnote>{CRIME_INDICATORS.note}</Subnote>
             </Panel>
           </div>
           <div className="col-12 col-md-6">
-            <Panel title={CRIME_SECURITY.title} icon={Icons.chart}>
+            <Panel title={CRIME_SECURITY.title} icon={Icons.chart} note={CRIME_SECURITY.note}>
               {CRIME_SECURITY.data.map(r => <BarRow key={r.label} label={r.label} value={r.value} pct={r.pct} color={r.color} />)}
-              <Subnote>{CRIME_SECURITY.note}</Subnote>
             </Panel>
           </div>
         </div>
