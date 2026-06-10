@@ -1,5 +1,9 @@
 const { useState, useEffect } = React;
 
+// ************************************************************
+// DATA
+// ************************************************************
+
 // DATA STATE — every data item carries a `state` field:
 //   1  = confirmed (sourced & verified)
 //  -1  = unconfirmed (value found but not yet cross-checked)
@@ -73,34 +77,30 @@ const GEO = [
   { state:1, label:'Arable land',              value:"~9.1%",             sub:"Fergana & Zerafshan valleys; highly irrigated (World Bank 2023)",      accent:C.dim, delay:0.45 },
 ];
 
-const GEO_TERRAIN = [];
-
-GEO_TERRAIN.title = 'Major Terrain Zones';
-
-GEO_TERRAIN.data  = [
+const GEO_TERRAIN = {
+  title: 'Major Terrain Zones',
+  data: [
   { state:1, label:"Desert & semi-desert (Kyzylkum)",     value:"~80%",  pct:100, color:C.uz  },
   { state:1, label:"Steppe (north & centre)",             value:"~10%",  pct:13,  color:C.grn },
   { state:1, label:"Mountains (east & south-east)",       value:"~8%",   pct:10,  color:C.blu },
   { state:1, label:"Fergana Valley (intensively farmed)", value:"~5%",   pct:6,   color:C.dim },
   { state:1, label:"Irrigated agricultural land",         value:"~9.1%", pct:12,  color:C.dim },
-];
+],
+  note: '80% desert makes Uzbekistan appear barren, but the Fergana Valley — shared with Kyrgyzstan and Tajikistan — is among Central Asia\'s most productive agricultural zones. The Kyzylkum Desert contains significant gold deposits (Muruntau mine — world\'s largest open-pit gold mine) and natural gas reserves.'
+};
 
-GEO_TERRAIN.note  = '80% desert makes Uzbekistan appear barren, but the Fergana Valley — shared with Kyrgyzstan and Tajikistan — is among Central Asia\'s most productive agricultural zones. The Kyzylkum Desert contains significant gold deposits (Muruntau mine — world\'s largest open-pit gold mine) and natural gas reserves.';
-
-const GEO_WATER = [];
-
-GEO_WATER.title = 'Key Water Bodies & Features'
-
-GEO_WATER.data = [
+const GEO_WATER = {
+  title: 'Key Water Bodies & Features',
+  data: [
   { state:1, label:'Amu Darya (Oxus) — main river', value:'2,400 km; originates in Tajikistan' },
   { state:1, label:'Syr Darya — northern river', value:'2,212 km; both feed the dying Aral Sea' },
   { state:1, label:'Aral Sea (former)', value:'Was 4th largest lake; now ~5% of original size; mostly desiccated' },
   { state:1, label:'Charvak Reservoir (near Tashkent)', value:'~35 km²; hydropower & recreation' },
   { state:1, label:'Fergana Valley irrigation canals', value:'>10,000 km of Soviet-era canals' },
   { state:1, label:'Muruntau gold mine (Kyzylkum)', value:"World's largest open-pit gold mine" },
-];
-
-GEO_WATER.note = 'The Aral Sea disaster — shared with Kazakhstan — is one of the world\'s worst ecological catastrophes. Soviet cotton irrigation drained both the Amu Darya and Syr Darya, shrinking the sea by 91%. The exposed seabed (Aralkum desert) now generates toxic salt dust storms affecting millions. Uzbekistan has taken global leadership in Aral Sea advocacy.';
+],
+  note: 'The Aral Sea disaster — shared with Kazakhstan — is one of the world\'s worst ecological catastrophes. Soviet cotton irrigation drained both the Amu Darya and Syr Darya, shrinking the sea by 91%. The exposed seabed (Aralkum desert) now generates toxic salt dust storms affecting millions. Uzbekistan has taken global leadership in Aral Sea advocacy.'
+};
 
 const GEO_REGIONS = [
   { state:1, name:"Tashkent Region",      type:"Capital · industrial hub", desc:"Capital (3M+). Major Soviet industrial city. Modernising rapidly under Mirziyoyev. Central Asia's largest city.", stripe:C.uz  },
@@ -122,11 +122,9 @@ const CLIMA_KPI = [
   { state:1, label:"Spring Mar–May",            value:"8–24°C",     sub:"Brief, pleasant; flowering steppes; snowmelt flood risk",                                    accent:C.uz,  delay:0.45 },
 ];
 
-const CLIMA_DAYLIGHT = [];
-
-CLIMA_DAYLIGHT.title = 'Daylight Hours — Tashkent (41.3°N)';
-
-CLIMA_DAYLIGHT.data  = [
+const CLIMA_DAYLIGHT = {
+  title: 'Daylight Hours — Tashkent (41.3°N)',
+  data: [
   { state:1, mo:'Jan', label:'9h 28m',    pct:37,  color:C.blu },
   { state:1, mo:'Feb', label:'10h 38m',   pct:45,  color:C.blu },
   { state:1, mo:'Mar', label:'12h 00m',   pct:54  },
@@ -139,22 +137,21 @@ CLIMA_DAYLIGHT.data  = [
   { state:1, mo:'Oct', label:'10h 42m',   pct:51  },
   { state:1, mo:'Nov', label:'9h 34m',    pct:38,  color:C.blu },
   { state:1, mo:'Dec', label:'9h 04m ★',  pct:33,  color:C.blu },
-];
+],
+  note: <>★ Summer solstice <strong style={{ color:C.grnL }}>15h 10m</strong> · Winter solstice <strong style={{ color:C.bluL }}>9h 04m</strong> · 300 sunny days/year in Tashkent — excellent solar energy potential · <em>Daylight values confirmed against climate.top / timeanddate.com (latitude 41.3°N)</em><br/>Tashkent's 300 sunny days and abundant flat desert land give Uzbekistan world-class solar energy potential. The government is developing 42 renewable projects totalling $9.5B — one of Central Asia's most ambitious clean energy programmes.</>
+};
 
-CLIMA_DAYLIGHT.note  = <>★ Summer solstice <strong style={{ color:C.grnL }}>15h 10m</strong> · Winter solstice <strong style={{ color:C.bluL }}>9h 04m</strong> · 300 sunny days/year in Tashkent — excellent solar energy potential · <em>Daylight values confirmed against climate.top / timeanddate.com (latitude 41.3°N)</em><br/>Tashkent's 300 sunny days and abundant flat desert land give Uzbekistan world-class solar energy potential. The government is developing 42 renewable projects totalling $9.5B — one of Central Asia's most ambitious clean energy programmes.</>;
-
-const CLIMA_RAIN_REGIONAL = [];
-
-CLIMA_RAIN_REGIONAL.title    = 'Rainfall by Region';
-CLIMA_RAIN_REGIONAL.sublabel = 'Annual precipitation by zone';
-
-CLIMA_RAIN_REGIONAL.data  = [
+const CLIMA_RAIN_REGIONAL = {
+  title: 'Rainfall by Region',
+  sublabel: 'Annual precipitation by zone',
+  data: [
   { state:1, label:"Fergana Valley mountain flanks", value:"~600 mm",    pct:100, color:C.uz  },
   { state:1, label:"Tashkent & Zerafshan Valley",    value:"~450 mm",    pct:75,  color:C.grn },
   { state:1, label:"Samarkand & Bukhara",            value:"~270 mm",    pct:45,  color:C.blu },
   { state:1, label:"Kyzylkum Desert (centre)",       value:"~100–150 mm",pct:22,  color:C.dim },
   { state:1, label:"Karakalpakstan (Aral basin)",    value:"~80 mm",     pct:13,  color:C.dim },
-];
+]
+};
 
 const tempColor = p => {
   if (p < 25) return `rgb(${Math.round(40+p*0.8)},${Math.round(60+p*0.4)},${Math.round(180-p*0.8)})`;
@@ -162,21 +159,20 @@ const tempColor = p => {
   if (p < 75) { const t=(p-50)/25; return `rgb(${Math.round(190+t*50)},${Math.round(160-t*80)},${Math.round(60-t*40)})`; }
   const t=(p-75)/25; return `rgb(${Math.round(240-t*30)},${Math.round(80-t*60)},${Math.round(20)})`;
 };
+
 const rainColor = p => `rgb(${Math.round(153-107*p/100)},${Math.round(153-19*p/100)},${Math.round(153+69*p/100)})`;
 
-const CLIMA_RAIN_SEASONAL = [];
-
-CLIMA_RAIN_SEASONAL.sublabel = 'Tashkent seasonal pattern';
-
-CLIMA_RAIN_SEASONAL.data  = [
+const CLIMA_RAIN_SEASONAL = {
+  sublabel: 'Tashkent seasonal pattern',
+  data: [
   { state:1, label:"April (wettest month)",  value:"~86 mm",  pct:100, color:C.uz  },
   { state:1, label:"Jun–Sep (very dry)",     value:"3–8 mm",  pct:9,   color:C.grn },
   { state:1, label:"Jan–Feb (snow possible)",value:"48–52 mm",pct:57,  color:C.blu },
-];
-
-CLIMA_RAIN_SEASONAL.gradbar1 = { title:'Monthly avg temperature — Tashkent (°C)', values:[3,5,11,18,23,29,30,28,22,15,8,3], colorStops:tempColor, unit:'°' };
-CLIMA_RAIN_SEASONAL.gradbar2 = { title:'Monthly rainfall — Tashkent (mm)', values:[48,52,70,86,35,8,3,3,8,35,45,52], colorStops:rainColor, unit:'mm' };
-CLIMA_RAIN_SEASONAL.note  = "Almost zero rainfall in summer (3–8mm/month Jun–Sep) means agriculture is entirely dependent on irrigation from the Amu Darya and Syr Darya — the same rivers that once filled the Aral Sea. Water stress is Uzbekistan's most critical long-term environmental and economic challenge.";
+],
+  gradbar1: { title:'Monthly avg temperature — Tashkent (°C)', values:[3,5,11,18,23,29,30,28,22,15,8,3], colorStops:tempColor, unit:'°' },
+  gradbar2: { title:'Monthly rainfall — Tashkent (mm)', values:[48,52,70,86,35,8,3,3,8,35,45,52], colorStops:rainColor, unit:'mm' },
+  note: "Almost zero rainfall in summer (3–8mm/month Jun–Sep) means agriculture is entirely dependent on irrigation from the Amu Darya and Syr Darya — the same rivers that once filled the Aral Sea. Water stress is Uzbekistan's most critical long-term environmental and economic challenge."
+};
 
 /* ── §3 POPULATION ── */
 const POP_KPI = [
@@ -187,55 +183,48 @@ const POP_KPI = [
   { state:1, label:"Life Expectancy",       value:"~75 yrs",      sub:"Women ~77 · Men ~73; improving steadily",                            accent:C.dim, delay:0.25 },
   { state:1, label:"Fertility Rate",        value:"~3.5",         sub:"UN WPP 2025: 3.45 births/woman; declining from 3.8 in 2000",        accent:C.blu, delay:0.30 },
 ];
-const POP_GROWTH = [];
 
-POP_GROWTH.title = 'Population Growth';
-
-POP_GROWTH.data  = [
+const POP_GROWTH = {
+  title: 'Population Growth',
+  data: [
   { state:1, label:"1991 (independence)", value:"20.6M",  pct:54,  color:C.dim },
   { state:1, label:"2000",                value:"24.5M",  pct:65,  color:C.dim },
   { state:1, label:"2010",                value:"28.0M",  pct:74,  color:C.blu },
   { state:1, label:"2020",                value:"33.9M",  pct:90,  color:C.grn },
   { state:1, label:"2025 (Jul)",          value:"~37.9M", pct:100, color:C.uz  },
-];
+],
+  note: "Uzbekistan's population nearly doubled since independence — from 20.6M to 37.9M (+84%). Unlike Kazakhstan, it did not suffer post-Soviet emigration collapse; natural growth remained high throughout. With 37.9M people, Uzbekistan accounts for ~50% of Central Asia's total population."
+};
 
-POP_GROWTH.note  = "Uzbekistan's population nearly doubled since independence — from 20.6M to 37.9M (+84%). Unlike Kazakhstan, it did not suffer post-Soviet emigration collapse; natural growth remained high throughout. With 37.9M people, Uzbekistan accounts for ~50% of Central Asia's total population.";
-
-const POP_CITIES = [];
-
-POP_CITIES.title = 'Largest Cities (2025 est.)';
-
-POP_CITIES.data  = [
+const POP_CITIES = {
+  title: 'Largest Cities (2025 est.)',
+  data: [
   { state:1, label:"Tashkent (capital)",          value:"3,000,000+", pct:100, color:C.uz  },
   { state:1, label:"Namangan (Fergana Valley)",   value:"~700,000",   pct:23,  color:C.grn },
   { state:1, label:"Samarkand (ancient capital)", value:"~600,000",   pct:20,  color:C.blu },
   { state:1, label:"Andijan (Fergana Valley)",    value:"~500,000",   pct:17,  color:C.dim },
   { state:1, label:"Bukhara (Silk Road oasis)",   value:"~280,000",   pct:9,   color:C.dim },
-];
+],
+  note: <>2025 est. — no inter-census registry; city boundaries vary by source.<br/>Tashkent at 3M+ is Central Asia's largest city — but notably, the Fergana Valley cities (Namangan, Andijan, Fergana city) together hold more people than Tashkent. The Valley's extreme density (~900/km²) creates significant pressure on water, land, and employment — making it Central Asia's most politically sensitive zone.</>
+};
 
-POP_CITIES.note  = <>2025 est. — no inter-census registry; city boundaries vary by source.<br/>Tashkent at 3M+ is Central Asia's largest city — but notably, the Fergana Valley cities (Namangan, Andijan, Fergana city) together hold more people than Tashkent. The Valley's extreme density (~900/km²) creates significant pressure on water, land, and employment — making it Central Asia's most politically sensitive zone.</>;
-
-const POP_ETHNIC = [];
-
-POP_ETHNIC.title = 'Ethnic Composition (2021)';
-
-POP_ETHNIC.data  = [
+const POP_ETHNIC = {
+  title: 'Ethnic Composition (2021)',
+  data: [
   { state:1, label:'Uzbek',  value:'83.8%', pct:83.8, color:C.uz  },
   { state:1, label:'Tajik',  value:'4.8%',  pct:4.8,  color:C.grn },
   { state:1, label:'Kazakh', value:'2.5%',  pct:2.5,  color:C.blu },
   { state:1, label:'Russian',value:'2.3%',  pct:2.3,  color:'#888'},
   { state:1, label:'Other (Kyrgyz, Tatar, Korean, etc.)', value:'6.6%', pct:6.6, color:C.dim },
-];
+],
+  label: '37.9M',
+  sublabel: 'population',
+  note: "The Tajik share (4.8%) is likely significantly underreported — Samarkand and Bukhara have historically large Tajik-speaking populations. Many Tajik-speakers registered as Uzbek during Soviet-era censuses. This is a cultural and political sensitivity in Uzbek-Tajik relations."
+};
 
-POP_ETHNIC.label    = '37.9M';
-POP_ETHNIC.sublabel = 'population';
-POP_ETHNIC.note  = "The Tajik share (4.8%) is likely significantly underreported — Samarkand and Bukhara have historically large Tajik-speaking populations. Many Tajik-speakers registered as Uzbek during Soviet-era censuses. This is a cultural and political sensitivity in Uzbek-Tajik relations.";
-
-const POP_RELIGION = [];
-
-POP_RELIGION.title = 'Religion & Language';
-
-POP_RELIGION.data  = [
+const POP_RELIGION = {
+  title: 'Religion & Language',
+  data: [
   { state:1, label:'Islam (predominantly Sunni Hanafi)', value:'~88%' },
   { state:1, label:'Eastern Orthodox Christian', value:'~9%' },
   { state:1, label:'Other / atheist', value:'~3%' },
@@ -243,9 +232,9 @@ POP_RELIGION.data  = [
   { state:1, label:'Widely spoken', value:'Russian (cities, older generations)' },
   { state:1, label:'Recognised minority', value:'Tajik, Kazakh, Kyrgyz, Russian' },
   { state:1, label:'UNESCO heritage cities', value:'Samarkand, Bukhara, Khiva, Shakhrisabz' },
-];
-
-POP_RELIGION.note  = "Uzbekistan's Hanafi Sunni Islam is generally moderate — a secular tradition reinforced under Karimov (1991–2016). Mirziyoyev has cautiously opened religious expression while maintaining state control. The Uzbek Latin script transition (from Cyrillic) is ongoing — most adults still use Cyrillic while youth learn Latin.";
+],
+  note: "Uzbekistan's Hanafi Sunni Islam is generally moderate — a secular tradition reinforced under Karimov (1991–2016). Mirziyoyev has cautiously opened religious expression while maintaining state control. The Uzbek Latin script transition (from Cyrillic) is ongoing — most adults still use Cyrillic while youth learn Latin."
+};
 
 /* ── §4 ECONOMY ── */
 const ECON_KPI = [
@@ -256,43 +245,40 @@ const ECON_KPI = [
   { state:1, label:"Inflation CPI (2025)",value:"~7.3%",     sub:"Cooling from 12%+ in 2022; Central Bank target 5% by 2028",               accent:C.dim, delay:0.25 },
   { state:1, label:"Currency",            value:"UZS (Sum)", sub:"~12,600 UZS = $1 (2025 avg); free float since 2017 (CBU)",                accent:C.dim, delay:0.30 },
 ];
-const ECON_GDP_DONUT = [];
 
-ECON_GDP_DONUT.title = 'GDP by Sector & Major Exports';
-
-ECON_GDP_DONUT.label    = '$145B';
-ECON_GDP_DONUT.sublabel = 'GDP 2025';
-ECON_GDP_DONUT.data  = [
+const ECON_GDP_DONUT = {
+  title: 'GDP by Sector & Major Exports',
+  label: '$145B',
+  sublabel: 'GDP 2025',
+  data: [
   { state:1, label:'Services (trade, finance, tourism)',  value:'~47%', pct:47, color:C.uz  },
   { state:1, label:'Industry (mining, manufacturing)',    value:'~26%', pct:26, color:C.grn },
   { state:1, label:'Agriculture (cotton, wheat, fruit)',  value:'~19%', pct:19, color:C.blu },
-];
+]
+};
 
-const ECON_EXPORTS_BARS = [];
-
-ECON_EXPORTS_BARS.data = [
+const ECON_EXPORTS_BARS = {
+  data: [
   { state:1, label:"Gold (Muruntau — world #1 open-pit)", value:"~42% of exports", pct:100, color:C.uz  },
   { state:1, label:"Natural gas & energy products",       value:"~6%",             pct:14,  color:C.grn },
   { state:1, label:"Copper, zinc, uranium",               value:"~3%",             pct:7,   color:C.blu },
   { state:1, label:"Cotton fibre & textiles",             value:"~6–7%",           pct:15,  color:C.dim },
-];
+],
+  note: "Muruntau gold mine (Kyzylkum Desert) is the world's largest open-pit gold mine — producing ~70 tonnes/year. Gold at 35% of exports makes Uzbekistan highly exposed to gold price swings. The 7.7% GDP growth in 2025 is driven by a rare combination: natural resources, manufacturing, services, and FDI all expanding simultaneously."
+};
 
-ECON_EXPORTS_BARS.note = "Muruntau gold mine (Kyzylkum Desert) is the world's largest open-pit gold mine — producing ~70 tonnes/year. Gold at 35% of exports makes Uzbekistan highly exposed to gold price swings. The 7.7% GDP growth in 2025 is driven by a rare combination: natural resources, manufacturing, services, and FDI all expanding simultaneously.";
-
-const ECON_INDICATORS = [];
-
-ECON_INDICATORS.title = 'Key Economic Indicators';
-
-ECON_INDICATORS.data  = [
+const ECON_INDICATORS = {
+  title: 'Key Economic Indicators',
+  data: [
   { state:1, label:'Remittances (% of GDP, 2025)', value:'~$18.9B (~14% of GDP); +27% YoY; from Russia mainly' },
   { state:1, label:'Gold production (Muruntau)', value:'~70 tonnes/year — world\'s largest mine' },
   { state:1, label:'Foreign reserves (2025)', value:'~$66B — record; gold-heavy (CBU Jan 2026)' },
   { state:1, label:'Foreign investment (2025)', value:'~$35–40B total; BoP FDI ~$2.8B (2024); record inflows' },
   { state:1, label:'Poverty rate ($3.65/day, 2025)', value:'~5.1% — dramatic improvement from ~27% in 2016' },
   { state:1, label:'Gini coefficient', value:'34.5 — moderate (World Bank 2023)' },
-];
-
-ECON_INDICATORS.note  = "The poverty reduction since Mirziyoyev's reforms began in 2016 is extraordinary — from ~27% to 5.1% in under a decade. Total foreign investment (~$35–40B) in 2025 is the highest in Central Asia by far. Foreign reserves of $66B+ provide unprecedented macro stability for a lower-middle income country. The \"Uzbekistan 2030\" strategy aims to reach $220–230B GDP — now likely achievable by 2027–28.";
+],
+  note: "The poverty reduction since Mirziyoyev's reforms began in 2016 is extraordinary — from ~27% to 5.1% in under a decade. Total foreign investment (~$35–40B) in 2025 is the highest in Central Asia by far. Foreign reserves of $66B+ provide unprecedented macro stability for a lower-middle income country. The \"Uzbekistan 2030\" strategy aims to reach $220–230B GDP — now likely achievable by 2027–28."
+};
 
 /* ── §5 EMPLOYMENT ── */
 const EMP_KPI = [
@@ -303,44 +289,41 @@ const EMP_KPI = [
   { state:1, label:"Min. Wage (2025)",         value:"~1,271,000 UZS", sub:"~$101/month; raised to 1,155K Jan 2025, then 1,271K Aug 2025 (WageIndicator)",         accent:C.blu, delay:0.25 },
   { state:1, label:"Labour migration abroad",  value:"~2M workers",    sub:"Mostly to Russia; remittances ~$18.9B (2025)",                                         accent:C.dim, delay:0.30 },
 ];
-const EMP_WAGES = [];
 
-EMP_WAGES.title = 'Wages by Sector (monthly UZS, 2024 est.)';
-
-EMP_WAGES.data  = [
+const EMP_WAGES = {
+  title: 'Wages by Sector (monthly UZS, 2024 est.)',
+  data: [
   { state:1, label:"Banking & financial services",  value:"~15,000,000", pct:100, color:C.uz  },
   { state:1, label:"Mining & extraction (gold, gas)",value:"~9,100,000", pct:61,  color:C.grn },
   { state:1, label:"National average (2025)",       value:"~6,400,000",  pct:43,  color:C.dim },
   { state:1, label:"Public administration",         value:"~5,500,000",  pct:37,  color:C.blu },
   { state:1, label:"Education",                     value:"~3,600,000",  pct:24,  color:C.dim },
   { state:1, label:"Agriculture (cotton, wheat)",   value:"~2,800,000",  pct:19,  color:C.dim },
-];
+],
+  note: <>est. 2024 — sectoral breakdown modelled from National Stats avg + ILO ratios.<br/>Wages have tripled in USD terms since 2016 — one of the fastest wage growth rates globally. The 4.3× gap between mining (~$940/month) and agriculture (~$220/month) explains rural-urban migration pressure. With 37.9M people and a young population, job creation is the government's most pressing economic challenge.</>
+};
 
-EMP_WAGES.note  = <>est. 2024 — sectoral breakdown modelled from National Stats avg + ILO ratios.<br/>Wages have tripled in USD terms since 2016 — one of the fastest wage growth rates globally. The 4.3× gap between mining (~$940/month) and agriculture (~$220/month) explains rural-urban migration pressure. With 37.9M people and a young population, job creation is the government's most pressing economic challenge.</>;
-
-const EMP_SECTORS_DONUT = [];
-
-EMP_SECTORS_DONUT.title = 'Employment by Sector';
-
-EMP_SECTORS_DONUT.label    = '14.6M';
-EMP_SECTORS_DONUT.sublabel = 'labour force';
-EMP_SECTORS_DONUT.data  = [
+const EMP_SECTORS_DONUT = {
+  title: 'Employment by Sector',
+  label: '14.6M',
+  sublabel: 'labour force',
+  data: [
   { state:1, label:'Agriculture',              value:'~26%', pct:26, color:C.uz  },
   { state:1, label:'Trade & services',         value:'~35%', pct:35, color:C.grn },
   { state:1, label:'Industry & manufacturing', value:'~13%', pct:13, color:C.blu },
   { state:1, label:'Construction',             value:'~11%', pct:11, color:C.dim },
   { state:1, label:'Transport & logistics',    value:'~8%',  pct:8,  color:'#555'},
   { state:1, label:'Other',                    value:'~7%',  pct:7,  color:C.dim },
-];
+]
+};
 
-const EMP_MIGRATION = [];
-
-EMP_MIGRATION.data = [
+const EMP_MIGRATION = {
+  data: [
   { state:1, label:'Migrant workers abroad (est. — no official registry; ILO modelled)', value:'~2,000,000' },
   { state:1, label:'Remittances (2025)', value:'~$18.9B (~14% of GDP)' },
-];
-
-EMP_MIGRATION.note = "Agriculture at 26% is declining as manufacturing expands — a healthy structural shift. The government's \"1 million programmers\" AI initiative and free economic zones are creating new digital employment. 2M migrant workers abroad represent ~14% of the ILO-estimated domestic labour force — significant but far less remittance-dependent than Tajikistan (45%). Remittances of $18.9B in 2025 (+27% YoY) now equal ~14% of GDP.";
+],
+  note: "Agriculture at 26% is declining as manufacturing expands — a healthy structural shift. The government's \"1 million programmers\" AI initiative and free economic zones are creating new digital employment. 2M migrant workers abroad represent ~14% of the ILO-estimated domestic labour force — significant but far less remittance-dependent than Tajikistan (45%). Remittances of $18.9B in 2025 (+27% YoY) now equal ~14% of GDP."
+};
 
 /* ── §6 EDUCATION ── */
 const EDU_KPI = [
@@ -351,34 +334,31 @@ const EDU_KPI = [
   { state:1, label:"Education Spending",         value:"~5% GDP",  sub:"Rising; international branch universities flagship reform",                           accent:C.dim, delay:0.25 },
   { state:1, label:"Foreign university branches",value:"~20+",     sub:"Inha, Webster, Turin, MSU branches; unprecedented for region",                       accent:C.dim, delay:0.30 },
 ];
-const EDU_METRICS = [];
 
-EDU_METRICS.title = 'Education Metrics';
-
-EDU_METRICS.data  = [
+const EDU_METRICS = {
+  title: 'Education Metrics',
+  data: [
   { state:1, label:"Primary enrolment rate",                           value:"~93%",          pct:93, color:C.uz  },
   { state:1, label:"Secondary enrollment rate (World Bank 2024)",      value:"96.8%",         pct:97, color:C.grn },
   { state:1, label:"Tertiary enrolment",                               value:"~45.8%",        pct:46, color:C.blu },
   { state:1, label:"PISA scores vs OECD avg",                          value:"below average", pct:42, color:C.dim },
   { state:1, label:"1 Million Programmers initiative",                 value:"2025 target",   pct:60, color:C.dim },
-];
+],
+  note: "Tertiary enrolment at 45.8% has more than tripled since 2016 — Karimov-era universities were heavily restricted. The 20+ international branch campuses (including Inha University Korea, Webster University USA, Turin Polytechnic) is the most ambitious higher education reform in post-Soviet Central Asia. The \"1 million programmers\" AI initiative targets a digital workforce."
+};
 
-EDU_METRICS.note  = "Tertiary enrolment at 45.8% has more than tripled since 2016 — Karimov-era universities were heavily restricted. The 20+ international branch campuses (including Inha University Korea, Webster University USA, Turin Polytechnic) is the most ambitious higher education reform in post-Soviet Central Asia. The \"1 million programmers\" AI initiative targets a digital workforce.";
-
-const EDU_FACTS = [];
-
-EDU_FACTS.title = 'Key Education Facts';
-
-EDU_FACTS.data  = [
+const EDU_FACTS = {
+  title: 'Key Education Facts',
+  data: [
   { state:1, label:'Script system', value:'Latin (official since 1993); Cyrillic still widely used' },
   { state:1, label:'Instruction languages', value:'Uzbek (primary); Russian medium schools available' },
   { state:1, label:'Branch university campuses', value:'20+: Inha (Korea), Turin Poly, Webster (US)' },
   { state:1, label:'New Uzbekistan University', value:'Est. 2022; English-medium; Mirziyoyev flagship' },
   { state:1, label:'Presidential schools (elite)', value:'14 across the country; competitive entry (Agency for Presidential Educational Institutions, 2024)' },
   { state:1, label:'International Math Olympiad medals', value:'Strong track record; top-ranked in Asia' },
-];
-
-EDU_FACTS.note  = "International branch campuses are Uzbekistan's most distinctive education reform — no other lower-middle-income country has attracted this many prestigious foreign institutions. New Uzbekistan University (2022) is modelled on Western research universities and taught entirely in English — a signal of the country's ambition to compete globally for talent and investment.";
+],
+  note: "International branch campuses are Uzbekistan's most distinctive education reform — no other lower-middle-income country has attracted this many prestigious foreign institutions. New Uzbekistan University (2022) is modelled on Western research universities and taught entirely in English — a signal of the country's ambition to compete globally for talent and investment."
+};
 
 /* ── §7 POLITICAL ── */
 const POL_KPI = [
@@ -389,31 +369,28 @@ const POL_KPI = [
   { state:1, label:"Ruling Party",      value:"Liberal Democratic",sub:"UzLiDeP; largest party; Mirziyoyev's vehicle",                      accent:C.dim, delay:0.25 },
   { state:1, label:"Independence",      value:"Sep 1, 1991",     sub:"From Soviet Union; national holiday — Independence Day",               accent:C.blu, delay:0.30 },
 ];
-const POL_ELECTION = [];
 
-POL_ELECTION.title = '2023 Presidential Election';
-
-POL_ELECTION.data  = [
+const POL_ELECTION = {
+  title: '2023 Presidential Election',
+  data: [
   { state:1, label:"Shavkat Mirziyoyev (UzLiDeP)", value:"87.1%",          pct:100, color:C.uz  },
   { state:1, label:"Other candidates (4 total)",   value:"12.9% combined", pct:13,  color:C.dim },
-];
+],
+  note: "Voter turnout ~80% (official). Constitutional reform of 2023 reset term count — allowing Mirziyoyev to serve until 2037. Four other candidates participated but were widely seen as cosmetic opposition. Press freedom rank 140/180 (RSF 2024) — better than Tajikistan but limited genuine media freedom. However, Karimov-era political prisoners have been released, internet is uncensored, and civil society has opened markedly."
+};
 
-POL_ELECTION.note  = "Voter turnout ~80% (official). Constitutional reform of 2023 reset term count — allowing Mirziyoyev to serve until 2037. Four other candidates participated but were widely seen as cosmetic opposition. Press freedom rank 140/180 (RSF 2024) — better than Tajikistan but limited genuine media freedom. However, Karimov-era political prisoners have been released, internet is uncensored, and civil society has opened markedly.";
-
-const POL_TIMELINE = [];
-
-POL_TIMELINE.title = 'Political Timeline';
-
-POL_TIMELINE.data  = [
+const POL_TIMELINE = {
+  title: 'Political Timeline',
+  data: [
   { state:1, yr:'1991', tx:'Independence declared Sep 1. Islam Karimov becomes first president, ruling until his death in 2016.' },
   { state:1, yr:'2005', tx:'Andijan massacre: security forces kill 200–1,500 protesters (est. varies). Uzbekistan expelled from US base.' },
   { state:1, yr:'2016', tx:'Karimov dies. Shavkat Mirziyoyev, PM, becomes president. Immediate opening of economy and society begins.' },
   { state:1, yr:'2017', tx:'Currency liberalised (free float). Borders opened with neighbours. Political prisoners released. Tourism opened.' },
   { state:1, yr:'2022', tx:'Record FDI, growth, and poverty reduction. Karakalpakstan unrest: protests over autonomy killed 18; suppressed.' },
   { state:1, yr:'2023', tx:'Constitutional reform; Mirziyoyev re-elected with 87%; "Uzbekistan 2030" strategy launched; WTO accession push.' },
-];
-
-POL_TIMELINE.note  = "The contrast between Karimov (1991–2016) and Mirziyoyev is one of the most dramatic policy reversals in post-Soviet history. Karimov presided over one of the world's most repressive regimes (boiling dissidents alive was reported); Mirziyoyev has opened the economy, released political prisoners, and welcomed foreign investment — though the state remains authoritarian.";
+],
+  note: "The contrast between Karimov (1991–2016) and Mirziyoyev is one of the most dramatic policy reversals in post-Soviet history. Karimov presided over one of the world's most repressive regimes (boiling dissidents alive was reported); Mirziyoyev has opened the economy, released political prisoners, and welcomed foreign investment — though the state remains authoritarian."
+};
 
 /* ── §8 TOURISM ── */
 const TOUR_KPI = [
@@ -424,26 +401,23 @@ const TOUR_KPI = [
   { state:1, label:"UNESCO World Heritage sites",   value:"4 sites",   sub:"Samarkand, Bukhara, Shakhrisabz, Itchan Kala (Khiva)",                           accent:C.dim, delay:0.25 },
   { state:1, label:"2030 visitor target",           value:"20M",       sub:"Official Uzbekistan 2030 strategy; interim targets 12M (2026) → 15.2M (2028) → 20M (2030)", accent:C.dim, delay:0.30 },
 ];
-const TOUR_ORIGINS = [];
 
-TOUR_ORIGINS.title = 'Top Visitor Origins (2024 est.)';
-
-TOUR_ORIGINS.data  = [
+const TOUR_ORIGINS = {
+  title: 'Top Visitor Origins (2024 est.)',
+  data: [
   { state:1, flag:'🇰🇬', country:'Kyrgyzstan',  val:'cross-border; largest source market 2024', pct:'~26%' },
   { state:1, flag:'🇹🇯', country:'Tajikistan',  val:'cross-border; trade & visits',             pct:'~23%' },
   { state:1, flag:'🇰🇿', country:'Kazakhstan',  val:'business & leisure; southern border',      pct:'~17%' },
   { state:1, flag:'🇷🇺', country:'Russia',      val:'business & cultural tourism',              pct:'~9%'  },
   { state:1, flag:'🇨🇳', country:'China',       val:'Silk Road heritage; top non-CIS growth',   pct:'~1%'  },
   { state:1, flag:'🇩🇪', country:'Europe & US', val:'heritage tourism; Registan, Bukhara',      pct:'~4%'  },
-];
+],
+  note: <>2024 est. — origin % derived from border crossings; no passport-level breakdown published.<br/>Tourism has been Uzbekistan's most dramatic reform success story — visitors grew from 2.7M (2018) to 8.2M (2024) — a near-3× increase in 6 years. The Silk Road trio of Samarkand, Bukhara, and Khiva is a world-class heritage destination finally opened to the world. Most visitors are regional neighbours (Kyrgyzstan, Tajikistan, Kazakhstan); Chinese tourism grew 63% in 2024 and is the fastest-growing long-haul market.</>
+};
 
-TOUR_ORIGINS.note  = <>2024 est. — origin % derived from border crossings; no passport-level breakdown published.<br/>Tourism has been Uzbekistan's most dramatic reform success story — visitors grew from 2.7M (2018) to 8.2M (2024) — a near-3× increase in 6 years. The Silk Road trio of Samarkand, Bukhara, and Khiva is a world-class heritage destination finally opened to the world. Most visitors are regional neighbours (Kyrgyzstan, Tajikistan, Kazakhstan); Chinese tourism grew 63% in 2024 and is the fastest-growing long-haul market.</>;
-
-const TOUR_HIGHLIGHTS = [];
-
-TOUR_HIGHLIGHTS.title = 'Tourism Highlights';
-
-TOUR_HIGHLIGHTS.data  = [
+const TOUR_HIGHLIGHTS = {
+  title: 'Tourism Highlights',
+  data: [
   { state:1, label:'Registan (Samarkand)', value:'World\'s most magnificent Islamic ensemble' },
   { state:1, label:'Itchan Kala, Khiva (UNESCO)', value:'Living walled city; medieval Islamic city' },
   { state:1, label:'Bukhara old city (UNESCO)', value:'140 listed monuments; Kalon Minaret' },
@@ -451,10 +425,10 @@ TOUR_HIGHLIGHTS.data  = [
   { state:1, label:'Aydarkul Lake (Kyzylkum)', value:'Desert lake; yurt camping; flamingos' },
   { state:1, label:'Fergana Valley crafts (silk, ceramics)', value:'Ikat silk weaving; UNESCO heritage' },
   { state:1, label:'Aral Sea tours (Moynaq)', value:'Ship graveyard; environmental tourism' },
-];
-
-TOUR_HIGHLIGHTS.gradbar = { title:'Tourism intensity by month (relative)', values:[15,20,45,85,100,80,65,70,90,85,30,15], colorStops:p => `rgb(${Math.round(153+79*p/100)},${Math.round(153-128*p/100)},${Math.round(153-109*p/100)})`, unit:'%' };
-TOUR_HIGHLIGHTS.note  = "Uzbekistan has arguably the richest concentration of Islamic architectural heritage anywhere in the world — Samarkand's Registan rivals the Taj Mahal in grandeur. The Aral Sea ship graveyard at Moynaq has become a haunting but significant eco-tourism site — a monument to the world's worst man-made ecological disaster. With 4 UNESCO sites and ~62 visa-free countries (Passport Index 2024), the runway for growth is enormous.";
+],
+  gradbar: { title:'Tourism intensity by month (relative)', values:[15,20,45,85,100,80,65,70,90,85,30,15], colorStops:p => `rgb(${Math.round(153+79*p/100)},${Math.round(153-128*p/100)},${Math.round(153-109*p/100)})`, unit:'%' },
+  note: "Uzbekistan has arguably the richest concentration of Islamic architectural heritage anywhere in the world — Samarkand's Registan rivals the Taj Mahal in grandeur. The Aral Sea ship graveyard at Moynaq has become a haunting but significant eco-tourism site — a monument to the world's worst man-made ecological disaster. With 4 UNESCO sites and ~62 visa-free countries (Passport Index 2024), the runway for growth is enormous."
+};
 
 /* ── §9 VITAL STATISTICS & HEALTH ── */
 const VITA_KPI = [
@@ -465,11 +439,10 @@ const VITA_KPI = [
   { state:1, label:"Deaths (2024)",      value:"~174,000",   sub:"Death rate ~4.8 per 1,000; National Stats 2024",                          accent:C.dim, delay:0.25 },
   { state:1, label:"Infant Mortality",   value:"~18 / 1,000",sub:"2024 WB/UNICEF; down from 38/1,000 in 2000; still above EU",             accent:C.blu, delay:0.30 },
 ];
-const VITA_DEATHS = [];
 
-VITA_DEATHS.title = 'Causes of Death (Statistics Agency UZ, 2023)';
-
-VITA_DEATHS.data  = [
+const VITA_DEATHS = {
+  title: 'Causes of Death (Statistics Agency UZ, 2023)',
+  data: [
   { state:1, label:"Circulatory diseases", value:"61.1%",  pct:100, color:C.uz  },
   { state:1, label:"Cancer (neoplasms)",   value:"10.8%",  pct:18,  color:C.grn },
   { state:1, label:"Other causes",         value:"~12.4%", pct:20,  color:C.dim },
@@ -477,24 +450,22 @@ VITA_DEATHS.data  = [
   { state:1, label:"External causes",      value:"4.8%",   pct:8,   color:C.dim },
   { state:1, label:"Digestive diseases",   value:"4.1%",   pct:7,   color:C.dim },
   { state:1, label:"Infectious diseases",  value:"1.3%",   pct:2,   color:C.dim },
-];
+],
+  note: "Circulatory disease at 61.1% is far above the global average (32%), driven by high hypertension prevalence, high-salt diets, and historically limited preventive care. Source: Statistics Agency of Uzbekistan, Jan 2024 (172,800 deaths registered in 2023). Infant mortality falling from 38 to ~18/1,000 since 2000 is one of Uzbekistan's most significant health achievements — better than Tajikistan (32) but still above Kazakhstan (8)."
+};
 
-VITA_DEATHS.note  = "Circulatory disease at 61.1% is far above the global average (32%), driven by high hypertension prevalence, high-salt diets, and historically limited preventive care. Source: Statistics Agency of Uzbekistan, Jan 2024 (172,800 deaths registered in 2023). Infant mortality falling from 38 to ~18/1,000 since 2000 is one of Uzbekistan's most significant health achievements — better than Tajikistan (32) but still above Kazakhstan (8).";
-
-const VITA_TRENDS = [];
-
-VITA_TRENDS.title = 'Marriage & Vital Trends';
-
-VITA_TRENDS.data  = [
+const VITA_TRENDS = {
+  title: 'Marriage & Vital Trends',
+  data: [
   { state:1, label:'Marriage rate (per 1,000)', value:'~7.1' },
   { state:1, label:'Divorce rate (per 1,000)', value:'~1.5' },
   { state:1, label:'Avg age at first marriage (women)', value:'~22 yrs' },
   { state:1, label:'Avg age at first marriage (men)', value:'~27 yrs' },
   { state:1, label:'Maternal mortality ratio (2023 est. — WHO/UNICEF joint modelled estimate, not direct count)', value:'~29 per 100,000' },
   { state:1, label:'Child stunting rate', value:'~8.5% — declining; above world avg' },
-];
-
-VITA_TRENDS.note  = "Maternal mortality at ~29/100,000 is improving but still 2× Kazakhstan. Uzbekistan was the first Central Asian country to formally abolish forced labour in cotton harvesting (2021) — a significant human rights milestone, addressing a practice that affected millions of students and public workers annually.";
+],
+  note: "Maternal mortality at ~29/100,000 is improving but still 2× Kazakhstan. Uzbekistan was the first Central Asian country to formally abolish forced labour in cotton harvesting (2021) — a significant human rights milestone, addressing a practice that affected millions of students and public workers annually."
+};
 
 const HEALTH_KPI = [
   { state:1, label:"Health Spending (% GDP)", value:"~7.7%",     sub:"WB 2021: 7.74%; public share growing; universal health system reform underway", accent:C.grn, delay:0.05 },
@@ -504,34 +475,31 @@ const HEALTH_KPI = [
   { state:1, label:"Doctors per 1,000",       value:"~2.87",     sub:"2023 National Stats; below Soviet peak; brain drain concern",                    accent:C.dim, delay:0.25 },
   { state:1, label:"Tashkent PM2.5 (2024)",   value:"~32 µg/m³", sub:"IQAir 2024; ~6× WHO guideline of 5 µg/m³",                                     accent:C.dim, delay:0.30 },
 ];
-const HEALTH_FACTS = [];
 
-HEALTH_FACTS.title = 'Health System Facts';
-
-HEALTH_FACTS.data  = [
+const HEALTH_FACTS = {
+  title: 'Health System Facts',
+  data: [
   { state:1, label:'Compulsory health insurance', value:'In development; phased introduction 2025+' },
   { state:1, label:'Hospital beds per 1,000', value:'~4.9 — above regional average; quality concern' },
   { state:1, label:'Forced labour in cotton (abolished)', value:'2021 — ILO confirmed; major reform' },
   { state:1, label:'Child nutrition — stunting', value:'6.7% (under-5, 2024); improving significantly' },
   { state:1, label:'Karakalpakstan health outcomes', value:'Worst in country; Aral Sea dust health crisis' },
   { state:1, label:'Tashkent air quality', value:'PM2.5 ~32 µg/m³ annual avg 2024 (IQAir); ~6× WHO guideline' },
-];
+],
+  note: "Karakalpakstan (Aral Sea region) has the worst health outcomes in Uzbekistan — the toxic salt dust from the exposed Aralkum Desert causes severe respiratory disease, cancer, and maternal health crises. This is a direct consequence of the Aral Sea disaster. Abolishing forced cotton labour in 2021 removed a major human rights stain and improved rural health outcomes."
+};
 
-HEALTH_FACTS.note  = "Karakalpakstan (Aral Sea region) has the worst health outcomes in Uzbekistan — the toxic salt dust from the exposed Aralkum Desert causes severe respiratory disease, cancer, and maternal health crises. This is a direct consequence of the Aral Sea disaster. Abolishing forced cotton labour in 2021 removed a major human rights stain and improved rural health outcomes.";
-
-const HEALTH_BURDEN = [];
-
-HEALTH_BURDEN.title = 'Disease & Health Burden';
-
-HEALTH_BURDEN.data  = [
+const HEALTH_BURDEN = {
+  title: 'Disease & Health Burden',
+  data: [
   { state:1, label:"Hypertension prevalence (est.; unverified — most recent WHO STEPS survey is 2019; 2024 data not publicly available)", value:"~32%",              pct:100, color:C.uz  },
   { state:1, label:"TB incidence per 100K (2022)",                                                                                        value:"~83",               pct:100, color:C.grn },
   { state:1, label:"OOP health spending share",                                                                                           value:"~53%",              pct:66,  color:C.blu },
   { state:1, label:"Tashkent PM2.5 (WHO guideline=5)",                                                                                    value:"~32 µg/m³",         pct:80,  color:C.dim },
   { state:1, label:"Aral Sea toxic dust affected pop.",                                                                                   value:"~2M in Karakalpakstan", pct:45, color:C.dim },
-];
-
-HEALTH_BURDEN.note  = "TB at 83/100K (2022 WHO) is among the highest in the region — above the Central Asian average. Drug-resistant TB is a particular concern. The Aral Sea dust crisis affecting ~2M Karakalpak people is a chronic, unfixable public health disaster — the sea cannot be restored and the exposed seabed will blow dust for generations.";
+],
+  note: "TB at 83/100K (2022 WHO) is among the highest in the region — above the Central Asian average. Drug-resistant TB is a particular concern. The Aral Sea dust crisis affecting ~2M Karakalpak people is a chronic, unfixable public health disaster — the sea cannot be restored and the exposed seabed will blow dust for generations."
+};
 
 /* ── §10 ENERGY ── */
 const ENERGY_KPI = [
@@ -542,35 +510,32 @@ const ENERGY_KPI = [
   { state:1, label:"Solar potential",            value:"World-class",    sub:"300+ sunny days; flat desert terrain; ideal for utility-scale solar",                               accent:C.dim, delay:0.25 },
   { state:1, label:"Nuclear power (planned)",    value:"~2.1 GW",        sub:"2× VVER-1000 + 2× RITM-200N SMR; Rosatom; site near Tuzkan Lake; first unit ~2029 (World Nuclear News)", accent:C.dim, delay:0.30 },
 ];
-const ENERGY_MIX = [];
 
-ENERGY_MIX.title = 'Electricity Generation Mix (2024 est.)';
-
-ENERGY_MIX.data  = [
+const ENERGY_MIX = {
+  title: 'Electricity Generation Mix (2024 est.)',
+  data: [
   { state:1, label:'Natural gas (dominant)',      value:'~76%', pct:76, color:C.uz  },
   { state:1, label:'Coal',                        value:'~11%', pct:11, color:'#666'},
   { state:1, label:'Hydro (rivers & reservoirs)', value:'~9%',  pct:9,  color:C.blu },
   { state:1, label:'Solar & wind (growing)',      value:'~4%',  pct:4,  color:C.grn },
-];
+],
+  label: '81.5 TWh',
+  sublabel: 'generated 2024',
+  note: <>2024 est. — IEA/UZ Stats; fuel-type split modelled, not metered per source.<br/>~76% gas-fired is relatively clean compared to Kazakhstan's coal-heavy grid. Coal at ~11% is higher than previously reported (corrected 2024 data). However, natural gas production is declining (~7%/year) — making the $9.5B renewable push urgent. Uzbekistan has signed deals for 20GW of solar and wind by 2030. The Rosatom nuclear plant would provide baseload power independence.</>
+};
 
-ENERGY_MIX.label    = '81.5 TWh';
-ENERGY_MIX.sublabel = 'generated 2024';
-ENERGY_MIX.note  = <>2024 est. — IEA/UZ Stats; fuel-type split modelled, not metered per source.<br/>~76% gas-fired is relatively clean compared to Kazakhstan's coal-heavy grid. Coal at ~11% is higher than previously reported (corrected 2024 data). However, natural gas production is declining (~7%/year) — making the $9.5B renewable push urgent. Uzbekistan has signed deals for 20GW of solar and wind by 2030. The Rosatom nuclear plant would provide baseload power independence.</>;
-
-const ENERGY_FACTS = [];
-
-ENERGY_FACTS.title = 'Energy & Resources Facts';
-
-ENERGY_FACTS.data  = [
+const ENERGY_FACTS = {
+  title: 'Energy & Resources Facts',
+  data: [
   { state:1, label:'Natural gas production', value:'~44.6 billion m³/year (2024; declining from 59 bcm in 2019)' },
   { state:1, label:'Oil production', value:'~55,000 bbl/day (minor)' },
   { state:1, label:'Uranium production (2024)', value:'~4,000 tonnes/year — world 5th (WNA 2024)' },
   { state:1, label:'Copper (Almalyk mine)', value:'Major producer; expanding capacity' },
   { state:1, label:'Coal reserves', value:'Modest; ~3.3 billion tonnes' },
   { state:1, label:'Muruntau gold mine annual output', value:'~70 tonnes — world\'s largest open-pit' },
-];
-
-ENERGY_FACTS.note  = "Uzbekistan is a critical minerals powerhouse: gold, uranium, copper, zinc, natural gas. Muruntau's 70-tonne annual output makes it the single most economically important asset in Central Asia. Uranium production, while smaller than Kazakhstan's, positions Uzbekistan well in the nuclear energy renaissance. Declining gas production makes the renewable transition existentially important.";
+],
+  note: "Uzbekistan is a critical minerals powerhouse: gold, uranium, copper, zinc, natural gas. Muruntau's 70-tonne annual output makes it the single most economically important asset in Central Asia. Uranium production, while smaller than Kazakhstan's, positions Uzbekistan well in the nuclear energy renaissance. Declining gas production makes the renewable transition existentially important."
+};
 
 /* ── §11 INFRASTRUCTURE ── */
 const INFRA_KPI = [
@@ -581,34 +546,31 @@ const INFRA_KPI = [
   { state:1, label:"High-speed rail",      value:"Afrosiyob",  sub:"250 km/h max; Tashkent–Bukhara in ~3h 20m; Spanish Talgo technology",             accent:C.dim, delay:0.25 },
   { state:1, label:"5G Status",            value:"Deployed",   sub:"Uztelecom & others launched 2022–2024; 3,500+ base stations nationwide",           accent:C.dim, delay:0.30 },
 ];
-const INFRA_PROJECTS = [];
 
-INFRA_PROJECTS.title = 'Key Infrastructure Projects';
-
-INFRA_PROJECTS.data  = [
+const INFRA_PROJECTS = {
+  title: 'Key Infrastructure Projects',
+  data: [
   { state:1, label:'China–Kyrgyzstan–Uzbekistan Railway', value:'Under construction; China-UZ connectivity' },
   { state:1, label:'Trans-Afghan Railway (planned)', value:'Would reach Indian Ocean via Afghanistan-Iran' },
   { state:1, label:'Tashkent Metro expansion', value:'New lines; reaching outer districts' },
   { state:1, label:'Navoi Free Economic Zone (logistics)', value:'Central Asia\'s largest FEZ; manufacturing hub' },
   { state:1, label:'Rogun Dam electricity import (TJ)', value:'CASA-1000 will supply Uzbekistan too' },
   { state:1, label:'Digital Uzbekistan 2030 programme', value:'E-government, AI, broadband, fintech' },
-];
+],
+  note: "The China-Kyrgyzstan-Uzbekistan Railway is the most transformative infrastructure project in Central Asia — it will create a direct rail link from China to Uzbekistan that bypasses Russia entirely. Combined with the Trans-Afghan Railway potential, Uzbekistan could become the genuine hub of a new Silk Road corridor linking East Asia to the Indian Ocean."
+};
 
-INFRA_PROJECTS.note  = "The China-Kyrgyzstan-Uzbekistan Railway is the most transformative infrastructure project in Central Asia — it will create a direct rail link from China to Uzbekistan that bypasses Russia entirely. Combined with the Trans-Afghan Railway potential, Uzbekistan could become the genuine hub of a new Silk Road corridor linking East Asia to the Indian Ocean.";
-
-const INFRA_DIGITAL = [];
-
-INFRA_DIGITAL.title = 'Digital Indicators';
-
-INFRA_DIGITAL.data  = [
+const INFRA_DIGITAL = {
+  title: 'Digital Indicators',
+  data: [
   { state:1, label:"Internet penetration",         value:"~84%", pct:84, color:C.uz  },
   { state:1, label:"Mobile penetration",           value:"~81%", pct:81, color:C.grn },
   { state:1, label:"E-government service uptake",  value:"~65%", pct:65, color:C.blu },
   { state:1, label:"Social media penetration",     value:"~60%", pct:60, color:C.dim },
   { state:1, label:"Fixed broadband",              value:"~20%", pct:20, color:C.dim },
-];
-
-INFRA_DIGITAL.note  = "Uzbekistan's internet is uncensored — a dramatic change from the Karimov era. 84% penetration is growing fast and social media (Instagram, Telegram) are widely used. The \"1 million programmers\" initiative and Uzbekistan's IT Park (1,900+ resident companies; 0% income tax) suggest a digital economy is genuinely taking root.";
+],
+  note: "Uzbekistan's internet is uncensored — a dramatic change from the Karimov era. 84% penetration is growing fast and social media (Instagram, Telegram) are widely used. The \"1 million programmers\" initiative and Uzbekistan's IT Park (1,900+ resident companies; 0% income tax) suggest a digital economy is genuinely taking root."
+};
 
 /* ── §12 SOCIAL ── */
 const SOCIAL_KPI = [
@@ -619,34 +581,31 @@ const SOCIAL_KPI = [
   { state:1, label:"Women in parliament",            value:"~38%",          sub:"57/150 seats after Oct 2024 elections (IPU); highest in CA",                      accent:C.blu, delay:0.25 },
   { state:1, label:"Mahalla system",                 value:"~10,000 units", sub:"9,756 self-governing bodies incl. 8,115 mahallas (official); govt cites 10,000+ (ISRS 2024)", accent:C.dim, delay:0.30 },
 ];
-const SOCIAL_SERVICES = [];
 
-SOCIAL_SERVICES.title = 'Access & Basic Services';
-
-SOCIAL_SERVICES.data  = [
+const SOCIAL_SERVICES = {
+  title: 'Access & Basic Services',
+  data: [
   { state:1, label:"Access to clean water (urban)",                                value:"~89%",  pct:89,  color:C.uz  },
   { state:1, label:"Access to clean water (rural)",                                value:"~71%",  pct:71,  color:C.grn },
   { state:1, label:"Access to basic sanitation, urban (JMP/World Bank 2020)",      value:"~100%", pct:100, color:C.dim },
   { state:1, label:"Access to basic sanitation, national avg (est.; unverified)",  value:"~73%",  pct:73,  color:C.dim },
   { state:1, label:"Electricity access (national)",                                value:"~100%", pct:100, color:C.blu },
-];
+],
+  note: "Rural sanitation at 68% is a key infrastructure gap — directly linked to child health outcomes. The mahalla (neighbourhood committee) system is uniquely Uzbek — it provides community welfare, social pressure for compliance, and local governance simultaneously. It was used effectively during COVID-19 for food distribution and monitoring."
+};
 
-SOCIAL_SERVICES.note  = "Rural sanitation at 68% is a key infrastructure gap — directly linked to child health outcomes. The mahalla (neighbourhood committee) system is uniquely Uzbek — it provides community welfare, social pressure for compliance, and local governance simultaneously. It was used effectively during COVID-19 for food distribution and monitoring.";
-
-const SOCIAL_COHESION = [];
-
-SOCIAL_COHESION.title = 'Social Cohesion & Gender';
-
-SOCIAL_COHESION.data  = [
+const SOCIAL_COHESION = {
+  title: 'Social Cohesion & Gender',
+  data: [
   { state:1, label:'Gini (World Bank 2023)', value:'34.5 — moderate' },
   { state:1, label:'Women in parliament (2024)', value:'~38% (57/150 seats) — highest in Central Asia (IPU)' },
   { state:1, label:'Gender Inequality Index (UNDP 2024)', value:'0.274 — rank 83/191' },
   { state:1, label:'Women in labour force', value:'~47% — improving' },
   { state:1, label:'Forced cotton labour (abolished)', value:'2021; confirmed by ILO' },
   { state:1, label:'Karakalpak autonomy status', value:'Autonomous Republic; 2022 unrest suppressed' },
-];
-
-SOCIAL_COHESION.note  = "Women in parliament at 38% is the highest in Central Asia — reflecting genuine quota-backed progress. The abolition of forced cotton labour was a landmark; for decades, millions of teachers, students, and public servants were mobilised each autumn for cotton harvesting — a Soviet-era practice that persisted long after independence. Its end in 2021 was transformative for rural women in particular.";
+],
+  note: "Women in parliament at 38% is the highest in Central Asia — reflecting genuine quota-backed progress. The abolition of forced cotton labour was a landmark; for decades, millions of teachers, students, and public servants were mobilised each autumn for cotton harvesting — a Soviet-era practice that persisted long after independence. Its end in 2021 was transformative for rural women in particular."
+};
 
 /* ── §13 ENVIRONMENT ── */
 const ENV_KPI = [
@@ -657,33 +616,30 @@ const ENV_KPI = [
   { state:1, label:"Aralkum toxic dust",           value:"~57,000 km² exposed",sub:"Former seabed now desert; salt & pesticide dust; 2M people affected",         accent:C.dim, delay:0.25 },
   { state:1, label:"Solar irradiation (GHI)",      value:"1,400–1,800 kWh/m²",sub:"IEA Solar Roadmap for Uzbekistan; 4.52 kWh/m²/day median; ideal for utility-scale solar", accent:C.dim, delay:0.30 },
 ];
-const ENV_FACTS = [];
 
-ENV_FACTS.title = 'Environmental Facts';
-
-ENV_FACTS.data  = [
+const ENV_FACTS = {
+  title: 'Environmental Facts',
+  data: [
   { state:1, label:'CO₂ per capita vs world avg', value:'~3.8t vs ~4.7t — moderate' },
   { state:1, label:'Aral Sea (Uzbek side)', value:'South Aral Sea — completely desiccated' },
   { state:1, label:'UN Special Programme for Aral Sea', value:'IFAS fund; Uzbekistan chairs rotating' },
   { state:1, label:'Saksaul tree planting', value:'Largest afforestation in Central Asia' },
   { state:1, label:'NDC target (2030)', value:'Reduce GHG intensity 35% vs 2010' },
   { state:1, label:'Protected areas', value:'~5.8% of territory (WB 2022); target 12% by 2028' },
-];
+],
+  note: "Uzbekistan has taken a global leadership role on the Aral Sea crisis — Mirziyoyev has addressed the UN General Assembly on it multiple times. The saksaul afforestation programme (planting drought-resistant trees on the exposed seabed) is the most practical mitigation measure available — it reduces dust emissions while creating a new ecosystem."
+};
 
-ENV_FACTS.note  = "Uzbekistan has taken a global leadership role on the Aral Sea crisis — Mirziyoyev has addressed the UN General Assembly on it multiple times. The saksaul afforestation programme (planting drought-resistant trees on the exposed seabed) is the most practical mitigation measure available — it reduces dust emissions while creating a new ecosystem.";
-
-const ENV_WATER = [];
-
-ENV_WATER.title = 'Water Stress & Pollution';
-
-ENV_WATER.data  = [
+const ENV_WATER = {
+  title: 'Water Stress & Pollution',
+  data: [
   { state:1, label:"Amu Darya water use vs flow",            value:"Over-abstracted",  pct:95, color:C.uz  },
   { state:1, label:"Irrigation efficiency (Soviet canals)",  value:"~40% (very poor)", pct:40, color:C.grn },
   { state:1, label:"Tashkent PM2.5 vs WHO (5 µg/m³)",       value:"~32 µg/m³ (6× over)",pct:80,color:C.blu },
   { state:1, label:"Aralkum dust events per year",           value:"~30 major events", pct:60, color:C.dim },
-];
-
-ENV_WATER.note  = "Water is Uzbekistan's most existential environmental challenge. Soviet-era irrigation canals waste 60% of the water they carry — efficiency improvements could free enormous volumes without new supply. Climate change is reducing the glacial meltwater from Tajikistan and Kyrgyzstan that feeds the rivers, making the crisis worse each decade.";
+],
+  note: "Water is Uzbekistan's most existential environmental challenge. Soviet-era irrigation canals waste 60% of the water they carry — efficiency improvements could free enormous volumes without new supply. Climate change is reducing the glacial meltwater from Tajikistan and Kyrgyzstan that feeds the rivers, making the crisis worse each decade."
+};
 
 /* ── §14 BUSINESS ── */
 const BIZ_KPI = [
@@ -694,35 +650,33 @@ const BIZ_KPI = [
   { state:1, label:"Corruption Index (TI 2024)",value:"32/100",        sub:"Rank 121/180; improving from 21/100 in 2016 under Karimov (TI CPI 2024)",             accent:C.uz,  delay:0.25 },
   { state:1, label:"WTO accession",             value:"Target 2026",   sub:"Observer since 1994; 30+ year process nearing completion",                            accent:C.dim, delay:0.30 },
 ];
-const BIZ_CLIMATE = [];
 
-BIZ_CLIMATE.title = 'Investment Climate Summary';
-
-BIZ_CLIMATE.data  = [
+const BIZ_CLIMATE = {
+  title: 'Investment Climate Summary',
+  data: [
   { state:1, label:'Fitch credit rating', value:'BB / Positive (upgraded from BB- in 2024)' },
   { state:1, label:'CPI score (TI 2024)', value:'32/100 — rank 121/180; improving from 21/100 in 2016' },
   { state:1, label:'Free Economic Zones', value:'~20 FEZs; Navoi (aviation), Urgut, IT Parks' },
   { state:1, label:'IT Park Uzbekistan', value:'1,900+ resident companies; 0% income tax; fast-growing' },
   { state:1, label:'Currency liberalisation (2017)', value:'Free float ended black market; FDI unlocked' },
   { state:1, label:'WTO observer since', value:'1994 — accession now actively negotiated' },
-];
+],
+  note: "Uzbekistan's reform trajectory since 2016 is the most dramatic business climate improvement in post-Soviet history — Ease of Doing Business improved from rank 166 to 69 in 7 years. Currency liberalisation in 2017 was the single most impactful reform, immediately unlocking FDI. The remaining challenges are judiciary independence and anti-corruption enforcement."
+};
 
-BIZ_CLIMATE.note  = "Uzbekistan's reform trajectory since 2016 is the most dramatic business climate improvement in post-Soviet history — Ease of Doing Business improved from rank 166 to 69 in 7 years. Currency liberalisation in 2017 was the single most impactful reform, immediately unlocking FDI. The remaining challenges are judiciary independence and anti-corruption enforcement.";
-
-const BIZ_RISKS = [];
-
-BIZ_RISKS.title = 'Key Risks & Opportunities';
-
-BIZ_RISKS.data  = [
+const BIZ_RISKS = {
+  title: 'Key Risks & Opportunities',
+  data: [
   { state:1, label:"Silk Road tourism opportunity",       value:"World-class",                    pct:95, color:C.uz  },
   { state:1, label:"China-KG-UZ railway opportunity",     value:"Transformational",               pct:90, color:C.grn },
   { state:1, label:"Renewable energy export potential",   value:"Very high",                      pct:85, color:C.dim },
   { state:1, label:"Russia geopolitical risk",            value:"Moderate (less exposed than KZ)", pct:50, color:C.blu },
   { state:1, label:"Water scarcity long-term risk",       value:"Critical",                       pct:90, color:C.dim },
   { state:1, label:"Reform reversal / governance risk",   value:"Moderate",                       pct:45, color:C.dim },
-];
+],
+  note: "Uzbekistan's opportunity set is exceptional: the largest population in Central Asia, world-class heritage tourism, critical minerals, and the new Silk Road pivot. Water scarcity is the overriding long-term risk — without fundamental irrigation reform and upstream glacier preservation, economic growth may hit a physical water ceiling by the 2040s."
+};
 
-BIZ_RISKS.note  = "Uzbekistan's opportunity set is exceptional: the largest population in Central Asia, world-class heritage tourism, critical minerals, and the new Silk Road pivot. Water scarcity is the overriding long-term risk — without fundamental irrigation reform and upstream glacier preservation, economic growth may hit a physical water ceiling by the 2040s.";
 const FISCAL_KPI = [
   { state:1, label:"Foreign Reserves (end-2025)", value:"~$66B",       sub:"Record $66.3B as of Jan 1 2026; includes gold; +61% YoY (CBU)",                    accent:C.uz,  delay:0.05 },
   { state:1, label:"Govt Debt / GDP (2025)",      value:"~33%",        sub:"IMF 2025 Article IV: 32.6% end-2024; mostly concessional IFI lending",             accent:C.dim, delay:0.10 },
@@ -731,26 +685,23 @@ const FISCAL_KPI = [
   { state:1, label:"Imports (2025)",             value:"~$47.4B",      sub:"Machinery, equipment, chemicals; trade deficit funded by FDI",                     accent:C.dim, delay:0.25 },
   { state:1, label:"Current Account (2025)",     value:"~−3.3% GDP",   sub:"World Bank; narrowing; investment-driven import surge",                            accent:C.dim, delay:0.30 },
 ];
-const FISCAL_EXPORTS = [];
 
-FISCAL_EXPORTS.title = 'Top Export Destinations (2024)';
-
-FISCAL_EXPORTS.data  = [
+const FISCAL_EXPORTS = {
+  title: 'Top Export Destinations (2024)',
+  data: [
   { state:1, flag:'🇨🇭', country:'Switzerland', val:'gold refining corridor (Muruntau)', pct:'~27%' },
   { state:1, flag:'🇬🇧', country:'UK',          val:'gold & commodities',               pct:'~16%' },
   { state:1, flag:'🇷🇺', country:'Russia',      val:'manufactured goods & food',        pct:'~13%' },
   { state:1, flag:'🇨🇳', country:'China',       val:'raw materials; Belt & Road',       pct:'~9%'  },
   { state:1, flag:'🇰🇿', country:'Kazakhstan',  val:'transit & bilateral trade',        pct:'~6%'  },
   { state:1, flag:'🇦🇫', country:'Afghanistan', val:'electricity & goods exports',      pct:'~4%'  },
-];
+],
+  note: "Switzerland (27%) and UK (16%) together account for 43% of exports — almost entirely because gold is refined in Switzerland and traded in London. This concentration means Uzbekistan's export figures are highly sensitive to gold prices. Afghanistan at 4% is notable — Uzbekistan exports electricity and consumer goods, giving it economic leverage over a fragile neighbour."
+};
 
-FISCAL_EXPORTS.note  = "Switzerland (27%) and UK (16%) together account for 43% of exports — almost entirely because gold is refined in Switzerland and traded in London. This concentration means Uzbekistan's export figures are highly sensitive to gold prices. Afghanistan at 4% is notable — Uzbekistan exports electricity and consumer goods, giving it economic leverage over a fragile neighbour.";
-
-const FISCAL_INDICATORS = [];
-
-FISCAL_INDICATORS.title = 'Key Fiscal Indicators';
-
-FISCAL_INDICATORS.data  = [
+const FISCAL_INDICATORS = {
+  title: 'Key Fiscal Indicators',
+  data: [
   { state:1, label:'Govt debt / GDP (2025)', value:'~33% — moderate; IMF end-2024: 32.6%; IFI concessional majority' },
   { state:1, label:'Foreign reserves (end-2025)', value:'~$66.3B — record; gold-heavy (CBU)' },
   { state:1, label:'GDP growth target 2030', value:'$220–230B nominal GDP' },
@@ -758,10 +709,10 @@ FISCAL_INDICATORS.data  = [
   { state:1, label:'WTO accession target', value:'2026 (in negotiation)' },
   { state:1, label:'Free economic zones (FEZs)', value:'~20 FEZs; 500+ resident companies' },
   { state:1, label:'GDP growth Jan–Sep 2025 (official)', value:'+7.7% — record pace' },
-];
-
-FISCAL_INDICATORS.gradbar = { title:'Trade balance 2015–2024 ($B)', values:[-4.5,-4.8,-5.2,-7.0,-8.1,-8.1,-11.5,-13.7,-15.2,-13.6], xLabels:['2015','2016','2017','2018','2019','2020','2021','2022','2023','2024'], colorStops:(p,v) => v >= 0 ? `rgb(${Math.round(153-118*p/100)},${Math.round(153+6*p/100)},${Math.round(153-89*p/100)})` : `rgb(${Math.round(153+79*p/100)},${Math.round(153-128*p/100)},${Math.round(153-109*p/100)})`, fmt:v => v > 0 ? `+${v}B` : `${v}B`, absScale:true };
-FISCAL_INDICATORS.note  = "Investment at 31.9% of GDP is exceptionally high — it is the engine of Uzbekistan's growth story. This is being funded by broad foreign investment (~$35–40B total), multilateral lending (IDB, ADB, World Bank), and the sovereign wealth fund. WTO accession would be the most significant trade reform since independence — opening markets and requiring legal modernisation.";
+],
+  gradbar: { title:'Trade balance 2015–2024 ($B)', values:[-4.5,-4.8,-5.2,-7.0,-8.1,-8.1,-11.5,-13.7,-15.2,-13.6], xLabels:['2015','2016','2017','2018','2019','2020','2021','2022','2023','2024'], colorStops:(p,v) => v >= 0 ? `rgb(${Math.round(153-118*p/100)},${Math.round(153+6*p/100)},${Math.round(153-89*p/100)})` : `rgb(${Math.round(153+79*p/100)},${Math.round(153-128*p/100)},${Math.round(153-109*p/100)})`, fmt:v => v > 0 ? `+${v}B` : `${v}B`, absScale:true },
+  note: "Investment at 31.9% of GDP is exceptionally high — it is the engine of Uzbekistan's growth story. This is being funded by broad foreign investment (~$35–40B total), multilateral lending (IDB, ADB, World Bank), and the sovereign wealth fund. WTO accession would be the most significant trade reform since independence — opening markets and requiring legal modernisation."
+};
 
 /* ── §15 CRIME ── */
 const CRIME_KPI = [
@@ -772,32 +723,34 @@ const CRIME_KPI = [
   { state:1, label:"Karakalpakstan unrest (2022)",value:"18 killed",  sub:"Autonomy protests; suppressed; internet cut; some reforms followed",                   accent:C.dim, delay:0.25 },
   { state:1, label:"Andijan massacre (2005)",     value:"Historical", sub:"200–1,500 killed; Karimov-era; Uzbekistan expelled from US base",                      accent:C.dim, delay:0.30 },
 ];
-const CRIME_INDICATORS = [];
 
-CRIME_INDICATORS.title = 'Crime & Security Indicators';
-
-CRIME_INDICATORS.data  = [
+const CRIME_INDICATORS = {
+  title: 'Crime & Security Indicators',
+  data: [
   { state:1, label:'Homicide rate (est.)', value:'~1.4 per 100,000 — low (UNODC/WB)' },
   { state:1, label:'Global Peace Index 2024', value:'Rank 67 / 163 (IEP)' },
   { state:1, label:'Afghanistan border security', value:'Well-managed; military hardware investment' },
   { state:1, label:'Drug trafficking', value:'Transit country for Afghan opiates; contained' },
   { state:1, label:'Political prisoners', value:'Hundreds released (Karimov-era); new arrests fewer' },
   { state:1, label:'Fergana Valley ethnic tensions', value:'Improved; borders open since 2017' },
-];
+],
+  note: "The opening of Uzbek-Kyrgyz and Uzbek-Tajik borders since 2017 has transformed security dynamics in the Fergana Valley — the region went from armed clashes over water and land to functional cross-border trade. Uzbekistan's management of the Afghan border (137km) is considered effective — the country has avoided significant spillover from Afghanistan's Taliban takeover. The Afghanistan border is 144 km (Wikipedia) — shortest of Uzbekistan's five external borders, running along the Amu Darya."
+};
 
-CRIME_INDICATORS.note  = "The opening of Uzbek-Kyrgyz and Uzbek-Tajik borders since 2017 has transformed security dynamics in the Fergana Valley — the region went from armed clashes over water and land to functional cross-border trade. Uzbekistan's management of the Afghan border (137km) is considered effective — the country has avoided significant spillover from Afghanistan's Taliban takeover. The Afghanistan border is 144 km (Wikipedia) — shortest of Uzbekistan's five external borders, running along the Amu Darya.";
-const CRIME_SECURITY = [];
-
-CRIME_SECURITY.title = 'Security Context';
-
-CRIME_SECURITY.data  = [
+const CRIME_SECURITY = {
+  title: 'Security Context',
+  data: [
   { state:1, label:"Corruption (CPI, 100=clean)",                                                                             value:"32/100",  pct:32, color:C.uz  },
   { state:1, label:"Press freedom (100=free, est. — RSF rank 148/180 converted to score; RSF does not publish a numeric score)", value:"~28/100", pct:28, color:C.grn },
   { state:1, label:"Rule of law (WJP 2024, 100=best)",                                                                        value:"49/100",  pct:49, color:C.blu },
   { state:1, label:"Political rights (FH 2024, 100=best)",                                                                    value:"12/100",  pct:12, color:C.dim },
-];
+],
+  note: "Uzbekistan's security environment has improved dramatically since 2016 but remains authoritarian. CPI at 32/100 (TI 2024) places Uzbekistan rank 121/180. Press freedom at rank 148/180 (RSF 2024) is poor but better than Tajikistan (162) or Turkmenistan (178). Freedom House total score of 12/100 (Not Free) reflects ongoing authoritarian governance. The Mirziyoyev reform story is real but incomplete — the judiciary remains unfree and civil society tightly managed."
+};
 
-CRIME_SECURITY.note  = "Uzbekistan's security environment has improved dramatically since 2016 but remains authoritarian. CPI at 32/100 (TI 2024) places Uzbekistan rank 121/180. Press freedom at rank 148/180 (RSF 2024) is poor but better than Tajikistan (162) or Turkmenistan (178). Freedom House total score of 12/100 (Not Free) reflects ongoing authoritarian governance. The Mirziyoyev reform story is real but incomplete — the judiciary remains unfree and civil society tightly managed.";
+// ************************************************************
+// TEMPLATE — css · components · html
+// ************************************************************
 
 const css = `
   @import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,700;0,9..144,900;1,9..144,400&family=Inter:wght@300;400;500&display=swap');
