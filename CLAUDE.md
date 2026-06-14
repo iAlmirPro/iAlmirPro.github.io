@@ -25,25 +25,31 @@ A GitHub Action (`cache-bust.yml`) automatically rewrites the `style.css?v=` que
 
 ## Dashboard workflow
 
-Country dashboards live in `dashboards/`. Each is authored as React JSX, then compiled to a self-contained static HTML file:
+Country dashboards live in `dashboards/`. Each is authored as React JSX, then compiled to a self-contained static HTML file.
 
+**Live preview (run from `dashboards/` directory):**
 ```bash
-# Convert JSX to HTML (requires Python 3.9+ and Node.js)
-pip3 install beautifulsoup4   # first time only
-python3 dashboards/jsx_to_html.py dashboards/[country]-dashboard.jsx
-# → writes dashboards/[country].html
+bash ../jsxpreviewer/jsxpreview.sh [country]-dashboard.jsx
+# Opens http://127.0.0.1:7743 — watches file; hit ⌘R after each save; Ctrl+C to stop
 ```
 
-npm packages for the renderer are auto-installed on first run into `~/.jsx_to_html_cache/`.
-
-**Live preview before compiling:**
+**Compile JSX → static HTML (run from `dashboards/` directory):**
 ```bash
-cd jsxpreviewer && bash jsxpreview.sh   # starts local server; edit input.jsx to preview live
+pip3 install beautifulsoup4   # first time only
+python3 jsx_to_html.py [country]-dashboard.jsx
+# → writes dashboards/[country].html
+# Requires Python 3.9+ and Node.js; npm packages auto-installed to ~/.jsx_to_html_cache/
 ```
 
 **After generating any JSX file, run this syntax check — must return zero results:**
 ```bash
 grep -n 'value:"\|sub:"\|accent:"\|label:"' dashboards/[file].jsx
+```
+
+**Diff a file against git HEAD in Beyond Compare:**
+```bash
+git show HEAD:dashboards/[file].jsx > /tmp/git_[file].jsx
+"/Users/almir/Applications/Beyond Compare.app/Contents/MacOS/bcomp" /tmp/git_[file].jsx dashboards/[file].jsx &
 ```
 
 ## Dashboard design rules
@@ -61,15 +67,29 @@ The single source of truth for all dashboard design is **`dashboards/dashboard-d
 - Never overwrite an existing version — copy first, then edit.
 - Always present the `.jsx` file after each version.
 
+### Pre-build declaration (new country — output this first, then stop)
+
+```
+Pre-build declaration: [country]
+Gate process: will execute G1→G5 per constant, outputting status line before writing the constant
+No constant will be written until it clears Gate 5
+Constants will be built and artifact updated one at a time
+```
+
+Any output produced without this appearing first is invalid.
+
 ### New country checklist
-1. Copy `kyrgyzstan-dashboard.jsx` as `[country]-dashboard-v1.jsx`
-2. Update the `C` color palette using country-code prefix (e.g. `kaz`, `uz`, `tj`, `tm`) — never use codes that clash (`ir` = Ireland)
-3. Update `Flag` SVG, hero H1/eyebrow/description
-4. Replace all data section by section — **every single value must be confirmed via web search before writing** (see Data Verification Standard in dashboard-design-system.md). No assumptions, no training knowledge, no test data. Values that cannot be confirmed must be marked `est.; unverified` in their sub/label field.
-5. Run duplicate check: visual component takes priority over table row; remove table row if duplicated
-6. Run color audit: max 2 colored KpiCards per section
-7. Add `GradientBar` and `AgeBar` at required placements (§2 Climate, §3 Population Growth, §8 Tourism, §10 Fiscal)
-8. Run syntax check (grep command above)
+1. Copy the most recent reference dashboard verbatim as `[country]-dashboard-v1.jsx` — do not retype, copy the file
+2. Update the `C` color palette using **ISO 3166 Alpha-3 lowercase** prefix (e.g. `kaz`, `uzb`, `tjk`, `tkm`) — never 2-letter codes (clash risk)
+3. Update `Flag` SVG, `valColor` function, template color keys, map values, header H1/eyebrow/description, footer sources
+4. Replace all data constants one at a time in this order: ERAS → TILES → GEO/GEO_TERRAIN/GEO_WATER/GEO_REGIONS → CLIMA_* → POP_* → ECON_* → EMP_* → EDU_* → POL_* → TOUR_* → VITA_* → HEALTH_* → ENERGY_* → INFRA_* → SOCIAL_* → ENV_* → BIZ_* → FISCAL_* → CRIME_*
+5. **Every single value must be confirmed via web search before writing** (see Data Verification Standard in `dashboard-design-system.md`). Set `state` on every item: `1` = verified (web search + source cited), `-1` = NOT verified (training knowledge / assumed), `0` = not tested. Values that cannot be confirmed must be marked `est.; unverified` in their sub/label field.
+6. After each constant clears Gate 5, output: `[constant name] done. Next per checklist: [next constant name].` then end the turn.
+7. Run duplicate check: visual component takes priority over table row; remove table row if duplicated
+8. Run color audit: max 2 colored KpiCards per section
+9. Add `GradientBar` and `AgeBar` at required placements (§2 Climate, §3 Population Growth, §8 Tourism, §10 Fiscal)
+10. Run Inconsistency Check Protocol — verify values shared across constants match
+11. Run syntax check (grep command above)
 
 ### Color system
 `red` (`#E8192C`) and `blu` (`#2E86DE`) are mandatory in every palette — they drive Record High/Low KpiCard accents. Record High temperature always uses `accent={C.red}`, Record Low always uses `accent={C.blu}`.
