@@ -409,6 +409,21 @@ def convert(jsx_path):
     with open(jsx_path) as f:
         src = f.read()
 
+    # Check for matching data file in countries/{name}.js
+    name      = re.sub(r'-dashboard$', '', os.path.splitext(os.path.basename(jsx_path))[0])
+    data_path = os.path.join(os.path.dirname(jsx_path), 'countries', name + '.js')
+    if os.path.isfile(data_path):
+        with open(data_path) as f:
+            data_src = f.read()
+        src = data_src + '\n' + src
+        print(f"✓  Data file: countries/{name}.js")
+
+    # Write combined source to temp file for Node renderers
+    tmp_jsx = os.path.join(cache, 'combined.jsx')
+    with open(tmp_jsx, 'w') as f:
+        f.write(src)
+    compile_path = tmp_jsx
+
     # Extract metadata from JSX
     m            = re.search(r"export default function (\w+)", src)
     country      = m.group(1) if m else "Country"
@@ -425,7 +440,7 @@ def convert(jsx_path):
     ensure_npm(cache)
 
     print("⚙️   Rendering to static HTML...")
-    r = subprocess.run(["node", node_js, jsx_path, tmp_out],
+    r = subprocess.run(["node", node_js, compile_path, tmp_out],
                        cwd=cache, capture_output=True, text=True)
     if r.returncode != 0 or not r.stdout.strip().startswith("OK"):
         print("❌  Render failed:\n" + (r.stderr or r.stdout)); sys.exit(1)
@@ -467,7 +482,7 @@ def convert(jsx_path):
     # Embed map SVG if the JSX contains a D3 map component
     if 'async function drawMap()' in src:
         print("🗺️   Rendering map SVG...")
-        map_svg = render_map_svg(jsx_path, cache)
+        map_svg = render_map_svg(compile_path, cache)
         if map_svg:
             # Remove paths for countries entirely outside the viewBox (0 0 960 540)
             map_svg = cull_offscreen_paths(map_svg)

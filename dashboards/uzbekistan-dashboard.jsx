@@ -5,13 +5,13 @@ const { useState, useEffect } = React;
 // ************************************************************
 
 // DATA STATE — every data item carries a `state` field:
-//   1  = confirmed (sourced & verified)
-//  -1  = unconfirmed (value found but not yet cross-checked)
-//   0  = not tested (placeholder or estimate, needs verification)
+//   1  = verified — confirmed by web search, source cited in sub/label
+//  -1  = NOT verified — training data, assumed, or found but not cross-checked by web search
+//   0  = not tested — placeholder, skipped, or search not yet performed
 
 // Uzbekistan flag: blue (#1EB4E5) top, white middle, green (#3DAA5C) bottom + red stripes, white crescent & 12 stars
 const C = {
-  uz:     '#1EB4E5', uzL: '#55ccf5',   // primary — Uzbek blue
+  uzb:    '#1EB4E5', uzbL: '#55ccf5',  // primary — Uzbek blue (ISO 3166 Alpha-3)
   grn:    '#3DAA5C', grnL: '#5dc97c',  // secondary — Uzbek green
   blu:    '#2E86DE', bluL: '#5ba8ff',  // water / depth
   red:    '#E8192C', redL: '#ff3347',  // heat / record high
@@ -21,6 +21,13 @@ const C = {
   track:  '#222',
   txt:    '#fff',
   sub:    '#999',
+  muted:  '#888',
+  faded:  '#555',
+  sea:    '#1a3a5c',
+  land:   '#1a1a1a',
+  capital:'#F5C518',
+  flagRed:'#c8102e',
+  uzbS:   'rgba(30,180,229,.45)',
   dim:    '#444',
 };
 
@@ -67,7 +74,7 @@ const TILES = [
 
 const GEO = [
   { state:1, label:'Total Area',               value:'447,400 km²',       sub:'Doubly landlocked; larger than Spain; 56th globally',                  accent:C.dim, delay:0.05 },
-  { state:1, label:'Highest Peak',             value:"4,643 m",           sub:"Khazret Sultan — Hissar Range; Tajik border",                          accent:C.uz,  delay:0.10 },
+  { state:1, label:'Highest Peak',             value:"4,643 m",           sub:"Khazret Sultan — Hissar Range; Tajik border",                          accent:C.uzb,  delay:0.10 },
   { state:1, label:'Lowest Point',             value:"−12 m",             sub:"Sariqarnish Kuli depression (Aral Sea basin)",                         accent:C.blu, delay:0.15 },
   { state:1, label:'Borders',                  value:"5 countries",       sub:"Kazakhstan, Kyrgyzstan, Tajikistan, Afghanistan, Turkmenistan",        accent:C.dim, delay:0.20 },
   { state:1, label:'Fergana Valley',           value:"~22,000 km²",       sub:"Most densely populated region; 14M+ people in shared basin",           accent:C.grn, delay:0.25 },
@@ -80,7 +87,7 @@ const GEO = [
 const GEO_TERRAIN = {
   title: 'Major Terrain Zones',
   data: [
-  { state:1, label:"Desert & semi-desert (Kyzylkum)",     value:"~80%",  pct:100, color:C.uz  },
+  { state:1, label:"Desert & semi-desert (Kyzylkum)",     value:"~80%",  pct:100, color:C.uzb  },
   { state:1, label:"Steppe (north & centre)",             value:"~10%",  pct:13,  color:C.grn },
   { state:1, label:"Mountains (east & south-east)",       value:"~8%",   pct:10,  color:C.blu },
   { state:1, label:"Fergana Valley (intensively farmed)", value:"~5%",   pct:6,   color:C.dim },
@@ -103,9 +110,9 @@ const GEO_WATER = {
 };
 
 const GEO_REGIONS = [
-  { state:1, name:"Tashkent Region",      type:"Capital · industrial hub", desc:"Capital (3M+). Major Soviet industrial city. Modernising rapidly under Mirziyoyev. Central Asia's largest city.", stripe:C.uz  },
+  { state:1, name:"Tashkent Region",      type:"Capital · industrial hub", desc:"Capital (3M+). Major Soviet industrial city. Modernising rapidly under Mirziyoyev. Central Asia's largest city.", stripe:C.uzb  },
   { state:1, name:"Samarkand & Zerafshan", type:"Tourism · silk road",     desc:"UNESCO World Heritage city. Registan, Bibi-Khanym Mosque. Was capital of Tamerlane's empire. 2M visitors/yr.",   stripe:C.grn },
-  { state:1, name:"Fergana Valley (east)", type:"Agriculture · dense",     desc:"Namangan, Fergana, Andijan cities. Cotton, silk, fruit. ~14M people in shared basin. Most contested region.",      stripe:C.uz  },
+  { state:1, name:"Fergana Valley (east)", type:"Agriculture · dense",     desc:"Namangan, Fergana, Andijan cities. Cotton, silk, fruit. ~14M people in shared basin. Most contested region.",      stripe:C.uzb  },
   { state:1, name:"Bukhara & Khorezm",    type:"Heritage · west",         desc:"Ancient oasis cities on Silk Road. Bukhara old city (UNESCO). Natural gas fields. Khiva walled city.",            stripe:C.grn },
 ];
 
@@ -119,7 +126,7 @@ const CLIMA_KPI = [
   { state:1, label:"Tashkent summer avg",       value:"28°C",       sub:"Sunny 300 days/year; dust storms from Kyzylkum common",                                      accent:C.dim, delay:0.30 },
   { state:1, label:"Winter Dec–Feb",            value:"−2–4°C avg", sub:"Snow possible; Tashkent mild; Fergana colder; mountains −20°C",                              accent:C.blu, delay:0.35 },
   { state:1, label:"Samarkand annual avg",      value:"13.5°C",     sub:"Slightly cooler than Tashkent; more rainfall from Zerafshan",                                accent:C.dim, delay:0.40 },
-  { state:1, label:"Spring Mar–May",            value:"8–24°C",     sub:"Brief, pleasant; flowering steppes; snowmelt flood risk",                                    accent:C.uz,  delay:0.45 },
+  { state:1, label:"Spring Mar–May",            value:"8–24°C",     sub:"Brief, pleasant; flowering steppes; snowmelt flood risk",                                    accent:C.uzb,  delay:0.45 },
 ];
 
 const CLIMA_DAYLIGHT = {
@@ -145,7 +152,7 @@ const CLIMA_RAIN_REGIONAL = {
   title: 'Rainfall by Region',
   sublabel: 'Annual precipitation by zone',
   data: [
-  { state:1, label:"Fergana Valley mountain flanks", value:"~600 mm",    pct:100, color:C.uz  },
+  { state:1, label:"Fergana Valley mountain flanks", value:"~600 mm",    pct:100, color:C.uzb  },
   { state:1, label:"Tashkent & Zerafshan Valley",    value:"~450 mm",    pct:75,  color:C.grn },
   { state:1, label:"Samarkand & Bukhara",            value:"~270 mm",    pct:45,  color:C.blu },
   { state:1, label:"Kyzylkum Desert (centre)",       value:"~100–150 mm",pct:22,  color:C.dim },
@@ -165,7 +172,7 @@ const rainColor = p => `rgb(${Math.round(153-107*p/100)},${Math.round(153-19*p/1
 const CLIMA_RAIN_SEASONAL = {
   sublabel: 'Tashkent seasonal pattern',
   data: [
-  { state:1, label:"April (wettest month)",  value:"~86 mm",  pct:100, color:C.uz  },
+  { state:1, label:"April (wettest month)",  value:"~86 mm",  pct:100, color:C.uzb  },
   { state:1, label:"Jun–Sep (very dry)",     value:"3–8 mm",  pct:9,   color:C.grn },
   { state:1, label:"Jan–Feb (snow possible)",value:"48–52 mm",pct:57,  color:C.blu },
 ],
@@ -176,7 +183,7 @@ const CLIMA_RAIN_SEASONAL = {
 
 /* ── §3 POPULATION ── */
 const POP_KPI = [
-  { state:1, label:"Population (Jul 2025)", value:"~37.9M",       sub:"Statistics Agency UZ Jul 2025: 37,859,698; largest in Central Asia", accent:C.uz,  delay:0.05 },
+  { state:1, label:"Population (Jul 2025)", value:"~37.9M",       sub:"Statistics Agency UZ Jul 2025: 37,859,698; largest in Central Asia", accent:C.uzb,  delay:0.05 },
   { state:1, label:"Urban Population",      value:"~47.9%",       sub:"Urbanisation accelerating; Tashkent agglomeration 4M+",              accent:C.dim, delay:0.10 },
   { state:1, label:"Median Age",            value:"♂ 27.9 · ♀ 29.5", sub:"Overall ~28 yrs (UN WPP 2024); young population; ~29% under 15", accent:C.grn, delay:0.15 },
   { state:1, label:"Population Density",    value:"83.6 /km²",    sub:"National Stats Jan 2025; 85.2/km² by Jan 2026; Fergana Valley ~900/km²", accent:C.dim, delay:0.20 },
@@ -191,7 +198,7 @@ const POP_GROWTH = {
   { state:1, label:"2000",                value:"24.5M",  pct:65,  color:C.dim },
   { state:1, label:"2010",                value:"28.0M",  pct:74,  color:C.blu },
   { state:1, label:"2020",                value:"33.9M",  pct:90,  color:C.grn },
-  { state:1, label:"2025 (Jul)",          value:"~37.9M", pct:100, color:C.uz  },
+  { state:1, label:"2025 (Jul)",          value:"~37.9M", pct:100, color:C.uzb  },
 ],
   note: "Uzbekistan's population nearly doubled since independence — from 20.6M to 37.9M (+84%). Unlike Kazakhstan, it did not suffer post-Soviet emigration collapse; natural growth remained high throughout. With 37.9M people, Uzbekistan accounts for ~50% of Central Asia's total population."
 };
@@ -199,7 +206,7 @@ const POP_GROWTH = {
 const POP_CITIES = {
   title: 'Largest Cities (2025 est.)',
   data: [
-  { state:1, label:"Tashkent (capital)",          value:"3,000,000+", pct:100, color:C.uz  },
+  { state:1, label:"Tashkent (capital)",          value:"3,000,000+", pct:100, color:C.uzb  },
   { state:1, label:"Namangan (Fergana Valley)",   value:"~700,000",   pct:23,  color:C.grn },
   { state:1, label:"Samarkand (ancient capital)", value:"~600,000",   pct:20,  color:C.blu },
   { state:1, label:"Andijan (Fergana Valley)",    value:"~500,000",   pct:17,  color:C.dim },
@@ -211,7 +218,7 @@ const POP_CITIES = {
 const POP_ETHNIC = {
   title: 'Ethnic Composition (2021)',
   data: [
-  { state:1, label:'Uzbek',  value:'83.8%', pct:83.8, color:C.uz  },
+  { state:1, label:'Uzbek',  value:'83.8%', pct:83.8, color:C.uzb  },
   { state:1, label:'Tajik',  value:'4.8%',  pct:4.8,  color:C.grn },
   { state:1, label:'Kazakh', value:'2.5%',  pct:2.5,  color:C.blu },
   { state:1, label:'Russian',value:'2.3%',  pct:2.3,  color:'#888'},
@@ -238,7 +245,7 @@ const POP_RELIGION = {
 
 /* ── §4 ECONOMY ── */
 const ECON_KPI = [
-  { state:1, label:"GDP Nominal (2025)",  value:"~$145B",    sub:"President Mirziyoyev year-end address 2025; record high; fastest-growing", accent:C.uz,  delay:0.05 },
+  { state:1, label:"GDP Nominal (2025)",  value:"~$145B",    sub:"President Mirziyoyev year-end address 2025; record high; fastest-growing", accent:C.uzb,  delay:0.05 },
   { state:1, label:"GDP per Capita (2025)",value:"~$3,850",  sub:"Lower-middle income; targeting upper-middle by 2030",                      accent:C.dim, delay:0.10 },
   { state:1, label:"GDP Growth (2025)",   value:"7.7%",      sub:"World Bank confirmed; record; exports, consumption & FDI led",             accent:C.grn, delay:0.15 },
   { state:1, label:"GDP PPP (2025 est.)", value:"~$458B",    sub:"PPP per capita ~$12,147 — IMF WEO; reflects large informal economy",       accent:C.dim, delay:0.20 },
@@ -251,7 +258,7 @@ const ECON_GDP_DONUT = {
   label: '$145B',
   sublabel: 'GDP 2025',
   data: [
-  { state:1, label:'Services (trade, finance, tourism)',  value:'~47%', pct:47, color:C.uz  },
+  { state:1, label:'Services (trade, finance, tourism)',  value:'~47%', pct:47, color:C.uzb  },
   { state:1, label:'Industry (mining, manufacturing)',    value:'~26%', pct:26, color:C.grn },
   { state:1, label:'Agriculture (cotton, wheat, fruit)',  value:'~19%', pct:19, color:C.blu },
 ]
@@ -259,7 +266,7 @@ const ECON_GDP_DONUT = {
 
 const ECON_EXPORTS_BARS = {
   data: [
-  { state:1, label:"Gold (Muruntau — world #1 open-pit)", value:"~42% of exports", pct:100, color:C.uz  },
+  { state:1, label:"Gold (Muruntau — world #1 open-pit)", value:"~42% of exports", pct:100, color:C.uzb  },
   { state:1, label:"Natural gas & energy products",       value:"~6%",             pct:14,  color:C.grn },
   { state:1, label:"Copper, zinc, uranium",               value:"~3%",             pct:7,   color:C.blu },
   { state:1, label:"Cotton fibre & textiles",             value:"~6–7%",           pct:15,  color:C.dim },
@@ -284,7 +291,7 @@ const ECON_INDICATORS = {
 const EMP_KPI = [
   { state:1, label:"Avg Monthly Wage (2025)",  value:"~$529",          sub:"~6.4M UZS; +19% YoY; National Stats full-year 2025",                                 accent:C.grn, delay:0.05 },
   { state:1, label:"Labour Force",             value:"~14.6M",         sub:"ILO/WB 2025 modeled estimate; 14.2M employed domestically",                           accent:C.dim, delay:0.10 },
-  { state:1, label:"Unemployment (2025)",      value:"~4.8%",          sub:"ILO modeled estimate; youth unemployment ~15%; significant underemployment",           accent:C.uz,  delay:0.15 },
+  { state:1, label:"Unemployment (2025)",      value:"~4.8%",          sub:"ILO modeled estimate; youth unemployment ~15%; significant underemployment",           accent:C.uzb,  delay:0.15 },
   { state:1, label:"Informal employment",      value:"~40%+",          sub:"Cotton agriculture, bazaar, construction; improving with formalisation push",           accent:C.dim, delay:0.20 },
   { state:1, label:"Min. Wage (2025)",         value:"~1,271,000 UZS", sub:"~$101/month; raised to 1,155K Jan 2025, then 1,271K Aug 2025 (WageIndicator)",         accent:C.blu, delay:0.25 },
   { state:1, label:"Labour migration abroad",  value:"~2M workers",    sub:"Mostly to Russia; remittances ~$18.9B (2025)",                                         accent:C.dim, delay:0.30 },
@@ -293,7 +300,7 @@ const EMP_KPI = [
 const EMP_WAGES = {
   title: 'Wages by Sector (monthly UZS, 2024 est.)',
   data: [
-  { state:1, label:"Banking & financial services",  value:"~15,000,000", pct:100, color:C.uz  },
+  { state:1, label:"Banking & financial services",  value:"~15,000,000", pct:100, color:C.uzb  },
   { state:1, label:"Mining & extraction (gold, gas)",value:"~9,100,000", pct:61,  color:C.grn },
   { state:1, label:"National average (2025)",       value:"~6,400,000",  pct:43,  color:C.dim },
   { state:1, label:"Public administration",         value:"~5,500,000",  pct:37,  color:C.blu },
@@ -308,7 +315,7 @@ const EMP_SECTORS_DONUT = {
   label: '14.6M',
   sublabel: 'labour force',
   data: [
-  { state:1, label:'Agriculture',              value:'~26%', pct:26, color:C.uz  },
+  { state:1, label:'Agriculture',              value:'~26%', pct:26, color:C.uzb  },
   { state:1, label:'Trade & services',         value:'~35%', pct:35, color:C.grn },
   { state:1, label:'Industry & manufacturing', value:'~13%', pct:13, color:C.blu },
   { state:1, label:'Construction',             value:'~11%', pct:11, color:C.dim },
@@ -327,7 +334,7 @@ const EMP_MIGRATION = {
 
 /* ── §6 EDUCATION ── */
 const EDU_KPI = [
-  { state:1, label:"Literacy Rate",              value:"99.9%",    sub:"Near-universal; Soviet legacy maintained and strengthened",                           accent:C.uz,  delay:0.05 },
+  { state:1, label:"Literacy Rate",              value:"99.9%",    sub:"Near-universal; Soviet legacy maintained and strengthened",                           accent:C.uzb,  delay:0.05 },
   { state:1, label:"HDI (2023)",                 value:"0.740",    sub:"High Human Development — rank 107th globally (UNDP HDR 2025)",                        accent:C.dim, delay:0.10 },
   { state:1, label:"Avg Years Schooling",        value:"~12.0 yrs",sub:"Improving; free 12-year education system",                                           accent:C.dim, delay:0.15 },
   { state:1, label:"Expected Schooling",         value:"~14.5 yrs",sub:"New branch campuses of foreign universities — est.; UNDP value unconfirmed",          accent:C.dim, delay:0.20 },
@@ -338,7 +345,7 @@ const EDU_KPI = [
 const EDU_METRICS = {
   title: 'Education Metrics',
   data: [
-  { state:1, label:"Primary enrolment rate",                           value:"~93%",          pct:93, color:C.uz  },
+  { state:1, label:"Primary enrolment rate",                           value:"~93%",          pct:93, color:C.uzb  },
   { state:1, label:"Secondary enrollment rate (World Bank 2024)",      value:"96.8%",         pct:97, color:C.grn },
   { state:1, label:"Tertiary enrolment",                               value:"~45.8%",        pct:46, color:C.blu },
   { state:1, label:"PISA scores vs OECD avg",                          value:"below average", pct:42, color:C.dim },
@@ -362,7 +369,7 @@ const EDU_FACTS = {
 
 /* ── §7 POLITICAL ── */
 const POL_KPI = [
-  { state:1, label:"System",            value:"Presidential",    sub:"Authoritarian but reforming; Mirziyoyev's opening far exceeds Karimov", accent:C.uz,  delay:0.05 },
+  { state:1, label:"System",            value:"Presidential",    sub:"Authoritarian but reforming; Mirziyoyev's opening far exceeds Karimov", accent:C.uzb,  delay:0.05 },
   { state:1, label:"President",         value:"Sh. Mirziyoyev", sub:"In power since 2016; re-elected 2023 after constitutional reform",      accent:C.grn, delay:0.10 },
   { state:1, label:"Parliament (Oliy Majlis)",value:"150 seats", sub:"Lower house; 5 parties all loyal to government",                       accent:C.dim, delay:0.15 },
   { state:1, label:"Next Election",     value:"2030",            sub:"7-year term from 2023; constitutional reform reset term count",         accent:C.dim, delay:0.20 },
@@ -373,7 +380,7 @@ const POL_KPI = [
 const POL_ELECTION = {
   title: '2023 Presidential Election',
   data: [
-  { state:1, label:"Shavkat Mirziyoyev (UzLiDeP)", value:"87.1%",          pct:100, color:C.uz  },
+  { state:1, label:"Shavkat Mirziyoyev (UzLiDeP)", value:"87.1%",          pct:100, color:C.uzb  },
   { state:1, label:"Other candidates (4 total)",   value:"12.9% combined", pct:13,  color:C.dim },
 ],
   note: "Voter turnout ~80% (official). Constitutional reform of 2023 reset term count — allowing Mirziyoyev to serve until 2037. Four other candidates participated but were widely seen as cosmetic opposition. Press freedom rank 140/180 (RSF 2024) — better than Tajikistan but limited genuine media freedom. However, Karimov-era political prisoners have been released, internet is uncensored, and civil society has opened markedly."
@@ -394,7 +401,7 @@ const POL_TIMELINE = {
 
 /* ── §8 TOURISM ── */
 const TOUR_KPI = [
-  { state:1, label:"International Visitors (2024)", value:"8.2M",      sub:"Statistics Agency UZ; fastest-growing in region; up from 2.7M in 2018",          accent:C.uz,  delay:0.05 },
+  { state:1, label:"International Visitors (2024)", value:"8.2M",      sub:"Statistics Agency UZ; fastest-growing in region; up from 2.7M in 2018",          accent:C.uzb,  delay:0.05 },
   { state:1, label:"Tourism Revenue (2024)",        value:"~$3.5B",    sub:"~3% of GDP; target $5B by 2026",                                                  accent:C.dim, delay:0.10 },
   { state:1, label:"Top draw",                      value:"Samarkand", sub:"Registan, Bibi-Khanym; UNESCO World Heritage; ~2M visits",                        accent:C.dim, delay:0.15 },
   { state:1, label:"Visa-free countries",           value:"~62",       sub:"Passport Index 2024; significant expansion since 2018; rank 80/199 (VisaGuide)",  accent:C.dim, delay:0.20 },
@@ -432,7 +439,7 @@ const TOUR_HIGHLIGHTS = {
 
 /* ── §9 VITAL STATISTICS & HEALTH ── */
 const VITA_KPI = [
-  { state:1, label:"Births (2024)",      value:"~918,000",   sub:"Birth rate ~25.5 per 1,000 (WB 2024); birth count National Stats 2024",   accent:C.uz,  delay:0.05 },
+  { state:1, label:"Births (2024)",      value:"~918,000",   sub:"Birth rate ~25.5 per 1,000 (WB 2024); birth count National Stats 2024",   accent:C.uzb,  delay:0.05 },
   { state:1, label:"Natural Increase (2024)", value:"~743,000", sub:"918K births − 174K deaths; National Stats 2024",                        accent:C.dim, delay:0.10 },
   { state:1, label:"Ages 0–14",          value:"~31.3%",     sub:"Large youth cohort; fertility declining but still high",                   accent:C.dim, delay:0.15 },
   { state:1, label:"Ages 65+",           value:"~6.1%",      sub:"Ageing slowly; pension costs manageable for now",                         accent:C.dim, delay:0.20 },
@@ -443,7 +450,7 @@ const VITA_KPI = [
 const VITA_DEATHS = {
   title: 'Causes of Death (Statistics Agency UZ, 2023)',
   data: [
-  { state:1, label:"Circulatory diseases", value:"61.1%",  pct:100, color:C.uz  },
+  { state:1, label:"Circulatory diseases", value:"61.1%",  pct:100, color:C.uzb  },
   { state:1, label:"Cancer (neoplasms)",   value:"10.8%",  pct:18,  color:C.grn },
   { state:1, label:"Other causes",         value:"~12.4%", pct:20,  color:C.dim },
   { state:1, label:"Respiratory diseases", value:"5.5%",   pct:9,   color:C.blu },
@@ -469,7 +476,7 @@ const VITA_TRENDS = {
 
 const HEALTH_KPI = [
   { state:1, label:"Health Spending (% GDP)", value:"~7.7%",     sub:"WB 2021: 7.74%; public share growing; universal health system reform underway", accent:C.grn, delay:0.05 },
-  { state:1, label:"Out-of-pocket spending",  value:"~53%",      sub:"Share of total health expenditure (WB 2020); one of highest in region",          accent:C.uz,  delay:0.10 },
+  { state:1, label:"Out-of-pocket spending",  value:"~53%",      sub:"Share of total health expenditure (WB 2020); one of highest in region",          accent:C.uzb,  delay:0.10 },
   { state:1, label:"TB incidence (2022)",     value:"~83 / 100K",sub:"WHO 2022; high; drug-resistant TB concern; one of highest in region",            accent:C.dim, delay:0.15 },
   { state:1, label:"Life expectancy",         value:"~75 yrs",   sub:"One of highest in region; improving under Mirziyoyev reforms",                   accent:C.dim, delay:0.20 },
   { state:1, label:"Doctors per 1,000",       value:"~2.87",     sub:"2023 National Stats; below Soviet peak; brain drain concern",                    accent:C.dim, delay:0.25 },
@@ -492,7 +499,7 @@ const HEALTH_FACTS = {
 const HEALTH_BURDEN = {
   title: 'Disease & Health Burden',
   data: [
-  { state:1, label:"Hypertension prevalence (est.; unverified — most recent WHO STEPS survey is 2019; 2024 data not publicly available)", value:"~32%",              pct:100, color:C.uz  },
+  { state:1, label:"Hypertension prevalence (est.; unverified — most recent WHO STEPS survey is 2019; 2024 data not publicly available)", value:"~32%",              pct:100, color:C.uzb  },
   { state:1, label:"TB incidence per 100K (2022)",                                                                                        value:"~83",               pct:100, color:C.grn },
   { state:1, label:"OOP health spending share",                                                                                           value:"~53%",              pct:66,  color:C.blu },
   { state:1, label:"Tashkent PM2.5 (WHO guideline=5)",                                                                                    value:"~32 µg/m³",         pct:80,  color:C.dim },
@@ -503,7 +510,7 @@ const HEALTH_BURDEN = {
 
 /* ── §10 ENERGY ── */
 const ENERGY_KPI = [
-  { state:1, label:"Electricity Generation",     value:"81.5 TWh/yr",    sub:"2024 actual (IEA/UZ Stats); +4.7% YoY; gas-dominant; renewables growing",                          accent:C.uz,  delay:0.05 },
+  { state:1, label:"Electricity Generation",     value:"81.5 TWh/yr",    sub:"2024 actual (IEA/UZ Stats); +4.7% YoY; gas-dominant; renewables growing",                          accent:C.uzb,  delay:0.05 },
   { state:1, label:"Natural gas reserves",       value:"~1.9 trillion m³",sub:"Proven reserves end-2024 (Institute of Energy); production declining",                            accent:C.dim, delay:0.10 },
   { state:1, label:"Gold production (Muruntau)", value:"~70 tonnes/yr",  sub:"World's largest open-pit mine; Kyzylkum Desert",                                                    accent:C.grn, delay:0.15 },
   { state:1, label:"Renewable investment (2025)",value:"$9.5B — 42 projects",sub:"Solar, wind, hydro; Forum 'Powering the Future' Dec 2025",                                     accent:C.dim, delay:0.20 },
@@ -514,7 +521,7 @@ const ENERGY_KPI = [
 const ENERGY_MIX = {
   title: 'Electricity Generation Mix (2024 est.)',
   data: [
-  { state:1, label:'Natural gas (dominant)',      value:'~76%', pct:76, color:C.uz  },
+  { state:1, label:'Natural gas (dominant)',      value:'~76%', pct:76, color:C.uzb  },
   { state:1, label:'Coal',                        value:'~11%', pct:11, color:'#666'},
   { state:1, label:'Hydro (rivers & reservoirs)', value:'~9%',  pct:9,  color:C.blu },
   { state:1, label:'Solar & wind (growing)',      value:'~4%',  pct:4,  color:C.grn },
@@ -563,7 +570,7 @@ const INFRA_PROJECTS = {
 const INFRA_DIGITAL = {
   title: 'Digital Indicators',
   data: [
-  { state:1, label:"Internet penetration",         value:"~84%", pct:84, color:C.uz  },
+  { state:1, label:"Internet penetration",         value:"~84%", pct:84, color:C.uzb  },
   { state:1, label:"Mobile penetration",           value:"~81%", pct:81, color:C.grn },
   { state:1, label:"E-government service uptake",  value:"~65%", pct:65, color:C.blu },
   { state:1, label:"Social media penetration",     value:"~60%", pct:60, color:C.dim },
@@ -574,7 +581,7 @@ const INFRA_DIGITAL = {
 
 /* ── §12 SOCIAL ── */
 const SOCIAL_KPI = [
-  { state:1, label:"Poverty rate ($3.65/day, 2025)", value:"~5.1%",         sub:"Statistics Agency; down from ~27% in 2016 — Mirziyoyev-era reform",            accent:C.uz,  delay:0.05 },
+  { state:1, label:"Poverty rate ($3.65/day, 2025)", value:"~5.1%",         sub:"Statistics Agency; down from ~27% in 2016 — Mirziyoyev-era reform",            accent:C.uzb,  delay:0.05 },
   { state:1, label:"Gini Coefficient",               value:"34.5",          sub:"World Bank 2023; moderate inequality; rising inequality a risk as economy grows", accent:C.dim, delay:0.10 },
   { state:1, label:"Rural-urban income gap",         value:"~1.6×",         sub:"Urban incomes ~60% higher; rural employment main challenge — est.; unverified",   accent:C.dim, delay:0.15 },
   { state:1, label:"Gender Inequality Index",        value:"0.274 (rank 83)",sub:"UNDP HDR 2024; better than Tajikistan; improving rapidly",                       accent:C.grn, delay:0.20 },
@@ -585,7 +592,7 @@ const SOCIAL_KPI = [
 const SOCIAL_SERVICES = {
   title: 'Access & Basic Services',
   data: [
-  { state:1, label:"Access to clean water (urban)",                                value:"~89%",  pct:89,  color:C.uz  },
+  { state:1, label:"Access to clean water (urban)",                                value:"~89%",  pct:89,  color:C.uzb  },
   { state:1, label:"Access to clean water (rural)",                                value:"~71%",  pct:71,  color:C.grn },
   { state:1, label:"Access to basic sanitation, urban (JMP/World Bank 2020)",      value:"~100%", pct:100, color:C.dim },
   { state:1, label:"Access to basic sanitation, national avg (est.; unverified)",  value:"~73%",  pct:73,  color:C.dim },
@@ -610,7 +617,7 @@ const SOCIAL_COHESION = {
 /* ── §13 ENVIRONMENT ── */
 const ENV_KPI = [
   { state:1, label:"CO₂ per capita (2022)",        value:"~3.8 t",         sub:"Below world avg (~4.7t); gas-heavy grid cleaner than coal",                       accent:C.grn, delay:0.05 },
-  { state:1, label:"Aral Sea volume lost",         value:"~91%",           sub:"Was world's 4th largest lake; irreversible catastrophe",                          accent:C.uz,  delay:0.10 },
+  { state:1, label:"Aral Sea volume lost",         value:"~91%",           sub:"Was world's 4th largest lake; irreversible catastrophe",                          accent:C.uzb,  delay:0.10 },
   { state:1, label:"Renewable energy target 2030", value:"40% of mix",     sub:"Up from ~4% in 2024; $9.5B in 42 projects committed 2025",                        accent:C.dim, delay:0.15 },
   { state:1, label:"Water stress level",           value:"Extreme",        sub:"Both Amu Darya & Syr Darya heavily over-abstracted for irrigation",               accent:C.blu, delay:0.20 },
   { state:1, label:"Aralkum toxic dust",           value:"~57,000 km² exposed",sub:"Former seabed now desert; salt & pesticide dust; 2M people affected",         accent:C.dim, delay:0.25 },
@@ -633,7 +640,7 @@ const ENV_FACTS = {
 const ENV_WATER = {
   title: 'Water Stress & Pollution',
   data: [
-  { state:1, label:"Amu Darya water use vs flow",            value:"Over-abstracted",  pct:95, color:C.uz  },
+  { state:1, label:"Amu Darya water use vs flow",            value:"Over-abstracted",  pct:95, color:C.uzb  },
   { state:1, label:"Irrigation efficiency (Soviet canals)",  value:"~40% (very poor)", pct:40, color:C.grn },
   { state:1, label:"Tashkent PM2.5 vs WHO (5 µg/m³)",       value:"~32 µg/m³ (6× over)",pct:80,color:C.blu },
   { state:1, label:"Aralkum dust events per year",           value:"~30 major events", pct:60, color:C.dim },
@@ -647,7 +654,7 @@ const BIZ_KPI = [
   { state:1, label:"Foreign Investment (2025)", value:"~$35–40B",      sub:"Total incl. loans & portfolio; BoP FDI ~$2.8B (2024); record inflows; Central Asia leader", accent:C.dim, delay:0.10 },
   { state:1, label:"Ease of Doing Business",    value:"~Rank 69/190",  sub:"World Bank 2019; massive improvement from rank 166 in 2012",                          accent:C.dim, delay:0.15 },
   { state:1, label:"VAT rate",                  value:"12%",           sub:"Reduced from 20% in 2019; significant tax reform package",                            accent:C.dim, delay:0.20 },
-  { state:1, label:"Corruption Index (TI 2024)",value:"32/100",        sub:"Rank 121/180; improving from 21/100 in 2016 under Karimov (TI CPI 2024)",             accent:C.uz,  delay:0.25 },
+  { state:1, label:"Corruption Index (TI 2024)",value:"32/100",        sub:"Rank 121/180; improving from 21/100 in 2016 under Karimov (TI CPI 2024)",             accent:C.uzb,  delay:0.25 },
   { state:1, label:"WTO accession",             value:"Target 2026",   sub:"Observer since 1994; 30+ year process nearing completion",                            accent:C.dim, delay:0.30 },
 ];
 
@@ -667,7 +674,7 @@ const BIZ_CLIMATE = {
 const BIZ_RISKS = {
   title: 'Key Risks & Opportunities',
   data: [
-  { state:1, label:"Silk Road tourism opportunity",       value:"World-class",                    pct:95, color:C.uz  },
+  { state:1, label:"Silk Road tourism opportunity",       value:"World-class",                    pct:95, color:C.uzb  },
   { state:1, label:"China-KG-UZ railway opportunity",     value:"Transformational",               pct:90, color:C.grn },
   { state:1, label:"Renewable energy export potential",   value:"Very high",                      pct:85, color:C.dim },
   { state:1, label:"Russia geopolitical risk",            value:"Moderate (less exposed than KZ)", pct:50, color:C.blu },
@@ -678,7 +685,7 @@ const BIZ_RISKS = {
 };
 
 const FISCAL_KPI = [
-  { state:1, label:"Foreign Reserves (end-2025)", value:"~$66B",       sub:"Record $66.3B as of Jan 1 2026; includes gold; +61% YoY (CBU)",                    accent:C.uz,  delay:0.05 },
+  { state:1, label:"Foreign Reserves (end-2025)", value:"~$66B",       sub:"Record $66.3B as of Jan 1 2026; includes gold; +61% YoY (CBU)",                    accent:C.uzb,  delay:0.05 },
   { state:1, label:"Govt Debt / GDP (2025)",      value:"~33%",        sub:"IMF 2025 Article IV: 32.6% end-2024; mostly concessional IFI lending",             accent:C.dim, delay:0.10 },
   { state:1, label:"Foreign Investment (2025)",   value:"~$35–40B",    sub:"Total incl. loans & portfolio; BoP FDI ~$2.8B (2024); Central Asia leader",        accent:C.grn, delay:0.15 },
   { state:1, label:"Exports (2025)",             value:"~$33.8B",      sub:"+23% YoY; gold, gas, copper, uranium, textiles, food",                             accent:C.dim, delay:0.20 },
@@ -717,9 +724,9 @@ const FISCAL_INDICATORS = {
 /* ── §15 CRIME ── */
 const CRIME_KPI = [
   { state:1, label:"Global Peace Index (2024)",   value:"Rank 67",    sub:"IEP GPI 2024; among biggest improvers; improving under Mirziyoyev",                   accent:C.grn, delay:0.05 },
-  { state:1, label:"Afghanistan border",          value:"144 km",     sub:"Terrorism & drug trafficking risk; Uzbekistan maintains strong border (Wikipedia / CIA WF)", accent:C.uz, delay:0.10 },
+  { state:1, label:"Afghanistan border",          value:"144 km",     sub:"Terrorism & drug trafficking risk; Uzbekistan maintains strong border (Wikipedia / CIA WF)", accent:C.uzb, delay:0.10 },
   { state:1, label:"Homicide rate (est.)",        value:"~1.4 / 100K",sub:"UNODC/WB modelled estimate; Uzbekistan does not publish official homicide statistics", accent:C.dim, delay:0.15 },
-  { state:1, label:"Press Freedom (RSF 2024)",    value:"Rank 148/180",sub:"Dropped 11 places in 2024; status worsened to 'very serious'",                        accent:C.uz,  delay:0.20 },
+  { state:1, label:"Press Freedom (RSF 2024)",    value:"Rank 148/180",sub:"Dropped 11 places in 2024; status worsened to 'very serious'",                        accent:C.uzb,  delay:0.20 },
   { state:1, label:"Karakalpakstan unrest (2022)",value:"18 killed",  sub:"Autonomy protests; suppressed; internet cut; some reforms followed",                   accent:C.dim, delay:0.25 },
   { state:1, label:"Andijan massacre (2005)",     value:"Historical", sub:"200–1,500 killed; Karimov-era; Uzbekistan expelled from US base",                      accent:C.dim, delay:0.30 },
 ];
@@ -740,7 +747,7 @@ const CRIME_INDICATORS = {
 const CRIME_SECURITY = {
   title: 'Security Context',
   data: [
-  { state:1, label:"Corruption (CPI, 100=clean)",                                                                             value:"32/100",  pct:32, color:C.uz  },
+  { state:1, label:"Corruption (CPI, 100=clean)",                                                                             value:"32/100",  pct:32, color:C.uzb  },
   { state:1, label:"Press freedom (100=free, est. — RSF rank 148/180 converted to score; RSF does not publish a numeric score)", value:"~28/100", pct:28, color:C.grn },
   { state:1, label:"Rule of law (WJP 2024, 100=best)",                                                                        value:"49/100",  pct:49, color:C.blu },
   { state:1, label:"Political rights (FH 2024, 100=best)",                                                                    value:"12/100",  pct:12, color:C.dim },
@@ -756,13 +763,13 @@ const css = `
   @import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,700;0,9..144,900;1,9..144,400&family=Inter:wght@300;400;500&display=swap');
   * { box-sizing: border-box; margin: 0; padding: 0; }
   html, body { overflow-x: hidden; }
-  body { background: #000; }
-  .dash { background:#000; color:#fff; font-family:'Inter',sans-serif; font-weight:300; line-height:1.6; padding: 0 22px 80px; max-width:1020px; margin:0 auto; overflow-x: hidden; }
+  body { background: ${C.bg}; }
+  .dash { background:${C.bg}; color:${C.txt}; font-family:'Inter',sans-serif; font-weight:300; line-height:1.6; padding: 0 22px 80px; max-width:1020px; margin:0 auto; overflow-x: hidden; }
   @keyframes up { from { opacity:0; transform:translateY(10px); } to { opacity:1; transform:none; } }
   .kpi { animation: up .4s ease forwards; opacity:0; }
   .row.g-1 { --bs-gutter-x: 2px; --bs-gutter-y: 2px; margin-bottom: 2px; }
-  .subnote { font-size:11px; color:#999; margin-top:10px; margin-bottom:0; line-height:1.6; }
-  .panel-sublabel { font-size:11px; color:#999; margin-bottom:11px; letter-spacing:0.04em; }
+  .subnote { font-size:11px; color:${C.sub}; margin-top:10px; margin-bottom:0; line-height:1.6; }
+  .panel-sublabel { font-size:11px; color:${C.sub}; margin-bottom:11px; letter-spacing:0.04em; }
   .section-icon { color:${C.txt}; font-size:16px; flex-shrink:0; }
   .section-title { font-size:13px; letter-spacing:0.18em; text-transform:uppercase; color:${C.txt}; font-weight:500; }
   .panel { background:${C.card}; border:1px solid ${C.border}; padding:20px; height:100%; }
@@ -786,26 +793,26 @@ const css = `
   .regcard-stripe { position:absolute; top:0; left:0; right:0; height:3px; }
   .regcard-name { font-family:'Fraunces',serif; font-weight:700; font-size:15px; color:${C.txt}; margin-bottom:3px; }
   .regcard-type { font-size:10px; letter-spacing:0.09em; text-transform:uppercase; color:${C.sub}; margin-bottom:9px; }
-  .regcard-desc { font-size:12px; color:#888; line-height:1.6; }
+  .regcard-desc { font-size:12px; color:${C.muted}; line-height:1.6; }
   .dlrow { display:flex; align-items:center; gap:8px; margin-bottom:6px; }
   .dlrow-mo { font-size:10px; letter-spacing:0.05em; text-transform:uppercase; color:${C.sub}; width:24px; flex-shrink:0; }
   .dlrow-track { flex:1; height:18px; background:${C.track}; border-radius:3px; overflow:hidden; min-width:0; }
   .dlrow-fill { height:100%; border-radius:3px; display:flex; align-items:center; padding-left:6px; }
   .dlrow-label { font-size:9px; font-weight:500; white-space:nowrap; overflow:hidden; }
   #top { padding:20px 0 0; display:grid; grid-template-columns:1fr minmax(0,96px); align-items:end; gap:16px; margin-bottom:8px; }
-  .top-eyebrow { font-size:10px; letter-spacing:0.28em; text-transform:uppercase; color:${C.uz}; margin-bottom:14px; }
+  .top-eyebrow { font-size:10px; letter-spacing:0.28em; text-transform:uppercase; color:${C.uzb}; margin-bottom:14px; }
   #top h1 { font-family:'Fraunces',serif; font-weight:900; font-size:clamp(44px,9vw,96px); line-height:0.9; letter-spacing:-0.02em; margin-bottom:16px; }
-  #top h1 em { font-style:italic; color:${C.uz}; font-weight:400; }
+  #top h1 em { font-style:italic; color:${C.uzb}; font-weight:400; }
   .top-desc { font-size:14px; color:${C.sub}; max-width:480px; line-height:1.7; }
   .top-flag { align-self:flex-start; margin-top:6px; }
   #glance { margin:28px 0 8px; }
   .glance-eyebrow { font-size:10px; letter-spacing:0.28em; text-transform:uppercase; color:${C.sub}; margin-bottom:14px; }
   .glance-grid { display:grid; grid-template-columns:1fr 1fr 1fr 1fr; gap:3px; }
-  .glance-tile { background:${C.uz}; border:1px solid ${C.border}; padding:14px 8px 12px; position:relative; overflow:hidden; display:flex; flex-direction:column; align-items:center; text-align:center; }
+  .glance-tile { background:${C.uzb}; border:1px solid ${C.border}; padding:14px 8px 12px; position:relative; overflow:hidden; display:flex; flex-direction:column; align-items:center; text-align:center; }
   .glance-tile-icon { margin-bottom:7px; line-height:1; }
-  .glance-tile-label { font-size:8.5px; letter-spacing:0.08em; text-transform:uppercase; color:#fff; margin-bottom:4px; }
-  .glance-tile-value { font-family:'Fraunces',serif; font-weight:900; font-size:12px; color:#fff; margin-bottom:3px; word-break:break-word; }
-  .glance-tile-note { font-size:9px; color:rgba(255,255,255,0.75); line-height:1.3; }
+  .glance-tile-label { font-size:8.5px; letter-spacing:0.08em; text-transform:uppercase; color:${C.txt}; margin-bottom:4px; }
+  .glance-tile-value { font-family:'Fraunces',serif; font-weight:900; font-size:12px; color:${C.txt}; margin-bottom:3px; word-break:break-word; }
+  .glance-tile-note { font-size:9px; color:${C.txt}; line-height:1.3; }
   .glance-map-tile { background:${C.card}; border:1px solid ${C.border}; padding:14px 12px 12px; position:relative; overflow:hidden; grid-column:span 4; }
   .glance-map-label { font-size:9px; letter-spacing:0.1em; text-transform:uppercase; color:${C.sub}; margin-bottom:8px; }
   .glance-map-container { position:relative; width:100%; aspect-ratio:16/9; overflow:hidden; border-radius:4px; }
@@ -813,9 +820,9 @@ const css = `
   .glance-map-loading { position:absolute; inset:0; display:flex; align-items:center; justify-content:center; color:${C.sub}; font-size:11px; }
   .divider { height:1px; background:${C.border}; margin:14px 0; }
   #footer { padding:8px 0 0; margin-top:8px; }
-  .footer-sources { font-size:10.5px; color:#555; line-height:1.7; }
-  .footer-legal { font-size:9.5px; color:#444; margin-top:6px; line-height:1.6; text-align:center; }
-  .timeline-item { padding-left:16px; border-left:1px solid ${C.uz}; margin-bottom:14px; }
+  .footer-sources { font-size:10.5px; color:${C.faded}; line-height:1.7; }
+  .footer-legal { font-size:9.5px; color:${C.dim}; margin-top:6px; line-height:1.6; text-align:center; }
+  .timeline-item { padding-left:16px; border-left:1px solid ${C.uzb}; margin-bottom:14px; }
   .timeline-year { font-size:10px; letter-spacing:0.11em; color:${C.grn}; text-transform:uppercase; margin-bottom:2px; }
   .country-row { display:flex; align-items:center; gap:10px; padding:9px 0; }
   .country-flag { font-size:18px; flex-shrink:0; }
@@ -823,7 +830,7 @@ const css = `
   .country-val { font-size:11px; color:${C.sub}; flex:1; }
   .country-pct { font-family:'Fraunces',serif; font-weight:700; font-size:13px; color:${C.txt}; flex-shrink:0; }
   .era-bar { display:flex; height:40px; border-radius:4px; overflow:hidden; }
-  .era-seg { cursor:pointer; transition:background 0.2s; flex-shrink:0; border-right:1px solid #000; }
+  .era-seg { cursor:pointer; transition:background 0.2s; flex-shrink:0; border-right:1px solid ${C.bg}; }
   .era-labels { position:relative; height:28px; margin-top:5px; }
   .era-year-label { position:absolute; top:0; font-size:9px; color:${C.sub}; white-space:nowrap; writing-mode:vertical-lr; }
   .era-2025 { position:absolute; right:0; top:0; font-size:9px; color:${C.sub}; white-space:nowrap; writing-mode:vertical-lr; transform:scaleX(-1) scaleY(-1); }
@@ -871,8 +878,8 @@ const Subnote = ({ children }) => (
   <p className="subnote">{children}</p>
 );
 
-const KpiCard = ({ label, value, sub, accent = C.uz, delay = 0 }) => {
-  const valColor = accent === C.uz ? C.uzL : accent === C.grn ? C.grnL : accent === C.blu ? C.bluL : accent === C.red ? C.redL : C.txt;
+const KpiCard = ({ label, value, sub, accent = C.uzb, delay = 0 }) => {
+  const valColor = accent === C.uzb ? C.uzbL : accent === C.grn ? C.grnL : accent === C.blu ? C.bluL : accent === C.red ? C.redL : C.txt;
   return (
     <div className="kpi" style={{ animationDelay:`${delay}s` }}>
       <div className="kpi-accent" style={{ background:accent }} />
@@ -893,7 +900,7 @@ const Panel = ({ title, icon, note, children }) => (
   </div>
 );
 
-const BarRow = ({ label, value, pct, color = C.uz }) => (
+const BarRow = ({ label, value, pct, color = C.uzb }) => (
   <div id="bar" className="bar">
     <div className="bar-header">
       <span className="bar-label">{label}</span>
@@ -927,12 +934,12 @@ const RegCard = ({ name, type, desc, stripe }) => (
   </div>
 );
 
-const DlRow = ({ mo, label, pct, color = C.uz, dark = false }) => (
+const DlRow = ({ mo, label, pct, color = C.uzb, dark = false }) => (
   <div className="dlrow">
     <span className="dlrow-mo">{mo}</span>
     <div className="dlrow-track">
       <div className="dlrow-fill" style={{ width:`${pct}%`, background:color }}>
-        <span className="dlrow-label" style={{ color: dark ? '#000' : '#fff' }}>{label}</span>
+        <span className="dlrow-label" style={{ color: dark ? C.bg : C.txt }}>{label}</span>
       </div>
     </div>
   </div>
@@ -967,8 +974,8 @@ const GradientBar = ({ title, values, colorStops, unit = '', height = 22, xLabel
       <div style={{ display:'flex', marginTop:4 }}>
         {labels.map((l, i) => (
           <div key={l} style={{ textAlign:'center', flex:1 }}>
-            <div style={{ fontSize:8, color: i===usePeakIdx ? '#fff' : labelColor, fontWeight: i===usePeakIdx ? 600 : 300, lineHeight:1 }}>{l}</div>
-            <div style={{ fontSize:8, color: i===usePeakIdx ? '#fff' : labelColor, lineHeight:1.4 }}>{fmt ? fmt(values[i]) : `${values[i]}${unit}`}</div>
+            <div style={{ fontSize:8, color: i===usePeakIdx ? C.txt : labelColor, fontWeight: i===usePeakIdx ? 600 : 300, lineHeight:1 }}>{l}</div>
+            <div style={{ fontSize:8, color: i===usePeakIdx ? C.txt : labelColor, lineHeight:1.4 }}>{fmt ? fmt(values[i]) : `${values[i]}${unit}`}</div>
           </div>
         ))}
       </div>
@@ -1022,18 +1029,18 @@ const Donut = ({ segments, label, sublabel, size = 160 }) => {
 /* Uzbekistan flag: blue / white / green horizontal stripes with red separators, crescent & 12 stars */
 const Flag = () => (
   <div style={{ width:90, height:54, borderRadius:3, overflow:'hidden',
-    boxShadow:`0 4px 24px rgba(30,180,229,.45)`, flexShrink:0, position:'relative' }}>
-    <div style={{ height:'30%', background:C.uz, display:'flex', alignItems:'center', paddingLeft:5 }}>
+    boxShadow:`0 4px 24px ${C.uzbS}`, flexShrink:0, position:'relative' }}>
+    <div style={{ height:'30%', background:C.uzb, display:'flex', alignItems:'center', paddingLeft:5 }}>
       <svg width="24" height="10" viewBox="0 0 24 10" fill="none">
-        <path d="M4 5 A3.5 3.5 0 0 1 11 5 A2.8 2.8 0 0 0 4 5Z" fill="#fff" />
+        <path d="M4 5 A3.5 3.5 0 0 1 11 5 A2.8 2.8 0 0 0 4 5Z" fill={C.txt} />
         {[0,1,2,3,4,5,6,7,8,9,10,11].map(i => (
-          <circle key={i} cx={14 + (i % 4) * 3} cy={i < 4 ? 2 : i < 8 ? 5 : 8} r="0.7" fill="#fff" />
+          <circle key={i} cx={14 + (i % 4) * 3} cy={i < 4 ? 2 : i < 8 ? 5 : 8} r="0.7" fill={C.txt} />
         ))}
       </svg>
     </div>
-    <div style={{ height:'3%', background:'#c8102e' }} />
-    <div style={{ height:'30%', background:'#fff' }} />
-    <div style={{ height:'4%', background:'#c8102e' }} />
+    <div style={{ height:'3%', background:C.flagRed }} />
+    <div style={{ height:'30%', background:C.txt }} />
+    <div style={{ height:'4%', background:C.flagRed }} />
     <div style={{ height:'33%', background:C.grn }} />
   </div>
 );
@@ -1069,7 +1076,7 @@ export default function Uzbekistan() {
 
         {/* ── AT A GLANCE ── */}
         {(() => {
-          const col = C.uz;
+          const col = C.uzb;
           const mapRef = React.useRef(null);
           const [mapLoaded, setMapLoaded] = React.useState(false);
 
@@ -1100,12 +1107,12 @@ export default function Uzbekistan() {
                 const path=d3.geoPath().projection(proj);
                 const svg=d3.select(mapRef.current);
                 svg.selectAll('*').remove();
-                svg.append('rect').attr('width',W).attr('height',H).attr('fill','#1a3a5c');
+                svg.append('rect').attr('width',W).attr('height',H).attr('fill',C.sea);
                 svg.append('g').selectAll('path').data(countries.features).join('path')
-                  .attr('d',path).attr('fill',d=>+d.id===UZ?C.uz:'#1a1a1a')
-                  .attr('stroke','#fff').attr('stroke-width',0.3);
+                  .attr('d',path).attr('fill',d=>+d.id===UZ?C.uzb:C.land)
+                  .attr('stroke',C.txt).attr('stroke-width',0.3);
                 const uzF=countries.features.find(d=>+d.id===UZ);
-                if(uzF) svg.append('path').datum(uzF).attr('d',path).attr('fill',C.uz).attr('stroke','#fff').attr('stroke-width',0.8);
+                if(uzF) svg.append('path').datum(uzF).attr('d',path).attr('fill',C.uzb).attr('stroke',C.txt).attr('stroke-width',0.8);
                 const labels=[
                   {name:'TURKMENISTAN',x:274,y:372},{name:'TAJIKISTAN',x:885,y:444},
                   {name:'KYRGYZSTAN',x:895,y:257},{name:'KAZAKHSTAN',x:740,y:155},
@@ -1113,13 +1120,13 @@ export default function Uzbekistan() {
                 ];
                 labels.forEach(({name,x,y})=>{
                   svg.append('text').attr('x',x).attr('y',y).attr('text-anchor','middle')
-                    .attr('fill','#fff').attr('font-size',12).attr('font-family','Inter,sans-serif')
+                    .attr('fill',C.txt).attr('font-size',12).attr('font-family','Inter,sans-serif')
                     .attr('letter-spacing',2).text(name);
                 });
                 const [ax,ay]=proj([69.28,41.30]);
-                svg.append('circle').attr('cx',ax).attr('cy',ay).attr('r',6).attr('fill','#F5C518').attr('opacity',0.2);
-                svg.append('circle').attr('cx',ax).attr('cy',ay).attr('r',3.5).attr('fill','#F5C518');
-                svg.append('text').attr('x',ax+8).attr('y',ay+4).attr('fill','#F5C518')
+                svg.append('circle').attr('cx',ax).attr('cy',ay).attr('r',6).attr('fill',C.capital).attr('opacity',0.2);
+                svg.append('circle').attr('cx',ax).attr('cy',ay).attr('r',3.5).attr('fill',C.capital);
+                svg.append('text').attr('x',ax+8).attr('y',ay+4).attr('fill',C.capital)
                   .attr('font-size',22).attr('font-family','Inter,sans-serif').attr('font-weight',500).text('Tashkent');
                 if(!cancelled) setMapLoaded(true);
               } catch(e){console.error('map',e);}
@@ -1139,7 +1146,7 @@ export default function Uzbekistan() {
                 var p = document.getElementById('era-panel-' + k);
                 if (p) p.style.display = (k === i) ? 'block' : 'none';
                 if (segs[k]) segs[k].style.background = (k === i) ? ERA_COLORS[k].colorL : ERA_COLORS[k].color;
-                if (legs[k]) legs[k].style.color = (k === i) ? ERA_COLORS[k].colorL : '#999';
+                if (legs[k]) legs[k].style.color = (k === i) ? ERA_COLORS[k].colorL : C.sub;
               }
               active = i;
             }
@@ -1209,7 +1216,7 @@ export default function Uzbekistan() {
         <div id="item" className="row gy-3 mb-3">
           <div className="col-12 col-md-6">
             <Panel title={CLIMA_DAYLIGHT.title} icon={Icons.sun} note={CLIMA_DAYLIGHT.note}>
-              {CLIMA_DAYLIGHT.data.map(r => <DlRow key={r.mo} mo={r.mo} label={r.label} pct={r.pct} color={r.color || C.uz} dark={r.dark} />)}
+              {CLIMA_DAYLIGHT.data.map(r => <DlRow key={r.mo} mo={r.mo} label={r.label} pct={r.pct} color={r.color || C.uzb} dark={r.dark} />)}
             </Panel>
           </div>
           <div className="col-12 col-md-6">

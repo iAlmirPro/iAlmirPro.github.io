@@ -1,46 +1,81 @@
-## At a Glance Summary
+# At a Glance — Instructions
 
-### Purpose
-A 4-column tile grid placed between the hero and §1 Geography. Gives a scannable overview of the country's key stats before the detailed sections begin.
-
-### Structure
-- Wrapper: `<div id="glance" style={{ margin:'28px 0 8px' }}>` — `id="glance"` enables anchor targeting
-- 16 stat tiles in a `display:grid, gridTemplateColumns:'1fr 1fr 1fr 1fr'` grid, `gap:3`
-- 1 full-width map tile below (`gridColumn:'span 4'`)
-- Each tile: `padding:'14px 8px 12px'`, `display:flex, flexDirection:'column', alignItems:'center', textAlign:'center'`
-
-### Tile anatomy (top to bottom, all centred)
-1. Icon — 24×24 inline FA6 solid SVG, `fill:#fff`, `marginBottom:7`
-2. Label — `fontSize:8.5`, `letterSpacing:0.08em`, uppercase, `color:#fff`
-3. Value — Fraunces 900, `fontSize:12`, `color:#fff`
-4. Note — `fontSize:9`, `color:rgba(255,255,255,0.75)`
-
-### Tile colors
-- **Background:** `C.[primary]` (country primary color — e.g. `C.kg` for Kyrgyzstan)
-- **All text and icons:** white
-
-### Icons — always inline FA6 solid SVG paths
-- **Never use emoji** — always inline `<svg>` with the exact `<path d="...">` copied from FA6 free GitHub source (`https://raw.githubusercontent.com/FortAwesome/Font-Awesome/6.x/svgs/solid/[name].svg`)
-- Use `curl` or direct fetch to get the real path — never write paths from memory
-- **Always verify the viewBox from the source SVG** — do not assume `0 0 512 512`. e.g. `hands-praying` is `0 0 640 512`
-- Standard icon mapping (adapt per country): `chart-line` GDP · `dollar-sign` GDP per Capita · `arrow-trend-up` Growth · `users` Population · `globe` Area · `money-bill-wave` Currency · `tag` Inflation · `person-circle-xmark` Unemployment · `book-open` Literacy · `hands-praying` Religion · `language` Language · `heart-pulse` Life Expectancy · `globe` HDI · `landmark` Government · `fire-flame-simple` Gas/Energy · `shield-halved` Neutrality/Security
-
-### Mini map tile
-The mini map is a **D3 choropleth map** rendered via `useEffect`. See `country-map-instructions.md` for the full implementation. Key points:
-- Load D3 from cdnjs: `https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js`
-- Load TopoJSON from cdnjs: `https://cdnjs.cloudflare.com/ajax/libs/topojson/3.0.2/topojson.min.js`
-- World geodata: `https://cdn.jsdelivr.net/npm/world-atlas@2/countries-50m.json`
-- Use `React.useRef` and `React.useState` inside the IIFE (not destructured at top level)
-- Map tile label: "Shape & Location", `aspectRatio:'16/9'`
-
-### Helper function
 ```js
-const fasvg = (viewBox, d) => (
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox={viewBox} width="24" height="24" fill="#fff">
+const fasvg = (vb, d) => (
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox={vb} width="24" height="24" fill="#fff">
     <path d={d}/>
   </svg>
 );
 ```
 
-### Standard tiles (16)
-GDP · GDP per Capita · GDP Growth · Population · Area · Currency · Inflation · Unemployment · Literacy · Religion · Language · Life Expectancy · HDI · Government · Energy/Gas Reserves · Neutrality/Security
+---
+
+### `TILES` constant — module level, DATA section
+
+Replace all 16 values. Include `state` field on every tile.
+
+```js
+const TILES = [
+  { state:1, label:'GDP',          value:'$X.XB',   note:'World Bank 2024',   icon:fasvg('0 0 512 512', '...') },
+  { state:1, label:'GDP per Cap.', value:'$X,XXX',  note:'World Bank 2024',   icon:fasvg('0 0 512 512', '...') },
+  { state:1, label:'GDP Growth',   value:'+X.X%',   note:'World Bank 2024',   icon:fasvg('0 0 512 512', '...') },
+  { state:1, label:'Population',   value:'XX.XM',   note:'Stats Agency 2025', icon:fasvg('0 0 640 512', '...') },
+  { state:1, label:'Area',         value:'XXX,XXX', note:'km² · World Bank',  icon:fasvg('0 0 512 512', '...') },
+  { state:1, label:'Currency',     value:'XXX',     note:'ISO 4217',          icon:fasvg('0 0 512 512', '...') },
+  { state:1, label:'Inflation',    value:'X.X%',    note:'IMF 2024',          icon:fasvg('0 0 512 512', '...') },
+  { state:1, label:'Unemployment', value:'X.X%',    note:'ILO 2024',          icon:fasvg('0 0 512 512', '...') },
+  { state:1, label:'Literacy',     value:'XX.X%',   note:'UNESCO 2024',       icon:fasvg('0 0 512 512', '...') },
+  { state:1, label:'Religion',     value:'XX% X',   note:'census year',       icon:fasvg('0 0 640 512', '...') },
+  { state:1, label:'Language',     value:'XXXXX',   note:'official',          icon:fasvg('0 0 640 512', '...') },
+  { state:1, label:'Life Exp.',    value:'XX.X yrs',note:'WHO 2024',          icon:fasvg('0 0 512 512', '...') },
+  { state:1, label:'HDI',          value:'X.XXX',   note:'UNDP 2024 · rank X',icon:fasvg('0 0 512 512', '...') },
+  { state:1, label:'Government',   value:'XXXXXX',  note:'type',              icon:fasvg('0 0 512 512', '...') },
+  { state:1, label:'Energy',       value:'XXX TCM', note:'proved reserves',   icon:fasvg('0 0 448 512', '...') },
+  { state:1, label:'Security',     value:'GPI X.XX',note:'IEP rank XX/163',   icon:fasvg('0 0 512 512', '...') },
+];
+```
+
+---
+
+### Icons — always inline FA6 solid SVG paths
+
+- **Never use emoji** — always inline `<svg>` with the exact `<path d="...">` from FA6 free source
+- Fetch the real path: `https://raw.githubusercontent.com/FortAwesome/Font-Awesome/6.x/svgs/solid/[name].svg`
+- **Always verify the viewBox from source** — do not assume `0 0 512 512` (e.g. `hands-praying` = `0 0 640 512`)
+
+Standard icon mapping:
+
+| Icon name | Used for |
+|---|---|
+| `chart-line` | GDP |
+| `dollar-sign` | GDP per Capita |
+| `arrow-trend-up` | GDP Growth |
+| `users` | Population |
+| `globe` | Area · HDI |
+| `money-bill-wave` | Currency |
+| `tag` | Inflation |
+| `person-circle-xmark` | Unemployment |
+| `book-open` | Literacy |
+| `hands-praying` | Religion |
+| `language` | Language |
+| `heart-pulse` | Life Expectancy |
+| `landmark` | Government |
+| `fire-flame-simple` | Energy / Gas Reserves |
+| `shield-halved` | Security / Peace Index |
+
+---
+
+### Map tile — what to set per country
+
+The IIFE and map rendering code are unchanged from the previous dashboard. Only these values change:
+
+| Variable | What to set |
+|---|---|
+| `COUNTRY_ISO_NUM` | ISO numeric code (e.g. Uzbekistan = `860`) |
+| `CENTRE_LON, CENTRE_LAT` | Geographic centre of the country |
+| `SCALE` | D3 Mercator scale — start at `2000`, increase until country fills frame |
+| `CAPITAL_LON, CAPITAL_LAT` | Capital city coordinates |
+| `CAPITAL_NAME` | Capital city name |
+| neighbour `labels` array | Computed positions — see `country-map-instructions.md` |
+
+> The EraTimeline click handler is injected automatically by `jsx_to_html.py` — do NOT add it manually.
