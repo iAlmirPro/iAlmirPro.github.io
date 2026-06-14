@@ -79,7 +79,7 @@ Constants will be built and artifact updated one at a time
 Any output produced without this appearing first is invalid.
 
 ### New country checklist
-1. Copy the most recent reference dashboard verbatim as `[country]-dashboard-v1.jsx` — do not retype, copy the file
+1. Copy the most recently modified dashboard (by filesystem date) verbatim as `[country]-dashboard-v1.jsx` — do not retype, copy the file
 2. Update the `C` color palette using **ISO 3166 Alpha-3 lowercase** prefix (e.g. `kaz`, `uzb`, `tjk`, `tkm`) — never 2-letter codes (clash risk)
 3. Update `Flag` SVG, `valColor` function, template color keys, map values, header H1/eyebrow/description, footer sources
 4. Replace all data constants one at a time in this order: ERAS → TILES → GEO/GEO_TERRAIN/GEO_WATER/GEO_REGIONS → CLIMA_* → POP_* → ECON_* → EMP_* → EDU_* → POL_* → TOUR_* → VITA_* → HEALTH_* → ENERGY_* → INFRA_* → SOCIAL_* → ENV_* → BIZ_* → FISCAL_* → CRIME_*

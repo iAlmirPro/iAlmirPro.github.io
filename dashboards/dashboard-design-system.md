@@ -55,7 +55,7 @@ Applies to all items: KPI arrays, BarRow data, Tbl rows, Donut segments, DlRow d
 
 > **Copy-first rule:** The new dashboard is built by copying the reference dashboard verbatim and updating only the permitted fields listed below. Do not rewrite any component from memory or from the snippets in this file. The snippets exist for verification only. If the diff between the reference file and the new file contains any component-level change not listed below, that change requires an explicit proposal and approval before proceeding.
 
-1. Copy the most recent reference dashboard verbatim as `[country]-dashboard-v1.jsx` — **do not retype, do not rewrite, copy the file**
+1. Copy the most recently modified dashboard (by filesystem date) verbatim as `[country]-dashboard-v1.jsx` — **do not retype, do not rewrite, copy the file**
 1b. **Immediately call `present_files` on the new file** — before any research, before any edits — so the artifact is visible in the side panel throughout the build process.
 2. Update **only** the following structural/identity items — nothing else:
    - `C` color object — new country's flag colors; use ISO 3166 Alpha-3 lowercase prefix (e.g. `kgz`, `kaz`, `uzb`, `tjk`, `tkm`) — **never use 2-letter codes** (clash risk with Alpha-2); rename `xxxS` key to country prefix
