@@ -29,7 +29,7 @@ Country dashboards live in `dashboards/`. Each is authored as React JSX, then co
 
 **Live preview (run from `dashboards/` directory):**
 ```bash
-bash ../jsxpreviewer/jsxpreview.sh [country]-dashboard.jsx
+bash ../tools/jsxpreviewer/jsxpreview.sh [country]-dashboard.jsx
 # Opens http://127.0.0.1:7743 — watches file; hit ⌘R after each save; Ctrl+C to stop
 ```
 
