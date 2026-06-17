@@ -1,0 +1,45 @@
+{
+  "_comment": "Configuration for fetch_dashboard_data.py — update these values annually or when a source changes its URL structure.",
+
+  "ti_cpi": {
+    "_comment": "TI publishes in January. Update year and xlsx_url every January. Get the direct xlsx URL from transparency.org/en/cpi — right-click the download button and copy the link. No page scraping — xlsx_url must be set or TI CPI is skipped.",
+    "year": 2025,
+    "xlsx_url": "https://images.transparencycdn.org/images/CPI2025_Results.xlsx"
+  },
+
+  "freedom_house": {
+    "_comment": "FH publishes in February. Update year to current year after release. URL pattern: {year}-02/All_data_FIW_2013-{year-1}.xlsx",
+    "year": 2025,
+    "url": "https://freedomhouse.org/sites/default/files/{year}-02/All_data_FIW_2013-{year_minus_1}.xlsx"
+  },
+
+  "undp": {
+    "_comment": "UNDP HDR API version. Update if UNDP changes the endpoint version (v3 → v4 etc.).",
+    "api_version": "v3",
+    "base_url": "https://api.hdr.undp.org/{api_version}/combination/countries/{iso3}"
+  },
+
+  "un_wpp": {
+    "_comment": "UN WPP data window. Shift start/end forward when a new WPP edition is released (every 2 years).",
+    "start_year": 2020,
+    "end_year": 2025,
+    "base_url": "https://population.un.org/dataportalapi/api/v1"
+  },
+
+  "ilo": {
+    "_comment": "ILO wage data time range. Extend end_year annually as new data becomes available.",
+    "time_range": "2018:2024",
+    "base_url": "https://rplumber.ilo.org/data/indicator/"
+  },
+
+  "rest_countries": {
+    "_comment": "REST Countries API version. Update if the project releases a new major version.",
+    "api_version": "v3.1",
+    "base_url": "https://restcountries.com/{api_version}/alpha/{iso2}"
+  },
+
+  "frankfurter": {
+    "_comment": "Frankfurter ECB exchange rate API. Free community project — update base_url if it moves.",
+    "base_url": "https://api.frankfurter.app/latest"
+  }
+}
