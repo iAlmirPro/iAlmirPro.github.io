@@ -36,7 +36,7 @@ bash ../tools/jsxpreviewer/jsxpreview.sh [country]-dashboard.jsx
 **Compile JSX → static HTML (run from `dashboards/` directory):**
 ```bash
 pip3 install beautifulsoup4   # first time only
-python3 jsx_to_html.py [country]-dashboard.jsx
+python3 ../tools/jsx_to_html.py [country]-dashboard.jsx
 # → writes dashboards/[country].html
 # Requires Python 3.9+ and Node.js; npm packages auto-installed to ~/.jsx_to_html_cache/
 ```

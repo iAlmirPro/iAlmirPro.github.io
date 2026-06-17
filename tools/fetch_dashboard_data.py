@@ -608,14 +608,14 @@ def fetch_ti_cpi_live(iso3, year=None):
 # Protocol : local file read — no network call
 # Format   : CSV with comment lines (#), columns: iso3, {index}_score,
 #            {index}_rank, {index}_year for each of: ti_cpi, gpi, fh, rsf, wjp
-# File     : dashboards/data/indexes.csv — maintained manually once a year.
+# File     : data/indexes.csv — maintained manually once a year.
 # Why CSV  : GPI requires registration (IEP data licensing), RSF blocks all
 #            programmatic access (HTTP 403), WJP has no accessible data file.
 #            TI CPI and Freedom House are auto-fetched — CSV is their fallback.
 # Update   : Jan (TI CPI), Feb (FH), May (RSF), Jun (GPI), Oct (WJP).
 # ──────────────────────────────────────────────────────────────────────────────
 _INDEXES_CSV = os.path.join(
-    os.path.dirname(__file__), '..', 'dashboards', 'data', 'indexes.csv'
+    os.path.dirname(__file__), '..', 'data', 'indexes.csv'
 )
 
 _INDEX_META = {
@@ -1391,6 +1391,698 @@ def fetch_climate(lat, lon, capital_name):
         return None
 
 # ──────────────────────────────────────────────────────────────────────────────
+# JSX-READY FORMATTER — produces pre-formatted display strings for prefill_dashboard.py
+# All formatting logic lives here so prefill_dashboard.py can stay simple.
+# ──────────────────────────────────────────────────────────────────────────────
+
+def _jfmt(raw, fmt):
+    """Format a raw value into a JSX display string. Returns None if raw is None/empty."""
+    if raw is None or raw == 'No data':
+        return None
+    try:
+        v = float(raw)
+    except (TypeError, ValueError):
+        v = None
+
+    if fmt == 'usd_B':
+        b = v / 1e9
+        if b >= 100: return f'~${b:.0f}B'
+        if b >= 10:  return f'~${b:.1f}B'
+        return f'~${b:.2f}B'
+
+    if fmt == 'usd_M':
+        m = v / 1e6
+        if m >= 1000: return f'~${m/1000:.1f}B'
+        if m >= 100:  return f'~${m:.0f}M'
+        return f'~${m:.1f}M'
+
+    if fmt == 'usd_comma':
+        return f'~${round(v / 100) * 100:,.0f}'
+
+    if fmt == 'pct1':
+        return f'{v:.1f}%'
+
+    if fmt == 'pct1s':
+        return f'{"+" if v >= 0 else ""}{v:.1f}%'
+
+    if fmt == 'pct0':
+        return f'{v:.0f}%'
+
+    if fmt == 'pop':
+        if v >= 1e6:  return f'~{v/1e6:.1f}M'
+        if v >= 1e3:  return f'~{v/1e3:.0f}K'
+        return f'{int(v)}'
+
+    if fmt == 'pop_exact':
+        return f'{int(v):,}'
+
+    if fmt == 'int':
+        return f'{int(v):,}'
+
+    if fmt == 'int_sign':
+        return f'{"+" if v >= 0 else ""}{int(v):,}'
+
+    if fmt == 'km2':
+        return f'{int(v):,} km²'
+
+    if fmt == 'density':
+        return f'{v:.1f} /km²'
+
+    if fmt == 'yrs':
+        return f'{v:.1f} yrs'
+
+    if fmt == 'f1':
+        return f'{v:.1f}'
+
+    if fmt == 'f2':
+        return f'{v:.2f}'
+
+    if fmt == 'f3':
+        return f'{v:.3f}'
+
+    if fmt == 'temp':
+        return f'{v:.1f}°C'
+
+    if fmt == 'mm':
+        return f'{int(round(v))} mm'
+
+    if fmt == 'per1k':
+        return f'{v:.1f} per 1k'
+
+    if fmt == 'per100k':
+        return f'{int(round(v))} per 100k'
+
+    if fmt == 'per100k2':
+        return f'{v:.2f} per 100k'
+
+    if fmt == 'per100':
+        return f'{v:.1f} per 100'
+
+    if fmt == 'ugm3':
+        return f'{v:.1f} μg/m³'
+
+    if fmt == 'm3':
+        return f'{int(v):,} m³/cap'
+
+    if fmt == 'kgoe':
+        return f'{int(v):,} kgoe/cap'
+
+    if fmt == 'kwh':
+        return f'{int(v):,} kWh/cap'
+
+    if fmt == 'wgi':
+        return f'{v:.4f}'
+
+    if fmt == 'cpi':
+        return f'{int(v)}/100'
+
+    if fmt == 'fh':
+        return f'{int(v)}/100'
+
+    if fmt == 'gpi_tile':
+        return f'GPI {v:.3f}'
+
+    if fmt == 'gpi':
+        return f'{v:.3f}'
+
+    if fmt == 'cap':
+        return str(raw).capitalize()
+
+    if fmt == 'date':
+        try:
+            from datetime import datetime as _dt
+            return _dt.strptime(str(raw), '%Y-%m-%d').strftime('%b %d, %Y')
+        except Exception:
+            return str(raw)
+
+    if fmt == 'raw':
+        return str(raw)
+
+    return str(raw)
+
+
+def _jget(output, path):
+    """Resolve a dot-path into a leaf node dict from the output."""
+    parts = path.split('.')
+    node  = output
+    for p in parts:
+        if not isinstance(node, dict) or p not in node:
+            return None
+        node = node[p]
+    return node
+
+
+def _jval(output, path):
+    """Return scalar value at dot-path, or None."""
+    node = _jget(output, path)
+    if node is None:
+        return None
+    if isinstance(node, dict):
+        v = node.get('value')
+        return None if v in (None, 'No data') else v
+    return node
+
+
+def _jyear(output, path):
+    """Return year string at dot-path, or ''."""
+    node = _jget(output, path)
+    if isinstance(node, dict):
+        return str(node.get('year', '')) if node.get('year') else ''
+    return ''
+
+
+def _item(output, path, fmt, label_hint, sub_tpl, manual=None):
+    """Build a single jsx_ready item dict."""
+    raw  = _jval(output, path)
+    year = _jyear(output, path)
+    fv   = _jfmt(raw, fmt) if raw is not None else None
+    sub  = sub_tpl.replace('{year}', year) if sub_tpl and year else sub_tpl or ''
+    return {
+        'label_hint': label_hint,
+        'value':      fv,
+        'sub':        sub if fv else None,
+        'year':       year,
+        'ready':      fv is not None,
+        'manual':     manual,
+    }
+
+
+def _daylight_str(h):
+    hrs  = int(h)
+    mins = round((h - hrs) * 60)
+    if mins == 60:
+        hrs += 1; mins = 0
+    return f'{hrs}h {mins:02d}m'
+
+
+def _none(label_hint, manual='Manual entry required'):
+    """Placeholder slot — no API source for this field."""
+    return {'label_hint': label_hint, 'value': None, 'sub': manual,
+            'year': '', 'ready': False, 'manual': manual}
+
+
+def build_jsx_ready(output):
+    """
+    Build the jsx_ready section from fetched data.
+    Returns {'by_id': {N: {value, sub, state}}} keyed by the global id:N
+    assigned to every item in the JSX template.
+
+    prefill_dashboard.py finds each `id:N` line and patches value/sub/state.
+    Use _none() for slots with no API source — they get value:'', state:0.
+    """
+    W = 'world_bank'
+
+    def item(id_n, path, fmt, sub_tmpl):
+        """Fetch a value and return a by_id entry."""
+        val = _jval(output, path)
+        yr  = _jyear(output, path)
+        fv  = _jfmt(val, fmt) if val is not None else None
+        sub = sub_tmpl.replace('{year}', str(yr)) if fv else None
+        return id_n, {'value': fv or '', 'sub': sub or 'Manual entry required', 'state': 1 if fv else 0}
+
+    def none(id_n, sub='Manual entry required'):
+        """Placeholder — no API source."""
+        return id_n, {'value': '', 'sub': sub, 'state': 0}
+
+    # Pre-fetch shared values
+    gpi_raw  = _jval(output, 'indexes.gpi');  gpi_year = _jyear(output, 'indexes.gpi')
+    ti_raw   = _jval(output, 'indexes.ti_cpi'); ti_yr  = _jyear(output, 'indexes.ti_cpi')
+    fh_raw   = _jval(output, 'indexes.fh');   fh_yr   = _jyear(output, 'indexes.fh')
+    rsf_raw  = _jval(output, 'indexes.rsf');  rsf_yr  = _jyear(output, 'indexes.rsf')
+    wjp_raw  = _jval(output, 'indexes.wjp');  wjp_yr  = _jyear(output, 'indexes.wjp')
+    govt_raw = _jval(output, 'wikidata.government_form')
+    ind_raw  = _jval(output, 'wikidata.independence_date')
+    hos_raw  = _jval(output, 'wikidata.head_of_state')
+    hp_name  = _jval(output, 'wikidata.highest_point_name')
+    hp_elev  = _jval(output, 'wikidata.highest_point_elev_m')
+    lp_name  = _jval(output, 'wikidata.lowest_point_name')
+    lp_elev  = _jval(output, 'wikidata.lowest_point_elev_m')
+    tot      = _jval(output, f'{W}.population_total')
+    fe       = _jval(output, f'{W}.life_expectancy_female')
+    ma       = _jval(output, f'{W}.life_expectancy_male')
+    tot_e    = _jval(output, f'{W}.life_expectancy_total')
+    yr_le    = _jyear(output, f'{W}.life_expectancy_total')
+    life_exp = (f'{float(tot_e):.1f} yrs (♀ {float(fe):.1f} · ♂ {float(ma):.1f})'
+                if tot_e and fe and ma else _jfmt(tot_e, 'yrs'))
+    rem_usd  = _jval(output, f'{W}.remittances_usd')
+    rem_pct  = _jval(output, f'{W}.remittances_pct_gdp')
+    rem_yr   = _jyear(output, f'{W}.remittances_usd')
+    rem_val  = (f'{float(rem_usd)/1e9:.2f}B ({float(rem_pct):.1f}% of GDP)'
+                if rem_usd and rem_pct else None)
+
+    # Climate
+    climate    = output.get('climate') or {}
+    monthly_cl = climate.get('monthly', {})
+    months_ord = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']
+    def _mavg(months):
+        v = [monthly_cl.get(m, {}).get('temp_mean_c') for m in months if monthly_cl.get(m, {}).get('temp_mean_c') is not None]
+        return round(sum(v)/len(v), 1) if v else None
+    summer_avg = _mavg(['Jun','Jul','Aug'])
+    winter_avg = _mavg(['Dec','Jan','Feb'])
+    spring_avg = _mavg(['Mar','Apr','May'])
+
+    by_id = dict([
+        # ── TILES (ids 1–16) ────────────────────────────────────────────────
+        item(1,  f'{W}.gdp_usd',              'usd_B',    'World Bank {year}'),
+        item(2,  f'{W}.gdp_per_capita_usd',   'usd_comma','World Bank {year}'),
+        item(3,  f'{W}.gdp_growth_pct',       'pct1s',    'World Bank {year}'),
+        item(4,  f'{W}.population_total',     'pop_M',    'World Bank {year}'),
+        none(5,  'ISO 4217 code + exchange rate — manual'),
+        item(6,  f'{W}.inflation_cpi_pct',    'pct1',     'World Bank CPI {year}'),
+        item(7,  f'{W}.unemployment_pct',     'pct1',     'ILO modelled {year}'),
+        item(8,  f'{W}.literacy_rate_adult_pct','pct1',   'World Bank {year}'),
+        none(9,  'Religion breakdown — manual'),
+        none(10, 'Official language — manual'),
+        (11, {'value': life_exp or '',           'sub': f'World Bank {yr_le}' if life_exp else 'Manual entry required', 'state': 1 if life_exp else 0}),
+        none(12, 'HDI rank — check UNDP HDR'),
+        (13, {'value': str(govt_raw) if govt_raw else '', 'sub': 'Wikidata' if govt_raw else 'Manual entry required', 'state': 1 if govt_raw else 0}),
+        none(14, 'Natural resources — manual'),
+        (15, {'value': _jfmt(gpi_raw, 'gpi') if gpi_raw else '', 'sub': f'IEP GPI {gpi_year}' if gpi_raw else 'Manual entry required', 'state': 1 if gpi_raw else 0}),
+        item(16, f'{W}.area_km2',             'km2',      'World Bank'),
+
+        # ── GEO (ids 17–25) ─────────────────────────────────────────────────
+        item(17, f'{W}.area_km2',             'km2',      'World Bank'),
+        (18, {'value': f'{hp_name} — {int(float(hp_elev))} m' if hp_name and hp_elev else '', 'sub': 'Wikidata' if hp_name else 'Manual entry required', 'state': 1 if (hp_name and hp_elev) else 0}),
+        (19, {'value': f'{lp_name} ({int(float(lp_elev))} m)' if lp_name and lp_elev is not None else '', 'sub': 'Wikidata' if lp_name else 'Manual entry required', 'state': 1 if lp_name else 0}),
+        none(20, 'Neighbouring countries — manual'),
+        none(21, 'Geographic feature 1 — manual'),
+        none(22, 'Geographic feature 2 — manual'),
+        none(23, 'Geographic feature 3 — manual'),
+        none(24, 'Geographic characteristic — manual'),
+        item(25, f'{W}.arable_land_pct',      'pct1',     'World Bank {year}'),
+
+        # ── GEO_TERRAIN (ids 26–30) — manual ────────────────────────────────
+        none(26), none(27), none(28), none(29), none(30),
+
+        # ── GEO_WATER (ids 31–36) — manual ──────────────────────────────────
+        none(31), none(32), none(33), none(34), none(35), none(36),
+
+        # ── GEO_REGIONS (ids 37–40) — manual ────────────────────────────────
+        none(37), none(38), none(39), none(40),
+
+        # ── CLIMA_KPI (ids 41–49) ───────────────────────────────────────────
+        (41, {'value': _jfmt(climate.get('annual_avg_temp_c'), 'temp') or '', 'sub': 'Open-Meteo 1991–2020 normals' if climate.get('annual_avg_temp_c') else 'Manual entry required', 'state': 1 if climate.get('annual_avg_temp_c') else 0}),
+        none(42, 'Record High temp — national met service / Wikipedia'),
+        none(43, 'Record Low temp — national met service / Wikipedia'),
+        (44, {'value': _jfmt(climate.get('annual_precip_mm'), 'mm') or '', 'sub': 'Open-Meteo 1991–2020 normals' if climate.get('annual_precip_mm') else 'Manual entry required', 'state': 1 if climate.get('annual_precip_mm') else 0}),
+        none(45, 'Köppen climate classification — manual'),
+        (46, {'value': _jfmt(summer_avg, 'temp') if summer_avg else '', 'sub': 'Open-Meteo Jun–Aug avg' if summer_avg else 'Manual entry required', 'state': 1 if summer_avg else 0}),
+        (47, {'value': _jfmt(winter_avg, 'temp') if winter_avg else '', 'sub': 'Open-Meteo Dec–Feb avg' if winter_avg else 'Manual entry required', 'state': 1 if winter_avg else 0}),
+        none(48, 'Second city climate — manual'),
+        (49, {'value': _jfmt(spring_avg, 'temp') if spring_avg else '', 'sub': 'Open-Meteo Mar–May avg' if spring_avg else 'Manual entry required', 'state': 1 if spring_avg else 0}),
+
+        # ── CLIMA_DAYLIGHT (ids 50–61) — auto-generated block, skip by_id ───
+        # (prefill_dashboard handles CLIMA_DAYLIGHT as a full block replacement)
+
+        # ── CLIMA_RAIN_REGIONAL (ids 62–66) — manual ────────────────────────
+        none(62), none(63), none(64), none(65), none(66),
+
+        # ── CLIMA_RAIN_SEASONAL (ids 67–69) — manual ────────────────────────
+        none(67), none(68), none(69),
+
+        # ── POP_KPI (ids 70–75) ─────────────────────────────────────────────
+        item(70, f'{W}.population_total',          'pop_exact', 'World Bank {year}'),
+        item(71, f'{W}.urban_population_pct',      'pct1',      'World Bank {year}'),
+        none(72, 'Median Age — check UN WPP (no World Bank API)'),
+        item(73, f'{W}.population_density_per_km2','density',   'World Bank {year}'),
+        (74, {'value': life_exp or '', 'sub': f'World Bank {yr_le}' if life_exp else 'Manual entry required', 'state': 1 if life_exp else 0}),
+        item(75, f'{W}.fertility_rate',            'f2',        'World Bank {year}'),
+
+        # ── POP_GROWTH (ids 76–80) — manual ─────────────────────────────────
+        none(76), none(77), none(78), none(79), none(80),
+
+        # ── POP_CITIES (ids 81–85) — auto-generated block, skip ─────────────
+
+        # ── POP_ETHNIC (ids 86–90) — manual ─────────────────────────────────
+        none(86), none(87), none(88), none(89), none(90),
+
+        # ── POP_RELIGION (ids 91–97) — manual ───────────────────────────────
+        none(91), none(92), none(93), none(94), none(95), none(96), none(97),
+
+        # ── ECON_KPI (ids 98–103) ───────────────────────────────────────────
+        item(98,  f'{W}.gdp_usd',             'usd_B',    'World Bank {year}'),
+        item(99,  f'{W}.gdp_per_capita_usd',  'usd_comma','World Bank {year}'),
+        item(100, f'{W}.gdp_growth_pct',      'pct1s',    'World Bank {year}'),
+        item(101, f'{W}.gdp_ppp_usd',         'usd_B',    'World Bank PPP {year}'),
+        item(102, f'{W}.inflation_cpi_pct',   'pct1',     'World Bank CPI {year}'),
+        none(103, 'Currency name + exchange rate — manual'),
+
+        # ── ECON_GDP_DONUT (ids 104–106) ────────────────────────────────────
+        item(104, f'{W}.services_pct_gdp',    'pct1', 'World Bank {year}'),
+        item(105, f'{W}.industry_pct_gdp',    'pct1', 'World Bank {year}'),
+        item(106, f'{W}.agriculture_pct_gdp', 'pct1', 'World Bank {year}'),
+
+        # ── ECON_EXPORTS_BARS (ids 107–110) — manual ────────────────────────
+        none(107), none(108), none(109), none(110),
+
+        # ── ECON_INDICATORS (ids 111–116) ───────────────────────────────────
+        (111, {'value': rem_val or '', 'sub': f'World Bank {rem_yr}' if rem_val else 'Manual entry required', 'state': 1 if rem_val else 0}),
+        none(112, 'Country-specific — manual'),
+        item(113, f'{W}.foreign_reserves_usd',     'usd_B',  'World Bank {year}'),
+        item(114, f'{W}.fdi_inflow_usd',           'usd_B',  'World Bank {year}'),
+        item(115, f'{W}.poverty_headcount_365_pct','pct1',   'World Bank {year}'),
+        item(116, f'{W}.gini_index',               'f1',     'World Bank {year}'),
+
+        # ── EMP_KPI (ids 117–122) ───────────────────────────────────────────
+        none(117, 'Avg monthly wage — ILO / national stats'),
+        none(118, 'Labour force total — ILO modelled'),
+        item(119, f'{W}.unemployment_pct',           'pct1', 'ILO modelled {year}'),
+        item(120, f'{W}.vulnerable_employment_pct',  'pct1', 'World Bank {year}'),
+        item(121, f'{W}.female_unemployment_pct',    'pct1', 'ILO modelled {year}'),
+        item(122, f'{W}.labour_force_participation_pct','pct1','ILO modelled {year}'),
+
+        # ── EMP_WAGES (ids 123–128) — manual ────────────────────────────────
+        none(123), none(124), none(125), none(126), none(127), none(128),
+
+        # ── EMP_SECTORS_DONUT (ids 129–134) ─────────────────────────────────
+        item(129, f'{W}.employment_agriculture_pct','pct1', 'ILO {year}'),
+        item(130, f'{W}.employment_services_pct',   'pct1', 'ILO {year}'),
+        item(131, f'{W}.employment_industry_pct',   'pct1', 'ILO {year}'),
+        item(132, f'{W}.youth_unemployment_pct',    'pct1', 'ILO modelled {year}'),
+        item(133, f'{W}.female_labour_force_pct',   'pct1', 'ILO modelled {year}'),
+        item(134, f'{W}.wage_workers_pct',          'pct1', 'World Bank {year}'),
+
+        # ── EMP_MIGRATION (ids 135–136) ─────────────────────────────────────
+        none(135, 'Migrant workers abroad — ILO / national stats'),
+        (136, {'value': rem_val or '', 'sub': f'World Bank {rem_yr}' if rem_val else 'Manual entry required', 'state': 1 if rem_val else 0}),
+
+        # ── EDU_KPI (ids 137–142) ───────────────────────────────────────────
+        item(137, f'{W}.literacy_rate_adult_pct',       'pct1', 'World Bank {year}'),
+        none(138, 'HDI value — check UNDP HDR'),
+        none(139, 'Avg years schooling — UNDP HDR'),
+        none(140, 'Expected years schooling — UNDP HDR'),
+        item(141, f'{W}.education_expenditure_pct_gdp', 'pct1', 'World Bank {year}'),
+        none(142, 'Foreign university branches — manual'),
+
+        # ── EDU_METRICS (ids 143–147) ───────────────────────────────────────
+        none(143),
+        item(144, f'{W}.school_enrollment_secondary_pct','pct1','World Bank {year}'),
+        item(145, f'{W}.school_enrollment_tertiary_pct', 'pct1','World Bank {year}'),
+        none(146), none(147),
+
+        # ── EDU_FACTS (ids 148–153) — manual ────────────────────────────────
+        none(148), none(149), none(150), none(151), none(152), none(153),
+
+        # ── POL_KPI (ids 154–159) ───────────────────────────────────────────
+        none(154, 'Government system — manual'),
+        (155, {'value': str(hos_raw) if hos_raw else '', 'sub': 'Wikidata' if hos_raw else 'Manual entry required', 'state': 1 if hos_raw else 0}),
+        item(156, f'{W}.women_in_parliament_pct', 'pct1', 'World Bank {year}'),
+        none(157, 'Next election date — manual'),
+        none(158, 'Ruling party — manual'),
+        (159, {'value': _jfmt(ind_raw, 'date') if ind_raw else '', 'sub': 'Wikidata' if ind_raw else 'Manual entry required', 'state': 1 if ind_raw else 0}),
+
+        # ── POL_ELECTION (ids 160–161) — manual ─────────────────────────────
+        none(160), none(161),
+
+        # ── POL_TIMELINE (ids 162–167) — manual ─────────────────────────────
+        none(162), none(163), none(164), none(165), none(166), none(167),
+
+        # ── TOUR_KPI (ids 168–173) ──────────────────────────────────────────
+        item(168, f'{W}.tourism_arrivals',        'int',   'World Bank {year}'),
+        item(169, f'{W}.tourism_receipts_usd',    'usd_M', 'World Bank {year}'),
+        none(170, 'Top tourist draw — manual'),
+        none(171, 'Visa-free countries — Passport Index / manual'),
+        none(172, 'UNESCO sites — manual'),
+        none(173, 'Visitor target — national strategy / manual'),
+
+        # ── TOUR_ORIGINS (ids 174–179) — manual ─────────────────────────────
+        none(174), none(175), none(176), none(177), none(178), none(179),
+
+        # ── TOUR_HIGHLIGHTS (ids 180–186) — manual ──────────────────────────
+        none(180), none(181), none(182), none(183), none(184), none(185), none(186),
+
+        # ── VITA_KPI (ids 187–192) ──────────────────────────────────────────
+        item(187, f'{W}.birth_rate_per1k',          'per1k',  'World Bank {year}'),
+        item(188, f'{W}.death_rate_per1k',          'per1k',  'World Bank {year}'),
+        item(189, f'{W}.pop_0_14_pct',              'pct1',   'World Bank {year}'),
+        item(190, f'{W}.pop_65plus_pct',            'pct1',   'World Bank {year}'),
+        item(191, f'{W}.under5_mortality_per1k',    'per1k',  'World Bank {year}'),
+        item(192, f'{W}.infant_mortality_per1k',    'per1k',  'World Bank {year}'),
+
+        # ── VITA_DEATHS (ids 193–199) — auto-generated block, skip ──────────
+
+        # ── VITA_TRENDS (ids 200–205) — manual ──────────────────────────────
+        none(200), none(201), none(202), none(203), none(204), none(205),
+
+        # ── HEALTH_KPI (ids 206–211) ────────────────────────────────────────
+        item(206, f'{W}.health_expenditure_pct_gdp', 'pct1',     'World Bank {year}'),
+        item(207, f'{W}.out_of_pocket_health_pct',   'pct1',     'World Bank {year}'),
+        item(208, f'{W}.tb_incidence_per100k',        'per100k',  'World Bank {year}'),
+        (209, {'value': life_exp or '', 'sub': f'World Bank {yr_le}' if life_exp else 'Manual entry required', 'state': 1 if life_exp else 0}),
+        item(210, f'{W}.physicians_per1k',            'f2',       'World Bank {year}'),
+        item(211, f'{W}.pm25_mean_annual_ugm3',       'ugm3',     'World Bank / WHO {year}'),
+
+        # ── HEALTH_FACTS (ids 212–217) ──────────────────────────────────────
+        none(212, 'Health insurance system — manual'),
+        item(213, f'{W}.hospital_beds_per1k',         'f2',    'World Bank {year}'),
+        item(214, f'{W}.nurses_per1k',                'f2',    'World Bank {year}'),
+        item(215, f'{W}.stunting_pct_under5',         'pct1',  'World Bank {year}'),
+        item(216, f'{W}.maternal_mortality_per100k',  'per100k','World Bank {year}'),
+        item(217, f'{W}.health_exp_per_capita_usd',   'usd_comma','World Bank {year}'),
+
+        # ── HEALTH_BURDEN (ids 218–222) ─────────────────────────────────────
+        (218, {'value': _jfmt(_jval(output,'who.hypertension_prevalence_pct'),'pct1') or '', 'sub': f'WHO GHO {_jyear(output,"who.hypertension_prevalence_pct")}' if _jval(output,'who.hypertension_prevalence_pct') else 'Manual entry required', 'state': 1 if _jval(output,'who.hypertension_prevalence_pct') else 0}),
+        item(219, f'{W}.tb_incidence_per100k',        'per100k','World Bank {year}'),
+        item(220, f'{W}.out_of_pocket_health_pct',    'pct1',  'World Bank {year}'),
+        item(221, f'{W}.pm25_mean_annual_ugm3',       'ugm3',  'World Bank / WHO {year}'),
+        none(222, 'Country-specific health burden — manual'),
+
+        # ── ENERGY_KPI (ids 223–228) ────────────────────────────────────────
+        item(223, f'{W}.renewable_electricity_pct',   'pct1', 'World Bank {year}'),
+        item(224, f'{W}.access_electricity_pct',      'pct1', 'World Bank {year}'),
+        none(225, 'Key resource — country-specific / manual'),
+        item(226, f'{W}.energy_use_kg_oil_per_cap',   'kgoe', 'World Bank {year}'),
+        none(227, 'Energy potential — manual'),
+        none(228, 'Energy project — manual'),
+
+        # ── ENERGY_MIX (ids 229–232) — auto-generated block, skip ───────────
+
+        # ── ENERGY_FACTS (ids 233–238) — manual ─────────────────────────────
+        none(233), none(234), none(235), none(236), none(237), none(238),
+
+        # ── INFRA_KPI (ids 239–244) — manual ────────────────────────────────
+        none(239), none(240), none(241), none(242), none(243), none(244),
+
+        # ── INFRA_PROJECTS (ids 245–250) — manual ───────────────────────────
+        none(245), none(246), none(247), none(248), none(249), none(250),
+
+        # ── INFRA_DIGITAL (ids 251–255) ─────────────────────────────────────
+        item(251, f'{W}.internet_users_pct',           'pct1',   'World Bank {year}'),
+        item(252, f'{W}.mobile_subscriptions_per100',  'per100', 'World Bank {year}'),
+        none(253, 'E-government uptake — manual'),
+        none(254, 'Social media penetration — manual'),
+        item(255, f'{W}.fixed_broadband_per100',       'per100', 'World Bank {year}'),
+
+        # ── SOCIAL_KPI (ids 256–261) ────────────────────────────────────────
+        item(256, f'{W}.poverty_headcount_365_pct',    'pct1', 'World Bank {year}'),
+        item(257, f'{W}.gini_index',                   'f1',   'World Bank {year}'),
+        item(258, f'{W}.poverty_headcount_685_pct',    'pct1', 'World Bank {year}'),
+        none(259, 'Gender Inequality Index — UNDP HDR'),
+        item(260, f'{W}.women_in_parliament_pct',      'pct1', 'World Bank {year}'),
+        item(261, f'{W}.international_migrants_pct',   'pct1', 'World Bank {year}'),
+
+        # ── SOCIAL_SERVICES (ids 262–266) ───────────────────────────────────
+        item(262, f'{W}.access_clean_water_pct',       'pct1', 'World Bank {year}'),
+        item(263, f'{W}.rural_population_pct',         'pct1', 'World Bank {year}'),
+        item(264, f'{W}.urban_population_total',       'pop_exact','World Bank {year}'),
+        item(265, f'{W}.access_sanitation_pct',        'pct1', 'World Bank {year}'),
+        item(266, f'{W}.access_electricity_pct',       'pct1', 'World Bank {year}'),
+
+        # ── SOCIAL_COHESION (ids 267–272) — manual ──────────────────────────
+        none(267), none(268), none(269), none(270), none(271), none(272),
+
+        # ── ENV_KPI (ids 273–278) ───────────────────────────────────────────
+        item(273, f'{W}.co2_per_capita_tons',           'f1',   'World Bank {year}'),
+        item(274, f'{W}.forest_area_pct',              'pct1', 'World Bank {year}'),
+        item(275, f'{W}.renewable_electricity_pct',    'pct1', 'World Bank {year}'),
+        item(276, f'{W}.renewable_freshwater_per_cap', 'm3',   'World Bank {year}'),
+        item(277, f'{W}.forest_area_km2',              'km2',  'World Bank {year}'),
+        item(278, f'{W}.pm25_mean_annual_ugm3',        'ugm3', 'World Bank / WHO {year}'),
+
+        # ── ENV_FACTS (ids 279–284) — manual ────────────────────────────────
+        none(279), none(280), none(281), none(282), none(283), none(284),
+
+        # ── ENV_WATER (ids 285–288) ──────────────────────────────────────────
+        item(285, f'{W}.agricultural_land_pct',        'pct1', 'World Bank {year}'),
+        none(286, 'Irrigation efficiency — manual'),
+        item(287, f'{W}.pm25_mean_annual_ugm3',        'ugm3', 'World Bank / WHO {year}'),
+        none(288, 'Water event — manual'),
+
+        # ── BIZ_KPI (ids 289–294) — manual ──────────────────────────────────
+        none(289), none(290), none(291), none(292),
+        (293, {'value': _jfmt(ti_raw, 'cpi') if ti_raw else '', 'sub': f'Transparency International {ti_yr}' if ti_raw else 'Manual entry required', 'state': 1 if ti_raw else 0}),
+        none(294),
+
+        # ── BIZ_CLIMATE (ids 295–300) — manual ──────────────────────────────
+        none(295), none(296), none(297), none(298), none(299), none(300),
+
+        # ── BIZ_RISKS (ids 301–306) — manual ────────────────────────────────
+        none(301), none(302), none(303), none(304), none(305), none(306),
+
+        # ── FISCAL_KPI (ids 307–312) ────────────────────────────────────────
+        item(307, f'{W}.foreign_reserves_usd',         'usd_B',  'World Bank {year}'),
+        item(308, f'{W}.govt_debt_pct_gdp',            'pct1',   'World Bank {year}'),
+        item(309, f'{W}.fdi_inflow_usd',               'usd_B',  'World Bank {year}'),
+        item(310, f'{W}.exports_usd',                  'usd_B',  'World Bank {year}'),
+        item(311, f'{W}.imports_usd',                  'usd_B',  'World Bank {year}'),
+        item(312, f'{W}.current_account_pct_gdp',      'pct1s',  'World Bank {year}'),
+
+        # ── FISCAL_EXPORTS (ids 313–318) — manual ───────────────────────────
+        none(313), none(314), none(315), none(316), none(317), none(318),
+
+        # ── FISCAL_INDICATORS (ids 319–325) ─────────────────────────────────
+        item(319, f'{W}.govt_debt_pct_gdp',            'pct1',   'World Bank {year}'),
+        item(320, f'{W}.foreign_reserves_usd',         'usd_B',  'World Bank {year}'),
+        item(321, f'{W}.gross_capital_formation_pct',  'pct1',   'World Bank {year}'),
+        item(322, f'{W}.gross_savings_pct_gdp',        'pct1',   'World Bank {year}'),
+        item(323, f'{W}.trade_pct_gdp',                'pct1',   'World Bank {year}'),
+        item(324, f'{W}.tax_revenue_pct_gdp',          'pct1',   'World Bank {year}'),
+        item(325, f'{W}.govt_expenditure_pct_gdp',     'pct1',   'World Bank {year}'),
+
+        # ── CRIME_KPI (ids 326–331) ─────────────────────────────────────────
+        (326, {'value': _jfmt(gpi_raw, 'gpi') if gpi_raw else '', 'sub': f'IEP GPI {gpi_year}' if gpi_raw else 'Manual entry required', 'state': 1 if gpi_raw else 0}),
+        none(327, 'Border/security context — manual'),
+        item(328, f'{W}.homicide_rate_per100k',        'per100k2','World Bank/UNODC {year}'),
+        (329, {'value': _jfmt(rsf_raw, 'f1') if rsf_raw else '', 'sub': f'RSF {rsf_yr}' if rsf_raw else 'Manual entry required', 'state': 1 if rsf_raw else 0}),
+        none(330, 'Security event — manual'),
+        none(331, 'Historical event — manual'),
+
+        # ── CRIME_INDICATORS (ids 332–337) ──────────────────────────────────
+        item(332, f'{W}.homicide_rate_per100k',            'per100k2','World Bank/UNODC {year}'),
+        (333, {'value': _jfmt(gpi_raw, 'gpi') if gpi_raw else '', 'sub': f'IEP GPI {gpi_year}' if gpi_raw else 'Manual entry required', 'state': 1 if gpi_raw else 0}),
+        (334, {'value': _jfmt(_jval(output,'wgi.rule_of_law_estimate'),'wgi') or '', 'sub': f'World Bank WGI {_jyear(output,"wgi.rule_of_law_estimate")}' if _jval(output,'wgi.rule_of_law_estimate') else 'Manual entry required', 'state': 1 if _jval(output,'wgi.rule_of_law_estimate') else 0}),
+        (335, {'value': _jfmt(_jval(output,'wgi.political_stability_estimate'),'wgi') or '', 'sub': f'World Bank WGI {_jyear(output,"wgi.political_stability_estimate")}' if _jval(output,'wgi.political_stability_estimate') else 'Manual entry required', 'state': 1 if _jval(output,'wgi.political_stability_estimate') else 0}),
+        (336, {'value': _jfmt(_jval(output,'wgi.control_corruption_estimate'),'wgi') or '', 'sub': f'World Bank WGI {_jyear(output,"wgi.control_corruption_estimate")}' if _jval(output,'wgi.control_corruption_estimate') else 'Manual entry required', 'state': 1 if _jval(output,'wgi.control_corruption_estimate') else 0}),
+        (337, {'value': _jfmt(_jval(output,'wgi.voice_accountability_estimate'),'wgi') or '', 'sub': f'World Bank WGI {_jyear(output,"wgi.voice_accountability_estimate")}' if _jval(output,'wgi.voice_accountability_estimate') else 'Manual entry required', 'state': 1 if _jval(output,'wgi.voice_accountability_estimate') else 0}),
+
+        # ── CRIME_SECURITY (ids 338–341) ────────────────────────────────────
+        (338, {'value': _jfmt(ti_raw, 'cpi') if ti_raw else '', 'sub': f'TI {ti_yr}' if ti_raw else 'Manual entry required', 'state': 1 if ti_raw else 0}),
+        (339, {'value': _jfmt(rsf_raw, 'f1') if rsf_raw else '', 'sub': f'RSF {rsf_yr}' if rsf_raw else 'Manual entry required', 'state': 1 if rsf_raw else 0}),
+        (340, {'value': _jfmt(wjp_raw, 'f2') if wjp_raw else '', 'sub': f'WJP {wjp_yr}' if wjp_raw else 'Manual entry required', 'state': 1 if wjp_raw else 0}),
+        (341, {'value': _jfmt(fh_raw, 'fh') if fh_raw else '', 'sub': f'Freedom House {fh_yr}' if fh_raw else 'Manual entry required', 'state': 1 if fh_raw else 0}),
+    ])
+
+    # ── Auto-generated blocks (full replacement, not by_id) ──────────────────
+    # CLIMA_DAYLIGHT, VITA_DEATHS, ENERGY_MIX, POP_CITIES
+    dl = output.get('daylight') or {}
+    monthly_dl = dl.get('monthly', {})
+    capital    = output.get('meta', {}).get('capital', 'capital')
+    lat        = output.get('meta', {}).get('lat', 0)
+    lat_str    = f'{abs(lat):.1f}°{"N" if lat >= 0 else "S"}'
+
+    if monthly_dl:
+        hours_list = [monthly_dl.get(m, 12.0) for m in months_ord]
+        max_h = max(hours_list); min_h = min(hours_list)
+        max_mo = months_ord[hours_list.index(max_h)]
+        min_mo = months_ord[hours_list.index(min_h)]
+        dl_items = []
+        for i, mo in enumerate(months_ord):
+            h = hours_list[i]
+            pct = round((h / max_h) * 100)
+            lbl = _daylight_str(h)
+            is_max = (mo == max_mo); is_min = (mo == min_mo)
+            is_cold = h <= min_h + (max_h - min_h) * 0.25
+            dl_items.append({'mo': mo, 'label': lbl + (' ★' if is_max or is_min else ''),
+                             'pct': pct, 'primary': is_max, 'blu': is_min or (is_cold and not is_max)})
+        auto_daylight = {'_auto': True, 'title': f'Daylight Hours — {capital} ({lat_str})',
+                         'max_label': _daylight_str(max_h), 'min_label': _daylight_str(min_h),
+                         'lat_str': lat_str, 'items': dl_items}
+    else:
+        auto_daylight = {'_auto': False}
+
+    if monthly_cl:
+        temps  = [round(monthly_cl.get(m, {}).get('temp_mean_c', 0), 1) for m in months_ord]
+        precip = [round(monthly_cl.get(m, {}).get('precip_mm', 0) / 30, 1) for m in months_ord]
+        clima_gradbar = {'location': climate.get('location', capital), 'temps': temps, 'precip': precip,
+                         'note': 'Open-Meteo 1991–2020 normals. precip = 30-yr monthly total ÷ 30.'}
+    else:
+        clima_gradbar = None
+
+    ncd  = _jval(output, f'{W}.death_noncommunicable_pct')
+    comm = _jval(output, f'{W}.death_communicable_pct')
+    inj  = _jval(output, f'{W}.death_injury_pct')
+    vd_yr = _jyear(output, f'{W}.death_noncommunicable_pct')
+    if ncd and comm and inj:
+        ncd_f = float(ncd); comm_f = float(comm); inj_f = float(inj)
+        auto_deaths = {'_auto': True, 'year': vd_yr, 'items': [
+            {'label': 'Non-communicable diseases', 'value': f'{ncd_f:.1f}%',  'pct': 100},
+            {'label': 'Communicable diseases',     'value': f'{comm_f:.1f}%', 'pct': round((comm_f/ncd_f)*100)},
+            {'label': 'Injuries',                  'value': f'{inj_f:.1f}%',  'pct': round((inj_f/ncd_f)*100)},
+        ]}
+    else:
+        auto_deaths = {'_auto': False}
+
+    coal  = _jval(output, f'{W}.electricity_coal_pct')
+    hydro = _jval(output, f'{W}.electricity_hydro_pct')
+    gas   = _jval(output, f'{W}.electricity_gas_pct')
+    nuke  = _jval(output, f'{W}.electricity_nuclear_pct')
+    renew = _jval(output, f'{W}.electricity_renewables_excl_hydro_pct')
+    em_yr = _jyear(output, f'{W}.electricity_coal_pct')
+    if any([coal, hydro, gas]):
+        segs = []
+        if coal  and float(coal)  > 0: segs.append(('Coal',             float(coal),  'dim'))
+        if hydro and float(hydro) > 0: segs.append(('Hydro',            float(hydro), 'primary'))
+        if gas   and float(gas)   > 0: segs.append(('Natural gas',      float(gas),   'secondary'))
+        if nuke  and float(nuke)  > 0: segs.append(('Nuclear',          float(nuke),  'red'))
+        if renew and float(renew) > 0: segs.append(('Wind/solar/other', float(renew), 'blu'))
+        segs.sort(key=lambda x: x[1], reverse=True)
+        max_pct = segs[0][1] if segs else 1
+        auto_energy = {'_auto': True, 'year': em_yr,
+                       'items': [{'label': l, 'value': f'{v:.1f}%', 'pct': round((v/max_pct)*100), 'color_role': r} for l, v, r in segs]}
+    else:
+        auto_energy = {'_auto': False}
+
+    cities_raw = _jget(output, 'wikidata.cities_by_population')
+    if isinstance(cities_raw, dict): cities_raw = cities_raw.get('value', [])
+    if isinstance(cities_raw, list) and cities_raw:
+        seen = {}
+        for c in cities_raw:
+            n, p = c.get('name', ''), c.get('population', 0)
+            if n and n not in seen: seen[n] = p
+        cities_sorted = sorted(seen.items(), key=lambda x: x[1], reverse=True)[:8]
+        auto_cities = {'_auto': True, 'cities': [{'name': n, 'pop': p} for n, p in cities_sorted]}
+    else:
+        auto_cities = {'_auto': False}
+
+    # Remap integer keys → composite "G:N" strings matching grp:G, id:N in JSX.
+    # grp:0 = TILES; grp:1–15 = §1–§15. ids are continuous across all constants
+    # within a section. Segments: (grp, start_old_global_id, total_count).
+    _SEGMENTS = [
+        (0,   1,  16),  # TILES
+        (1,  17,  24),  # §1  GEO (GEO+TERRAIN+WATER+REGIONS)
+        (2,  41,  29),  # §2  CLIMATE (KPI+DAYLIGHT+RAIN_REGIONAL+RAIN_SEASONAL)
+        (3,  70,  28),  # §3  POP (KPI+GROWTH+CITIES+ETHNIC+RELIGION)
+        (4,  98,  19),  # §4  ECON (KPI+DONUT+EXPORTS+INDICATORS)
+        (5, 117,  20),  # §5  EMP (KPI+WAGES+SECTORS+MIGRATION)
+        (6, 137,  17),  # §6  EDU (KPI+METRICS+FACTS)
+        (7, 154,  14),  # §7  POL (KPI+ELECTION+TIMELINE)
+        (8, 168,  19),  # §8  TOUR (KPI+ORIGINS+HIGHLIGHTS)
+        (9, 187,  36),  # §9  VITA+HEALTH (VITA_KPI+DEATHS+TRENDS+HEALTH_KPI+FACTS+BURDEN)
+        (10, 223, 16),  # §10 ENERGY (KPI+MIX+FACTS)
+        (11, 239, 17),  # §11 INFRA (KPI+PROJECTS+DIGITAL)
+        (12, 256, 17),  # §12 SOCIAL (KPI+SERVICES+COHESION)
+        (13, 273, 16),  # §13 ENV (KPI+FACTS+WATER)
+        (14, 289, 37),  # §14 BIZ+FISCAL (BIZ_KPI+CLIMATE+RISKS+FISCAL_KPI+EXPORTS+INDICATORS)
+        (15, 326, 16),  # §15 CRIME (KPI+INDICATORS+SECURITY)
+    ]
+    _REMAP = {}
+    for grp_n, start, count in _SEGMENTS:
+        for local in range(1, count + 1):
+            _REMAP[start + local - 1] = f'{grp_n}:{local}'
+
+    by_id_composite = {_REMAP[k]: v for k, v in by_id.items() if k in _REMAP}
+
+    return {
+        'by_id':         by_id_composite,
+        'auto_daylight': auto_daylight,
+        'auto_deaths':   auto_deaths,
+        'auto_energy':   auto_energy,
+        'auto_cities':   auto_cities,
+        'clima_gradbar': clima_gradbar,
+    }
+
+
+# ──────────────────────────────────────────────────────────────────────────────
 # COUNTRY RESOLUTION — fully automatic, no lookup table
 # ──────────────────────────────────────────────────────────────────────────────
 def resolve_country(iso_input):
@@ -1713,10 +2405,13 @@ def main():
         output['climate'] = {'status': -1, 'value': None, 'reason': 'coordinates not resolved'}
         print(f'  ❌  Skipped — coordinates could not be resolved')
 
+    # ── Build jsx_ready section ───────────────────────────────
+    output['jsx_ready'] = build_jsx_ready(output)
+
     # ── Write output ──────────────────────────────────────────
     import os
-    os.makedirs('dashboards/data', exist_ok=True)
-    outfile = f'dashboards/data/{iso3.lower()}_data.json'
+    os.makedirs('data', exist_ok=True)
+    outfile = f'data/{iso3.lower()}_data.json'
     with open(outfile, 'w', encoding='utf-8') as f:
         json.dump(output, f, indent=2, ensure_ascii=False, default=str)
 

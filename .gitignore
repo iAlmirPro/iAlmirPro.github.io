@@ -6,3 +6,17 @@
 
 # Reference folder (local only)
 ref/
+
+# Archive folder (local only)
+archive/
+
+# Data folder (local only)
+data/
+
+# Emacs temp files
+*~
+\#*\#
+.\#*
+*.elc
+auto-save-list
+tramp
