@@ -2415,6 +2415,59 @@ def main():
     with open(outfile, 'w', encoding='utf-8') as f:
         json.dump(output, f, indent=2, ensure_ascii=False, default=str)
 
+    # ── Write patch sheet ─────────────────────────────────────
+    _SECTION_LABELS = {
+        0:  'TILES',
+        1:  '§1  GEOGRAPHY',
+        2:  '§2  CLIMATE',
+        3:  '§3  POPULATION',
+        4:  '§4  ECONOMY',
+        5:  '§5  EMPLOYMENT',
+        6:  '§6  EDUCATION',
+        7:  '§7  POLITICAL',
+        8:  '§8  TOURISM',
+        9:  '§9  VITAL STATISTICS & HEALTH',
+        10: '§10 ENERGY',
+        11: '§11 INFRASTRUCTURE',
+        12: '§12 SOCIAL',
+        13: '§13 ENVIRONMENT',
+        14: '§14 BUSINESS & FISCAL',
+        15: '§15 CRIME & SECURITY',
+    }
+    by_id = output['jsx_ready']['by_id']
+    patch_lines = [
+        f'Patch sheet — {name} ({iso3})',
+        f'Generated: {datetime.now().strftime("%Y-%m-%d %H:%M")}',
+        f'Format: KEY  VALUE  SOURCE  STATE (①=API sourced  ✗=manual required  ②=web-searched & verified)',
+        '',
+    ]
+    current_grp = None
+    for key in sorted(by_id.keys(), key=lambda k: (int(k.split(':')[0]), int(k.split(':')[1]))):
+        grp = int(key.split(':')[0])
+        if grp != current_grp:
+            current_grp = grp
+            patch_lines.append('')
+            patch_lines.append(f'── {_SECTION_LABELS.get(grp, f"grp:{grp}")} ──')
+        entry = by_id[key]
+        state_icon = '②' if entry['state'] == 2 else ('①' if entry['state'] == 1 else '✗')
+        val  = entry['value'] or '—'
+        sub  = entry['sub']  or ''
+        patch_lines.append(f"  {key:<6}  {val:<18}  {sub:<40}  {state_icon}")
+
+    # Auto-blocks summary
+    patch_lines += [
+        '',
+        '── AUTO-GENERATED BLOCKS ──',
+        f"  CLIMA_DAYLIGHT  {'①' if output['jsx_ready']['auto_daylight'].get('_auto') else '✗'}  (12-month daylight hours from latitude)",
+        f"  VITA_DEATHS     {'①' if output['jsx_ready']['auto_deaths'].get('_auto')   else '✗'}  (NCD/communicable/injury split)",
+        f"  ENERGY_MIX      {'①' if output['jsx_ready']['auto_energy'].get('_auto')   else '✗'}  (electricity generation mix)",
+        f"  POP_CITIES      {'①' if output['jsx_ready']['auto_cities'].get('_auto')   else '✗'}  (largest cities from Wikidata)",
+    ]
+
+    patchfile = f'data/{iso3.lower()}_patch.txt'
+    with open(patchfile, 'w', encoding='utf-8') as f:
+        f.write('\n'.join(patch_lines) + '\n')
+
     # ── Summary ───────────────────────────────────────────────
     undp_count    = len(output['undp'])
     wpp_count     = len(output['un_wpp'])
@@ -2449,6 +2502,7 @@ def main():
     print(f'  ─────────────────────────────────────────')
     print(f'  Total       : ~{total_fetched} data points fetched')
     print(f'  Output      : {outfile}')
+    print(f'  Patch sheet : {patchfile}')
     print(f'{"═"*56}\n')
 
 if __name__ == '__main__':

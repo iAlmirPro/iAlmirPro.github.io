@@ -83,7 +83,7 @@ Any output produced without this appearing first is invalid.
 2. Update the `C` color palette using **ISO 3166 Alpha-3 lowercase** prefix (e.g. `kaz`, `uzb`, `tjk`, `tkm`) — never 2-letter codes (clash risk)
 3. Update `Flag` SVG, `valColor` function, template color keys, map values, header H1/eyebrow/description, footer sources
 4. Replace all data constants one at a time in this order: ERAS → TILES → GEO/GEO_TERRAIN/GEO_WATER/GEO_REGIONS → CLIMA_* → POP_* → ECON_* → EMP_* → EDU_* → POL_* → TOUR_* → VITA_* → HEALTH_* → ENERGY_* → INFRA_* → SOCIAL_* → ENV_* → BIZ_* → FISCAL_* → CRIME_*
-5. **Every single value must be confirmed via web search before writing** (see Data Verification Standard in `dashboard-design-system.md`). Set `state` on every item: `1` = verified (web search + source cited), `-1` = NOT verified (training knowledge / assumed), `0` = not tested. Values that cannot be confirmed must be marked `est.; unverified` in their sub/label field.
+5. **Every single value must be confirmed via web search before writing** (see Data Verification Standard in `dashboard-design-system.md`). Set `state` on every item: `2` = manually web-searched & verified (source cited), `1` = API/script fetched (automated), `0` = not yet verified, `-1` = NOT verified (training knowledge / assumed). Values that cannot be confirmed must be marked `est.; unverified` in their sub/label field.
 6. After each constant clears Gate 5, output: `[constant name] done. Next per checklist: [next constant name].` then end the turn.
 7. Run duplicate check: visual component takes priority over table row; remove table row if duplicated
 8. Run color audit: max 2 colored KpiCards per section
