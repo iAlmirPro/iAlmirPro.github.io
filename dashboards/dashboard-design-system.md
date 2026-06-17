@@ -30,47 +30,53 @@ Single `.jsx`: **DATA section** (`C`, `ERAS`, `TILES`, all constants — no JSX)
 ---
 
 ## Data State Field
-- `1` = verified — web search done, source cited in `sub`
+- `2` = manually web-searched and verified by Claude during Gate process (source cited in `sub`)
+- `1` = API / script fetched (World Bank, WGI, Open-Meteo, Wikidata — automated, sourced)
+- `0` = not yet verified — placeholder
 - `-1` = NOT verified — training data / assumed / not cross-checked
-- `0` = not tested — placeholder
 
-**`-1` is not a soft warning.** The only path to `1` is a completed web search with a cited source.
+**`-1` is not a soft warning.** The only path to `2` is a completed web search with a cited source. API-fetched values (`1`) are trusted but not independently cross-checked — upgrade to `2` only if you also ran a manual verification.
 
 ---
 
 ## Hybrid Workflow — New Country
 
 ```bash
-# Phase 1 — fetch all API data
-python3 tools/fetch_dashboard_data.py <ISO3>
-# → dashboards/data/<iso3>_data.json  (~170 verified data points + jsx_ready section)
+# Phase 1 — copy most recently modified dashboard verbatim
+cp dashboards/uzbekistan-dashboard.jsx dashboards/<country>-dashboard-v1.jsx
 
-# Phase 2 — copy template, reset state:0, inject auto constants, write cheatsheet
-python3 tools/prefill_dashboard.py <ISO3>
-# → dashboards/<country>-dashboard-v1.jsx
-# → dashboards/<country>-cheatsheet.md  (141/149 items pre-formatted, state:1 ready)
+# Phase 2 — fetch all API data + generate patch sheet
+python3 tools/fetch_dashboard_data.py <ISO3>
+# → data/<iso3>_data.json     (full raw API data, ~170 verified points)
+# → data/<iso3>_patch.txt     (compact patch sheet: grp:id · value · source · ✓/✗)
 ```
 
 **Phase 3 — Identity edits** (manual, before Gate process — see list below under Quick-Start step 4)
 
-**Phase 4 — Gate process** (reduced scope):
-- Open `<country>-cheatsheet.md` before each constant
-- **Pre-fetched rows** → `state:1`, use value + sub directly, skip Gate 2 web search
-- **Manual rows** → still require Gate 2 web search
+**Phase 4 — Claude applies patch sheet** (section by section):
+- Read `data/<iso3>_patch.txt` — each line: `G:N  value  source  ✓/✗`
+- **`✓` slots** → write value + source citation as sub, `state:1` (API-sourced)
+- **`✗` slots** → write meaningful hint in sub, `state:0`; repurpose label if Uzbekistan concept doesn't apply to new country (e.g. desert → mountain range)
+- Concept mismatches → repurpose slot or set `state:-1` with annotation
+- Update `pct:` whenever value is a bare percentage
+- Auto-blocks (`CLIMA_DAYLIGHT` · `VITA_DEATHS` · `ENERGY_MIX` · `POP_CITIES`) injected from `jsx_ready` section of JSON
+
+**Phase 5 — Gate process** (state:0 and state:-1 items only):
+- **`state:1` rows** API-fetched — skip Gate 2 web search; write as-is
+- **`state:0` rows** → Gate 2 web search required → on confirm set `state:2`
+- **`state:-1` rows** → Gate 2 web search required → on confirm set `state:2`; if unconfirmable keep `-1` and annotate `est.; unverified`
 - Gate 5 self-check runs regardless of source
 - Handoff rule after each constant applies without exception
 
-Auto-written by prefill (state:1, no manual work): `CLIMA_DAYLIGHT` · `VITA_DEATHS` · `ENERGY_MIX` · `POP_CITIES`
+Manual-only (no API source) → `state:2` after verification: Currency · Religion · Language · HDI (if UNDP failed) · Energy/resources · Record High/Low temps · ERAS · POL_TIMELINE · TOUR_HIGHLIGHTS · narrative `note` fields
 
-Manual-only (no API source): Currency · Religion · Language · HDI (if UNDP failed) · Energy/resources · Record High/Low temps · ERAS · POL_TIMELINE · TOUR_HIGHLIGHTS · narrative `note` fields
-
-> Color placeholders `C.xxx`, `C.yyy` in cheatsheet and auto-blocks — replace with real palette keys after Phase 3.
+**Every const is a mix**: within any constant, some items are API-fetched (`state:1`) and others are manually researched (`state:2`). Do not blanket-set an entire constant to one state — audit each item individually against what the fetch script actually provides.
 
 ---
 
 ## Quick-Start Checklist (new country)
 
-Steps 1–3 (copy, reset state:0, present file) are handled by `prefill_dashboard.py`. Start from step 4.
+Steps 1–2 (copy template, fetch data + patch sheet) are handled by the bash commands above. Start from step 4.
 
 **Step 4 — Identity edits** (only these, nothing else):
 - `C` color object — flag colors; ISO 3166 Alpha-3 lowercase prefix (`kgz`, `kaz`, `uzb`, `tjk`, `tkm`); rename `xxxS` key
@@ -277,7 +283,7 @@ const SECTION_TBL = { title:'Title', data:[
 ### ⛔ HARD RULE
 **Writing a value without first completing a web search is a protocol violation. Training knowledge is not a source.**
 
-Exception: values marked `ready:true` in `<country>-cheatsheet.md` are already API-verified (state:1). Skip Gate 2 for these.
+Exception: values marked `✓` in `data/<iso3>_patch.txt` are already API-verified (state:1). Skip Gate 2 for these.
 
 ### Gate Process — one constant at a time
 
@@ -286,34 +292,13 @@ CONST_NAME
 [G1] N data points identified ✅
 [G2] Searched N values ✅  (or: N from cheatsheet state:1 · M searched)
 [G3] N confirmed · N unverified (field — reason) ✅
-[G4] Constant written ✅
-[G5] All confirmed sourced · unverified annotated ✅
+[G4] Cross-constant consistency check ✅  (values match across related constants)
+[G5] Self-check ✅  (no apostrophe issues · states correct · unverified annotated · colors valid)
 ```
 
 Output only the status lines above. No prose narration of gate steps.
 
-After Gate 5 passes → write constant via Bash (brace-depth Python, see below) → **STOP, end the turn.**
-
-### Brace-depth constant replacement (use this, never regex):
-
-```python
-def replace_const(content, name, new_block):
-    start = content.find(f'const {name} =')
-    if start == -1: print(f"{name} ❌ NOT FOUND"); return content
-    opener = '{' if '{' in content[start:start+30] else '['
-    closer = '}' if opener == '{' else ']'
-    i = start; depth = 0
-    while i < len(content):
-        if content[i] == opener: depth += 1
-        elif content[i] == closer:
-            depth -= 1
-            if depth == 0:
-                end = i + 1
-                if end < len(content) and content[end] == ';': end += 1
-                break
-        i += 1
-    return content[:start] + new_block + content[end:]
-```
+After Gate 5 passes → write constant → **STOP, end the turn.**
 
 ### Annotation format
 
@@ -370,3 +355,20 @@ Never modify the current version directly.
 **Step 3 — make only the approved change.** Every additional change needs its own Step 1.
 
 **Step 4 — present the new versioned file immediately.**
+
+---
+
+## Known mistakes — do not repeat
+
+- **Era timeline year label base hardcoded to 1900 (BIH, Jun 2026)** — The EraTimeline component calculates label positions as `(era.start - 1900) / ERA_TOTAL * 100`. When copying from Uzbekistan (which starts in 1900), this base year must be updated to match the new country's first era start year. For BIH it was changed to `1878`. Always check this line when setting up a new country's timeline.
+
+- **Unescaped apostrophes in single-quoted JSX strings (BIH, Jun 2026)** — Writing `desc:'...Tito's Partisans...'` breaks the string literal because the apostrophe in "Tito's" closes the single quote prematurely. Always escape as `\'` inside single-quoted strings (`desc:'Tito\'s Partisans'`), or use double quotes when the text contains apostrophes (`desc:"Tito's Partisans"`). Affects any field written as a single-quoted string: `desc:`, `sub:`, `note:`, `value:`. Check all narrative text for contractions and possessives before writing.
+
+- **ERA_TOTAL / ERAS.title / ERAS.note removed during cleanup (BIH, Jun 2026)** — When removing stale template content that had been incorrectly appended after a new ERAS block, these three lines were swept out along with the UZB remnants. They are not inside `const ERAS = [...]` but follow it immediately; they must always be preserved or rewritten when replacing ERAS. Before removing any block of "stale" content, verify that ERA_TOTAL, ERAS.title, and ERAS.note are accounted for in the replacement.
+
+---
+
+## Pending Investigations
+
+- **BIH ERAS** — content marked as incorrect by user; needs full review and rewrite before finalising bosnia-and-herzegovina-dashboard.
+- **Gate process confirmed order** — G1 identify → G2 search → G3 confirm → G4 cross-constant consistency check → G5 self-check → write → STOP. No writing before G5 clears. No prose narration — output only the 5 status lines.
