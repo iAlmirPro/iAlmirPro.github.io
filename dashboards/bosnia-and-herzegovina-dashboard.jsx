@@ -401,20 +401,19 @@ const POL_TIMELINE = {
 };
 
 /* ── Political Era Timeline data ── */
-const ERAS = [
-  { state:2, id:'austro_hungarian', label:'Austro-Hungarian Rule',      short:'Habsburg Era',          start:1878, end:1918, color:'#8B5E3C', colorL:'#b07d52', desc:'Austria-Hungary occupies BiH under the 1878 Congress of Berlin (Art.25 Treaty of Berlin). Rapid modernisation: railways, schools, industry. 1908 formal annexation triggers Bosnian Crisis. Archduke Franz Ferdinand assassinated in Sarajevo 28 June 1914 — spark of WWI.',                                                                    events:['1878 — Congress of Berlin; AH occupation begins','1908 — Formal annexation; Bosnian Crisis erupts','1914 — Franz Ferdinand assassinated in Sarajevo (28 Jun); WWI begins'] },
-  { state:2, id:'yugoslavia_kingdom', label:'Kingdom of Yugoslavia',    short:'Royal Yugoslavia',       start:1918, end:1941, color:'#4A6FA5', colorL:'#6a8fc5', desc:'BiH absorbed into the Kingdom of Serbs, Croats and Slovenes (renamed Yugoslavia 1929). Centralised royal dictatorship under King Alexander from 1929. Inter-ethnic tensions between Serbs, Croats and Bosniaks simmer throughout the interwar period.',                                                                                             events:['1918 — Kingdom of SCS formed after WWI collapse of AH','1929 — King Alexander declares dictatorship; country renamed Yugoslavia','1934 — King Alexander assassinated in Marseille'] },
-  { state:2, id:'wwii',              label:'WWII & NDH',                short:'Nazi Occupation',        start:1941, end:1945, color:'#2d2d2d', colorL:'#555',    desc:'Yugoslavia invaded April 1941. BiH becomes part of the Ustasha-led Independent State of Croatia (NDH), a Nazi puppet state. Mass atrocities against Serbs, Jews and Roma. Tito\'s Partisans wage resistance; BiH is a central battleground.',                                                                                                    events:['1941 — Axis invasion; NDH established (Apr)','1942 — Jasenovac concentration camp at peak; mass killings','1943 — AVNOJ second session in Jajce; federal Yugoslavia planned','1945 — Liberation; NDH collapses'] },
-  { state:2, id:'socialist_yugo',    label:'Socialist Yugoslavia',      short:'Tito Era',               start:1945, end:1992, color:'#C8102E', colorL:'#f03050', desc:'BiH becomes one of six federal republics of Tito\'s Yugoslavia. "Brotherhood and Unity" policy suppresses ethnic nationalism. Sarajevo hosts 1984 Winter Olympics — symbol of multicultural peak. Tito dies 1980; economic crisis and nationalism re-emerge through the 1980s.',                                                                events:['1945 — Socialist Federal Republic of Yugoslavia proclaimed','1974 — New constitution grants BiH greater autonomy','1980 — Tito dies; collective presidency established','1984 — Sarajevo hosts Winter Olympics','1990 — First multi-party elections; nationalist parties dominate'] },
-  { state:2, id:'war',               label:'War & Independence',        short:'Bosnian War',            start:1992, end:1995, color:'#555',    colorL:'#777',    desc:'Independence referendum 1 Mar 1992 (99.7% yes; Serbs boycott). War erupts immediately. Siege of Sarajevo — longest siege of a capital in modern warfare: 44 months, ~11,540 dead. Srebrenica massacre July 1995: 8,372 Bosniak men and boys killed — worst atrocity in Europe since WWII.',                                                   events:['1992 — Independence referendum (1 Mar); war begins (6 Apr)','1992 — Siege of Sarajevo begins (longest in modern history)','1993 — Washington Agreement creates Bosniak-Croat Federation','1995 — Srebrenica massacre (Jul 11); 8,372 killed','1995 — NATO airstrikes (Operation Deliberate Force; Aug–Sep)'] },
-  { state:2, id:'dayton',            label:'Dayton Bosnia',             short:'Post-War Reconstruction',start:1995, end:2025, color:'#002395', colorL:'#3355cc', desc:'Dayton Peace Accords signed 14 Dec 1995. Country divided: Federation of BiH (51%) and Republika Srpska (49%). High Representative oversees implementation. EU candidacy granted 2022. Road to EU membership ongoing; complex governance structure remains a major obstacle.',                                                                          events:['1995 — Dayton Peace Accords signed (14 Dec)','1996 — IFOR peacekeepers deployed; first post-war elections','2000 — ICTY convicts first war crimes suspects','2008 — ICJ rules Srebrenica was genocide','2016 — SAA with EU enters into force','2022 — EU candidate status granted'] },
-];
+const ERAS = {
+  title: 'Bosnia and Herzegovina — An Interactive Era Timeline (1878–2025)',
+  note:  "From Habsburg occupation to Dayton governance, Bosnia and Herzegovina has experienced five radically different state structures in under 150 years. The 1995 Dayton Peace Accords ended the war but created one of the world's most complex constitutional arrangements — a tripartite presidency and two entities — widely seen as both a peace guarantee and an obstacle to EU integration.",
+  data: [
+  { grp:7, id:17, state:2, key:'austro_hungarian', label:'Austro-Hungarian Rule',      short:'Habsburg Era',          start:1878, end:1918, color:'#8B5E3C', colorL:'#b07d52', desc:'Austria-Hungary occupies BiH under the 1878 Congress of Berlin (Art.25 Treaty of Berlin). Rapid modernisation: railways, schools, industry. 1908 formal annexation triggers Bosnian Crisis. Archduke Franz Ferdinand assassinated in Sarajevo 28 June 1914 — spark of WWI.',                                                                    events:['1878 — Congress of Berlin; AH occupation begins','1908 — Formal annexation; Bosnian Crisis erupts','1914 — Franz Ferdinand assassinated in Sarajevo (28 Jun); WWI begins'] },
+  { grp:7, id:18, state:2, key:'yugoslavia_kingdom', label:'Kingdom of Yugoslavia',    short:'Royal Yugoslavia',       start:1918, end:1941, color:'#4A6FA5', colorL:'#6a8fc5', desc:'BiH absorbed into the Kingdom of Serbs, Croats and Slovenes (renamed Yugoslavia 1929). Centralised royal dictatorship under King Alexander from 1929. Inter-ethnic tensions between Serbs, Croats and Bosniaks simmer throughout the interwar period.',                                                                                             events:['1918 — Kingdom of SCS formed after WWI collapse of AH','1929 — King Alexander declares dictatorship; country renamed Yugoslavia','1934 — King Alexander assassinated in Marseille'] },
+  { grp:7, id:19, state:2, key:'wwii',              label:'WWII & NDH',                short:'Nazi Occupation',        start:1941, end:1945, color:'#2d2d2d', colorL:'#555',    desc:'Yugoslavia invaded April 1941. BiH becomes part of the Ustasha-led Independent State of Croatia (NDH), a Nazi puppet state. Mass atrocities against Serbs, Jews and Roma. Tito\'s Partisans wage resistance; BiH is a central battleground.',                                                                                                    events:['1941 — Axis invasion; NDH established (Apr)','1942 — Jasenovac concentration camp at peak; mass killings','1943 — AVNOJ second session in Jajce; federal Yugoslavia planned','1945 — Liberation; NDH collapses'] },
+  { grp:7, id:20, state:2, key:'socialist_yugo',    label:'Socialist Yugoslavia',      short:'Tito Era',               start:1945, end:1992, color:'#C8102E', colorL:'#f03050', desc:'BiH becomes one of six federal republics of Tito\'s Yugoslavia. "Brotherhood and Unity" policy suppresses ethnic nationalism. Sarajevo hosts 1984 Winter Olympics — symbol of multicultural peak. Tito dies 1980; economic crisis and nationalism re-emerge through the 1980s.',                                                                events:['1945 — Socialist Federal Republic of Yugoslavia proclaimed','1974 — New constitution grants BiH greater autonomy','1980 — Tito dies; collective presidency established','1984 — Sarajevo hosts Winter Olympics','1990 — First multi-party elections; nationalist parties dominate'] },
+  { grp:7, id:21, state:2, key:'war',               label:'War & Independence',        short:'Bosnian War',            start:1992, end:1995, color:'#555',    colorL:'#777',    desc:'Independence referendum 1 Mar 1992 (99.7% yes; Serbs boycott). War erupts immediately. Siege of Sarajevo — longest siege of a capital in modern warfare: 44 months, ~11,540 dead. Srebrenica massacre July 1995: 8,372 Bosniak men and boys killed — worst atrocity in Europe since WWII.',                                                   events:['1992 — Independence referendum (1 Mar); war begins (6 Apr)','1992 — Siege of Sarajevo begins (longest in modern history)','1993 — Washington Agreement creates Bosniak-Croat Federation','1995 — Srebrenica massacre (Jul 11); 8,372 killed','1995 — NATO airstrikes (Operation Deliberate Force; Aug–Sep)'] },
+  { grp:7, id:22, state:2, key:'dayton',            label:'Dayton Bosnia',             short:'Post-War Reconstruction',start:1995, end:2025, color:'#002395', colorL:'#3355cc', desc:'Dayton Peace Accords signed 14 Dec 1995. Country divided: Federation of BiH (51%) and Republika Srpska (49%). High Representative oversees implementation. EU candidacy granted 2022. Road to EU membership ongoing; complex governance structure remains a major obstacle.',                                                                          events:['1995 — Dayton Peace Accords signed (14 Dec)','1996 — IFOR peacekeepers deployed; first post-war elections','2000 — ICTY convicts first war crimes suspects','2008 — ICJ rules Srebrenica was genocide','2016 — SAA with EU enters into force','2022 — EU candidate status granted'] },
+]};
 
 const ERA_TOTAL = 2025 - 1878;
-
-ERAS.title = 'Bosnia and Herzegovina — An Interactive Era Timeline (1878–2025)';
-
-ERAS.note  = "From Habsburg occupation to Dayton governance, Bosnia and Herzegovina has experienced five radically different state structures in under 150 years. The 1995 Dayton Peace Accords ended the war but created one of the world's most complex constitutional arrangements — a tripartite presidency and two entities — widely seen as both a peace guarantee and an obstacle to EU integration.";
 
 /* ── §8 TOURISM ── */
 const TOUR_KPI = [
@@ -1040,18 +1039,20 @@ const Donut = ({ segments, label, sublabel, size = 160 }) => {
   );
 };
 
-/* Uzbekistan flag: blue / white / green horizontal stripes with red separators, crescent & 12 stars */
+/* Bosnia and Herzegovina flag — source: Wikimedia Commons (public domain) */
 const Flag = () => (
-  <div style={{ width:90, height:54, borderRadius:3, overflow:'hidden',
+  <div style={{ width:90, height:45, borderRadius:3, overflow:'hidden',
     boxShadow:`0 4px 24px ${C.bihS}`, flexShrink:0, position:'relative' }}>
-    <svg width="90" height="54" viewBox="0 0 3 2" xmlns="http://www.w3.org/2000/svg">
-      <rect width="3" height="2" fill={C.bih} />
-      <polygon points="0.5,0 1.5,0 3,2 2,2" fill={C.yel} />
-      {[0,1,2,3,4,5,6,7,8].map(i => (
-        <polygon key={i}
-          points={`${0.3 + i*0.27},${0.08 + i*0.24} ${0.3 + i*0.27 + 0.09},${0.08 + i*0.24} ${0.3 + i*0.27 + 0.045},${0.08 + i*0.24 - 0.09}`}
-          fill={C.txt} />
-      ))}
+    <svg width="90" height="45" viewBox="0 0 16 8" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink">
+      <rect width="16" height="8" fill="#002395"/>
+      <path d="m4.24,0h8v8z" fill="#fecb00"/>
+      <g id="bih-sg">
+        <path id="bih-s" d="M2.353283,0.5248529 2.8,-0.85 3.246717,0.524853 2.077197,-0.324853H3.522803z" fill="#fff"/>
+        <use xlinkHref="#bih-s" x="1" y="1"/>
+        <use xlinkHref="#bih-s" x="2" y="2"/>
+      </g>
+      <use xlinkHref="#bih-sg" x="3" y="3"/>
+      <use xlinkHref="#bih-sg" x="6" y="6"/>
     </svg>
   </div>
 );
@@ -1143,8 +1144,8 @@ export default function BosniaAndHerzegovina() {
             }
             drawMap();
             // Set up timeline clicks after render
-            var ERA_COLORS = ERAS.map(function(e){ return { color: e.color, colorL: e.colorL }; });
-            var ERA_COUNT = ERAS.length;
+            var ERA_COLORS = ERAS.data.map(function(e){ return { color: e.color, colorL: e.colorL }; });
+            var ERA_COUNT = ERAS.data.length;
             var active = null;
             function selectEra(i) {
               var segs = document.querySelectorAll('.era-seg');
@@ -1358,8 +1359,8 @@ export default function BosniaAndHerzegovina() {
 
               {/* Era bar — data-era index used by vanilla JS below */}
               <div className="era-bar">
-                {ERAS.map((era, i) => (
-                  <div key={era.id}
+                {ERAS.data.map((era, i) => (
+                  <div key={era.key}
                     data-era={i}
                     className="era-seg"
                     title={`${era.label} (${era.start}–${era.end})`}
@@ -1370,11 +1371,11 @@ export default function BosniaAndHerzegovina() {
 
               {/* Year labels — % positions match bar since gap removed */}
               <div className="era-labels">
-                {ERAS.map((era, i) => {
+                {ERAS.data.map((era, i) => {
                   const left = ((era.start - 1878) / ERA_TOTAL) * 100;
                   const isFirst = i === 0;
                   return (
-                    <div key={era.id} className="era-year-label"
+                    <div key={era.key} className="era-year-label"
                       style={{ left:`${left}%`, transform: isFirst ? 'scaleX(-1) scaleY(-1)' : 'translateX(-50%) scaleX(-1) scaleY(-1)' }}>
                       {era.start}
                     </div>
@@ -1389,8 +1390,8 @@ export default function BosniaAndHerzegovina() {
               </div>
 
               {/* All era detail panels — hidden by default, shown by JS */}
-              {ERAS.map((era, i) => (
-                <div key={era.id} id={`era-panel-${i}`} className="era-panel"
+              {ERAS.data.map((era, i) => (
+                <div key={era.key} id={`era-panel-${i}`} className="era-panel"
                   style={{ display:'none', borderLeft:`3px solid ${era.color}` }}>
                   <div className="era-panel-header">
                     <div>
@@ -1413,8 +1414,8 @@ export default function BosniaAndHerzegovina() {
 
               {/* Legend */}
               <div className="era-legend">
-                {ERAS.map((era, i) => (
-                  <div key={era.id} data-era={i} className="era-leg">
+                {ERAS.data.map((era, i) => (
+                  <div key={era.key} data-era={i} className="era-leg">
                     <div className="era-swatch" style={{ background:era.color }} />
                     <span className={`era-leg-lbl era-leg-lbl-${i}`}>{era.short}</span>
                   </div>

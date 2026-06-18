@@ -42,8 +42,8 @@ Single `.jsx`: **DATA section** (`C`, `ERAS`, `TILES`, all constants — no JSX)
 ## Hybrid Workflow — New Country
 
 ```bash
-# Phase 1 — copy most recently modified dashboard verbatim
-cp dashboards/uzbekistan-dashboard.jsx dashboards/<country>-dashboard-v1.jsx
+# Phase 1 — copy most recently modified dashboard verbatim (check filesystem date)
+cp dashboards/<most-recently-modified>-dashboard.jsx dashboards/<country>-dashboard.jsx
 
 # Phase 2 — fetch all API data + generate patch sheet
 python3 tools/fetch_dashboard_data.py <ISO3>
@@ -112,7 +112,7 @@ Steps 1–2 (copy template, fetch data + patch sheet) are handled by the bash co
 End the turn. Do not begin the next group in the same turn.
 
 **Step 6** — Run Inconsistency Check Protocol
-**Step 7** — Present final `.jsx`
+**Step 7** — Run syntax check · compile JSX → HTML · commit and push
 
 ---
 
@@ -134,11 +134,12 @@ const C = {
 
 **Known palettes:**
 ```
-Kyrgyzstan:   kgz #E8192C/ff3347  yel #F0B830/ffd060  blu #2E86DE/5ba8ff  (red = kgz)
-Kazakhstan:   kaz #00AFCA/33c8df  yel #FFC72C/ffd966  blu #2E86DE/5ba8ff  red #E8192C/ff3347
-Uzbekistan:   uzb #1EB4E5/55ccf5  grn #3DAA5C/5dc97c  blu #2E86DE/5ba8ff  red #E8192C/ff3347
-Tajikistan:   tjk #239F40/3dc95a  gld #D4AF37/f0cc55  blu #2E86DE/5ba8ff  red #C8102E/f03050
-Turkmenistan: tkm #009A44/00c857  yel #F5C518/ffd84d  blu #2E86DE/5ba8ff  red #C8102E/f03050
+Bosnia & Herzegovina: bih #002395/1a3aad  yel #FCDD09/fde84a  blu #2E86DE/5ba8ff  red #E8192C/ff3347
+Kyrgyzstan:           kgz #E8192C/ff3347  yel #F0B830/ffd060  blu #2E86DE/5ba8ff  (red = kgz)
+Kazakhstan:           kaz #00AFCA/33c8df  yel #FFC72C/ffd966  blu #2E86DE/5ba8ff  red #E8192C/ff3347
+Uzbekistan:           uzb #1EB4E5/55ccf5  grn #3DAA5C/5dc97c  blu #2E86DE/5ba8ff  red #E8192C/ff3347
+Tajikistan:           tjk #239F40/3dc95a  gld #D4AF37/f0cc55  blu #2E86DE/5ba8ff  red #C8102E/f03050
+Turkmenistan:         tkm #009A44/00c857  yel #F5C518/ffd84d  blu #2E86DE/5ba8ff  red #C8102E/f03050
 ```
 
 **`valColor` — add a case for every accent used. Always include `C.red` and `C.blu`:**
@@ -156,28 +157,14 @@ Turkmenistan: C.tkm→C.tkmL · C.red→C.redL · C.yel→C.yelL · C.blu→C.bl
 
 ## Header / Footer
 
-- **Eyebrow:** `Country Dashboard 2025` in `C.[primary]`
+- **Eyebrow:** `Country Dashboard [current year]` in `C.[primary]`
 - **H1:** name with suffix as `<em>` — e.g. `Uzbeki<em>stan</em>`
 - **Description:** 1–2 sentences
-- **Flag:** replace `<Flag />` SVG
+- **Flag:** replace `<Flag />` SVG — fetch the official SVG from Wikimedia Commons (`https://upload.wikimedia.org/wikipedia/commons/...`), adapt the `viewBox` and paths directly into the component. Use `xmlnsXlink` and `xlinkHref` for `<use>` references. Give `<g>` and `<path id>` a country-prefixed id (e.g. `bih-s`, `bih-sg`) to avoid id collisions when multiple flags are on the same page. Adjust `width`/`height` on the wrapper `<div>` to match the flag's native aspect ratio (not always 3:2).
 - **Sources line:** all sources used, ending `Data as of [Month Year].`
 - **Legal:** `Generated [Month Year] · Claude Sonnet 4.6 (Anthropic) · iAlmirPro`
 
 `jsx_to_html.py` replaces `[Month Year]` at compile time.
-
----
-
-## EraTimeline
-
-Only `ERAS` array and `ERA_TOTAL` change. Structure, class names, click handler — copy unchanged.
-```js
-const ERAS = [
-  { id:'era_id', label:'Full Name', short:'Short', start:YYYY, end:YYYY,
-    color:'#hex', colorL:'#hex',  // raw hex, not C.xxx; vary across eras
-    desc:'One paragraph.', events:['YEAR — event'] },
-];
-const ERA_TOTAL = LAST_YEAR - FIRST_YEAR;
-```
 
 ---
 
@@ -188,44 +175,44 @@ const ERA_TOTAL = LAST_YEAR - FIRST_YEAR;
 **KPI array:**
 ```js
 const SECTION_KPI = [
-  { state:1, label:'Name', value:'$X.XB', sub:'Source · year', accent:C.xxx, delay:0.05 },
-  { state:1, label:'Name', value:'X.X%',  sub:'Source · year', accent:C.dim, delay:0.10 },
+  { grp:N, id:1, state:1, label:'Name', value:'$X.XB', sub:'Source · year', accent:C.xxx, delay:0.05 },
+  { grp:N, id:2, state:1, label:'Name', value:'X.X%',  sub:'Source · year', accent:C.dim, delay:0.10 },
 ];
 ```
 
 **Panel + BarRow:**
 ```js
 const SECTION_BARS = { title:'Title', data:[
-  { state:1, label:'Row', value:'XX%', pct:100, color:C.xxx },
+  { grp:N, id:1, state:1, label:'Row', value:'XX%', pct:100, color:C.xxx },
 ], note:'Interpretive note.' };
 ```
 
 **Panel + Tbl:**
 ```js
 const SECTION_TBL = { title:'Title', data:[
-  { state:1, label:'Row', value:'Value' },
+  { grp:N, id:1, state:1, label:'Row', value:'Value' },
 ], note:'Interpretive note.' };
 ```
 
 **Panel + Donut:**
 ```js
 const SECTION_DONUT = { title:'Title', label:'XX.XM', sublabel:'unit', data:[
-  { state:1, label:'Segment', value:'XX%', pct:60, color:C.xxx },
+  { grp:N, id:1, state:1, label:'Segment', value:'XX%', pct:60, color:C.xxx },
 ], note:'Interpretive note.' };
 ```
 
 **Panel + DlRow (daylight):**
 ```js
 const SECTION_DAYLIGHT = { title:'Daylight Hours — City (lat°N)', data:[
-  { state:1, mo:'Jan', label:'9h 28m',    pct:37,  color:C.blu },
-  { state:1, mo:'Jun', label:'15h 10m ★', pct:100, color:C.xxx, dark:true },
+  { grp:N, id:1, state:1, mo:'Jan', label:'9h 28m',    pct:37,  color:C.blu },
+  { grp:N, id:6, state:1, mo:'Jun', label:'15h 10m ★', pct:100, color:C.xxx, dark:true },
 ], note:'Interpretive note.' };
 ```
 
 **Panel + GradientBar:**
 ```js
 const SECTION_CLIMATE = { sublabel:'Secondary label', data:[
-  { state:1, label:'Row', value:'X mm', pct:100, color:C.xxx },
+  { grp:N, id:1, state:1, label:'Row', value:'X mm', pct:100, color:C.xxx },
 ], gradbar1:{ title:'Label', values:[/* 12 months */], colorStops:tempColor, unit:'°' },
    gradbar2:{ title:'Label', values:[/* 12 months */], colorStops:rainColor, unit:'mm' },
    note:'Interpretive note.' };
@@ -234,28 +221,42 @@ const SECTION_CLIMATE = { sublabel:'Secondary label', data:[
 **Panel + country-rows:**
 ```js
 const SECTION_ORIGINS = { title:'Title', data:[
-  { state:1, flag:'🇷🇺', country:'Russia', val:'description', pct:'XX%' },
+  { grp:N, id:1, state:1, flag:'🇷🇺', country:'Russia', val:'description', pct:'XX%' },
 ], note:'Interpretive note.' };
 ```
 
 **RegCard array:**
 ```js
 const GEO_REGIONS = [
-  { state:1, name:'Region', type:'Type · function', desc:'2–3 sentences.', stripe:C.xxx },
+  { grp:N, id:1, state:1, name:'Region', type:'Type · function', desc:'2–3 sentences.', stripe:C.xxx },
 ];
 ```
 
 **Political timeline:**
 ```js
 const POL_TIMELINE = { title:'Title', data:[
-  { state:1, yr:'YYYY', tx:'Event.' },
+  { grp:N, id:1, state:1, yr:'YYYY', tx:'Event.' },
 ], note:'Interpretive note.' };
+```
+
+**Era timeline** (belongs to the same `grp` as POL; `id:` continues from last POL item; `key:` is the string slug used by the component; structure/click handler — copy unchanged):
+```js
+const ERAS = {
+  title: 'Country — An Interactive Era Timeline (YYYY–YYYY)',
+  note:  'Interpretive note.',
+  data: [
+    { grp:N, id:N, state:2, key:'era_slug', label:'Full Name', short:'Short', start:YYYY, end:YYYY,
+      color:'#hex', colorL:'#hex',  // raw hex, not C.xxx; vary across eras
+      desc:'One paragraph.', events:['YEAR — event'] },
+  ]
+};
+const ERA_TOTAL = LAST_YEAR - FIRST_YEAR;
 ```
 
 **Data suppression** (government doesn't publish):
 ```js
 const SECTION_TBL = { title:'Title', data:[
-  { state:-1, label:'WHO modelled estimate', value:'~X% — est.; unverified — government does not publish; WHO modelled' },
+  { grp:N, id:1, state:-1, label:'WHO modelled estimate', value:'~X% — est.; unverified — government does not publish; WHO modelled' },
 ], note:'[Country] does not publish [topic]. Values are international modelled estimates only.' };
 ```
 
@@ -341,20 +342,13 @@ Infant mortality → `VITA_KPI·HEALTH_KPI` · Foreign reserves → `ECON_INDICA
 ```
 Proposed change: [exactly what will change]
 Reason: [why]
-File: [current filename → new filename]
 Awaiting approval.
 ```
 Stop. Do not open the file. Do not write code.
 
-**Step 2 — increment version first:**
-```bash
-cp [country]-dashboard-v[N].jsx [country]-dashboard-v[N+1].jsx
-```
-Never modify the current version directly.
+**Step 2 — make only the approved change.** Every additional change needs its own Step 1.
 
-**Step 3 — make only the approved change.** Every additional change needs its own Step 1.
-
-**Step 4 — present the new versioned file immediately.**
+Files use the naming `[country]-dashboard.jsx` (no version suffix). If a significant rewrite is needed, confirm with the user whether to keep the old file before overwriting.
 
 ---
 
@@ -370,5 +364,4 @@ Never modify the current version directly.
 
 ## Pending Investigations
 
-- **BIH ERAS** — content marked as incorrect by user; needs full review and rewrite before finalising bosnia-and-herzegovina-dashboard.
-- **Gate process confirmed order** — G1 identify → G2 search → G3 confirm → G4 cross-constant consistency check → G5 self-check → write → STOP. No writing before G5 clears. No prose narration — output only the 5 status lines.
+- none
