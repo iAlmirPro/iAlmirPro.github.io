@@ -52,6 +52,22 @@ git show HEAD:dashboards/[file].jsx > /tmp/git_[file].jsx
 "/Users/almir/Applications/Beyond Compare.app/Contents/MacOS/bcomp" /tmp/git_[file].jsx dashboards/[file].jsx &
 ```
 
+**Diff all three reference docs at once (run from repo root):**
+```bash
+git show HEAD:dashboards/dashboard-design-system.md  > /tmp/git_dds.md
+git show HEAD:dashboards/at-a-glance-instructions.md > /tmp/git_aag.md
+git show HEAD:dashboards/country-map-instructions.md > /tmp/git_cmi.md
+"/Users/almir/Applications/Beyond Compare.app/Contents/MacOS/bcomp" /tmp/git_dds.md dashboards/dashboard-design-system.md &
+"/Users/almir/Applications/Beyond Compare.app/Contents/MacOS/bcomp" /tmp/git_aag.md dashboards/at-a-glance-instructions.md &
+"/Users/almir/Applications/Beyond Compare.app/Contents/MacOS/bcomp" /tmp/git_cmi.md dashboards/country-map-instructions.md &
+```
+
+**Fetch data constants from public APIs (run from repo root):**
+```bash
+python3 tools/fetch_dashboard_data.py [ISO2 or ISO3]   # e.g. BIH or BA
+```
+Pulls ~180 constants from World Bank, IMF, WHO, Wikidata, Open-Meteo, and others — no API key required. Output values carry `state: 1` (automated). See script header for full source list.
+
 ## Dashboard design rules
 
 The single source of truth for all dashboard design is **`dashboards/dashboard-design-system.md`**. Read it before touching any dashboard file. Key rules:
@@ -107,6 +123,10 @@ Always read these before building or updating their respective sections:
 
 - `dashboards/at-a-glance-instructions.md` — At-a-Glance section structure, tile anatomy, icons, map tile
 - `dashboards/country-map-instructions.md` — D3 choropleth map component: projection, colours, label positioning
+
+## Notes on other files
+
+- `COMMANDS.md` — quick-reference cheat sheet, but contains **stale paths** (missing `tools/` prefix). Trust `CLAUDE.md` over it.
 
 ## Username rename
 

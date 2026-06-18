@@ -48,15 +48,15 @@ cp dashboards/<most-recently-modified>-dashboard.jsx dashboards/<country>-dashbo
 # Phase 2 — fetch all API data + generate patch sheet
 python3 tools/fetch_dashboard_data.py <ISO3>
 # → data/<iso3>_data.json     (full raw API data, ~170 verified points)
-# → data/<iso3>_patch.txt     (compact patch sheet: grp:id · value · source · ✓/✗)
+# → data/<iso3>_patch.txt     (compact patch sheet: grp:id · value · source · ①/✗)
 ```
 
 **Phase 3 — Identity edits** (manual, before Gate process — see list below under Quick-Start step 4)
 
 **Phase 4 — Claude applies patch sheet** (section by section):
-- Read `data/<iso3>_patch.txt` — each line: `G:N  value  source  ✓/✗`
-- **`✓` slots** → write value + source citation as sub, `state:1` (API-sourced)
-- **`✗` slots** → write meaningful hint in sub, `state:0`; repurpose label if Uzbekistan concept doesn't apply to new country (e.g. desert → mountain range)
+- Read `data/<iso3>_patch.txt` — each line: `G:N  value  source  ①/✗`
+- **`①` slots** → write value + source citation as sub, `state:1` (API-sourced)
+- **`✗` slots** → write meaningful hint in sub, `state:0`; repurpose label if template concept doesn't apply to new country (e.g. desert → mountain range)
 - Concept mismatches → repurpose slot or set `state:-1` with annotation
 - Update `pct:` whenever value is a bare percentage
 - Auto-blocks (`CLIMA_DAYLIGHT` · `VITA_DEATHS` · `ENERGY_MIX` · `POP_CITIES`) injected from `jsx_ready` section of JSON
@@ -364,4 +364,4 @@ Files use the naming `[country]-dashboard.jsx` (no version suffix). If a signifi
 
 ## Pending Investigations
 
-- none
+- `data/indexes.csv` missing — deleted with the `data/` folder. Must be recreated manually once a year. Contains GPI, RSF, and WJP scores per country (these cannot be auto-fetched: IEP requires registration, RSF returns HTTP 403, WJP has no accessible data file). TI CPI and Freedom House are auto-fetched; CSV is their fallback only. Update schedule: TI CPI Jan, FH Feb, RSF May, GPI Jun, WJP Oct. See `tools/fetch_dashboard_data.py` ~line 611 for the expected CSV format and column names.
