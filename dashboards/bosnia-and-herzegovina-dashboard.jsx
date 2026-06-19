@@ -1619,7 +1619,7 @@ export default function BosniaAndHerzegovina() {
 
         <div id="footer">
           <p className="footer-sources">
-            Sources: Agency for Statistics of Bosnia and Herzegovina · World Bank 2024 · IMF WEO 2025 · UNDP HDR 2025 · Transparency International CPI 2025 · WHO · IEP GPI 2024 · RSF Press Freedom 2024 · World Justice Project 2024 · Freedom House 2025 · ILO · Open-Meteo · Data as of [Month Year].
+            Sources: Agency for Statistics of Bosnia and Herzegovina (BHAS) · World Bank 2024 · IMF WEO 2024 · UNDP HDR 2024 · UN World Population Prospects · Transparency International CPI 2024 · IEP Global Peace Index 2026 · RSF Press Freedom Index 2026 · World Justice Project Rule of Law Index 2025 · Freedom House Freedom in the World 2025 · WHO Global Health Observatory · ILO / ILOSTAT · Open-Meteo · Wikidata · UNODC · OCCRP · Europol · BIRN · IQAir 2024 · FAOSTAT · IEA · Worldometer · macrotrends · worlddata.info · theglobaleconomy.com · populationpyramids.net · easeweather.com · plantmaps.com · PwC · Passport Index 2024 · European External Action Service · Sarajevo Times · Data as of [Month Year].
           </p>
           <p className="footer-legal">
             Generated June 2026 · Claude Sonnet 4.6 (Anthropic) · iAlmirPro
