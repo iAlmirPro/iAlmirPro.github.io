@@ -41,5 +41,23 @@
   "frankfurter": {
     "_comment": "Frankfurter ECB exchange rate API. Free community project — update base_url if it moves.",
     "base_url": "https://api.frankfurter.app/latest"
+  },
+
+  "rsf": {
+    "_comment": "RSF Press Freedom Index — published in May. URL pattern: rsf.org/sites/default/files/import_classement/{year}.csv — update year and url each May.",
+    "year": 2026,
+    "url": "https://rsf.org/sites/default/files/import_classement/2026.csv"
+  },
+
+  "gpi": {
+    "_comment": "IEP Global Peace Index — published in June. URL pattern: visionofhumanity.org/wp-content/uploads/{release_year}/06/GPI_{release_year}_{data_year}.csv — for the current-year edition both years are the same (e.g. GPI_2026_2026.csv). Update year and url each June.",
+    "year": 2026,
+    "url": "https://www.visionofhumanity.org/wp-content/uploads/2026/06/GPI_2026_2026.csv"
+  },
+
+  "wjp": {
+    "_comment": "WJP Rule of Law Index — published in October. URL pattern: worldjusticeproject.org/rule-of-law-index/downloads/{year}_wjp_rule_of_law_index_HISTORICAL_DATA_FILE.xlsx — update year and xlsx_url each October.",
+    "year": 2025,
+    "xlsx_url": "https://worldjusticeproject.org/rule-of-law-index/downloads/2025_wjp_rule_of_law_index_HISTORICAL_DATA_FILE.xlsx"
   }
 }

@@ -67,7 +67,7 @@ const TILES = [
   { grp:0, id:12, state:2, label:'HDI',            value:'0.804',            note:'Rank 74 · High human development (UNDP HDR 2025)', icon:icnHdi },
   { grp:0, id:13, state:2, label:'Government',     value:'Parliamentary',    note:'Federal republic · Dayton tripartite presidency', icon:icnGovt},
   { grp:0, id:14, state:2, label:'Hydropower',     value:'2,129 MW',         note:'Over 50% of electricity; major rivers: Neretva, Drina, Sava', icon:icnGas},
-  { grp:0, id:15, state:1, label:'Peace Index',    value:'GPI 1.869',        note:'Rank 54/163 (IEP GPI 2024)',               icon:icnPeace},
+  { grp:0, id:15, state:1, label:'Peace Index',    value:'GPI 1.810',        note:'Rank 48/163 · IEP GPI 2026',               icon:icnPeace},
   { grp:0, id:16, state:1, label:'Area',           value:'51,210 km²',       note:'Landlocked (except 20 km Adriatic coast) · World Bank', icon:icnArea},
 ];
 
@@ -736,10 +736,10 @@ const FISCAL_INDICATORS = {
 
 /* ── §15 CRIME ── */
 const CRIME_KPI = [
-  { grp:15, id:1, state:-1, label:"Global Peace Index 2024 (est.; unverified — BiH exact rank not retrieved)", value:"~Rank 55–70", sub:"est.; unverified — BiH generally scores in upper-middle tier; post-war stability improved significantly", accent:C.dim, delay:0.05 },
+  { grp:15, id:1, state:1,  label:"Global Peace Index (IEP GPI 2026)", value:"1.810 · Rank 48/163", sub:"IEP GPI 2026", accent:C.dim, delay:0.05 },
   { grp:15, id:2, state:2,  label:"Homicide rate (UNODC 2022)",  value:"~1.5 / 100K",  sub:"Below EU average (~1.0) but higher than Western Balkans best performers (UNODC)",        accent:C.dim, delay:0.10 },
   { grp:15, id:3, state:2,  label:"Corruption Index (TI 2024)",  value:"33/100 (rank 109)", sub:"Historic low; structural corruption linked to Dayton's 14-government complexity",    accent:C.yel, delay:0.15 },
-  { grp:15, id:4, state:2,  label:"Press Freedom (RSF 2025)",    value:"~Rank 60–70",   sub:"RSF 2025; classified Problematic; political pressure on public broadcasters; BNTV incidents", accent:C.dim, delay:0.20 },
+  { grp:15, id:4, state:1,  label:"Press Freedom (RSF 2026)",    value:"Rank 90/180",   sub:"RSF 2026; score 54.3/100; classified Problematic; political pressure on public broadcasters", accent:C.dim, delay:0.20 },
   { grp:15, id:5, state:2,  label:"Organised crime (OCCRP)",     value:"Regional hub",  sub:"Balkans corridor for drugs (heroin/cocaine) & human trafficking; OCCRP/Europol reports", accent:C.red, delay:0.25 },
   { grp:15, id:6, state:2,  label:"War crimes prosecuted (ICTY)", value:"90 convicted", sub:"ICTY closed 2017; 90 persons convicted; domestic war crimes courts continuing (BIRN)",   accent:C.dim, delay:0.30 },
 ];
@@ -761,9 +761,9 @@ const CRIME_SECURITY = {
   title: 'Governance & Security Scores',
   data: [
   { grp:15, id:13, state:2,  label:"Corruption (CPI 2024, 100=clean)",                                                                                value:"33/100",  pct:33, color:C.yel },
-  { grp:15, id:14, state:-1, label:"Press freedom score (est.; unverified — RSF does not publish numeric score; rank ~60–70 converted)",               value:"~55/100", pct:55, color:C.dim },
-  { grp:15, id:15, state:2,  label:"Rule of law (WJP 2023, 100=best)",                                                                                value:"~42/100", pct:42, color:C.blu },
-  { grp:15, id:16, state:-1, label:"Political rights (Freedom House 2024, 100=best; est.; unverified — FH score not retrieved in this session)",       value:"~40/100", pct:40, color:C.dim },
+  { grp:15, id:14, state:1,  label:"Press freedom score (RSF 2026, 100=most free)",                                                                     value:"54.3/100", pct:54, color:C.dim },
+  { grp:15, id:15, state:1,  label:"Rule of law (WJP 2025, 100=best)",                                                                                value:"57/100",  pct:57, color:C.blu },
+  { grp:15, id:16, state:1,  label:"Political rights (Freedom House 2025, 100=best)",                                                                    value:"52/100",  pct:52, color:C.dim },
 ],
   note: "BiH is classified \'Partly Free\' by Freedom House — a significant distinction from Uzbekistan\'s \'Not Free\' status. Genuine elections take place; civil society and independent media exist. The governance deficit is structural rather than authoritarian: the Dayton system creates 14 governments with overlapping mandates, enabling corruption by diffusing accountability. Rule of law weakness stems from judicial appointment politicisation across entity lines."
 };

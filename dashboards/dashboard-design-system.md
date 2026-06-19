@@ -362,6 +362,14 @@ Files use the naming `[country]-dashboard.jsx` (no version suffix). If a signifi
 
 ---
 
-## Pending Investigations
+## Annual index URL updates
 
-- `data/indexes.csv` missing — deleted with the `data/` folder. Must be recreated manually once a year. Contains GPI, RSF, and WJP scores per country (these cannot be auto-fetched: IEP requires registration, RSF returns HTTP 403, WJP has no accessible data file). TI CPI and Freedom House are auto-fetched; CSV is their fallback only. Update schedule: TI CPI Jan, FH Feb, RSF May, GPI Jun, WJP Oct. See `tools/fetch_dashboard_data.py` ~line 611 for the expected CSV format and column names.
+All five indexes are auto-fetched. Set the direct download URL in `tools/fetch_config.json` once a year after each index publishes. If no URL is set the fetcher skips that index and the patch sheet will show `Manual entry required`.
+
+| Index | Publish month | Config key | Where to get the URL |
+|---|---|---|---|
+| TI CPI | January | `ti_cpi.xlsx_url` | transparency.org/en/cpi — right-click download button |
+| Freedom House | February | `freedom_house.url` | Auto-constructed from year pattern — update `year` only |
+| RSF | May | `rsf.url` | URL pattern: `rsf.org/sites/default/files/import_classement/{year}.csv` |
+| GPI | June | `gpi.url` | URL pattern: `visionofhumanity.org/wp-content/uploads/{year}/06/GPI_{year}_{year}.csv` |
+| WJP | October | `wjp.xlsx_url` | URL pattern: `worldjusticeproject.org/rule-of-law-index/downloads/{year}_wjp_rule_of_law_index_HISTORICAL_DATA_FILE.xlsx` |

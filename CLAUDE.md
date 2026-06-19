@@ -67,6 +67,10 @@ git show HEAD:dashboards/country-map-instructions.md > /tmp/git_cmi.md
 python3 tools/fetch_dashboard_data.py [ISO2 or ISO3]   # e.g. BIH or BA
 ```
 Pulls ~180 constants from World Bank, IMF, WHO, Wikidata, Open-Meteo, and others — no API key required. Output values carry `state: 1` (automated). See script header for full source list.
+- `data/<iso3>_data.json` — full raw API data (~170 points)
+- `data/<iso3>_patch.txt` — compact patch sheet used during the Gate process (`grp:id · value · source · ①/✗`)
+
+All five indexes (TI CPI, Freedom House, RSF, GPI, WJP) are auto-fetched. Update URLs in `tools/fetch_config.json` once a year after each publishes. See `dashboards/dashboard-design-system.md` → "Annual index URL updates" for the schedule.
 
 ## Dashboard design rules
 

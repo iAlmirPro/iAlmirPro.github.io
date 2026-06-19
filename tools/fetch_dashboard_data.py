@@ -27,7 +27,9 @@ Sources:
     - World Bank WGI API            (governance indicators via source=3)
     - transparency.org              (TI CPI — page scrape to find xlsx link, then xlsx parse)
     - freedomhouse.org              (Freedom House — direct xlsx download + parse)
-    - Local indexes.csv             (GPI, RSF, WJP — updated annually; TI CPI / FH fallback)
+    - rsf.org                       (RSF Press Freedom Index — CSV download)
+    - visionofhumanity.org          (IEP Global Peace Index — CSV download)
+    - worldjusticeproject.org       (WJP Rule of Law Index — xlsx download)
 """
 
 import sys
@@ -450,7 +452,7 @@ def fetch_un_wpp(un_numeric):
 #            the ECMA standard) — namespace is detected dynamically from
 #            sharedStrings.xml to avoid hardcoding.
 #            Columns: Country/Territory, ISO3, Region, CPI {year} score, Rank
-# Fallback : None → fetch_indexes() uses CSV row instead.
+# Fallback : none
 # ──────────────────────────────────────────────────────────────────────────────
 import io
 import re
@@ -603,28 +605,323 @@ def fetch_ti_cpi_live(iso3, year=None):
 
 
 # ──────────────────────────────────────────────────────────────────────────────
-# FETCH: LOCAL INDEXES CSV
+# GENERIC XLSX PARSER (shared by RSF / GPI / WJP live fetchers)
 #
-# Protocol : local file read — no network call
-# Format   : CSV with comment lines (#), columns: iso3, {index}_score,
-#            {index}_rank, {index}_year for each of: ti_cpi, gpi, fh, rsf, wjp
-# File     : data/indexes.csv — maintained manually once a year.
-# Why CSV  : GPI requires registration (IEP data licensing), RSF blocks all
-#            programmatic access (HTTP 403), WJP has no accessible data file.
-#            TI CPI and Freedom House are auto-fetched — CSV is their fallback.
-# Update   : Jan (TI CPI), Feb (FH), May (RSF), Jun (GPI), Oct (WJP).
+# Scans all sheets for a header row that contains both an ISO column and a
+# score column (identified by caller-supplied hint lists). Returns (score, rank)
+# or (None, None). Handles both sparse rows (cell r= attribute) and dense rows.
 # ──────────────────────────────────────────────────────────────────────────────
-_INDEXES_CSV = os.path.join(
-    os.path.dirname(__file__), '..', 'data', 'indexes.csv'
-)
 
-_INDEX_META = {
-    'ti_cpi':  ('TI Corruption Perceptions Index',   'https://www.transparency.org/en/cpi',             0, 100, 'higher = less corrupt'),
-    'gpi':     ('Global Peace Index',                'https://www.visionofhumanity.org/maps/',           1, 5,   'lower = more peaceful'),
-    'fh':      ('Freedom House Freedom in the World', 'https://freedomhouse.org/report/freedom-world',   0, 100, 'higher = more free'),
-    'rsf':     ('RSF Press Freedom Index',            'https://rsf.org/en/index',                        0, 100, 'higher = more press freedom'),
-    'wjp':     ('WJP Rule of Law Index',              'https://worldjusticeproject.org/rule-of-law-index', 0, 1, 'higher = stronger rule of law'),
-}
+def _parse_xlsx_generic(xlsx_bytes, iso3, iso_col_hints, score_col_hints, rank_col_hints):
+    """
+    Generic xlsx parser for ranking/index files.
+    iso_col_hints, score_col_hints, rank_col_hints: lists of lowercase substrings
+    to match against lowercased column headers.
+    Returns (score_float, rank_int_or_None) or (None, None).
+    """
+    def _col_letters_to_idx(ref):
+        m = re.match(r'([A-Z]+)', ref or '')
+        if not m:
+            return -1
+        idx = 0
+        for ch in m.group(1):
+            idx = idx * 26 + (ord(ch) - ord('A') + 1)
+        return idx - 1
+
+    try:
+        with zipfile.ZipFile(io.BytesIO(xlsx_bytes)) as z:
+            ns_uri = 'http://schemas.openxmlformats.org/spreadsheetml/2006/main'
+            shared = []
+            if 'xl/sharedStrings.xml' in z.namelist():
+                with z.open('xl/sharedStrings.xml') as f:
+                    ss_raw = f.read()
+                m = re.search(rb'xmlns=["\']([^"\']+)["\']', ss_raw)
+                if m:
+                    ns_uri = m.group(1).decode()
+                ss_tree = ET.fromstring(ss_raw)
+                shared = [
+                    ''.join(t.text or '' for t in si.iter(f'{{{ns_uri}}}t'))
+                    for si in ss_tree
+                ]
+
+            def cell_val(c):
+                t    = c.get('t', '')
+                v_el = c.find(f'{{{ns_uri}}}v')
+                if v_el is None:
+                    return ''
+                raw = v_el.text or ''
+                if t == 's':
+                    try:
+                        return shared[int(raw)]
+                    except (ValueError, IndexError):
+                        return raw
+                return raw
+
+            sheet_files = sorted(
+                [n for n in z.namelist() if re.match(r'xl/worksheets/sheet\d+\.xml', n)],
+                key=lambda s: int(re.search(r'\d+', s).group()),
+            )
+
+            for sheet_file in sheet_files:
+                with z.open(sheet_file) as f:
+                    ws_tree = ET.parse(f)
+                rows = ws_tree.getroot().findall(f'.//{{{ns_uri}}}row')
+
+                header_idx = iso_col = score_col = rank_col = None
+
+                for i, row in enumerate(rows):
+                    cells  = row.findall(f'{{{ns_uri}}}c')
+                    values = [cell_val(c) for c in cells]
+                    vl     = [v.lower().strip() for v in values]
+
+                    has_iso   = any(any(h in v for h in iso_col_hints)   for v in vl)
+                    has_score = any(any(h in v for h in score_col_hints) for v in vl)
+                    if has_iso and has_score:
+                        header_idx = i
+                        for j, v in enumerate(vl):
+                            if iso_col   is None and any(h in v for h in iso_col_hints):
+                                iso_col   = j
+                            if score_col is None and any(h in v for h in score_col_hints):
+                                score_col = j
+                            if rank_col  is None and any(h in v for h in rank_col_hints):
+                                rank_col  = j
+                        break
+
+                if header_idx is None:
+                    continue
+
+                for row in rows[header_idx + 1:]:
+                    cells = row.findall(f'{{{ns_uri}}}c')
+                    # Build col_map — prefer sparse (r= attribute), fall back to dense
+                    col_map = {_col_letters_to_idx(c.get('r', '')): cell_val(c) for c in cells}
+                    if not col_map or max(col_map.keys(), default=-1) < 0:
+                        col_map = {i: cell_val(c) for i, c in enumerate(cells)}
+
+                    iso_val = col_map.get(iso_col, '').strip().upper()
+                    if iso_val != iso3.upper():
+                        continue
+
+                    score_raw = col_map.get(score_col, '').strip() if score_col is not None else ''
+                    rank_raw  = col_map.get(rank_col,  '').strip() if rank_col  is not None else ''
+                    try:
+                        score = float(score_raw) if score_raw else None
+                    except ValueError:
+                        score = None
+                    try:
+                        rank = int(float(rank_raw)) if rank_raw else None
+                    except ValueError:
+                        rank = None
+                    return score, rank
+
+    except Exception as e:
+        print(f'  ⚠  xlsx parse error: {e}')
+    return None, None
+
+
+# ──────────────────────────────────────────────────────────────────────────────
+# FETCH: RSF PRESS FREEDOM INDEX (live, from rsf.org)
+#
+# Protocol : HTTPS — CSV download → stdlib csv parse
+# Auth     : none (browser-like headers required; RSF returns 403 without them)
+# URL      : rsf.org/sites/default/files/import_classement/{year}.csv
+#            Update rsf.url in fetch_config.json each May after release.
+# Format   : CSV — columns include ISO code and global score / rank
+# Fallback : none
+# ──────────────────────────────────────────────────────────────────────────────
+
+def fetch_rsf_live(iso3):
+    """Download RSF CSV and return score/rank for iso3, or None."""
+    url  = _cfg('rsf', 'url', default='')
+    year = _cfg('rsf', 'year', default=datetime.now().year)
+    if not url:
+        print(f'  ⚠  RSF: no url in fetch_config.json — skipping live fetch')
+        return None
+    print(f'  RSF: downloading CSV from config URL')
+    try:
+        r = SESSION.get(url, headers=_TI_HEADERS, timeout=60, allow_redirects=True)
+        r.raise_for_status()
+    except Exception as e:
+        print(f'  ⚠  RSF CSV download failed: {e}')
+        return None
+    try:
+        try:
+            text = r.content.decode('utf-8-sig')
+        except UnicodeDecodeError:
+            text = r.content.decode('latin-1')
+        # Auto-detect delimiter (RSF uses semicolons)
+        first_line = text.splitlines()[0] if text.splitlines() else ''
+        delim = ';' if first_line.count(';') > first_line.count(',') else ','
+        reader  = csv.DictReader(text.splitlines(), delimiter=delim)
+        headers = [h.lower().strip() for h in (reader.fieldnames or [])]
+
+        # Detect ISO, score, rank columns by matching header substrings
+        iso_col   = next((h for h in headers if h in ('iso3', 'iso_3', 'iso 3', 'code_iso', 'iso')), None)
+        score_col = next((h for h in headers if 'score' in h or 'pfindex' in h), None)
+        rank_col  = next((h for h in headers if h == 'rank' or h == 'ranking'), None)
+
+        if not iso_col or not score_col:
+            print(f'  ⚠  RSF: could not identify ISO/score columns in CSV (headers: {headers[:10]})')
+            return None
+
+        def _parse_num(s):
+            """Parse a number that may use comma as decimal separator."""
+            try:
+                return float(str(s).strip().replace(',', '.'))
+            except (ValueError, TypeError):
+                return None
+
+        for row in reader:
+            row_lower = {k.lower().strip(): v for k, v in row.items()}
+            if row_lower.get(iso_col, '').strip().upper() != iso3.upper():
+                continue
+            score = _parse_num(row_lower.get(score_col, ''))
+            try:
+                rank = int(float(str(row_lower.get(rank_col, '')).strip())) if rank_col else None
+            except (ValueError, TypeError):
+                rank = None
+            if score is None:
+                continue
+            result = {
+                'status': 1,
+                'value':  round(score, 2),
+                'year':   str(year),
+                'source': 'RSF Press Freedom Index',
+                'label':  'RSF Press Freedom Index (higher = more press freedom)',
+                'url':    'https://rsf.org/en/index',
+            }
+            if rank is not None:
+                result['rank'] = rank
+            return result
+
+    except Exception as e:
+        print(f'  ⚠  RSF CSV parse error: {e}')
+        return None
+
+    print(f'  ⚠  RSF: {iso3} not found in CSV')
+    return None
+
+
+# ──────────────────────────────────────────────────────────────────────────────
+# FETCH: IEP GLOBAL PEACE INDEX (live, from visionofhumanity.org)
+#
+# Protocol : HTTPS — CSV download → stdlib csv parse
+# Auth     : none (browser-like headers required)
+# URL      : visionofhumanity.org/wp-content/uploads/{year}/06/GPI_{year}_{year}.csv
+#            Update gpi.url in fetch_config.json each June after release.
+# Format   : CSV — columns include ISO code, overall score, rank
+# Fallback : none
+# ──────────────────────────────────────────────────────────────────────────────
+
+def fetch_gpi_live(iso3):
+    """Download GPI CSV and return score/rank for iso3, or None."""
+    url  = _cfg('gpi', 'url', default='')
+    year = _cfg('gpi', 'year', default=datetime.now().year)
+    if not url:
+        print(f'  ⚠  GPI: no url in fetch_config.json — skipping live fetch')
+        return None
+    print(f'  GPI: downloading CSV from config URL')
+    try:
+        r = SESSION.get(url, headers=_TI_HEADERS, timeout=60, allow_redirects=True)
+        r.raise_for_status()
+    except Exception as e:
+        print(f'  ⚠  GPI CSV download failed: {e}')
+        return None
+    try:
+        try:
+            text = r.content.decode('utf-8-sig')
+        except UnicodeDecodeError:
+            text = r.content.decode('latin-1')
+        reader  = csv.DictReader(text.splitlines())
+        headers = [h.lower().strip() for h in (reader.fieldnames or [])]
+
+        iso_col   = next((h for h in headers if h in ('code', 'iso3', 'iso_3', 'iso 3', 'code_iso', 'iso')), None)
+        score_col = next((h for h in headers if h == 'index_over' or 'overall' in h or ('index' in h and 'score' in h)), None)
+        rank_col  = next((h for h in headers if h == 'rank' or 'ranking' in h or 'position' in h), None)
+
+        if not iso_col or not score_col:
+            print(f'  ⚠  GPI: could not identify ISO/score columns in CSV (headers: {headers[:10]})')
+            return None
+
+        for row in reader:
+            row_lower = {k.lower().strip(): v for k, v in row.items()}
+            if row_lower.get(iso_col, '').strip().upper() != iso3.upper():
+                continue
+            try:
+                score = float(row_lower[score_col])
+            except (ValueError, KeyError):
+                score = None
+            try:
+                rank = int(float(row_lower[rank_col])) if rank_col else None
+            except (ValueError, KeyError, TypeError):
+                rank = None
+            if score is None:
+                continue
+            result = {
+                'status': 1,
+                'value':  round(score, 3),
+                'year':   str(year),
+                'source': 'IEP Global Peace Index',
+                'label':  'Global Peace Index (lower = more peaceful)',
+                'url':    'https://www.visionofhumanity.org/maps/',
+            }
+            if rank is not None:
+                result['rank'] = rank
+            return result
+
+    except Exception as e:
+        print(f'  ⚠  GPI CSV parse error: {e}')
+        return None
+
+    print(f'  ⚠  GPI: {iso3} not found in CSV')
+    return None
+
+
+# ──────────────────────────────────────────────────────────────────────────────
+# FETCH: WJP RULE OF LAW INDEX (live, from worldjusticeproject.org)
+#
+# Protocol : HTTPS — binary file download (xlsx) → XML parse
+# Auth     : none (browser-like headers required)
+# URL      : set wjp.xlsx_url in fetch_config.json each October after release
+#            Get the direct xlsx link from worldjusticeproject.org/rule-of-law-index
+# Format   : xlsx — typically: Country, ISO code, WJP Score, Rank columns
+# Fallback : none
+# ──────────────────────────────────────────────────────────────────────────────
+
+def fetch_wjp_live(iso3):
+    """Download WJP xlsx and return score/rank for iso3, or None."""
+    xlsx_url = _cfg('wjp', 'xlsx_url', default='')
+    year     = _cfg('wjp', 'year', default=datetime.now().year)
+    if not xlsx_url:
+        print(f'  ⚠  WJP: no xlsx_url in fetch_config.json — skipping live fetch')
+        return None
+    print(f'  WJP: downloading xlsx from config URL')
+    try:
+        r = SESSION.get(xlsx_url, headers=_TI_HEADERS, timeout=60, allow_redirects=True)
+        r.raise_for_status()
+    except Exception as e:
+        print(f'  ⚠  WJP xlsx download failed: {e}')
+        return None
+    score, rank = _parse_xlsx_generic(
+        r.content, iso3,
+        iso_col_hints   = ['iso3', 'iso_3', 'iso 3', 'iso code', 'wb code', 'code'],
+        score_col_hints = ['overall score', 'wjp score', 'score', 'rule of law index'],
+        rank_col_hints  = ['rank', 'ranking', 'position'],
+    )
+    if score is None:
+        print(f'  ⚠  WJP: {iso3} not found in xlsx')
+        return None
+    result = {
+        'status': 1,
+        'value':  round(score, 2),
+        'year':   str(year),
+        'source': 'WJP Rule of Law Index',
+        'label':  'WJP Rule of Law Index (higher = stronger rule of law)',
+        'url':    'https://worldjusticeproject.org/rule-of-law-index',
+    }
+    if rank is not None:
+        result['rank'] = rank
+    return result
+
 
 # ──────────────────────────────────────────────────────────────────────────────
 # FETCH: FREEDOM HOUSE — Freedom in the World (direct xlsx download)
@@ -641,7 +938,7 @@ _INDEX_META = {
 #            CL rating (0-60), subcategory scores A1-G4, Total (0-100).
 # Match    : by Country/Territory name string (FH uses no ISO codes).
 #            _FH_NAME_OVERRIDES maps ISO3 → FH name for WB name mismatches.
-# Fallback : None → fetch_indexes() uses CSV row instead.
+# Fallback : none
 # Source   : Same URL used by xmarquez/democracyData download_fh_full().
 # ──────────────────────────────────────────────────────────────────────────────
 
@@ -817,63 +1114,14 @@ def fetch_freedom_house_xlsx(iso3, country_name, year=None):
     return None
 
 
-def fetch_indexes(iso3, ti_cpi_live=None, fh_live=None):
-    """
-    Returns index scores for iso3.
-    ti_cpi_live: result from fetch_ti_cpi_live() — used instead of CSV if provided.
-    fh_live:     result from fetch_freedom_house_live() — used instead of CSV if provided.
-    CSV supplies GPI, RSF, WJP (and TI CPI / FH fallback).
-    """
+def fetch_indexes(iso3, ti_cpi_live=None, fh_live=None, rsf_live=None, gpi_live=None, wjp_live=None):
+    """Merge live index results into a single dict keyed by index name."""
     results = {}
-
-    # TI CPI: live fetch takes priority; CSV is fallback
-    if ti_cpi_live is not None:
-        results['ti_cpi'] = ti_cpi_live
-
-    # Freedom House: live fetch takes priority; CSV is fallback
-    if fh_live is not None:
-        results['fh'] = fh_live
-
-    path = os.path.normpath(_INDEXES_CSV)
-    if not os.path.exists(path):
-        print(f'  ⚠  indexes.csv not found at {path}')
-        return results
-
-    with open(path, newline='', encoding='utf-8') as f:
-        reader = csv.DictReader(
-            (line for line in f if not line.startswith('#') and line.strip()),
-        )
-        for row in reader:
-            if row.get('iso3', '').strip().upper() != iso3.upper():
-                continue
-            for key, (label, url, lo, hi, note) in _INDEX_META.items():
-                if key in results:
-                    continue  # already have live data for this index
-                score_col = f'{key}_score'
-                rank_col  = f'{key}_rank'
-                year_col  = f'{key}_year'
-                score = row.get(score_col, '').strip()
-                rank  = row.get(rank_col,  '').strip()
-                year  = row.get(year_col,  '').strip()
-                if not score:
-                    continue
-                entry = {
-                    'status': 1,
-                    'value':  float(score),
-                    'year':   year,
-                    'source': label,
-                    'label':  f'{label} ({note})',
-                    'url':    url,
-                }
-                if rank:
-                    entry['rank'] = int(rank)
-                if key == 'fh':
-                    status_val = row.get('fh_status', '').strip()
-                    if status_val:
-                        entry['status_label'] = status_val
-                results[key] = entry
-            break
-
+    if ti_cpi_live is not None: results['ti_cpi'] = ti_cpi_live
+    if fh_live     is not None: results['fh']     = fh_live
+    if rsf_live    is not None: results['rsf']    = rsf_live
+    if gpi_live    is not None: results['gpi']    = gpi_live
+    if wjp_live    is not None: results['wjp']    = wjp_live
     return results
 
 
@@ -1504,6 +1752,12 @@ def _jfmt(raw, fmt):
     if fmt == 'gpi':
         return f'{v:.3f}'
 
+    if fmt == 'rsf_pct':
+        return f'{v:.1f}/100'
+
+    if fmt == 'wjp_pct':
+        return f'{int(round(v * 100))}/100'
+
     if fmt == 'cap':
         return str(raw).capitalize()
 
@@ -1550,6 +1804,14 @@ def _jyear(output, path):
     return ''
 
 
+def _jrank(output, path):
+    """Return integer rank at dot-path, or None."""
+    node = _jget(output, path)
+    if isinstance(node, dict):
+        return node.get('rank')
+    return None
+
+
 def _daylight_str(h):
     hrs  = int(h)
     mins = round((h - hrs) * 60)
@@ -1577,11 +1839,11 @@ def build_jsx_ready(output):
         return f'{grp}:{id_n}', {'value': '', 'sub': sub, 'state': 0}
 
     # Pre-fetch shared values
-    gpi_raw  = _jval(output, 'indexes.gpi');  gpi_year = _jyear(output, 'indexes.gpi')
+    gpi_raw  = _jval(output, 'indexes.gpi');  gpi_year = _jyear(output, 'indexes.gpi');  gpi_rank = _jrank(output, 'indexes.gpi')
     ti_raw   = _jval(output, 'indexes.ti_cpi'); ti_yr  = _jyear(output, 'indexes.ti_cpi')
     fh_raw   = _jval(output, 'indexes.fh');   fh_yr   = _jyear(output, 'indexes.fh')
-    rsf_raw  = _jval(output, 'indexes.rsf');  rsf_yr  = _jyear(output, 'indexes.rsf')
-    wjp_raw  = _jval(output, 'indexes.wjp');  wjp_yr  = _jyear(output, 'indexes.wjp')
+    rsf_raw  = _jval(output, 'indexes.rsf');  rsf_yr  = _jyear(output, 'indexes.rsf');  rsf_rank = _jrank(output, 'indexes.rsf')
+    wjp_raw  = _jval(output, 'indexes.wjp');  wjp_yr  = _jyear(output, 'indexes.wjp');  wjp_rank = _jrank(output, 'indexes.wjp')
     govt_raw = _jval(output, 'wikidata.government_form')
     hos_raw  = _jval(output, 'wikidata.head_of_state')
     hp_name  = _jval(output, 'wikidata.highest_point_name')
@@ -1607,15 +1869,28 @@ def build_jsx_ready(output):
         nd_val, nd_sub, nd_st = f'{float(dr_raw)-float(br_raw):.2f} per 1k', f'World Bank {nd_yr}', 1
     else:
         nd_val, nd_sub, nd_st = '', 'Manual entry required', 0
-    who_ob_raw = _jval(output, 'who.obesity_prevalence_pct_who')
-    who_ob_yr  = _jyear(output, 'who.obesity_prevalence_pct_who')
-    who_ob_fv  = _jfmt(who_ob_raw, 'pct1') if who_ob_raw is not None else None
+    who_ob_raw  = _jval(output, 'who.obesity_prevalence_pct_who')
+    who_ob_yr   = _jyear(output, 'who.obesity_prevalence_pct_who')
+    who_ob_fv   = _jfmt(who_ob_raw, 'pct1') if who_ob_raw is not None else None
     who_tob_raw = _jval(output, 'who.tobacco_use_pct')
     who_tob_fv  = None if (who_tob_raw is None or who_tob_raw == 'No data') else _jfmt(who_tob_raw, 'pct1')
     who_tob_yr  = _jyear(output, 'who.tobacco_use_pct')
-    imf_fb_raw = _jval(output, 'imf.imf_fiscal_balance_pct_gdp')
-    imf_fb_yr  = _jyear(output, 'imf.imf_fiscal_balance_pct_gdp')
-    imf_fb_fv  = _jfmt(imf_fb_raw, 'pct1s') if imf_fb_raw is not None else None
+    who_diab_raw = _jval(output, 'who.diabetes_prevalence_pct');  who_diab_yr = _jyear(output, 'who.diabetes_prevalence_pct')
+    who_htn_raw  = _jval(output, 'who.hypertension_prevalence_pct'); who_htn_yr = _jyear(output, 'who.hypertension_prevalence_pct')
+    who_ncd_raw  = _jval(output, 'who.ncd_mortality_risk_pct');   who_ncd_yr  = _jyear(output, 'who.ncd_mortality_risk_pct')
+    who_sui_raw  = _jval(output, 'who.suicide_rate_per100k');     who_sui_yr  = _jyear(output, 'who.suicide_rate_per100k')
+    imf_fb_raw  = _jval(output, 'imf.imf_fiscal_balance_pct_gdp')
+    imf_fb_yr   = _jyear(output, 'imf.imf_fiscal_balance_pct_gdp')
+    imf_fb_fv   = _jfmt(imf_fb_raw, 'pct1s') if imf_fb_raw is not None else None
+    # UNDP
+    hdi_raw      = _jval(output, 'undp.undp_hdi');              hdi_yr     = _jyear(output, 'undp.undp_hdi')
+    hdi_rank_raw = _jval(output, 'undp.undp_rankhdi')
+    mys_raw      = _jval(output, 'undp.undp_mys');              mys_yr     = _jyear(output, 'undp.undp_mys')
+    eys_raw      = _jval(output, 'undp.undp_eys');              eys_yr     = _jyear(output, 'undp.undp_eys')
+    gii_raw      = _jval(output, 'undp.undp_gii');              gii_yr     = _jyear(output, 'undp.undp_gii')
+    gii_rank_raw = _jval(output, 'undp.undp_rankgii')
+    # UN WPP
+    med_age_raw  = _jval(output, 'un_wpp.median_age');          med_age_yr = _jyear(output, 'un_wpp.median_age')
 
     climate    = output.get('climate') or {}
     monthly_cl = climate.get('monthly', {})
@@ -1640,10 +1915,10 @@ def build_jsx_ready(output):
         none(0,  9, 'Religion breakdown — manual'),
         none(0, 10, 'Official language — manual'),
         ('0:11', {'value': life_exp or '', 'sub': f'World Bank {yr_le}' if life_exp else 'Manual entry required', 'state': 1 if life_exp else 0}),
-        none(0, 12, 'HDI rank — check UNDP HDR'),
+        ('0:12', {'value': (f'{_jfmt(hdi_raw, "f3")} · rank {int(hdi_rank_raw)}/193' if hdi_rank_raw else _jfmt(hdi_raw, 'f3')) if hdi_raw else '', 'sub': f'UNDP HDR {hdi_yr}' if hdi_raw else 'Manual entry required', 'state': 1 if hdi_raw else 0}),
         ('0:13', {'value': str(govt_raw) if govt_raw else '', 'sub': 'Wikidata' if govt_raw else 'Manual entry required', 'state': 1 if govt_raw else 0}),
         none(0, 14, 'Natural resources — manual'),
-        ('0:15', {'value': _jfmt(gpi_raw, 'gpi') if gpi_raw else '', 'sub': f'IEP GPI {gpi_year}' if gpi_raw else 'Manual entry required', 'state': 1 if gpi_raw else 0}),
+        ('0:15', {'value': _jfmt(gpi_raw, 'gpi_tile') if gpi_raw else '', 'sub': f'Rank {gpi_rank}/163 · IEP GPI {gpi_year}' if gpi_raw else 'Manual entry required', 'state': 1 if gpi_raw else 0}),
         item(0, 16, f'{W}.area_km2', 'km2', 'World Bank'),
 
         # grp:1  GEO
@@ -1674,7 +1949,7 @@ def build_jsx_ready(output):
         # grp:3  POP
         item(3,  1, f'{W}.population_total',           'pop_exact', 'World Bank {year}'),
         item(3,  2, f'{W}.urban_population_pct',       'pct1',      'World Bank {year}'),
-        none(3,  3, 'Median Age — UN WPP'),
+        ('3:3', {'value': _jfmt(med_age_raw, 'yrs') if med_age_raw else '', 'sub': f'UN WPP {med_age_yr}' if med_age_raw else 'Manual entry required', 'state': 1 if med_age_raw else 0}),
         item(3,  4, f'{W}.population_density_per_km2', 'density',   'World Bank {year}'),
         ('3:5', {'value': life_exp or '', 'sub': f'World Bank {yr_le}' if life_exp else 'Manual entry required', 'state': 1 if life_exp else 0}),
         item(3,  6, f'{W}.fertility_rate', 'f2', 'World Bank {year}'),
@@ -1718,12 +1993,12 @@ def build_jsx_ready(output):
 
         # grp:6  EDU
         item(6,  1, f'{W}.literacy_rate_adult_pct',        'pct1', 'World Bank {year}'),
-        none(6,  2, 'HDI value — UNDP HDR'),
-        none(6,  3, 'Avg years schooling — UNDP HDR'),
-        none(6,  4, 'Expected years schooling — UNDP HDR'),
+        ('6:2', {'value': _jfmt(hdi_raw, 'f3') if hdi_raw else '', 'sub': f'UNDP HDR {hdi_yr}' if hdi_raw else 'Manual entry required', 'state': 1 if hdi_raw else 0}),
+        ('6:3', {'value': _jfmt(mys_raw, 'yrs') if mys_raw else '', 'sub': f'UNDP HDR {mys_yr}' if mys_raw else 'Manual entry required', 'state': 1 if mys_raw else 0}),
+        ('6:4', {'value': _jfmt(eys_raw, 'yrs') if eys_raw else '', 'sub': f'UNDP HDR {eys_yr}' if eys_raw else 'Manual entry required', 'state': 1 if eys_raw else 0}),
         item(6,  5, f'{W}.education_expenditure_pct_gdp',  'pct1', 'World Bank {year}'),
         item(6,  6, f'{W}.school_enrollment_tertiary_pct', 'pct1', 'World Bank {year}'),
-        none(6,  7, 'Primary enrolment — not retrieved'),
+        item(6,  7, f'{W}.school_enrollment_primary_pct', 'pct1', 'World Bank {year}'),
         item(6,  8, f'{W}.school_enrollment_secondary_pct','pct1', 'World Bank {year}'),
         item(6,  9, f'{W}.school_enrollment_tertiary_pct', 'pct1', 'World Bank {year}'),
         none(6, 10, 'Female:male tertiary ratio — manual'),
@@ -1774,8 +2049,8 @@ def build_jsx_ready(output):
         none(9, 27, 'War trauma legacy — manual'),
         none(9, 28, 'Sarajevo air quality — manual'),
         item(9, 29, f'{W}.infant_mortality_per1k',     'per1k',   'World Bank {year}'),
-        none(9, 30, 'CVD mortality share — manual'),
-        none(9, 31, 'Cancer mortality share — manual'),
+        ('9:30', {'value': _jfmt(who_ncd_raw, 'pct1') if who_ncd_raw else '', 'sub': f'WHO NCD premature mortality risk (30–70) {who_ncd_yr}' if who_ncd_raw else 'Manual entry required', 'state': 1 if who_ncd_raw else 0}),
+        ('9:31', {'value': _jfmt(who_diab_raw, 'pct1') if who_diab_raw else '', 'sub': f'WHO GHO Diabetes prevalence {who_diab_yr}' if who_diab_raw else 'Manual entry required', 'state': 1 if who_diab_raw else 0}),
         ('9:32', {'value': who_tob_fv or '', 'sub': f'WHO GHO {who_tob_yr}' if who_tob_fv else 'Manual entry required', 'state': 1 if who_tob_fv else 0}),
         ('9:33', {'value': who_ob_fv or '', 'sub': f'WHO GHO {who_ob_yr}' if who_ob_fv else 'Manual entry required', 'state': 1 if who_ob_fv else 0}),
         none(9, 34, 'PTSD prevalence — manual'),
@@ -1814,7 +2089,7 @@ def build_jsx_ready(output):
         # grp:12  SOCIAL
         item(12,  1, f'{W}.poverty_headcount_365_pct', 'pct1', 'World Bank {year}'),
         item(12,  2, f'{W}.gini_index',                'f1',   'World Bank {year}'),
-        none(12,  3, 'Gender Inequality Index — UNDP HDR'),
+        ('12:3', {'value': _jfmt(gii_raw, 'f3') if gii_raw else '', 'sub': f'UNDP HDR GII {gii_yr}' if gii_raw else 'Manual entry required', 'state': 1 if gii_raw else 0}),
         none(12,  4, 'Global Gender Gap — manual'),
         item(12,  5, f'{W}.women_in_parliament_pct',   'pct1', 'World Bank {year}'),
         none(12,  6, 'Domestic violence — manual'),
@@ -1824,7 +2099,7 @@ def build_jsx_ready(output):
         item(12, 10, f'{W}.access_sanitation_pct',     'pct1', 'World Bank {year}'),
         item(12, 11, f'{W}.access_electricity_pct',    'pct1', 'World Bank {year}'),
         item(12, 12, f'{W}.women_in_parliament_pct',   'pct1', 'World Bank {year}'),
-        none(12, 13, 'GII rank — UNDP'),
+        ('12:13', {'value': (f'Rank {int(gii_rank_raw)}/193' if gii_rank_raw else _jfmt(gii_raw, 'f3')) if gii_raw else '', 'sub': f'UNDP HDR {gii_yr}' if gii_raw else 'Manual entry required', 'state': 1 if gii_raw else 0}),
         none(12, 14, 'Education gender parity — manual'),
         none(12, 15, 'War crimes legacy — manual'),
         none(12, 16, 'Landmine contamination — manual'),
@@ -1834,12 +2109,12 @@ def build_jsx_ready(output):
         item(13,  1, f'{W}.co2_per_capita_tons', 'f1',   'World Bank {year}'),
         item(13,  2, f'{W}.forest_area_pct',     'pct1', 'World Bank {year}'),
         none(13,  3, 'NDC target 2030 — manual'),
-        none(13,  4, 'Sarajevo AQI — PM2.5 not retrieved'),
+        item(13,  4, f'{W}.pm25_mean_annual_ugm3', 'ugm3', 'World Bank / WHO {year}'),
         none(13,  5, 'Protected areas % — manual'),
         none(13,  6, 'Landslide risk — manual'),
         none(13,  7), none(13,  8), none(13,  9), none(13, 10), none(13, 11), none(13, 12),
         item(13, 13, f'{W}.forest_area_pct', 'pct1', 'World Bank {year}'),
-        none(13, 14, 'Sarajevo AQI annual avg — manual'),
+        item(13, 14, f'{W}.pm25_mean_annual_ugm3', 'ugm3', 'World Bank / WHO {year}'),
         none(13, 15, 'Protected area % territory — manual'),
         none(13, 16, 'Landslide-risk territory — manual'),
 
@@ -1873,10 +2148,10 @@ def build_jsx_ready(output):
         none(14, 37, 'GDP per capita growth — manual'),
 
         # grp:15  CRIME
-        ('15:1',  {'value': _jfmt(gpi_raw, 'gpi') if gpi_raw else '', 'sub': f'IEP GPI {gpi_year}' if gpi_raw else 'Manual entry required', 'state': 1 if gpi_raw else 0}),
+        ('15:1',  {'value': (f'{_jfmt(gpi_raw, "gpi")} · Rank {gpi_rank}/163' if gpi_rank else _jfmt(gpi_raw, 'gpi')) if gpi_raw else '', 'sub': f'IEP GPI {gpi_year}' if gpi_raw else 'Manual entry required', 'state': 1 if gpi_raw else 0}),
         item(15,  2, f'{W}.homicide_rate_per100k', 'per100k2','World Bank/UNODC {year}'),
         ('15:3',  {'value': _jfmt(ti_raw, 'cpi') if ti_raw else '', 'sub': f'TI CPI {ti_yr}' if ti_raw else 'Manual entry required', 'state': 1 if ti_raw else 0}),
-        ('15:4',  {'value': _jfmt(rsf_raw, 'f1') if rsf_raw else '', 'sub': f'RSF {rsf_yr}' if rsf_raw else 'Manual entry required', 'state': 1 if rsf_raw else 0}),
+        ('15:4',  {'value': (f'Rank {rsf_rank}/180' if rsf_rank else _jfmt(rsf_raw, 'f1')) if rsf_raw else '', 'sub': (f'RSF {rsf_yr} · score {_jfmt(rsf_raw, "f1")}' if rsf_rank else f'RSF {rsf_yr}') if rsf_raw else 'Manual entry required', 'state': 1 if rsf_raw else 0}),
         none(15,  5, 'Organised crime — manual'),
         none(15,  6, 'War crimes prosecuted — manual'),
         item(15,  7, f'{W}.homicide_rate_per100k', 'per100k2','World Bank/UNODC {year}'),
@@ -1886,8 +2161,8 @@ def build_jsx_ready(output):
         none(15, 11, 'War crimes courts — manual'),
         none(15, 12, 'Srebrenica denial — manual'),
         ('15:13', {'value': _jfmt(ti_raw, 'cpi') if ti_raw else '', 'sub': f'TI CPI {ti_yr}' if ti_raw else 'Manual entry required', 'state': 1 if ti_raw else 0}),
-        ('15:14', {'value': _jfmt(rsf_raw, 'f1') if rsf_raw else '', 'sub': f'RSF {rsf_yr}' if rsf_raw else 'Manual entry required', 'state': 1 if rsf_raw else 0}),
-        ('15:15', {'value': _jfmt(wjp_raw, 'f2') if wjp_raw else '', 'sub': f'WJP {wjp_yr}' if wjp_raw else 'Manual entry required', 'state': 1 if wjp_raw else 0}),
+        ('15:14', {'value': _jfmt(rsf_raw, 'rsf_pct') if rsf_raw else '', 'sub': f'RSF {rsf_yr}' if rsf_raw else 'Manual entry required', 'state': 1 if rsf_raw else 0}),
+        ('15:15', {'value': _jfmt(wjp_raw, 'wjp_pct') if wjp_raw else '', 'sub': (f'WJP {wjp_yr} · rank {wjp_rank}' if wjp_rank else f'WJP {wjp_yr}') if wjp_raw else 'Manual entry required', 'state': 1 if wjp_raw else 0}),
         ('15:16', {'value': _jfmt(fh_raw, 'fh') if fh_raw else '', 'sub': f'Freedom House {fh_yr}' if fh_raw else 'Manual entry required', 'state': 1 if fh_raw else 0}),
     ])
 
@@ -2199,30 +2474,47 @@ def main():
         output['un_wpp'] = {'_fetch': {'status': -1, 'value': None, 'indicator': 'UN_WPP', 'reason': 'no UN numeric ID resolved'}}
         print(f'  ❌  Skipped — UN numeric ID could not be resolved')
 
-    # ── 5. Indexes (TI CPI live + CSV fallback for others) ───
-    print(f'\n[5/11] Indexes (TI CPI + Freedom House xlsx; GPI / RSF / WJP from CSV)')
+    # ── 5. Indexes (live xlsx fetchers; CSV as last-resort fallback) ───
+    print(f'\n[5/11] Indexes (TI CPI + FH + RSF + GPI + WJP)')
     print(f'  Fetching TI CPI from transparency.org …')
     ti_live = fetch_ti_cpi_live(iso3)
     if ti_live:
         rank_str = f'  rank {ti_live["rank"]}' if 'rank' in ti_live else ''
         print(f'  ✅  TI CPI (live)  score {ti_live["value"]}{rank_str}  ({ti_live["year"]})')
     else:
-        print(f'  ⚠  TI CPI live fetch failed — will use CSV fallback if available')
+        print(f'  ⚠  TI CPI live fetch failed — skipped/failed')
 
     print(f'  Fetching Freedom House from freedomhouse.org (xlsx) …')
     fh_live = fetch_freedom_house_xlsx(iso3, name)
     if fh_live:
         print(f'  ✅  Freedom House (xlsx)  score {fh_live["value"]}/100  {fh_live.get("status_label", "")}  ({fh_live["year"]})')
     else:
-        print(f'  ⚠  Freedom House xlsx fetch failed — will use CSV fallback if available')
+        print(f'  ⚠  Freedom House xlsx fetch failed — skipped/failed')
 
-    indexes = fetch_indexes(iso3, ti_cpi_live=ti_live, fh_live=fh_live)
+    rsf_live = fetch_rsf_live(iso3)
+    if rsf_live:
+        rank_str = f'  rank {rsf_live["rank"]}' if 'rank' in rsf_live else ''
+        print(f'  ✅  RSF (live)  score {rsf_live["value"]}{rank_str}  ({rsf_live["year"]})')
+    else:
+        print(f'  ⚠  RSF live fetch skipped/failed — skipped/failed')
+
+    gpi_live = fetch_gpi_live(iso3)
+    if gpi_live:
+        rank_str = f'  rank {gpi_live["rank"]}' if 'rank' in gpi_live else ''
+        print(f'  ✅  GPI (live)  score {gpi_live["value"]}{rank_str}  ({gpi_live["year"]})')
+    else:
+        print(f'  ⚠  GPI live fetch skipped/failed — skipped/failed')
+
+    wjp_live = fetch_wjp_live(iso3)
+    if wjp_live:
+        rank_str = f'  rank {wjp_live["rank"]}' if 'rank' in wjp_live else ''
+        print(f'  ✅  WJP (live)  score {wjp_live["value"]}{rank_str}  ({wjp_live["year"]})')
+    else:
+        print(f'  ⚠  WJP live fetch skipped/failed')
+
+    indexes = fetch_indexes(iso3, ti_cpi_live=ti_live, fh_live=fh_live,
+                            rsf_live=rsf_live, gpi_live=gpi_live, wjp_live=wjp_live)
     output['indexes'] = indexes
-    for k, v in indexes.items():
-        if k in ('ti_cpi', 'fh') and (ti_live if k == 'ti_cpi' else fh_live):
-            continue  # already printed above
-        rank_str = f'  rank {v["rank"]}' if 'rank' in v else ''
-        print(f'  ✅  {v["source"]:<42} (CSV)  {v["value"]}{rank_str}  ({v["year"]})')
     if not indexes:
         print(f'  ❌  No index data found for {iso3}')
 
