@@ -1,6 +1,6 @@
-# 🏍️ Vergleich: Reiseenduros ab 900 cm³ (BMW, Honda, Triumph)
+# 🏍️ Vergleich: BMW, Honda, Triumph
 
-Diese Übersicht vergleicht die aktuellen Premium-Reiseenduros der Marken BMW, Honda und Triumph für den Markt Österreich (inkl. NoVA).
+Diese Übersicht vergleicht die aktuellen Reiseenduros der Marken BMW, Honda und Triumph für den Markt Österreich (inkl. NoVA).
 
 ## Technische Daten & Preise
 
