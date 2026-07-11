@@ -5,7 +5,7 @@ Diese Übersicht vergleicht die aktuellen Premium-Reiseenduros der Marken BMW, H
 ## Technische Daten & Preise
 
 | Modell | Variante | Hubraum [cc] | Leistung [PS] | Rad v. [Zoll] | Antrieb | Tank [L] | Verbrauch [L/100km] | Neu [€] | Gebraucht [€] | Garantie [J] | Service [km] | Asphalt [%] | Offroad [%] | Fokus / Besonderheit |
-| :--- || :---: | :---: | :---: | :---: | :---: | :---: | :--- | :--- | :---: | :--- | :---: | :---: | :--- |
+| :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :--- | :--- | :---: | :--- | :---: | :---: | :--- |
 | **Honda CRF1100L** | **Standard** | 1.084 | 102 | 21" | Kette | 18,8 | ~4,9 | ab 16.990 | 11.500 - 13.500 | 2 | 12.000 | 50 | 50 | **Allrounder:** Manuell, klassische Schaltung, leicht. |
 | **Honda CRF1100L** | **Std DCT** | 1.084 | 102 | 21" | Kette | 18,8 | ~4,9 | ab 18.290 | 12.500 - 14.500 | 2 | 12.000 | 55 | 45 | **Automatik-Enduro:** Doppelkupplung, top im Stehen fahren. |
 | **Honda CRF1100L** | ** ES** | 1.084 | 102 | 21" | Kette | 18,8 | ~4,9 | ab 18.690 | 13.500 - 15.500 | 2 | 12.000 | 55 | 45 | **Premium-Allrounder:** Elektronisches Showa-Fahrwerk. |
