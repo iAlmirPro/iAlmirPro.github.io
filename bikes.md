@@ -4,8 +4,6 @@ Diese Übersicht vergleicht die aktuellen Reiseenduros der Marken BMW, Honda und
 
 ## Technische Daten & Preise
 
-## Honda Africa Twin
-
 | Vendor | Modell | Variante | Hubraum [cc] | Leistung [PS] | Rad v. [Zoll] | Antrieb | Tank [L] | Verbrauch [L/100km] | Neu [€] | Gebraucht [€] | Garantie [J] | Service [km] | Asphalt [%] | Offroad [%] | Fokus / Besonderheit |
 | :--- | :--- | :--- | :---: | :---: | :---: | :---: | :---: | :---: | :--- | :--- | :---: | :--- | :---: | :---: | :--- |
 | Honda | CRF1100L | **Standard** | 1.084 | 102 | 21 | Kette | 18,8 | ~4,9 | ab 16.990 | 11.500 - 13.500 | 2 | 12.000 | 50 | 50 | **Allrounder:** Manuell, klassische Schaltung, leicht. |
@@ -29,5 +27,6 @@ Diese Übersicht vergleicht die aktuellen Reiseenduros der Marken BMW, Honda und
 | Triumph | Tiger 1200 | **Rally Expl.** | 1.160 | 150 | 21 | Kardan | 30,0 | ~5,1 | ab 26.495 | 17.500 - 21.000 | 4 | 16.000 | 65 | 35 | **Abenteuer-Gigant:** Vollausstattung, maximale Reichweite. |
 
 > **Hinweise zur Tabelle:**
+> * CRF1100L == Africa Twin
 > * **Preise (AT):** Alle Neupreise beinhalten die in Österreich fällige NoVA und Umsatzsteuer. Zusätzliche Ausstattungspakete ab Werk können den Preis weiter anheben.
 > * **BMW ASA / Honda DCT:** Das automatisierte Schaltsystem (ASA) von BMW schlägt bei der R 1300er Reihe mit ca. 1.000 € Aufpreis zu Buche und ist für alle gelisteten 1300er-Modelle optional wählbar. Bei Honda ist das DCT ein eigenständiges Modell (separat aufgeführt).
