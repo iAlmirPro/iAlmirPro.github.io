@@ -12,7 +12,6 @@ Diese Übersicht vergleicht die aktuellen Premium-Reiseenduros der Marken BMW, H
 | **Honda CRF1100L ES DCT** | 1.084 cc | 102 PS | 21" | Kette | 18,8 L | ~4,9 L | ab € 19.990 | € 14.500 - 16.500 | 2 J. | 12k km | 60% | 40% | **Vollausstattung:** E-Fahrwerk kombiniert mit DCT. |
 | **Honda CRF1100L Adv. Sports** | 1.084 cc | 102 PS | 19" | Kette | 24,8 L | ~4,9 L | ab € 21.090 | € 14.500 - 16.500 | 2 J. | 12k km | 85% | 15% | **Touren-König:** E-Fahrwerk, 19"-Rad für Kurven. |
 | **Honda CRF1100L Adv. Sp. DCT** | 1.084 cc | 102 PS | 19" | Kette | 24,8 L | ~4,9 L | ab € 22.490 | € 15.500 - 18.000 | 2 J. | 12k km | 90% | 10% | **Kilometerfresser:** Großer Tank, Windschutz, DCT. |
-| | | | | | | | | | | | | | |
 | **BMW F 900 GS Standard** | 895 cc | 105 PS | 21" | Kette | 14,5 L | ~4,4 L | ab € 15.450 | € 12.000 - 14.000 | 3 J. | 10k km | 30% | 70% | **Hardcore-Enduro:** Radikal leicht (219 kg), für Dreck. |
 | **BMW F 900 GS Adventure** | 895 cc | 105 PS | 21" | Kette | 23,0 L | ~4,5 L | ab € 16.550 | € 13.500 - 15.500 | 3 J. | 10k km | 55% | 45% | **Mittelklasse-Reise:** Großer Tank, hoher Komfort. |
 | **BMW R 1300 GS Standard** | 1.300 cc | 145 PS | 19" | Kardan | 19,0 L | ~4,8 L | ab € 22.750 | € 19.500 - 22.500 | 3 J. | 10k km | 80% | 20% | **Die Benchmark:** Extrem handlich, gewaltiger Boxer. |
@@ -20,7 +19,6 @@ Diese Übersicht vergleicht die aktuellen Premium-Reiseenduros der Marken BMW, H
 | **BMW R 1300 GS Tramuntana** | 1.300 cc | 145 PS | 19" | Kardan | 19,0 L | ~4,8 L | ab € 26.200 | € 22.500 - 25.000 | 3 J. | 10k km | 85% | 15% | **Edel-Variante:** Option 719 Frästeile, Grün/Gold-Optik. |
 | **BMW R 1300 GS Adventure** | 1.300 cc | 145 PS | 19" | Kardan | 30,0 L | ~4,9 L | ab € 25.090 | € 23.500 - 26.000 | 3 J. | 10k km | 85% | 15% | **Das Reiseschiff:** Monumentaler Alutank, sehr breit. |
 | **BMW R 1300 GSA Trophy** | 1.300 cc | 145 PS | 19" | Kardan | 30,0 L | ~4,9 L | ab € 25.950 | € 24.500 - 27.500 | 3 J. | 10k km | 75% | 25% | **Rallye-Reiseschiff:** Große GSA mit Sportfahrwerk. |
-| | | | | | | | | | | | | | |
 | **Triumph Tiger 900 GT Pro** | 888 cc | 108 PS | 19" | Kette | 20,0 L | ~4,7 L | ab € 17.195 | € 12.500 - 15.000 | 4 J. | 10k km | 90% | 10% | **Kurvenräuber:** Gussräder, straffes Straßenfahrwerk. |
 | **Triumph Tiger 900 Rally Pro** | 888 cc | 108 PS | 21" | Kette | 20,0 L | ~4,7 L | ab € 18.295 | € 13.000 - 15.500 | 4 J. | 10k km | 45% | 55% | **Premium-Enduro:** Speichenräder, langer Federweg. |
 | **Triumph Tiger 1200 GT Pro** | 1.160 cc | 150 PS | 19" | Kardan | 20,0 L | ~5,1 L | ab € 22.195 | € 15.000 - 18.000 | 4 J. | 16k km | 90% | 10% | **Straßen-Triple:** E-Fahrwerk, leichtfüßig auf Pässen. |
