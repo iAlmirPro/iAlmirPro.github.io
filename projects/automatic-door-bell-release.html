@@ -34,13 +34,42 @@
     letter-spacing:0.05em; text-transform:uppercase;
   }
   a.back:hover { opacity:0.8; }
+  .concept-img {
+    width:100%; height:auto; display:block;
+    background:#fff; border:1px solid #1e1e1e; margin-bottom:20px;
+  }
+  .caption {
+    font-size:0.8rem; color:var(--muted); line-height:1.6;
+    margin-top:-6px; margin-bottom:24px;
+  }
+  h2.section-sub {
+    font-size:0.78rem; font-weight:700; text-transform:uppercase;
+    letter-spacing:0.14em; color:var(--red); margin-bottom:12px;
+  }
+  .challenges { list-style:none; margin-bottom:20px; }
+  .challenges li {
+    color:#ccc; line-height:1.6; font-size:0.9rem;
+    padding-left:16px; position:relative; margin-bottom:10px;
+  }
+  .challenges li::before {
+    content:'\2014'; position:absolute; left:0; color:var(--red);
+  }
+  .challenges strong { color:#fff; }
 </style>
 </head>
 <body>
   <div class="card">
     <span class="eyebrow">Home Automation &nbsp;·&nbsp; DIY Project</span>
     <h1>Automatic Door Release with Bell Pattern</h1>
+    <img class="concept-img" src="automatic-door-bell-release-idea.png" alt="Concept diagram: a microcontroller taps the intercom's SCS bus, reads the doorbell button's press pattern, and pulses the door release when it matches" width="1200" height="639">
+    <p class="caption">Concept sketch — the doorbell button's press pattern travels the existing intercom wiring (SCS bus) as short/long electrical bursts, much like Morse code. A microcontroller taps that bus passively, recognizes one specific pattern, and pulses the door release only when it matches.</p>
     <p>A DIY doorbell-triggered entrance release — listens for a specific ring pattern and automatically unlocks the door when it's recognized, skipping the need to buzz visitors in manually.</p>
+    <h2 class="section-sub">Major Challenges</h2>
+    <ul class="challenges">
+      <li><strong>Undocumented protocol</strong> — the intercom's bus signal had no public spec to build against. An entire custom analog front-end was designed and simulated to tap it, then dropped in favor of piggybacking on an existing intercom module that already conditions the signal.</li>
+      <li><strong>Reverse-engineering the encoding</strong> — the bus turned out to use Return-to-Zero encoding, not plain UART: a "0" bit is a short pulse, a "1" bit is silence. Sampling at the usual mid-bit point misreads it, so the decoder had to look for a pulse anywhere in the bit's time window instead.</li>
+      <li><strong>Sampling resolution</strong> — captures stayed unreliable for a long time. The real cause wasn't the decoding logic at all — it was the microcontroller sampling too coarsely against a pulse barely wider than the sampling interval itself. Tightening the sample rate fixed it.</li>
+    </ul>
     <p class="draft-note">Draft placeholder — full write-up and details coming soon.</p>
     <a class="back" href="../index.html#projects">&larr; Back to iAlmirPro.Home</a>
   </div>
