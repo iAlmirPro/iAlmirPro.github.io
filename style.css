@@ -531,6 +531,12 @@ section {
   opacity: 0.8;
 }
 
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+}
+
 /* ================================================
    CONTACT / SIGNATURE
    ================================================ */
@@ -643,6 +649,10 @@ footer {
     grid-template-columns: repeat(3, 1fr);
   }
 
+  .projects-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
 }
 
 /* ================================================
@@ -656,6 +666,10 @@ footer {
 
   .dashboards-grid {
     grid-template-columns: repeat(2, 1fr);
+  }
+
+  .projects-grid {
+    grid-template-columns: 1fr;
   }
 
   .contact-links {

@@ -8,12 +8,15 @@
 
   <!-- Favicon -->
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
-  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <link rel="apple-touch-icon" href="img/apple-touch-icon.png">
+  <link rel="manifest" href="manifest.json">
 
   <!-- Open Graph — Facebook & LinkedIn -->
   <meta property="og:type" content="website">
   <meta property="og:title" content="Almir Balihodžić">
   <meta property="og:description" content="ASIC Engineer · AI Practitioner · Civic Leader · Explorer">
+  <link rel="canonical" href="https://ialmirpro.github.io">
+
   <meta property="og:url" content="https://ialmirpro.github.io">
   <meta property="og:image" content="https://ialmirpro.github.io/img/social/og-facebook-linkedin.jpg">
   <meta property="og:image:width" content="1200">
@@ -34,7 +37,7 @@
   <!-- Source Sans Pro -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:ital,wght@0,200;0,300;0,400;0,600;0,700;0,900;1,300;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:ital,wght@0,200;0,300;0,400;0,600;0,700;1,300&display=swap" rel="stylesheet">
 
   <!-- Font Awesome 6 -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
@@ -58,6 +61,7 @@
         <li><a href="#skills">Skills</a></li>
         <li><a href="#interests">Interests</a></li>
         <li><a href="#dashboards">Dashboards</a></li>
+        <li><a href="#projects">Projects</a></li>
         <li><a href="#contact">Contact</a></li>
       </ul>
     </div>
@@ -102,7 +106,8 @@
           <p>Born on 9 October 1985 in Bosnia and Herzegovina, I have been living in Austria since 1992, growing up in the Mühlviertel region of Upper Austria.</p>
           <p>After the Federal Higher Technical Institute (HTL) in Leonding, I studied Hardware/Software Systems Engineering and Embedded Systems Design at the University of Applied Sciences Upper Austria in Hagenberg, earning my MSc in 2010.</p>
           <p>My professional career spans RF system engineering, digital design, and six years designing mixed-signal ASICs as a member of the Apple Technology Engineering Austria team in Linz — at the very frontier of consumer silicon.</p>
-          <p>From May 2017 to October 2025 I served as a Municipal Councilor of the City of Linz. In January 2026 I stepped away from the desk to become an <strong>Explorer by Design</strong> — a self-directed study in global systems, human-centric thinking and real-time adaptation.</p>
+          <p>From May 2017 to October 2025 I served as a Municipal Councilor of the City of Linz.</p>
+		  <p>In January 2026 I stepped away from the desk to become an <strong>Explorer by Design</strong> — a self-directed study in global systems, human-centric thinking and real-time adaptation.</p>
           <div class="about-meta">
             <span><i class="fas fa-map-marker-alt"></i>&nbsp; Linz, Upper Austria</span>
             <span><i class="fas fa-flag"></i>&nbsp; Austrian</span>
@@ -199,13 +204,13 @@
         <div class="skill-card">
           <div class="skill-icon"><i class="fas fa-code"></i></div>
           <h3>Programming</h3>
-          <p>Python, C, C++, C#, Java, Assembler; Bash, TCL, Make, Perl, SQL, JavaScript</p>
+          <p>Python, C, C++, C#, Java, Assembler; Bash, TCL, Make, Perl, SQL, JavaScript, PHP</p>
         </div>
 
         <div class="skill-card">
           <div class="skill-icon"><i class="fas fa-robot"></i></div>
           <h3>Artificial Intelligence</h3>
-          <p>LLM Orchestration, Agentic Systems, MCP, Fine-tuning; Claude · GPT-4o · Gemini · Llama; Claude Code, OpenAI &amp; Anthropic APIs</p>
+          <p>LLM Orchestration, Agentic Systems, MCP, Fine-tuning; Claude · GPT-4o · Gemini · Llama; Claude Code, GitHub Copilot, OpenAI &amp; Anthropic APIs; Anthropic Academy certified (AI Fluency)</p>
         </div>
 
         <div class="skill-card">
@@ -223,7 +228,7 @@
         <div class="skill-card">
           <div class="skill-icon"><i class="fas fa-users"></i></div>
           <h3>Leadership</h3>
-          <p>Supervisory board governance (2 mandates, 8 yrs); Municipal Councilor (8 yrs); UGL-certified; technical mentoring</p>
+          <p>Supervisory board governance (IKT Linz GmbH, 4 yrs; Creative Region, 8 yrs); Municipal Councilor (8 yrs); UGL-certified; technical mentoring</p>
         </div>
 
       </div>
@@ -271,8 +276,9 @@
   <!-- ================================================ -->
   <section id="dashboards" class="section-dark">
     <div class="container">
+      <span class="hero-eyebrow">Experimental &nbsp;·&nbsp; AI-Assisted</span>
       <h2 class="section-title">Country Dashboards</h2>
-      <p class="dashboards-intro">Data snapshots across the world — geography, climate, population, economy and more.</p>
+      <p class="dashboards-intro">Built on the road with AI assistance — a single-page reference for country data I'd otherwise have to dig up and research from scratch each time I traveled.</p>
       <div class="dashboards-grid">
 
         <a href="dashboards/kyrgyzstan.html" class="dash-card" style="--accent:#E8192C" target="_blank" rel="noopener">
@@ -322,6 +328,40 @@
   </section>
 
   <!-- ================================================ -->
+  <!-- DIY PROJECTS                                      -->
+  <!-- ================================================ -->
+  <section id="projects" class="section-alt">
+    <div class="container">
+      <h2 class="section-title">DIY Projects</h2>
+      <p class="dashboards-intro">Hands-on builds — hardware and software projects made for the fun of solving a problem myself.</p>
+      <div class="projects-grid">
+
+        <a href="projects/linz-ag-departure-dashboard.html" class="dash-card" target="_blank" rel="noopener">
+          <div class="dash-flag"><i class="fas fa-bus"></i></div>
+          <div class="dash-name">Linz AG Departure Dashboard</div>
+          <div class="dash-region">Public Transit</div>
+          <div class="dash-open">View Project →</div>
+        </a>
+
+        <a href="projects/automatic-door-bell-release.html" class="dash-card" target="_blank" rel="noopener">
+          <div class="dash-flag"><i class="fas fa-bell"></i></div>
+          <div class="dash-name">Automatic Door Release with Bell Pattern</div>
+          <div class="dash-region">Home Automation</div>
+          <div class="dash-open">View Project →</div>
+        </a>
+
+        <a href="projects/wireless-garage-opener.html" class="dash-card" target="_blank" rel="noopener">
+          <div class="dash-flag"><i class="fas fa-warehouse"></i></div>
+          <div class="dash-name">Wireless Garage Opener</div>
+          <div class="dash-region">Home Automation</div>
+          <div class="dash-open">View Project →</div>
+        </a>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ================================================ -->
   <!-- CONTACT / SIGNATURE                               -->
   <!-- ================================================ -->
   <section id="contact">
@@ -336,7 +376,7 @@
         </a>
       </div>
       <div class="signature-wrap">
-        <img src="img/signature.svg" alt="Almir Balihodžić signature" class="signature">
+        <img src="img/signature.svg" alt="Almir Balihodžić signature" class="signature" loading="lazy">
       </div>
     </div>
   </section>
