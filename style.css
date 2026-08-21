@@ -533,8 +533,24 @@ section {
 
 .projects-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   gap: 14px;
+}
+
+.dash-card.teaser {
+  border: 1px dashed #333;
+  cursor: default;
+}
+
+.dash-card.teaser:hover {
+  transform: none;
+  box-shadow: none;
+  border-color: #333;
+}
+
+.dash-card.teaser .dash-flag,
+.dash-card.teaser .dash-open {
+  color: #555;
 }
 
 /* ================================================
@@ -661,7 +677,7 @@ footer {
 @media (max-width: 480px) {
 
   .skills-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, 1fr);
   }
 
   .dashboards-grid {
@@ -669,7 +685,7 @@ footer {
   }
 
   .projects-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, 1fr);
   }
 
   .contact-links {
