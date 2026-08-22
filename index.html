@@ -42,6 +42,9 @@
   <!-- Font Awesome 6 -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
+  <!-- Bootstrap 5 -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+
   <link rel="stylesheet" href="style.css?v=a86d793">
 </head>
 <body>
@@ -49,36 +52,38 @@
   <!-- ================================================ -->
   <!-- NAVIGATION                                        -->
   <!-- ================================================ -->
-  <nav id="navbar">
-    <div class="nav-inner">
-      <a class="nav-brand" href="#hero">AB</a>
-      <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">
+  <nav class="navbar navbar-expand-md fixed-top" id="navbar">
+    <div class="container">
+      <a class="navbar-brand" href="#hero">AB</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navLinks" aria-controls="navLinks" aria-expanded="false" aria-label="Toggle navigation">
         <i class="fas fa-bars"></i>
       </button>
-      <ul class="nav-links" id="navLinks">
-        <li><a href="#about">About</a></li>
-        <li><a href="#experience">Experience</a></li>
-        <li><a href="#skills">Skills</a></li>
-        <li><a href="#interests">Interests</a></li>
-        <li><a href="#projects">Projects</a></li>
-        <li><a href="#dashboards">Dashboards</a></li>
-        <li><a href="#contact">Contact</a></li>
-      </ul>
+      <div class="collapse navbar-collapse" id="navLinks">
+        <ul class="navbar-nav ms-md-auto">
+          <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
+          <li class="nav-item"><a class="nav-link" href="#experience">Experience</a></li>
+          <li class="nav-item"><a class="nav-link" href="#skills">Skills</a></li>
+          <li class="nav-item"><a class="nav-link" href="#interests">Interests</a></li>
+          <li class="nav-item"><a class="nav-link" href="#projects">Projects</a></li>
+          <li class="nav-item"><a class="nav-link" href="#dashboards">Dashboards</a></li>
+          <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
+        </ul>
+      </div>
     </div>
   </nav>
 
   <!-- ================================================ -->
   <!-- HERO                                              -->
   <!-- ================================================ -->
-  <section id="hero">
-    <div class="hero-content">
+  <section id="hero" class="d-flex flex-column align-items-center justify-content-center text-center min-vh-100 position-relative">
+    <div class="hero-content d-flex flex-column align-items-center gap-4">
       <span class="hero-eyebrow">ASIC Engineer &nbsp;·&nbsp; AI Practitioner &nbsp;·&nbsp; Civic Leader &nbsp;·&nbsp; Explorer</span>
       <h1>Almir <span class="red">Balihodžić</span></h1>
       <p class="hero-quote">
         &ldquo;He, who believes to be someone, has ceased to become someone.&rdquo;
         <em>&mdash; Socrates</em>
       </p>
-      <div class="hero-icons">
+      <div class="hero-icons d-flex gap-4 mt-2">
         <a href="https://www.linkedin.com/in/almirbalihodzic" target="_blank" rel="noopener" aria-label="LinkedIn">
           <i class="fab fa-linkedin"></i>
         </a>
@@ -98,11 +103,11 @@
   <section id="about">
     <div class="container">
       <h2 class="section-title">About</h2>
-      <div class="about-grid">
-        <div class="about-photo">
+      <div class="about-grid row g-5 align-items-start">
+        <div class="about-photo col-12 col-md-auto">
           <img src="img/photo.jpg" alt="Almir Balihodžić">
         </div>
-        <div class="about-text">
+        <div class="about-text col-12 col-md">
           <p>Born on 9 October 1985 in Bosnia and Herzegovina, I have been living in Austria since 1992, growing up in the Mühlviertel region of Upper Austria.</p>
           <p>After the Federal Higher Technical Institute (HTL) in Leonding, I studied Hardware/Software Systems Engineering and Embedded Systems Design at the University of Applied Sciences Upper Austria in Hagenberg, earning my MSc in 2010.</p>
           <p>My professional career spans RF system engineering, digital design, and six years designing mixed-signal ASICs as a member of the Apple Technology Engineering Austria team in Linz — at the very frontier of consumer silicon.</p>
@@ -181,54 +186,70 @@
   <section id="skills">
     <div class="container">
       <h2 class="section-title">Skills</h2>
-      <div class="skills-grid">
+      <div class="skills-grid row row-cols-2 row-cols-md-4">
 
-        <div class="skill-card">
-          <div class="skill-icon"><i class="fas fa-microchip"></i></div>
-          <h3>RTL Design</h3>
-          <p>VHDL, SystemVerilog, SystemC &mdash; Block definition through mixed-signal ASIC; AMBA/Wishbone; RISC/ARM processor sub-systems; Lint/CDC/RDC; TnD and DFT Infrastructure</p>
+        <div class="col">
+          <div class="skill-card card h-100">
+            <div class="skill-icon"><i class="fas fa-microchip"></i></div>
+            <h3>RTL Design</h3>
+            <p>VHDL, SystemVerilog, SystemC &mdash; Block definition through mixed-signal ASIC; AMBA/Wishbone; RISC/ARM processor sub-systems; Lint/CDC/RDC; TnD and DFT Infrastructure</p>
+          </div>
         </div>
 
-        <div class="skill-card">
-          <div class="skill-icon"><i class="fas fa-vials"></i></div>
-          <h3>Verification</h3>
-          <p>UVM, Formal Verification, STA, TCL-driven regression; Synopsys VCS / Verdi, Cadence Xcelium</p>
+        <div class="col">
+          <div class="skill-card card h-100">
+            <div class="skill-icon"><i class="fas fa-vials"></i></div>
+            <h3>Verification</h3>
+            <p>UVM, Formal Verification, STA, TCL-driven regression; Synopsys VCS / Verdi, Cadence Xcelium</p>
+          </div>
         </div>
 
-        <div class="skill-card">
-          <div class="skill-icon"><i class="fas fa-layer-group"></i></div>
-          <h3>EDA &amp; Flows</h3>
-          <p>Synopsys DC / PrimeTime / VCS / Verdi; JasperGold</p>
+        <div class="col">
+          <div class="skill-card card h-100">
+            <div class="skill-icon"><i class="fas fa-layer-group"></i></div>
+            <h3>EDA &amp; Flows</h3>
+            <p>Synopsys DC / PrimeTime / VCS / Verdi; JasperGold</p>
+          </div>
         </div>
 
-        <div class="skill-card">
-          <div class="skill-icon"><i class="fas fa-code"></i></div>
-          <h3>Coding & Scripting</h3>
-          <p>Python, C, C++, C#, Java, Assembler; Bash, TCL, Make, Perl, SQL, JavaScript, PHP</p>
+        <div class="col">
+          <div class="skill-card card h-100">
+            <div class="skill-icon"><i class="fas fa-code"></i></div>
+            <h3>Coding & Scripting</h3>
+            <p>Python, C, C++, C#, Java, Assembler; Bash, TCL, Make, Perl, SQL, JavaScript, PHP</p>
+          </div>
         </div>
 
-        <div class="skill-card">
-          <div class="skill-icon"><i class="fas fa-robot"></i></div>
-          <h3>Artificial Intelligence</h3>
-          <p>LLM Orchestration, Agentic Systems, MCP; Anthropic · Google · OpenAI; <strong>Anthropic Academy certified</strong></p>
+        <div class="col">
+          <div class="skill-card card h-100">
+            <div class="skill-icon"><i class="fas fa-robot"></i></div>
+            <h3>Artificial Intelligence</h3>
+            <p>LLM Orchestration, Agentic Systems, MCP; Anthropic · Google · OpenAI; <strong>Anthropic Academy certified</strong></p>
+          </div>
         </div>
 
-        <div class="skill-card">
-          <div class="skill-icon"><i class="fas fa-tools"></i></div>
-          <h3>Toolchain</h3>
-          <p>Git, Emacs, Unix, macOS, SVN, Clearcase, Perforce, LaTeX</p>
+        <div class="col">
+          <div class="skill-card card h-100">
+            <div class="skill-icon"><i class="fas fa-tools"></i></div>
+            <h3>Toolchain</h3>
+            <p>Git, Emacs, Unix, macOS, SVN, Clearcase, Perforce, LaTeX</p>
+          </div>
         </div>
 
-        <div class="skill-card">
-          <div class="skill-icon"><i class="fas fa-drafting-compass"></i></div>
-          <h3>Design &amp; Making</h3>
-          <p>Adobe InDesign & Illustrator; Blender, Bambu Studio; Bambu Lab P1S with AMS &mdash; multi-material FDM</p>
+        <div class="col">
+          <div class="skill-card card h-100">
+            <div class="skill-icon"><i class="fas fa-drafting-compass"></i></div>
+            <h3>Design &amp; Making</h3>
+            <p>Adobe InDesign & Illustrator; Blender, Bambu Studio; Bambu Lab P1S with AMS &mdash; multi-material FDM</p>
+          </div>
         </div>
 
-        <div class="skill-card">
-          <div class="skill-icon"><i class="fas fa-users"></i></div>
-          <h3>Leadership</h3>
-          <p>Supervisory board governance (8 yrs); Municipal Councilor (8 yrs); UGL-certified; technical mentoring</p>
+        <div class="col">
+          <div class="skill-card card h-100">
+            <div class="skill-icon"><i class="fas fa-users"></i></div>
+            <h3>Leadership</h3>
+            <p>Supervisory board governance (8 yrs); Municipal Councilor (8 yrs); UGL-certified; technical mentoring</p>
+          </div>
         </div>
 
       </div>
@@ -241,30 +262,38 @@
   <section id="interests" class="section-red">
     <div class="container">
       <h2 class="section-title">Beyond the Desk</h2>
-      <div class="interests-grid">
+      <div class="interests-grid row row-cols-2 row-cols-md-4 text-center">
 
-        <div class="interest-item">
-          <i class="fas fa-mountain"></i>
-          <h3>Kilimanjaro</h3>
-          <p>Africa&rsquo;s highest peak &mdash; summited 18 July 2018</p>
+        <div class="col">
+          <div class="interest-item">
+            <i class="fas fa-mountain"></i>
+            <h3>Kilimanjaro</h3>
+            <p>Africa&rsquo;s highest peak &mdash; summited 18 July 2018</p>
+          </div>
         </div>
 
-        <div class="interest-item">
-          <i class="fas fa-plane"></i>
-          <h3>Flying &amp; Gliding</h3>
-          <p>Pilot training for Sailplanes + TMG (EASA); Radiotelephone Operator Certificate for Aeronautical Services</p>
+        <div class="col">
+          <div class="interest-item">
+            <i class="fas fa-plane"></i>
+            <h3>Flying &amp; Gliding</h3>
+            <p>Pilot training for Sailplanes + TMG (EASA); Radiotelephone Operator Certificate for Aeronautical Services</p>
+          </div>
         </div>
 
-        <div class="interest-item">
-          <i class="fas fa-suitcase-rolling"></i>
-          <h3>World Traveller</h3>
-          <p>35+ countries across five continents &mdash; and counting</p>
+        <div class="col">
+          <div class="interest-item">
+            <i class="fas fa-suitcase-rolling"></i>
+            <h3>World Traveller</h3>
+            <p>35+ countries across five continents &mdash; and counting</p>
+          </div>
         </div>
 
-        <div class="interest-item">
-          <i class="fas fa-person-running"></i>
-          <h3>Fitness</h3>
-          <p>Jogging, swimming and hiking</p>
+        <div class="col">
+          <div class="interest-item">
+            <i class="fas fa-person-running"></i>
+            <h3>Fitness</h3>
+            <p>Jogging, swimming and hiking</p>
+          </div>
         </div>
 
       </div>
@@ -278,34 +307,42 @@
     <div class="container">
       <h2 class="section-title">DIY Projects</h2>
       <p class="dashboards-intro">Hands-on builds — hardware and software projects made for the fun of solving a problem myself.</p>
-      <div class="projects-grid">
+      <div class="projects-grid row row-cols-2 row-cols-md-4">
 
-        <a href="projects/linz-ag-departure-dashboard.html" class="dash-card" target="_blank" rel="noopener">
-          <div class="dash-flag"><i class="fas fa-bus"></i></div>
-          <div class="dash-name">Linz AG Departure Dashboard</div>
-          <div class="dash-region">Public Transit</div>
-          <div class="dash-open">View Project →</div>
-        </a>
+        <div class="col">
+          <a href="projects/linz-ag-departure-dashboard.html" class="dash-card card h-100" target="_blank" rel="noopener">
+            <div class="dash-flag"><i class="fas fa-bus"></i></div>
+            <div class="dash-name">Linz AG Departure Dashboard</div>
+            <div class="dash-region">Public Transit</div>
+            <div class="dash-open">View Project →</div>
+          </a>
+        </div>
 
-        <a href="projects/automatic-door-bell-release.html" class="dash-card" target="_blank" rel="noopener">
-          <div class="dash-flag"><i class="fas fa-bell"></i></div>
-          <div class="dash-name">Automatic Door Release with Bell Pattern</div>
-          <div class="dash-region">Home Automation</div>
-          <div class="dash-open">View Project →</div>
-        </a>
+        <div class="col">
+          <a href="projects/automatic-door-bell-release.html" class="dash-card card h-100" target="_blank" rel="noopener">
+            <div class="dash-flag"><i class="fas fa-bell"></i></div>
+            <div class="dash-name">Automatic Door Release with Bell Pattern</div>
+            <div class="dash-region">Home Automation</div>
+            <div class="dash-open">View Project →</div>
+          </a>
+        </div>
 
-        <a href="projects/wireless-garage-opener.html" class="dash-card" target="_blank" rel="noopener">
-          <div class="dash-flag"><i class="fas fa-warehouse"></i></div>
-          <div class="dash-name">Wireless Garage Opener</div>
-          <div class="dash-region">Home Automation</div>
-          <div class="dash-open">View Project →</div>
-        </a>
+        <div class="col">
+          <a href="projects/wireless-garage-opener.html" class="dash-card card h-100" target="_blank" rel="noopener">
+            <div class="dash-flag"><i class="fas fa-warehouse"></i></div>
+            <div class="dash-name">Wireless Garage Opener</div>
+            <div class="dash-region">Home Automation</div>
+            <div class="dash-open">View Project →</div>
+          </a>
+        </div>
 
-        <div class="dash-card teaser">
-          <div class="dash-flag"><i class="fas fa-flask"></i></div>
-          <div class="dash-name">Something's Brewing</div>
-          <div class="dash-region">Experimental</div>
-          <div class="dash-open">Watch this space</div>
+        <div class="col">
+          <div class="dash-card teaser card h-100">
+            <div class="dash-flag"><i class="fas fa-flask"></i></div>
+            <div class="dash-name">Something's Brewing</div>
+            <div class="dash-region">Experimental</div>
+            <div class="dash-open">Watch this space</div>
+          </div>
         </div>
 
       </div>
@@ -320,49 +357,61 @@
       <span class="hero-eyebrow">Experimental &nbsp;·&nbsp; AI-Assisted</span>
       <h2 class="section-title">Country Dashboards</h2>
       <p class="dashboards-intro">Built on the road with AI assistance — a single-page reference for country data I'd otherwise have to dig up and research from scratch each time I traveled. Data snapshots across the world — geography, climate, population, economy and more.</p>
-      <div class="dashboards-grid">
+      <div class="dashboards-grid row row-cols-2 row-cols-sm-3 row-cols-lg-5">
 
-        <a href="dashboards/kyrgyzstan.html" class="dash-card" style="--accent:#E8192C" target="_blank" rel="noopener">
-          <div class="dash-flag">🇰🇬</div>
-          <div class="dash-name">Kyrgyzstan</div>
-          <div class="dash-region">Central Asia</div>
-          <div class="dash-open">Open Dashboard →</div>
-        </a>
+        <div class="col">
+          <a href="dashboards/kyrgyzstan.html" class="dash-card card h-100" style="--accent:#E8192C" target="_blank" rel="noopener">
+            <div class="dash-flag">🇰🇬</div>
+            <div class="dash-name">Kyrgyzstan</div>
+            <div class="dash-region">Central Asia</div>
+            <div class="dash-open">Open Dashboard →</div>
+          </a>
+        </div>
 
-        <a href="dashboards/kazakhstan.html" class="dash-card" style="--accent:#00AFCA" target="_blank" rel="noopener">
-          <div class="dash-flag">🇰🇿</div>
-          <div class="dash-name">Kazakhstan</div>
-          <div class="dash-region">Central Asia</div>
-          <div class="dash-open">Open Dashboard →</div>
-        </a>
+        <div class="col">
+          <a href="dashboards/kazakhstan.html" class="dash-card card h-100" style="--accent:#00AFCA" target="_blank" rel="noopener">
+            <div class="dash-flag">🇰🇿</div>
+            <div class="dash-name">Kazakhstan</div>
+            <div class="dash-region">Central Asia</div>
+            <div class="dash-open">Open Dashboard →</div>
+          </a>
+        </div>
 
-        <a href="dashboards/uzbekistan.html" class="dash-card" style="--accent:#1EB4E5" target="_blank" rel="noopener">
-          <div class="dash-flag">🇺🇿</div>
-          <div class="dash-name">Uzbekistan</div>
-          <div class="dash-region">Central Asia</div>
-          <div class="dash-open">Open Dashboard →</div>
-        </a>
+        <div class="col">
+          <a href="dashboards/uzbekistan.html" class="dash-card card h-100" style="--accent:#1EB4E5" target="_blank" rel="noopener">
+            <div class="dash-flag">🇺🇿</div>
+            <div class="dash-name">Uzbekistan</div>
+            <div class="dash-region">Central Asia</div>
+            <div class="dash-open">Open Dashboard →</div>
+          </a>
+        </div>
 
-        <a href="dashboards/tajikistan.html" class="dash-card" style="--accent:#239F40" target="_blank" rel="noopener">
-          <div class="dash-flag">🇹🇯</div>
-          <div class="dash-name">Tajikistan</div>
-          <div class="dash-region">Central Asia</div>
-          <div class="dash-open">Open Dashboard →</div>
-        </a>
+        <div class="col">
+          <a href="dashboards/tajikistan.html" class="dash-card card h-100" style="--accent:#239F40" target="_blank" rel="noopener">
+            <div class="dash-flag">🇹🇯</div>
+            <div class="dash-name">Tajikistan</div>
+            <div class="dash-region">Central Asia</div>
+            <div class="dash-open">Open Dashboard →</div>
+          </a>
+        </div>
 
-        <a href="dashboards/turkmenistan.html" class="dash-card" style="--accent:#009A44" target="_blank" rel="noopener">
-          <div class="dash-flag">🇹🇲</div>
-          <div class="dash-name">Turkmenistan</div>
-          <div class="dash-region">Central Asia</div>
-          <div class="dash-open">Open Dashboard →</div>
-        </a>
+        <div class="col">
+          <a href="dashboards/turkmenistan.html" class="dash-card card h-100" style="--accent:#009A44" target="_blank" rel="noopener">
+            <div class="dash-flag">🇹🇲</div>
+            <div class="dash-name">Turkmenistan</div>
+            <div class="dash-region">Central Asia</div>
+            <div class="dash-open">Open Dashboard →</div>
+          </a>
+        </div>
 
-        <a href="dashboards/bosnia-and-herzegovina.html" class="dash-card" style="--accent:#002395" target="_blank" rel="noopener">
-          <div class="dash-flag">🇧🇦</div>
-          <div class="dash-name">Bosnia &amp; Herzegovina</div>
-          <div class="dash-region">Western Balkans</div>
-          <div class="dash-open">Open Dashboard →</div>
-        </a>
+        <div class="col">
+          <a href="dashboards/bosnia-and-herzegovina.html" class="dash-card card h-100" style="--accent:#002395" target="_blank" rel="noopener">
+            <div class="dash-flag">🇧🇦</div>
+            <div class="dash-name">Bosnia &amp; Herzegovina</div>
+            <div class="dash-region">Western Balkans</div>
+            <div class="dash-open">Open Dashboard →</div>
+          </a>
+        </div>
 
       </div>
     </div>
@@ -374,7 +423,7 @@
   <section id="contact">
     <div class="container text-center">
       <h2 class="section-title">Get in Touch</h2>
-      <div class="contact-links">
+      <div class="contact-links d-flex justify-content-center gap-4 mb-5">
         <a href="https://www.linkedin.com/in/almirbalihodzic" target="_blank" rel="noopener">
           <i class="fab fa-linkedin"></i> LinkedIn
         </a>
@@ -395,6 +444,7 @@
     <p>&copy; <span id="year"></span> Almir Balihodžić &nbsp;&middot;&nbsp; Linz, Austria</p>
   </footer>
 
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
   <script src="script.js"></script>
 </body>
 </html>
