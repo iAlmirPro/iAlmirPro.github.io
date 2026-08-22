@@ -14,7 +14,7 @@
     padding:32px;
   }
   .card {
-    max-width:560px; width:100%;
+    max-width:1000px; width:100%;
     background:#0d0d0d; border:1px solid #1e1e1e; border-top:3px solid var(--red);
     border-radius:0;
     padding:40px 32px;
@@ -35,13 +35,47 @@
     letter-spacing:0.05em; text-transform:uppercase;
   }
   a.back:hover { opacity:0.8; }
+  .concept-img {
+    width:100%; height:auto; display:block;
+    background:#fff; border:1px solid #1e1e1e; margin-bottom:20px;
+  }
+  .caption {
+    font-size:0.8rem; color:var(--muted); line-height:1.6;
+    margin-top:-6px; margin-bottom:24px;
+  }
+  h2.section-sub {
+    font-size:0.78rem; font-weight:700; text-transform:uppercase;
+    letter-spacing:0.14em; color:var(--red); margin-bottom:12px;
+  }
+  .challenges { list-style:none; margin-bottom:20px; }
+  .challenges li {
+    color:#ccc; line-height:1.6; font-size:0.9rem;
+    padding-left:16px; position:relative; margin-bottom:10px;
+  }
+  .challenges li::before {
+    content:'\2014'; position:absolute; left:0; color:var(--red);
+  }
+  .challenges strong { color:#fff; }
 </style>
 </head>
 <body class="d-flex align-items-center justify-content-center min-vh-100">
   <div class="card">
     <span class="eyebrow">Home Automation &nbsp;·&nbsp; DIY Project</span>
     <h1>Wireless Garage Opener</h1>
-    <p>A self-built wireless remote/controller for opening and closing the garage door — replacing or extending the stock opener with a custom RF/Wi-Fi-based solution.</p>
+    <img class="concept-img" src="wireless-garage-opener.png" alt="Concept diagram: 433 MHz remotes, phone BLE pairing, BLE beacon tags, and a PIR motion sensor all feed into an ESP32-C3 Mini, which triggers a 433 MHz rolling-code remote to open the garage door" width="2000" height="889">
+    <p class="caption">Concept sketch — several possible trigger sources (a 433 MHz universal remote via an RF receiver module, BLE pairing from a phone, BLE beacon tags, and a PIR motion sensor) all converge on one microcontroller, which in turn activates the output side — here, an existing 433 MHz rolling-code remote — to open the door.</p>
+    <p>The base idea is a general one: any authorized trigger — a remote, a paired phone, a beacon tag, or simply detected presence — is just an interchangeable input on the same board. Swapping or adding a trigger doesn't change the underlying architecture, only which port feeds it.</p>
+    <p>The 433 MHz remote in the diagram is one such input; it could just as easily be a smartphone or a BLE beacon tag instead. The ESP32 already has a built-in Wi-Fi/BLE radio, so those two paths need no extra hardware — but the universal remote control path needs a separate RF receiver module to pick up its 433 MHz signal.</p>
+    <p>An ESP32-C3 sits in deep sleep (µA draw) until a PIR sensor wakes it, then opens a window in which a bonded iPhone, a whitelisted BLE beacon tag, or a universal remote control can authorize a relay pulse to open the door.</p>
+    <p>The original remote control's rolling code can't be replicated, so it has to stay as the final link before the door — reused as-is. Instead of a person pressing its button, the ESP32 simulates that press electrically, bypassing the button entirely.</p>
+    <h2 class="section-sub">Major Challenges</h2>
+    <ul class="challenges">
+      <li><strong>Fully self-contained</strong> — the device operates entirely on its own, with no user interaction and no re-flashing required once deployed.</li>
+      <li><strong>Deep-sleep wake constraints</strong> — the ESP32-C3 stays in deep sleep to extend battery life, woken only by the PIR sensor.</li>
+      <li><strong>Unattended authentication</strong> — passkey-based pairing ensures only authorized persons can use the device.</li>
+      <li><strong>State surviving a full restart</strong> — every deep-sleep wake resets the chip entirely (RAM is lost), so bonded phones and the beacon whitelist have to live in flash to persist across cycles.</li>
+      <li><strong>One button, three behaviors</strong> — hold duration alone distinguishes normal use, teaching a new beacon, and a full factory reset.</li>
+    </ul>
     <p class="draft-note">Draft placeholder — full write-up and details coming soon.</p>
     <a class="back" href="../index.html#projects">&larr; Back to iAlmirPro.Home</a>
   </div>
