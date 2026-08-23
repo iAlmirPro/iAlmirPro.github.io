@@ -14,7 +14,7 @@
     padding:32px;
   }
   .card {
-    max-width:560px; width:100%;
+    max-width:1000px; width:100%;
     background:#0d0d0d; border:1px solid #1e1e1e; border-top:3px solid var(--red);
     border-radius:0;
     padding:40px 32px;
@@ -35,14 +35,44 @@
     letter-spacing:0.05em; text-transform:uppercase;
   }
   a.back:hover { opacity:0.8; }
+  .concept-img {
+    width:100%; height:auto; display:block;
+    background:#fff; border:1px solid #1e1e1e; margin-bottom:20px;
+  }
+  .caption {
+    font-size:0.8rem; color:var(--muted); line-height:1.6;
+    margin-top:-6px; margin-bottom:24px;
+  }
+  h2.section-sub {
+    font-size:0.78rem; font-weight:700; text-transform:uppercase;
+    letter-spacing:0.14em; color:var(--red); margin-bottom:12px;
+  }
+  .challenges { list-style:none; margin-bottom:20px; }
+  .challenges li {
+    color:#ccc; line-height:1.6; font-size:0.9rem;
+    padding-left:16px; position:relative; margin-bottom:10px;
+  }
+  .challenges li::before {
+    content:'\2014'; position:absolute; left:0; color:var(--red);
+  }
+  .challenges strong { color:#fff; }
 </style>
 </head>
 <body class="d-flex align-items-center justify-content-center min-vh-100">
   <div class="card">
     <span class="eyebrow">Public Transit &nbsp;·&nbsp; DIY Project</span>
     <h1>Linz AG Departure Dashboard</h1>
+    <img class="concept-img" src="linz-ag-departure-dashboard.png" alt="A Raspberry Pi Pico W driving a 7.5-inch red/black/white e-paper display, showing live departures for the Lederergasse stop with line, direction, and minutes-until-departure columns" width="2000" height="1135">
+    <p class="caption">Concept sketch — a Raspberry Pi Pico W drives a 7.5" red/black/white e-paper panel mounted at the Lederergasse stop, fetching live departures over Wi-Fi from Linz AG's public API.</p>
     <p>A personal real-time departure board for Linz's public transport network (trams &amp; buses operated by Linz AG) — built to glance at upcoming departures at a stop from home, instead of checking the app every time.</p>
-    <p class="draft-note">Draft placeholder — full write-up and details coming soon.</p>
+    <h2 class="section-sub">Major Challenges</h2>
+    <ul class="challenges">
+      <li><strong>Streaming JSON under a tight memory budget</strong> — the Pico W has 264&nbsp;KB of SRAM, and the two display framebuffers alone use ~94&nbsp;KB of that, permanently. The API's raw response is ~90&ndash;100&nbsp;KB, so parsing it with a standard JSON parser would need roughly that much again — too risky alongside TLS and interpreter overhead. Instead, the response is read in small chunks and only the 5 needed fields are pulled out on the fly, peaking at ~4&nbsp;KB of working memory instead of ~99&nbsp;KB — verified byte-identical to a full JSON parse across several chunk sizes.</li>
+      <li><strong>Full refresh instead of partial</strong> — the e-paper driver has a partial-refresh mode, but it proved unreliable on this panel, so every update is a full ~15&ndash;20s redraw instead.</li>
+      <li><strong>Freshness vs. flicker</strong> — refreshing every 60 seconds means the panel is visibly redrawing for a quarter to a third of every minute. A deliberate trade of visual calm for up-to-date departures, at a known cost to panel wear. Another option would be to trigger the display on demand with a button instead — show the departure times for 60 seconds, then turn the panel off (or switch to a static image) so the refresh flicker isn't a constant distraction.</li>
+      <li><strong>No real-time clock</strong> — the Pico has no battery-backed clock and MicroPython has no timezone database, so time comes from NTP in UTC and gets shifted to local time with a fixed offset that has to be flipped by hand twice a year for daylight saving.</li>
+    </ul>
+    <p class="draft-note">Draft placeholder — first implementation, not yet verified on real hardware.</p>
     <a class="back" href="../index.html#projects">&larr; Back to iAlmirPro.Home</a>
   </div>
 </body>
