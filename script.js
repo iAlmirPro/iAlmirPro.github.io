@@ -26,3 +26,15 @@ const observer = new IntersectionObserver(entries => {
 }, { rootMargin: '-40% 0px -55% 0px' });
 
 sections.forEach(s => observer.observe(s));
+
+// Travel gallery: tap-to-reveal caption on touch devices (hover handles desktop)
+const isTouch = window.matchMedia('(hover: none)').matches;
+if (isTouch) {
+  document.querySelectorAll('.travel-tile').forEach(tile => {
+    tile.addEventListener('click', () => {
+      const wasActive = tile.classList.contains('active');
+      document.querySelectorAll('.travel-tile.active').forEach(t => t.classList.remove('active'));
+      if (!wasActive) tile.classList.add('active');
+    });
+  });
+}
