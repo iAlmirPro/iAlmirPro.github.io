@@ -477,7 +477,7 @@ a.cert-item:hover {
 .cert-group-date {
   font-size: 0.75rem;
   color: var(--muted);
-  margin-top: -18px;
+  margin-top: -26px;
   margin-bottom: 24px;
 }
 
@@ -522,8 +522,20 @@ a.cert-item:hover {
   cursor: default;
 }
 
+.cert-link-text {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+
+.cert-chip:hover .cert-link-text {
+  text-decoration-thickness: 2px;
+}
+
 .cert-chip .cert-link {
+  flex-shrink: 0;
   font-size: 0.72rem;
+  white-space: nowrap;
 }
 
 .cert-chip .cert-link::before {
@@ -538,6 +550,12 @@ a.cert-item:hover {
   box-shadow: 0 4px 14px rgba(0,0,0,0.10);
   transform: translateY(-2px);
   text-decoration: none;
+}
+
+.cert-chip-text {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
 }
 
 .cert-chip-icon {
@@ -700,6 +718,7 @@ a.cert-item:hover {
   font-size: 2.4rem;
   line-height: 1;
   margin-bottom: 16px;
+  color: var(--white);
 }
 
 .dash-name {
@@ -839,4 +858,42 @@ footer {
     letter-spacing: 0.12em;
   }
 
+}
+
+/* Certification pills on narrow screens: "Verify" follows the title as plain
+   inline text; issuer/date of unlinked pills sits under the title */
+@media (max-width: 767.98px) {
+  .cert-chip {
+    border-radius: 20px;
+  }
+
+  .cert-chip .cert-chip-text {
+    display: block;
+  }
+
+  a.cert-chip .cert-link {
+    display: inline;
+    margin-left: 0;
+  }
+
+  /* non-breaking spaces keep the dot attached to the last word of the title */
+  a.cert-chip .cert-link::before {
+    content: '\00a0\00b7\00a0';
+    margin-right: 0;
+    font-weight: 400;
+    color: var(--muted);
+  }
+
+  .cert-chip-static {
+    padding-right: 16px;
+  }
+
+  .cert-chip-meta {
+    display: block;
+    white-space: nowrap;
+  }
+
+  .cert-chip-meta::before {
+    content: none;
+  }
 }
