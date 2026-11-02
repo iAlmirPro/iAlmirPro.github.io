@@ -503,6 +503,25 @@ a.cert-item:hover {
   transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
 }
 
+.cert-chip-meta {
+  font-size: 0.72rem;
+  font-weight: 400;
+  color: var(--muted);
+}
+
+.cert-chip-meta::before {
+  content: '\00b7';
+  margin-right: 6px;
+}
+
+.cert-chip-static,
+.cert-chip-static:hover {
+  border-color: #e4e4e4;
+  box-shadow: none;
+  transform: none;
+  cursor: default;
+}
+
 .cert-chip .cert-link {
   font-size: 0.72rem;
 }
