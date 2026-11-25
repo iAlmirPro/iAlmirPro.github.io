@@ -7,10 +7,24 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 Personal website at **https://ialmirpro.github.io** — plain static HTML, no build tools, no framework. Push to `main` and GitHub Pages serves it within ~60 seconds.
 
 ```
-index.html   — landing page
-style.css    — dark header, firebrick accent
-script.js    — auto-updating copyright year
-dashboards/  — country data dashboards (JSX source → compiled HTML)
+index.html   — single-page landing site (sections: hero, about, experience, skills, certifications, interests, gallery, projects, dashboards, contact)
+style.css    — dark header, firebrick accent; loaded only by index.html (Bootstrap 5.3 comes from the jsDelivr CDN)
+script.js    — copyright year, mobile-nav close, scroll-spy nav highlight, touch tap-to-reveal for gallery tiles
+projects/    — standalone project write-ups (own inline <style>, do not use style.css); linked from the #projects section
+dashboards/  — country data dashboards (JSX source → compiled HTML) + design docs; linked from the #dashboards section
+tools/       — dashboard tooling (jsx_to_html.py, fetch_dashboard_data.py + fetch_config.json, jsxpreviewer/)
+data/        — gitignored (local only); fetcher output lands here
+bikes.md     — unrelated personal motorcycle comparison notes (German); not part of the site
+```
+
+The `#gallery` and `#dashboards` sections in `index.html` carry `d-none` — they exist in the markup but are hidden on the live site. Dashboard pages are still reachable by direct URL. Adding a new dashboard means adding a `.dash-card` link (with `--accent` colour) in `#dashboards` in addition to producing the HTML.
+
+## Local preview
+
+No build step. For the landing page, serve the repo root statically (this is what `.claude/launch.json` does):
+
+```bash
+python3 -m http.server 8743
 ```
 
 ## Deployment
@@ -21,11 +35,13 @@ git commit -m "your message"
 git push
 ```
 
-A GitHub Action (`cache-bust.yml`) automatically rewrites the `style.css?v=` query string in `index.html` to the git SHA on every push that touches `style.css`.
+A GitHub Action (`cache-bust.yml`) rewrites the `style.css?v=` query string in `index.html` to the git SHA on every push to `main` that touches `style.css`, then **commits that change back to `main`** (`chore: cache-bust CSS → <sha>`). After pushing a `style.css` change, `git pull --rebase` before the next push or it will be rejected. Don't edit the `?v=` value by hand. The workflow only rewrites `index.html`; other pages don't reference `style.css`.
 
 ## Dashboard workflow
 
 Country dashboards live in `dashboards/`. Each is authored as React JSX, then compiled to a self-contained static HTML file.
+
+Pipeline: `tools/fetch_dashboard_data.py` (→ `data/`, gitignored) → values hand-patched into `[country]-dashboard.jsx` via the Gate process → `tools/jsxpreviewer` for live preview → `tools/jsx_to_html.py` writes `[country].html` next to the JSX (the `-dashboard` suffix is stripped; React and the D3 map are rendered to static markup at compile time). Both the `.jsx` and the compiled `.html` are committed — recompile and commit both after any JSX change. The jsxpreviewer vendors React, Babel, D3 and Bootstrap locally (`tools/jsxpreviewer/*.min.js`), so it works offline; `__bundle.jsx` there is a gitignored build artifact.
 
 **Live preview (run from `dashboards/` directory):**
 ```bash
@@ -74,7 +90,7 @@ All five indexes (TI CPI, Freedom House, RSF, GPI, WJP) are auto-fetched. Update
 
 ## Dashboard design rules
 
-The single source of truth for all dashboard design is **`dashboards/dashboard-design-system.md`**. Read it before touching any dashboard file. Key rules:
+The single source of truth for all dashboard design is **`dashboards/dashboard-design-system.md`**. Read it before touching any dashboard file (`dashboards/MUST-READ-FIRST.md` says the same: read the design system before any other file in that folder). It also holds a "Known mistakes" log — check it for recurring JSX pitfalls (e.g. the `EraTimeline` base-year, unescaped apostrophes in single-quoted strings, `ERA_TOTAL`/`ERAS.title`/`ERAS.note` that sit outside `const ERAS`). Key rules:
 
 ### Approval protocol
 - **Never make changes without explicit final approval.** Always propose first, describe in plain language, wait for confirmation, then act.
@@ -86,6 +102,7 @@ The single source of truth for all dashboard design is **`dashboards/dashboard-d
 - Every meaningful change → new version: `v1 → v2 → v3…`
 - Never overwrite an existing version — copy first, then edit.
 - Always present the `.jsx` file after each version.
+- The committed dashboards are the unversioned "final" files (`[country]-dashboard.jsx`, as in the BIH `v1→final` rename); `-vN` copies are working drafts. `jsx_to_html.py` only strips a trailing `-dashboard.jsx`, so a `x-dashboard-v2.jsx` draft compiles to `x-dashboard-v2.html` — rename to the final `x-dashboard.jsx` name before publishing.
 
 ### Pre-build declaration (new country — output this first, then stop)
 
